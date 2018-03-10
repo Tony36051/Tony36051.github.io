@@ -7,7 +7,7 @@ title: 幻煞幽穹
 subtitle:
 description:
 author: 360517703@163.com
-language: zh-CN
+language: zh-Hans
 timezone: Asia/Shanghai
 
 # URL
@@ -72,7 +72,7 @@ pagination_dir: page
 # Extensions
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://hexo.io/themes/
-theme: landscape
+theme: next
 #theme: cafe
 
 # Deployment
