@@ -1,8 +1,9 @@
----
+
 title: 离线yum安装通用方法(Docker为例)
 date: 2018-03-13 10:00:00
-tags: \[centos, docker\]
-
+tags:
+- centos
+- docker
 ---
 # 原理
 yum install有参数\-\-downloadonly，可以只下载不安装，搭配\-\-downloaddir=DLDIR参数可以下载依赖包，完成离线安装。
@@ -67,4 +68,5 @@ net-snmp-agent-libs-5.7.2-24.el7.i686
 ```bash
 yum remove rpm-libs-4.11.3-17.el7.i686
 ```
+
 
