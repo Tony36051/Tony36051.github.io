@@ -48,6 +48,12 @@ mr-jobhistory-daemon.sh start historyserver
 ```bash
 hdfs haadmin -failover nn2 nn1
 ```
+9. 切换Active的ResourceManager
+由于yarn rmadmin不支持-failover命令，只能kill掉active的ResourceManager进程，待切换后再查看 
+```bash
+yarn rmadmin -getServiceState rm1 #查看状态 
+yarn rmadmin -getServiceState rm2 #查看状态
+```
 nn1是namenode1，nn2是namenode2. 对应的配置文件是**hdfs-site.xml**
 ## Hbase
 1. 启动HMaster
