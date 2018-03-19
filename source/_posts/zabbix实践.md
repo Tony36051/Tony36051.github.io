@@ -53,16 +53,24 @@ Agent用原生的rpm包安装，centos7.2下直接安装无依赖。生产环境
 
 ## 配置
 ### 判断进程是否存在、获取进程号
-使用UserParameter功能，sudo vim /etc/zabbix/zabbix_agentd.d/userparameter_script.conf
+使用UserParameter功能，能在agent端执行自定义命令，命令的返回值会送到server作为键值对应的数值。
+#### 流程
+1. 在Agent端/etc/zabbix/zabbix_agentd.d/目录下新建参数自定义命令。
 ```bash
+sudo vim /etc/zabbix/zabbix_agentd.d/userparameter_script.conf
 UserParameter=ps[*],ps -ef | grep $1 | grep -v zabbix | wc -l
 UserParameter=pid[*],ps -ef | grep "$1" | grep -v grep | sed -r 's/ +/ /g' | cut -d " " -f 2
 ```
-
+2. 在web端配置监控项，可以是active或passive，键值ps[NameNode]，对应地会在agent端执行命令ps -ef | grep NameNode | grep -v zabbix | wc -l
+3. server端收到对应的返回值，正常来说是1。
 
 ### Hadoop参数
-zabbix-server监控项用zabbix采集器，在server机器上运行主动脚本采集master1:50070/jmx 的数据，解析后通过zabbix-sender发送给server端。
-1. 脚本
+#### 流程
+1. server端执行外部检查，外部检查调用zabbix/externalscripts目录下执行系统命令（如调用 python get_dfs_info.py master1 50070）。
+2. 调用系统命令后，被调用程序应使用zabbix-sender给server端发送相关数据。
+这里发送的是文本文件，每行一条记录，空格划分三列，第一列是被监控机器在web上显示的hostname，第二列是键值，第三列是具体的数据。
+3. zabbix-server监控项用zabbix采集器，键值对应发送文件的第二列，数据类型要区分整数和字符串等。
+#### 脚本
 ```bash
 #!/bin/sh
 
@@ -192,12 +200,10 @@ fi
 
 # debug: sh cluster-hadoop-plugin.sh 10.41.236.209 50070 master1 DFS
 ```
-
-
-3. 监控项 示例
+#### 监控项 <small>示例</small>
 外部检查：
 cluster-hadoop-plugin.sh\[{$HADOOP\_NAMENODE\_HOST},{$HADOOP\_NAMENODE\_METRICS\_PORT},{$ZABBIX\_NAME},DFS\]
-监视
+监控项
 Zabbix采集器：键值live_nodes 
 
 
