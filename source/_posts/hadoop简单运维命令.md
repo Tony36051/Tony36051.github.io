@@ -1,5 +1,6 @@
 ---
 title: Hadoop组件运维命令
+date: 2018-03-20
 tags:
 - hadoop
 
