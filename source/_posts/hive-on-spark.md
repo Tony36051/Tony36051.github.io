@@ -52,6 +52,8 @@ spark.driver.memory              4g
 spark.executor.extraJavaOptions  -XX:+PrintGCDetails -Dkey=value -Dnumbers="one two three"
 spark.yarn.jars                  hdfs://ns1/spark-jars/jars/*.jar
 ```
+### 验证spark
+>./bin/spark-submit --class org.apache.spark.examples.SparkPi --master yarn-client ./examples/jars/spark-examples_2.11-2.2.0.jar 10
 ## hive
 ### 添加必要的依赖库
 ```bash
@@ -76,6 +78,13 @@ ln -s /home/hadoop/soft/spark-2.2.0-bin-hadoop2.7/jars/spark-core_2.11-2.2.0.jar
     </description>
   </property>
 ```
+### 验证hive on spark
+-   命令行输入 hive，进入hive CLI
+-   set hive.execution.engine=spark; (将执行引擎设为Spark，默认是mr，退出hive CLI后，回到默认设置。若想让引擎默认为Spark，需要在hive-site.xml里设置）
+-   create table test(ts BIGINT,line STRING); (创建表）
+-   select count(*) from test;
+-   若整个过程没有报错，并出现正确结果，则Hive on Spark配置成功。
+
 ## 优化
 因为在yarn上执行，拷贝spark的jars到hdfs上能避免每次拷贝。
 如果仅是在hive中使用spark，可以在hive-site.xml中配置
