@@ -1,6 +1,5 @@
 ---
 title: Hadoop组件运维命令
-date: 2018-03-20
 tags:
 - hadoop
 
@@ -83,6 +82,31 @@ coordinator和worker都是一样的启动命令
 /home/hadoop/soft/presto/bin/launcher start
 ```
 
+## Azkaban
+Azkaban工作流项目使用的是2.5.0版本，有Web和Executor两个组件
+```bash
+cd /home/hadoop/soft/azkaban-web-2.5.0/
+nohup bin/azkaban-web-start.sh > /home/hadoop/soft/azkaban-web-2.5.0/webServer.log 2>&1 &
+
+cd  /home/hadoop/soft/azkaban-executor-2.5.0/
+nohup bin/azkaban-executor-start.sh > /home/hadoop/soft/azkaban-executor-2.5.0/executorServer.log 2>&1 &
+
+```
+
+## Kylin
+```bash
+cd /home/hadoop/soft/kylin/bin
+sh kylin.sh start
+```
+## Hue
+```bash
+cd  /home/hadoop/soft/hue
+nohup build/env/bin/supervisor &
+```
+## 杀掉yarn上的任务
+```
+bin/yarn application -kill <applicationId>
+```
 ## 参考
 1. [Hadoop、Hbase原生脚本说明](http://xstarcd.github.io/wiki/Cloud/manual_start_hadoop_hbase.html)
 2. [Hadoop+ZooKeeper+HBase 启动顺序](http://blog.csdn.net/u011414200/article/details/50437356)
