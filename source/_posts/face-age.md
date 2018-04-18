@@ -14,121 +14,15 @@ https://data.vision.ee.ethz.ch/cvl/rrothe/imdb-wiki/static/wiki_crop.tar
 数据说明：https://data.vision.ee.ethz.ch/cvl/rrothe/imdb-wiki/
 ## 解析元数据
 元数据wiki.mat、imdab.mat是已matlab形式的mat文件存的，可以用scipy.io.loadmat读取。
+|属性| 值 | 含义|
+|--|--|--|
+|gender | nan/0/1 | 0 for female and 1 for male, _NaN_ if unknown
+|face_score|nan/float| _NaN_ 没有人脸，得分越高越确定人脸
+|second_face_score|nan/float|第二张人脸的的人，越高越确定，_NaN_表示没有第二张脸
+|dob|不知道|date of birth (Matlab serial date number)用来算age，有些age算出来超出常理。要丢弃
 
-```python
-# -*- coding: utf-8 -*-  
-# utils.py
-# -*- coding: utf-8 -*-  
-from scipy.io import loadmat  
-from datetime import datetime  
-import os  
-import plot  
-import logging  
-from tqdm import tqdm  
-import numpy as np  
-MAX_AGE = 117  
-logger = logging.getLogger()  
-handler = logging.StreamHandler()  
-formatter = logging.Formatter(  
-        '%(asctime)s %(name)s %(levelname)s %(message)s')  
-handler.setFormatter(formatter)  
-logger.addHandler(handler)  
-logger.setLevel(logging.DEBUG)  
-  
-  
-def calc_age(taken, dob):  
-    birth = datetime.fromordinal(max(int(dob) - 366, 1))  
-    # assume the photo was taken in the middle of the year  
-  if birth.month < 7:  
-        return taken - birth.year  
-    else:  
-        return taken - birth.year - 1  
-  
-  
-def get_meta(mat_path, db):  
-    meta = loadmat(mat_path)  
-    full_path = meta[db][0, 0]["full_path"][0]  
-    dob = meta[db][0, 0]["dob"][0]  # Matlab serial date number  
-  gender = meta[db][0, 0]["gender"][0]  
-    photo_taken = meta[db][0, 0]["photo_taken"][0]  # year  
-  face_score = meta[db][0, 0]["face_score"][0]  
-    second_face_score = meta[db][0, 0]["second_face_score"][0]  
-    age = [calc_age(photo_taken[i], dob[i]) for i in range(len(dob))]  
-  
-    return full_path, dob, gender, photo_taken, face_score, second_face_score, age  
-  
-  
-def mk_dir(dir):  
-    try:  
-        os.mkdir( dir )  
-    except OSError:  
-        pass  
-  
-  
-def filter_unusual(full_path, gender, face_score, second_face_score, age):  
-    unusual_gender_idx = list()  
-    unusual_face_score_idx = list()  
-    unusual_second_face_score_idx = list()  
-    unusual_age_idx = list()  
-    length = len(full_path)  
-    for i in tqdm(range(length)):  
-        if np.isnan(gender[i]) or ~(0<=gender[i]<=1):  
-            unusual_gender_idx.append(i)  
-            logger.warn("unusual gender: %d, %s"%(i, str(gender[i])))  
-  
-        if face_score[i] < 0:  
-            unusual_face_score_idx.append(i)  
-            logger.warn("no face: %d, %.2f"%( i, face_score[i] ))  
-  
-  
-        if second_face_score[i] > 0:  
-            unusual_second_face_score_idx.append(i)  
-            logger.warn("more than one face: %d, %.2f"%(i, second_face_score[i]))  
-  
-        if ~(0 <= age[i] <= MAX_AGE):  
-            unusual_age_idx.append(i)  
-            logger.warn("unusual age: %d, %d" % (i, age[i]))  
-    print(1)  
-  
-  
-  
-if __name__ == '__main__':  
-  
-    mat_path = ur"D:\wiki_crop\wiki.mat"  
-  db = "wiki"  
-  full_path, dob, gender, photo_taken, face_score, second_face_score, age = get_meta(mat_path, db)  
-  
-    filter_unusual(full_path, gender, face_score, second_face_score, age)  
-  
-    age = [a for a in age if 0 < a < MAX_AGE]  
-    print(len(age))  
-    plot.histgram_demo(age)
-```
-```python
-# -*- coding: utf-8 -*-  
-# plot.py
-import matplotlib.pyplot as plt  
-import numpy as np  
-  
-  
-def line_demo():  
-    x = np.linspace(-1, 1, 50)  
-    y = 2 * x + 1  
-  # plt.figure()  
-  plt.plot(x, y)  
-    plt.show()  
-  
-  
-def histgram_demo(tdata):  
-    # plt.figure()  
-  plt.hist(tdata, bins=50, color='steelblue')  
-    plt.show()  
-  
-  
-if __name__ == '__main__':  
-    # histgram_demo()  
-  line_demo()
-```
+## 人脸对齐
+
 
 # 论文笔记
 ## 人脸图像的年龄估计技术研究
@@ -150,3 +44,357 @@ LAP2016，人脸年龄v2比赛冠军
 年龄编码的方式
 ##Apparent Age Estimation Using Ensemble of Deep Learning Models
 LAP2016， 人脸年龄v2第5名
+
+## code
+`hog.py`
+```python
+from skimage import feature as ft
+from skimage import io
+import argparse
+import utils
+import math
+import multiprocessing
+import os
+import tqdm
+
+
+def extract_hog(img_full_path):
+    ori = 8
+    ppc = (16, 16)
+    cpb = (1, 1)
+    image = io.imread(img_full_path)
+    features = ft.hog(image,  # input image
+                      orientations=ori,  # number of bins
+                      pixels_per_cell=ppc,  # pixel per cell
+                      cells_per_block=cpb,  # cells per blcok
+                      block_norm='L2-Hys',  # block norm : str {‘L1’, ‘L1-sqrt’, ‘L2’, ‘L2-Hys’}, optional
+                      transform_sqrt=True,  # power law compression (also known as gamma correction)
+                      feature_vector=True,  # flatten the final vectors
+                      visualise=False)  # return HOG map
+    return features
+
+
+def task(data_dir, stage, paths, ages, position):
+    file_name = os.path.join(data_dir, "%s_%d.txt" % (stage, position))
+    with open(file_name, 'w') as f:
+        for i, img_path in enumerate(paths):
+            img_path = img_path[1:] if img_path[0] == "/" else img_path
+            features = extract_hog(os.path.join(data_dir, img_path))
+            line = ",".join([str(a) for a in features]) + "," + str(ages[i]) + "\n"
+            f.write(line)
+    return file_name
+
+
+def merge_pool_results(data_dir, results):
+    merged_file = os.path.join(data_dir, "hog.txt")
+    with open(merged_file, 'w') as wf:
+        for file in results:
+            with open(file, 'r') as rf:
+                wf.writelines(rf.readlines())
+        # os.remove(file)
+
+
+def simple_process(data_dir, meta_file):
+    """not fast enough"""
+    paths = list()
+    ages = list()
+    with open(os.path.join(data_dir, meta_file), 'r') as f:
+        for line in f.readlines():
+            ss = line.split(" ")
+            paths.append(ss[0])
+            ages.append(ss[1])
+    with open(os.path.join(data_dir, "hog_all.txt"), 'w') as f:
+        for i in tqdm.trange(len(paths)):
+            feature = extract_hog(os.path.join(data_dir, paths[i]))
+            line = ",".join([str(a) for a in feature]) + "," + str(ages[i]) + "\n"
+            f.write(line)
+
+
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--data_dir', required=False, help='data dir')
+    parser.add_argument('--process', required=False, help='how many process')
+
+    args = parser.parse_args()
+    process = int(args.process) if args.process else 32
+    data_dir = args.data_dir if args.data_dir else "/home/tony/data"
+
+    stage = "hog"
+    meta_file = "aligned_meta.txt"
+
+    results = list()
+
+    train_path, train_age = utils.read_meta_data(data_dir, meta_file)
+    # train_path = train_path[0:100]
+    # train_age = train_age[0:100]
+    n = int(math.ceil(len(train_path) / float(process)))
+    print(len(train_path))
+
+    pool = multiprocessing.Pool(processes=process)
+    for i in range(0, len(train_path), n):
+        t = pool.apply_async(task, args=(data_dir, stage, train_path[i: i + n], train_age[i:i + n], i,))
+        results.append(t)
+    pool.close()
+    pool.join()
+
+    merge_pool_results(data_dir, [t.get() for t in results])
+    [os.remove(os.path.join(data_dir, t.get())) for t in results]
+
+
+
+```
+
+`align.py`
+```python
+# -*- coding: utf-8 -*-
+import cv2
+import dlib
+import os
+import sys
+from imutils.face_utils import FaceAligner
+from tqdm import tqdm
+import math
+from multiprocessing import Process as pro, Pool
+import argparse
+import utils
+
+cur_dir = os.path.dirname(__file__)
+# cur_dir = os.path.dirname(os.path.abspath(__file__))
+data_dir = os.path.join(cur_dir, "data")
+# data_dir = r"d:/data"  # special for windows
+classifier_xml = os.path.join(data_dir, "haarcascade_frontalface_alt2.xml")
+predictor_path = os.path.join(data_dir, "shape_predictor_68_face_landmarks.dat")
+
+detector = dlib.get_frontal_face_detector()
+predictor = dlib.shape_predictor(predictor_path)
+fa = FaceAligner(predictor, desiredFaceWidth=160)
+
+
+def opencv_recognize(img_path):
+    face_patterns = cv2.CascadeClassifier(classifier_xml)
+    sample_image = cv2.imread(img_path)
+    # cv2.imshow("image", sample_image)
+    faces = face_patterns.detectMultiScale(sample_image, scaleFactor=1.1, minNeighbors=5, minSize=(100, 100))
+
+    for (x, y, w, h) in faces:
+        cv2.rectangle(sample_image, (x, y), (x + w, y + h), (0, 255, 0), 2)
+
+    # cv2.imwrite('/Users/abel/201612_detected.png', sample_image)
+    cv2.imshow("image", sample_image)
+    cv2.waitKey(0)
+    cv2.destroyAllWindows()
+
+
+def dlib_recognize_and_align(img_path):
+    '''加载人脸检测器、加载官方提供的模型构建特征提取器'''
+    win = dlib.image_window()
+    detector = dlib.get_frontal_face_detector()
+    predictor = dlib.shape_predictor(predictor_path)
+    brg_img = cv2.imread(img_path)
+    rgb_img = cv2.cvtColor(brg_img, cv2.COLOR_BGRA2RGB)
+    dets = detector(rgb_img, 1)
+    print("Number of faces detected: {}".format(len(dets)))
+    for i, d in enumerate(dets):
+        print("Detection {}: Left: {} Top: {} Right: {} Bottom: {}".format(
+            i, d.left(), d.top(), d.right(), d.bottom()))
+
+    win.clear_overlay()
+    win.set_image(rgb_img)
+    win.add_overlay(dets)
+    dlib.hit_enter_to_continue()
+    pass
+
+
+def align_and_save(data_dir, img_path):
+    full_path = os.path.join(data_dir, img_path)
+    bgr_img = cv2.imread(full_path, 0)
+    gray = bgr_img
+    # gray = cv2.cvtColor(bgr_img, cv2.COLOR_BGR2GRAY)
+    rects = detector(gray, 1)
+    if len(rects) != 1:
+        return False
+    img = fa.align(gray, gray, rects[0])
+    new_file_path = os.path.join(data_dir, "aligned", img_path)
+    aligned_dir = os.path.dirname(new_file_path)
+    if not os.path.exists(aligned_dir):
+        os.makedirs(aligned_dir)
+    cv2.imwrite(new_file_path, img)
+    return True
+
+
+
+
+
+def crop_train_face(train_path, train_age):
+    """single process"""
+    pre_len = len(train_path)
+    new_path = list()
+    new_age = list()
+    for i in tqdm(range(pre_len)):
+        img_path = data_dir + train_path[i]
+        new_file_path = align_and_save(img_path)
+        new_path.append(new_file_path)
+        new_age.append(train_age[i])
+    return new_path, new_age
+
+
+def task(data_dir, stage, img_paths, ages, position):
+    file_name = os.path.join(data_dir, "%s_%d.txt" % (stage, position))
+    with open(file_name, 'w') as f:
+        for i, img_path in enumerate(img_paths):
+            img_path = img_path[1:] if img_path[0] == "/" else img_path
+            if align_and_save(data_dir, img_path):
+                f.write("aligned/%s %d\n" % (img_path, ages[i]))
+    return file_name
+
+
+def merge_pool_results(data_dir, results):
+    merged_file = os.path.join(data_dir, "aligned_meta.txt")
+    with open(merged_file, 'w') as wf:
+        for file in results:
+            with open(file, 'r') as rf:
+                wf.writelines(rf.readlines())
+        os.remove(file)
+
+def chunks(arr, m):
+    n = int(math.ceil(len(arr) / float(m)))
+    return [arr[i:i + n] for i in range(0, len(arr), n)]
+
+
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--data_dir', required=False, help='data dir')
+    parser.add_argument('--process', required=False, help='how many process')
+
+    args = parser.parse_args()
+    process = int(args.process) if args.process else 32
+    data_dir = args.data_dir if args.data_dir else "/home/tony/data"
+
+    stage = "train"
+    meta_file = "wiki.txt"
+    results = list()
+    train_path, train_age = utils.read_meta_data(data_dir, meta_file)
+    n = int(math.ceil(len(train_path) / float(process)))
+    print(len(train_path))
+
+    pool = Pool(processes=process)
+    for i in range(0, len(train_path), n):
+        t = pool.apply_async(task, args=(data_dir, stage, train_path[i: i + n], train_age[i:i + n], i,))
+        results.append(t)
+    pool.close()
+    pool.join()
+
+    merge_pool_results(data_dir, [t.get() for t in results])
+
+
+
+```
+
+`unify_meta_data.py`
+```python
+# -*- coding: utf-8 -*-
+import logging
+from utils import get_meta
+from tqdm import trange
+import numpy as np
+import os
+import sys
+
+MAX_AGE = 117
+logger = logging.getLogger()
+handler = logging.StreamHandler()
+formatter = logging.Formatter(
+    '%(asctime)s %(name)s %(levelname)s %(message)s')
+handler.setFormatter(formatter)
+logger.addHandler(handler)
+logger.setLevel(logging.DEBUG)
+
+
+def filter_unusual(full_path, gender, face_score, second_face_score, age):
+    # label filter
+    gender_idx = np.where(~np.isnan(gender))[0]
+    age_idx = [i for i in range(len(age)) if 0 <= age[i] <= MAX_AGE]
+    # face filter
+    # face_score_idx = np.where(face_score <= 0)[0]
+    # second_face_score_idx = np.where(second_face_score>0)[0]
+
+    return np.intersect1d(gender_idx, age_idx)
+
+
+def main_process(data_path, db, limit=None):
+    mat_path = os.path.join(data_path, db + "_crop", db + ".mat")
+    full_path, dob, gender, photo_taken, face_score, second_face_score, age = get_meta(mat_path, db)
+    ok_idx = filter_unusual(full_path, gender, face_score, second_face_score, age)
+    meta_file = os.path.join(data_path, db + ".txt")
+    with open(meta_file, 'w') as f:
+        for i in trange(len(ok_idx)):
+            if limit and i >= int(limit):
+                break
+            f.write("%s_crop/%s %d\n" % (db, full_path[i][0], age[i]))
+    return meta_file
+
+if __name__ == '__main__':
+    data_path = str(sys.argv[1]) if len(sys.argv) > 1 else r"d:/data"
+    data_path = "/home/tony/data"
+    db = "wiki"
+    meta_file = main_process(data_path, db)
+    print("meta_file: " + meta_file)
+
+```
+
+`utils.py`
+```python
+# utils.py
+# -*- coding: utf-8 -*-
+from scipy.io import loadmat
+from datetime import datetime
+import os
+import numpy as np
+
+
+def calc_age(taken, dob):
+    birth = datetime.fromordinal(max(int(dob) - 366, 1))
+    # assume the photo was taken in the middle of the year
+    if birth.month < 7:
+        return taken - birth.year
+    else:
+        return taken - birth.year - 1
+
+
+def get_meta(mat_path, db):
+    meta = loadmat(mat_path)
+    full_path = meta[db][0, 0]["full_path"][0]
+    dob = meta[db][0, 0]["dob"][0]  # Matlab serial date number
+    gender = meta[db][0, 0]["gender"][0]
+    photo_taken = meta[db][0, 0]["photo_taken"][0]  # year
+    face_score = meta[db][0, 0]["face_score"][0]
+    second_face_score = meta[db][0, 0]["second_face_score"][0]
+    # age = np.array(map(calc_age, photo_taken, dob))  # python 2/3 staff
+    age = [calc_age(photo_taken[i], dob[i]) for i in range(len(dob))]
+    return full_path, dob, gender, photo_taken, face_score, second_face_score, age
+
+
+def mk_dir(dir):
+    try:
+        os.mkdir(dir)
+    except OSError:
+        pass
+
+
+def read_meta_data(data_dir, file_name):
+    path = list()
+    age = list()
+    with open(os.path.join(data_dir, file_name)) as f:
+        for line in f.readlines():
+            ss = line.split(" ")
+            path.append(ss[0])
+            age.append(int(ss[1]))
+    return path, age
+
+
+if __name__ == '__main__':
+    mat_path = r"D:\wiki_crop\wiki.mat"
+    db = "wiki"
+    full_path, dob, gender, photo_taken, face_score, second_face_score, age = get_meta(mat_path, db)
+
+```
