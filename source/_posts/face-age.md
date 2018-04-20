@@ -1,4 +1,3 @@
-
 ---
 title: 人脸年龄
 date: 2018-04-10 00:09
@@ -6,7 +5,82 @@ tag:
 - AI
 
 ___
-# hog-rf
+# 试验数据
+## 各类特征pca512后，直接串连
+
+### LogisticRegression 
+LogisticRegression on hog(512) resulting mae: 12.534653
+LogisticRegression on lbp(512) resulting mae: 12.316832
+LogisticRegression on vgg(512) resulting mae: 5.792079
+LogisticRegression on hog_lbp(1024) resulting mae: 12.564356
+LogisticRegression on hog_vgg(1024) resulting mae: 4.762376
+LogisticRegression on lbp_vgg(1024) resulting mae: 5.118812
+LogisticRegression on hog_lbp_vgg(1536) resulting mae: 4.841584
+### LinearSVR
+LinearSVR on hog(512) resulting mae: 13.975740
+LinearSVR on lbp(512) resulting mae: 14.171815
+LinearSVR on vgg(512) resulting mae: 6.477576
+LinearSVR on hog_lbp(1024) resulting mae: 22.368721
+LinearSVR on hog_vgg(1024) resulting mae: 9.580384
+LinearSVR on lbp_vgg(1024) resulting mae: 11.537682
+LinearSVR on hog_lbp_vgg(1536) resulting mae: 6.361257
+
+### SVR(rbf)
+SVR on hog(512) resulting mae: 11.496392
+SVR on lbp(512) resulting mae: 11.600109
+SVR on vgg(512) resulting mae: 11.721817
+SVR on hog_lbp(1024) resulting mae: 11.682743
+SVR on hog_vgg(1024) resulting mae: 11.624635
+SVR on lbp_vgg(1024) resulting mae: 11.608328
+SVR on hog_lbp_vgg(1536) resulting mae: 11.349862
+
+### rf
+RandomForestRegressor on hog(512) resulting mae: 11.234653
+RandomForestRegressor on lbp(512) resulting mae: 12.245545
+RandomForestRegressor on vgg(512) resulting mae: 5.855446
+RandomForestRegressor on hog_lbp(1024) resulting mae: 10.981188
+RandomForestRegressor on hog_vgg(1024) resulting mae: 5.754455
+RandomForestRegressor on lbp_vgg(1024) resulting mae: 5.740594
+RandomForestRegressor on hog_lbp_vgg(1536) resulting mae: 6.240594
+### ada
+AdaBoostRegressor on hog(512) resulting mae: 11.469027
+AdaBoostRegressor on lbp(512) resulting mae: 11.945927
+AdaBoostRegressor on vgg(512) resulting mae: 6.560440
+AdaBoostRegressor on hog_lbp(1024) resulting mae: 10.853807
+AdaBoostRegressor on hog_vgg(1024) resulting mae: 6.464129
+AdaBoostRegressor on lbp_vgg(1024) resulting mae: 6.640677
+AdaBoostRegressor on hog_lbp_vgg(1536) resulting mae: 6.807597
+
+## 直接串联融合
+先全部pca skb-f_regression skb-mutual_info_regression
+### LinearSVR 
+LinearSVR on hog_lbp(300) resulting mae: 6.277855
+LinearSVR on hog_vgg(300) resulting mae: 5.596323
+LinearSVR on lbp_vgg(300) resulting mae: 6.167967
+LinearSVR on hog_lbp_vgg(300) resulting mae: 5.759966
+
+LinearSVR on hog_lbp(150) resulting mae: 5.891156
+LinearSVR on hog_vgg(150) resulting mae: 5.809739
+LinearSVR on lbp_vgg(150) resulting mae: 5.940609
+LinearSVR on hog_lbp_vgg(150) resulting mae: 5.626772
+
+LinearSVR on hog_lbp(60) resulting mae: 5.666367
+LinearSVR on hog_vgg(60) resulting mae: 5.797798
+LinearSVR on lbp_vgg(60) resulting mae: 6.250504
+LinearSVR on hog_lbp_vgg(60) resulting mae: 5.709871
+
+## 融合
+PCA30+LDA30+f_regression30+mutual_info_regression30
+LinearSVR on hog_lbp(120) resulting mae: 2.708872
+LinearSVR on hog_vgg(120) resulting mae: 2.525526
+LinearSVR on lbp_vgg(120) resulting mae: 2.654724
+LinearSVR on hog_lbp_vgg(120) resulting mae: 4.254801
+
+## new code
+
+
+
+## hog-rf
 | 年龄段 | 图片数 | mae |
 |--|--|--|
 |0-10 | 2| 24.40078125|
