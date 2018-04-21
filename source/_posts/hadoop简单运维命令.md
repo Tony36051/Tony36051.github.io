@@ -1,5 +1,6 @@
 ---
 title: Hadoop组件运维命令
+date: 2018-04-06
 tags:
 - hadoop
 
@@ -70,16 +71,19 @@ hbase-daemons.sh start regionserver # 整个集群
 ```bash
 # hive --service metastore  # 关键部分  
 nohup hive --service metastore > /home/hadoop/soft/hive/logs/metastore.log 2>&1 &
+
 ```
 2. 启动HiveServer2
 ```bash
 # hive --service hiveserver2  # 关键部分  
 nohup hive --service hiveserver2  > /home/hadoop/soft/hive/logs/hiveserver2  .log 2>&1 &
+
 ```
 ## presto
 coordinator和worker都是一样的启动命令
 ```bash
 /home/hadoop/soft/presto/bin/launcher start
+
 ```
 
 ## Azkaban
@@ -97,6 +101,7 @@ nohup bin/azkaban-executor-start.sh > /home/hadoop/soft/azkaban-executor-2.5.0/e
 ```bash
 cd /home/hadoop/soft/kylin/bin
 sh kylin.sh start
+
 ```
 ## Hue
 ```bash
