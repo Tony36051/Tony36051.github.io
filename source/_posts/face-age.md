@@ -1,10 +1,10 @@
 ---
-title: 人脸年龄
-date: 2018-04-10 00:09
-tag:
-- AI
+title: 人脸年龄预测
+date: 2018-04-20 18:09
+tags:
+- 机器学习
 
-___
+---
 # 试验数据
 ## 各类特征pca512后，直接串连
 
@@ -69,12 +69,18 @@ LinearSVR on hog_vgg(60) resulting mae: 5.797798
 LinearSVR on lbp_vgg(60) resulting mae: 6.250504
 LinearSVR on hog_lbp_vgg(60) resulting mae: 5.709871
 
-## 融合
+## hog-pca512，lbp-pac512，vgg512后融合
 PCA30+LDA30+f_regression30+mutual_info_regression30
 LinearSVR on hog_lbp(120) resulting mae: 2.708872
 LinearSVR on hog_vgg(120) resulting mae: 2.525526
 LinearSVR on lbp_vgg(120) resulting mae: 2.654724
 LinearSVR on hog_lbp_vgg(120) resulting mae: 4.254801
+## hog-1700+， lbp-16000+， vgg512融合
+PCA30+LDA30+f_regression30+mutual_info_regression30
+LinearSVR on hog_lbp(120) resulting mae: 3.564676
+LinearSVR on hog_vgg(120) resulting mae: 3.800873
+LinearSVR on lbp_vgg(120) resulting mae: 5.523058
+LinearSVR on hog_lbp_vgg(120) resulting mae: 5.760532
 
 ## new code
 
