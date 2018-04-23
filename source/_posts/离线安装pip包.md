@@ -1,8 +1,8 @@
 ---
-title: 离线安装pip包
+title: 内网使用pip
 date: 2018-03-21 10:58
 tags:
-- 离线安装
+- pip
 
 ---
 # 离线安装pip包
@@ -15,4 +15,14 @@ tags:
 >pip install oauthlib -d .\oauthlib
 
 ## 安装全部包
->pip install *.whl
+>pip install *
+
+# 内网使用
+windows环境下，建立全局配置文件C:\ProgramData\pip\pip.ini
+```
+[global]
+timeout = 3
+index-url = https://pypi.tuna.tsinghua.edu.cn/simple
+proxy = http://username:password@proxy.example.com:port
+```
+不知为啥，就算配置上trust-host、证书，在我司内网环境下用pypi的源依旧会报证书验证错误`SSL3_GET_SERVER_CERTIFICATE`。
