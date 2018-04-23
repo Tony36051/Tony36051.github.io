@@ -13,9 +13,10 @@ tags:
 该命令会下载whl包，包括被依赖的包
 >pip install <包名> -d <目录> 或 pip install -d <目录> -r requirements.txt
 >pip install oauthlib -d .\oauthlib
+>新版pip： pip download -d DIR somepackage
 
 ## 安装全部包
->pip install *
+>pip install --no-index --find-links=DIR -r requirements.txt
 
 # 内网使用
 windows环境下，建立全局配置文件C:\ProgramData\pip\pip.ini
