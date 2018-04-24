@@ -11,3 +11,5 @@ uSupply自动化总览
 1. CCO PageObject
 2. CCO Mock-杨志伟
 3. Xcube hadoop参数
+4. Xcube Spark on Yarn
+5. Xcube Hive on Spark
