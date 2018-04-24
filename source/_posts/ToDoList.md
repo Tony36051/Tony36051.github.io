@@ -14,3 +14,4 @@ CCO 解决方案自动化-姣姣邮件
 3. Xcube hadoop参数
 4. Xcube Spark on Yarn
 5. Xcube Hive on Spark
+6. **任职资格**
