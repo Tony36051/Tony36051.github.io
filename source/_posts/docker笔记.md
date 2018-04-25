@@ -217,6 +217,7 @@ semaphore
 3. Web依赖数据库和server
 4. Agent几乎无依赖，不用docker部署，而且部署后默认采集是容器内指标，意义不大
 5. Web端图表如果是中文标题，会因为缺少字体而显示为小的长方形，故映射一个字体文件
+
 ### Server
 ```
 docker run -d --name zabbix-server-mysql --restart always \
