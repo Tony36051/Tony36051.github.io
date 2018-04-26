@@ -29,12 +29,8 @@ vim /home/hadoop/soft/hadoop/etc/hadoop/yarn-site.xml
 ### 新建spark-log目录
 >hdfs dfs -mkdir -p hdfs://ns1/spark/spark-log
 ### 上传jar包
-#### 建目录
 >hdfs dfs -mkdir -p hdfs://ns1/spark/jars
-#### 准备jar包
->jar cv0f spark-libs.jar -C $SPARK_HOME/jars/ .
-#### 上传jar包到hdfs
->hdfs dfs -put spark-libs.jar hdfs://ns1/spark/jars/
+>hdfs dfs -put $SPARK_HOME/jars/*.jar hdfs://ns1/spark/jars/
 
 ## spark
 配置`spark-env.sh`、`slaves`和`spark-defaults.conf`三个文件
@@ -59,8 +55,8 @@ hd7
 ```
 `spark-defaults.conf`
 ```bash
-spark.master                     yarn-cluster
-spark.home                       /home/hadoop/soft/spark-2.2.0-bin-hadoop2.7
+spark.master                     yarn
+spark.home                       /home/hadoop/soft/spark
 spark.eventLog.enabled           true
 spark.eventLog.dir               hdfs://ns1/spark/spark-log
 spark.serializer                 org.apache.spark.serializer.KryoSerializer
@@ -78,12 +74,12 @@ spark.yarn.jars                  hdfs://ns1/spark/jars/*.jar
 ## hive
 ### 添加必要的依赖库
 ```bash
-ln -s /home/hadoop/soft/spark-2.2.0-bin-hadoop2.7/jars/scala-library-2.11.8.jar /home/hadoop/soft/apache-hive-2.3.2-bin/lib/
-ln -s /home/hadoop/soft/spark-2.2.0-bin-hadoop2.7/jars/spark-network-common_2.11-2.2.0.jar /home/hadoop/soft/apache-hive-2.3.2-bin/lib/
-ln -s /home/hadoop/soft/spark-2.2.0-bin-hadoop2.7/jars/spark-core_2.11-2.2.0.jar /home/hadoop/soft/apache-hive-2.3.2-bin/lib/
+ln -s /home/hadoop/soft/spark/jars/scala-library-2.11.8.jar /home/hadoop/soft/hive/lib/
+ln -s /home/hadoop/soft/spark/jars/spark-network-common_2.11-2.2.0.jar /home/hadoop/soft/hive/lib/
+ln -s /home/hadoop/soft/spark/jars/spark-core_2.11-2.2.0.jar /home/hadoop/soft/hive/lib/
 ```
 ### 剔除spark中hive的库
->mv spark-2.2.0-bin-hadoop2.7/jars/hive*.jar spark-2.2.0-bin-hadoop2.7/
+>mv /home/hadoop/soft/spark/jars/hive*.jar /home/hadoop/soft/spark/
 ### 启用spark引擎
 1. 在命令行交互（进入hive之后）`set hive.execution.engine=spark;`
 2. 配置hive.site.xml文件，配置
