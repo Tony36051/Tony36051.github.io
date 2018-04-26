@@ -12,6 +12,7 @@ tags:
 在http://localhost:8083/pluginManager/advanced中，升级站点的url去掉https的s，用http协议，然后提交一下，获取一下可选插件
 2. 安装忽略ssl证书的插件`Skip Certificate Check`
 3. `git plugin`需要配置忽略ssl：git config --global http.sslVerify "false"
+
 # 常用插件
 1. Subversion Plug-in 公司还在使用SVN，在Repository URL后记得加`@HEAD`
 2. Robot Framework plugin 集成RobotFramework的好插件
