@@ -15,6 +15,27 @@ hive: 2.3.2
 spark: 2.2.0
 6个节点，4个nodemanager
 hive 的wiki说只有对应的版本能保证兼容性，不是完全兼容也可以的。只是不知道有无隐患。
+
+## yarn配置
+修改之后需要分发集群并重启
+```bash
+vim /home/hadoop/soft/hadoop/etc/hadoop/yarn-site.xml
+<property>
+  <name>yarn.resourcemanager.scheduler.class</name>
+  <value>org.apache.hadoop.yarn.server.resourcemanager.scheduler.fair.FairScheduler</value>
+</property>
+```
+## hdfs准备路径和jar包
+### 新建spark-log目录
+>hdfs dfs -mkdir -p hdfs://ns1/spark/spark-log
+### 上传jar包
+#### 建目录
+>hdfs dfs -mkdir -p hdfs://ns1/spark/jars
+#### 准备jar包
+>jar cv0f spark-libs.jar -C $SPARK_HOME/jars/ .
+#### 上传jar包到hdfs
+>hdfs dfs -put spark-libs.jar hdfs://ns1/spark/jars/
+
 ## spark
 配置`spark-env.sh`、`slaves`和`spark-defaults.conf`三个文件
 `spark-env.sh`
@@ -41,7 +62,7 @@ hd7
 spark.master                     yarn-cluster
 spark.home                       /home/hadoop/soft/spark-2.2.0-bin-hadoop2.7
 spark.eventLog.enabled           true
-spark.eventLog.dir               hdfs://ns1/spark-log
+spark.eventLog.dir               hdfs://ns1/spark/spark-log
 spark.serializer                 org.apache.spark.serializer.KryoSerializer
 spark.executor.cores             5
 spark.executor.memory            6400m
@@ -50,7 +71,7 @@ spark.default.parallelism        100
 spark.yarn.executor.memoryOverhead  1280m
 spark.driver.memory              4g
 spark.executor.extraJavaOptions  -XX:+PrintGCDetails -Dkey=value -Dnumbers="one two three"
-spark.yarn.jars                  hdfs://ns1/spark-jars/jars/*.jar
+spark.yarn.jars                  hdfs://ns1/spark/jars/*.jar
 ```
 ### 验证spark
 >./bin/spark-submit --class org.apache.spark.examples.SparkPi --master yarn-client ./examples/jars/spark-examples_2.11-2.2.0.jar 10
