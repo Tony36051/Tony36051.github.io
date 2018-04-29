@@ -87,18 +87,18 @@ mapred.child.java.opts，每个任务最大jvm heap大小为1000M， -Xmx1000M -
 mapred.map/reduce.tasks，不知道yarn管理之后还有没有，默认值2/1应该偏小
 `mapred.output.compress.*`启用压缩相关
 cdh推荐配置
-|配置项| 推荐参数| 注释|
+|配置项 | 推荐参数 | 注释|
 |--|--|--|
-|yarn.app.mapreduce.am.resource.cpu-vcores|1|AM container vcore reservation |
-|yarn.app.mapreduce.am.resource.mb|1024|AM container memory reservation |
-|ApplicationMaster Java Maximum Heap Size (available in CM)|1024|AM Java heap size |
-|mapreduce.map.cpu.vcores|1|Map task vcore reservation |
-|mapreduce.map.memory.mb|1024|Map task memory reservation |
-|mapreduce.map.java.opts.max.heap|1024|Map task Java heap size |
-|mapreduce.reduce.cpu.vcores|1|Reduce task vcore reservation |
-|mapreduce.reduce.memory.mb|1024|Reduce task memory reservation |
-|mapreduce.reduce.java.opts|1024|Reduce Task Java heap size |
-|mapreduce.task.io.sort.mb|256|Spill/Sort memory reservation |
+|yarn.app.mapreduce.am.resource.cpu-vcores | 1 | AM container vcore reservation |
+|yarn.app.mapreduce.am.resource.mb | 1024 | AM container memory reservation |
+|ApplicationMaster Java Maximum Heap Size (available in CM) | 1024 | AM Java heap size |
+|mapreduce.map.cpu.vcores | 1 | Map task vcore reservation |
+|mapreduce.map.memory.mb | 1024 | Map task memory reservation |
+|mapreduce.map.java.opts.max.heap | 1024 | Map task Java heap size |
+|mapreduce.reduce.cpu.vcores | 1 | Reduce task vcore reservation |
+|mapreduce.reduce.memory.mb | 1024 | Reduce task memory reservation |
+|mapreduce.reduce.java.opts | 1024 | Reduce Task Java heap size |
+|mapreduce.task.io.sort.mb | 256 | Spill/Sort memory reservation |
 
 ## yarn-site.xml
 ### 日志聚合功能
@@ -124,3 +124,6 @@ yarn.scheduler.minimum/maximum-allocation-mb，最小1G，最大8G
 
 
  
+<!--stackedit_data:
+eyJoaXN0b3J5IjpbLTEzNTU0MDg4NTddfQ==
+-->
