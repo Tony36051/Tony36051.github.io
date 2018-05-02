@@ -1,0 +1,37 @@
+---
+title: Linux常用命令组合
+date: 2018-05-02 09:57
+tag: 
+- Linux
+---
+身为半个运维人员，日常使用Linux命令组合很多，每次都记不住，特此笔记。
+<!--more-->
+## 硬件信息
+```bash
+# 总核数 = 物理CPU个数 X 每颗物理CPU的核数 
+# 总逻辑CPU数 = 物理CPU个数 X 每颗物理CPU的核数 X 超线程数
+# 查看物理CPU个数 
+cat /proc/cpuinfo| grep "physical id"| sort| uniq| wc -l
+# 查看每个物理CPU中core的个数(即核数) 
+cat /proc/cpuinfo| grep "cpu cores"| uniq 
+查看逻辑CPU的个数 
+cat /proc/cpuinfo| grep "processor"| wc -l
+# 查看CPU信息（型号）
+cat /proc/cpuinfo | grep name | cut -f2 -d: | uniq -c
+# 查看内存信息
+cat /proc/meminfo
+```
+## 进程相关
+
+## 批量执行
+### pssh
+#### pssh使用sudo
+关键是使用ssh的参数`-tt`, 在pssh使用`-X`传递ssh参数。
+举例如何使用：批量修改密码，前提已经有ssh互信
+```bash
+cat chpass.txt
+hadoop:hadoop_password
+pscp -h list_ip.txt chpass.txt /tmp/chpass.txt
+pssh -h list_ip.txt -i -X -tt "sudo chpasswd < /tmp/chpass.txt"
+```
+
