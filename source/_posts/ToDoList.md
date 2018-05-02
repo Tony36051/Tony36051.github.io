@@ -14,7 +14,7 @@ title: TODO
 |--|--|--|
 | 05-04 | CCO RF执行修复 |  |
 | 05-04 | PageObject |  |
-| 05-04 | Hive on Spark on Yarn |  |
+| 05-04 | Hive on Spark on Yarn | hive与spark分开，避免jar包冲突 |
 | 05-08 | CCO Mock-杨志伟 |  |
 | 05-08 | hadoop参数 尝试 |  |
 | 05-11 | CCO 解决方案自动化-姣姣邮件 |  |
@@ -27,7 +27,7 @@ title: TODO
 |--|--|--|
 | 04-27 | 任职资格 | done |
 | 04-27 | hadoop参数研读 | done |
-|  |  |
+| 05-03 | yarn参数、mapred参数调整完成，快了20% |
 |  |  |
 |  |  |
 |  |  |
