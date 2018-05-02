@@ -6,12 +6,30 @@ title: TODO
 1. 智能化测试
 2. 算法
 ### 定时任务
-uSupply自动化总览
-CCO 解决方案自动化-姣姣邮件
+【每周四】uSupply自动化总览
+
+
 ### 近期任务
-1. CCO PageObject
-2. CCO Mock-杨志伟
-3. Xcube hadoop参数
-4. Xcube Spark on Yarn
-5. Xcube Hive on Spark
-6. **任职资格**
+| DDL | 事件 | 状态 |
+|--|--|--|
+| 04-27 | 任职资格 | done |
+| 04-27 | hadoop参数研读 | done |
+| 05-04 | PageObject |  |
+| 05-04 | Hive on Spark on Yarn |  |
+| 05-08 | CCO Mock-杨志伟 |  |
+| 05-08 | hadoop参数 尝试 |  |
+| 05-11 | CCO 解决方案自动化-姣姣邮件 |  |
+| 05-25 | 采集、传输、存储 | 0%
+
+
+
+### Done
+| 时间 | 事件 |
+|--|--|
+| 04-27 | 任职资格 |
+| 04-27 | hadoop参数研读 |
+|  |  |
+|  |  |
+|  |  |
+|  |  |
+|  |  |
