@@ -22,7 +22,10 @@ cat /proc/cpuinfo | grep name | cut -f2 -d: | uniq -c
 cat /proc/meminfo
 ```
 ## 进程相关
-
+通过ps、grep和kill批量杀死进程
+```bash
+ps aux|grep hive|awk '{print $2}'|xargs kill -9
+```
 ## 批量执行
 ### pssh
 #### pssh使用sudo
