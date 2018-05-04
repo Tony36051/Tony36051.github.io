@@ -80,4 +80,5 @@ mapred.compress.map.output
 
 ## 参考链接
 1. 默认参数：https://hadoop.apache.org/docs/r2.7.3/hadoop-mapreduce-client/hadoop-mapreduce-client-core/mapred-default.xml
-2. 
+2. [Hadoop参数调整](https://github.com/mattshma/bigdata/blob/master/hadoop/hdfs/tune.md)
+3. [内存：Yarn-Mapreduce参数调整](https://my.oschina.net/dailidong/blog/675633)
