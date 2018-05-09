@@ -4,7 +4,7 @@ date: 2018-04-25 14:14
 tags:
 - docker
 ---
-记录配置要点和常用命令。
+docker的配置要点、常见问题、命令、姿势。
 <!-- more -->
 # 安装&配置
 官网指南：https://docs.docker.com/install/
@@ -40,6 +40,40 @@ sudo systemctl daemon-reload
 #重启docker
 sudo systemctl restart docker
 ```
+# 常见问题
+## 挂载的volume没有写权限
+有一类容器需要在宿主机读写文件做持久化，宿主机的目录data属于userA，然而容器内运行的用户是userB，通常会造成没有写权限而报错。更准确地说，不是根据用户名，而是根据uid/gid来判断权限的。
+
+`cat /etc/passwd`可以看出系统所有用户，`whoami`可以查看当前的用户名，`id username`可以查看username的用户uid和gid。通常来说，宿主机和容器内的uid/gid有以下对应关系：
+| 用户 | 宿主机 | 容器内 |
+|--|--|--|
+| root | 0 | 0 |
+| nobody | 99 | 65534 |
+| 第一个useradd的用户 | 1000 | 1000 |
+
+通常来说，我们将要挂载的目录的属主在为1000，一般就没问题。例如将`~/data`改为容器内的用户
+```bash
+chown -R 1000:1000 ~/data
+```
+## proxy环境与docker network
+这不是常见问题，但如果你在一家需要代理上网的公司，你有可能遇上。
+### 描述
+众所周知，docker容器内的ip默认是`172.17.0.0`网段，新建一个docker network的网段是`172.18.0.0`。非常巧的是，我司的代理服务器的ip刚好是`172.18.xx.xx`。此时如果用docker-compose，通常会新建一个网络，然后加到linux路由中，本来应该走代理的请求走到了新建的docker网络。表现为逐个容器都能启动，一旦使用docker-compose或swarm就不行了，无法通过代理拉取新的镜像。
+### 对症下药
+知道原因之后就好办了，规避的方法很简单，指定使用默认的网卡docker0。或者手工指定新建网络的网段。
+没有保存相关命令和yaml文件，日后有机会再补充吧。
+
+
+# 常用操作
+## 调试&生产启动命令
+
+### 调试
+在调试的时候，经常要修改启动的命令和参数，希望能看到实时控制台信息。
+>docker run --rm -it mysql
+### 生产
+在实际生产环境使用时，希望以daemon形式、固定的名字运行，最好能自动重启。
+>docker run -d -name mysql5.6 --restart always mysql
+
 # 常用命令
 ## 构建镜像
 ```bash
@@ -230,7 +264,7 @@ docker run -d --name zabbix-server-mysql --restart always \
 zabbix/zabbix-server-mysql
 ```
 ### Web
-```
+```bash
 docker run --name zabbix-web-nginx-mysql --restart always \
 --link mysql:mysql_host \
 --link zabbix-server-mysql:zabbix-server-mysql \
@@ -246,6 +280,27 @@ docker run --name zabbix-web-nginx-mysql --restart always \
 ## 7z压缩镜像
 -w是工作目录，这里是/t。 a是add，压缩的意思，e是extract，解压的意思。最后两个参数是输出文件和压缩目录
 >docker run -it --rm -v $(pwd):/t -w /t izotoff/7zip a test1.7z .
+
+## zookeeper
+```bash
+docker run -d --restart always --name zookeeper \
+-p 2181:2181 \
+zookeeper:3.4
+```
+
+## kafka
+hub.docker.com上有好多镜像，最高的要自己build，在proxy环境下比较麻烦，构建过程中在alpine中用wget下载https报错。有些镜像是捆绑zookeeper，最后选择的是分开的，提供了data和logs映射的镜像。
+>chown -R 1000:1000 data/ logs/
+```Dockerfile
+docker run -d --restart always --name kafka \
+-p 7203:7203 \
+-p 9092:9092 \
+-v /home/tony/kafka/data:/data \
+-v /home/tony/kafka/logs:/logs \
+--link zookeeper:zookeeper \
+--env ZOOKEEPER_IP=zookeeper \
+ches/kafka
+```
 
 # Dockerfile
 ## RobotFramework执行器
