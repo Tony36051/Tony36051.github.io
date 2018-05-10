@@ -7,6 +7,8 @@ tags:
 ---
 
 # Hadoop组件运维命令
+## TODO
+Agent在supervise的方式下启动，如果进程死掉会被系统立即重启，以提供服务。
 ## 简介
 项目中初次使用原生的Hadoop集群，各组件不稳定，常需要各种重启命令。
 
@@ -17,7 +19,7 @@ tags:
 <small>节点规划中，zookeeper跟journalnode放在一起，共5个节点</small>
 ```bash
 zkServer.sh start  # QuorumPeerMain
-hadoop-daemon.sh start journalnode
+hadoop-daemon.sh start journalnode # JournalNode
 ```
 2. 启动NameNode
 ```bash
