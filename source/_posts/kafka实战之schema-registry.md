@@ -9,6 +9,82 @@ tags:
 ---
 测试岗位却不甘止步于业务测试，遂尝试智能化测试，当前的思路是通过日志大数据分析，协助自动化用例的诊断和建议。其中传输协议打算使用avro，原因是使用hadoop集群。本文使用confluent公司提供的schema-registry存放avro的schema。
 <!--more-->
+# 部署动作
+直接用confluent公司的opensource好像很方便，但是启动之后经常少broker，用不了。那就用他们的docker镜像吧，基于他们的单节点尝试的。
+```yaml
+---
+version: '2'
+services:
+  zookeeper:
+    image: confluentinc/cp-zookeeper:latest
+    restart: always
+    volumes:
+      - /home/tony/kafka/zk-data:/var/lib/zookeeper/data
+      - /home/tony/kafka/zk-txn-logs:/var/lib/zookeeper/log
+    ports:
+      - "2181:2181"
+    network_mode: host
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+    extra_hosts:
+      - "moby:127.0.0.1"
+
+  kafka:
+    image: confluentinc/cp-kafka:latest
+    restart: always
+    volumes:
+      - /home/tony/kafka/kafka-data:/var/lib/kafka/data
+    ports:
+      - "9092:9092"
+    network_mode: host
+    depends_on:
+      - zookeeper
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: localhost:2181
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://${localhost_ip}:9092
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+    depends_on:
+      - zookeeper
+    extra_hosts:
+      - "moby:127.0.0.1"
+
+  schema-reristry:
+    image: confluentinc/cp-schema-registry:latest
+    restart: always
+    ports:
+      - "8081:8081"
+    environment:
+      SCHEMA_REGISTRY_KAFKASTORE_CONNECTION_URL: localhost:2181
+      SCHEMA_REGISTRY_HOST_NAME: localhost
+      SCHEMA_REGISTRY_LISTENERS: http://${localhost_ip}:8081
+      SCHEMA_REGISTRY_DEBUG: "true"
+    depends_on:
+      - zookeeper
+      - kafka
+    network_mode: host
+
+  kafka-rest:
+    image: confluentinc/cp-kafka-rest:latest
+    restart: always
+    ports:
+      - "8082:8082"
+    network_mode: host
+    environment:
+      KAFKA_REST_ZOOKEEPER_CONNECT: localhost:2181
+      KAFKA_REST_LISTENERS: http://${localhost_ip}:8082
+      KAFKA_REST_SCHEMA_REGISTRY_URL: http://localhost:8081
+      KAFKA_REST_HOST_NAME: ${localhost_ip}
+    depends_on:
+      - zookeeper
+      - schema-reristry
+```
+kafka-manager，临时命令
+```yaml
+docker run -it --rm  -p 9000:9000 -e ZK_HOSTS="10.75.76.163:2181" -e APPLICATION_SECRET=letmein sheepkiller/kafka-manager
+```
+
 # 准备动作
 使用confluent提供的一键包，avro的maven插件，先写java版本，后面再补充python实现。
 ## pom.xml
@@ -138,84 +214,90 @@ tags:
 在${project.basedir}目录执行如下命令，用maven插件将*.avsc文件生成对应的java文件。
 >mvn org.apache.avro:avro-maven-plugin:1.8.2:schema
 ```json
-{
-  "namespace": "com.huawei.unistar.aitest",
-  "type": "record",
-  "name": "Testcase",
-  "doc": "Represents an testcase's execution history",
-  "fields": [
-    {
-      "name": "app",
-      "type": "string",
-      "doc": "被测产品，应用或模块"
-    },
-    {
-      "name": "testTool",
-      "type": "string",
-      "doc": "测试工具"
-    },
-    {
-      "name": "startDate",
-      "type": {
-        "type": "long",
-        "logicalType": "timestamp-millis"
-      },
-      "doc": "用例开始时间"
-    },
-    {
-      "name": "endDate",
-      "type": {
-        "type": "long",
-        "logicalType": "timestamp-millis"
-      },
-      "doc": "用例结束时间"
-    },
-    {
-      "name": "elapsed",
-      "type": {
-        "type": "int",
-        "logicalType": "time-millis"
-      },
-      "doc": "用例执行时长"
-    },
-    {
-      "name": "suite",
-      "type": [
-        "null",
-        "string"
-      ],
-      "default": null,
-      "doc": "用例所属测试套"
-    },
-    {
-      "name": "case",
-      "type": "string",
-      "doc": "用例名"
-    },
-    {
-      "name": "result",
-      "type": "string",
-      "doc": "执行结果"
-    },
-    {
-      "name": "capability",
-      "type": {
-        "type": "enum",
-        "name": "capability",
-        "symbols": ["HTTP", "DATABASE", "GUI", "DEFAULT"],
-        "doc": "测试能力，枚举值。default：无法识别/未提及"
-      }
-    },
-    {
-      "name": "errorMsg",
-      "type": [
-        "null",
-        "string"
-      ],
-      "default": null,
-      "doc": "失败日志，默认为空。失败时必填"
-    }
-  ]
+{  
+  "namespace": "com.huawei.unistar.aitest",  
+  "type": "record",  
+  "name": "Testcase",  
+  "doc": "Represents an testcase's execution history",  
+  "fields": [  
+    {  
+      "name": "app",  
+  "type": "string",  
+  "doc": "被测产品，应用或模块"  
+  },  
+  {  
+      "name": "testTool",  
+  "type": "string",  
+  "doc": "测试工具"  
+  },  
+  {  
+      "name": "startDate",  
+  "type": {  
+        "type": "long",  
+  "logicalType": "timestamp-millis"  
+  },  
+  "doc": "用例开始时间"  
+  },  
+  {  
+      "name": "endDate",  
+  "type": {  
+        "type": "long",  
+  "logicalType": "timestamp-millis"  
+  },  
+  "doc": "用例结束时间"  
+  },  
+  {  
+      "name": "elapsed",  
+  "type": {  
+        "type": "int",  
+  "logicalType": "time-millis"  
+  },  
+  "default": 0,  
+  "doc": "用例执行时长"  
+  },  
+  {  
+      "name": "suite",  
+  "type": [  
+        "null",  
+  "string"  
+  ],  
+  "default": null,  
+  "doc": "用例所属测试套"  
+  },  
+  {  
+      "name": "case",  
+  "type": "string",  
+  "doc": "用例名"  
+  },  
+  {  
+      "name": "result",  
+  "type": "string",  
+  "doc": "执行结果"  
+  },  
+  {  
+      "name": "capability",  
+  "type": {  
+        "type": "enum",  
+  "name": "Capability",  
+  "symbols": [  
+          "HTTP",  
+  "DATABASE",  
+  "GUI",  
+  "DEFAULT"  
+  ],  
+  "doc": "测试能力，枚举值。default：无法识别/未提及"  
+  }  
+    },  
+  {  
+      "name": "errorMsg",  
+  "type": [  
+        "null",  
+  "string"  
+  ],  
+  "default": null,  
+  "doc": "失败日志，默认为空。失败时必填"  
+  }  
+  ]  
 }
 ```
 # 与schema-registry通信
