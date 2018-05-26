@@ -78,7 +78,7 @@ nohup hive --service metastore > /home/hadoop/soft/hive/logs/metastore.log 2>&1 
 2. 启动HiveServer2
 ```bash
 # hive --service hiveserver2  # 关键部分  
-nohup hive --service hiveserver2  > /home/hadoop/soft/hive/logs/hiveserver2  .log 2>&1 &
+nohup hive --service hiveserver2 > /home/hadoop/soft/hive/logs/hiveserver2.log 2>&1 &
 
 ```
 ## presto
@@ -114,6 +114,32 @@ nohup build/env/bin/supervisor &
 ```
 bin/yarn application -kill <applicationId>
 ```
+
+## 统计hive数据仓库表占用空间
+```python
+#!/usr/bin/env python  
+# -*- coding: utf-8 -*-  
+import re  
+import os  
+  
+cmd = "hdfs dfs -du -s /user/hive/warehouse/dwdb.db/* > /tmp/hive_dwdb_space.txt"  
+os.system(cmd)  
+  
+path = r"/tmp/hive_dwdb_space.txt"  
+  
+sum = 0  
+with open(path, 'r') as f:  
+    for line in f.readlines():  
+        ss = re.split("\s*", line)  
+        s0 = int(ss[0])  
+        s1 = ss[1]  
+        if "prj_" in s1:  
+            sum += s0  
+            print(s1)  
+print("sum: %0.2f GB" % (sum * 1.0 / 1024 / 1024 / 1024))
+```
+
+
 ## 参考
 1. [Hadoop、Hbase原生脚本说明](http://xstarcd.github.io/wiki/Cloud/manual_start_hadoop_hbase.html)
 2. [Hadoop+ZooKeeper+HBase 启动顺序](http://blog.csdn.net/u011414200/article/details/50437356)
