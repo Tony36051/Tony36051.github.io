@@ -32,6 +32,7 @@ hadoop圈有多个应用（如hive、sqoop、azkaban等），每个应用有一�
 
 # yarn(mapreduce)
 配置路径：`/home/hadoop/soft/hadoop/etc/hadoop`
+
 | 文件名 | 作用 |
 | -- | -- |
 | slaves | 所有从节点的ip(hostname),一般只写DataNode和NodeManager |
@@ -42,6 +43,7 @@ hadoop圈有多个应用（如hive、sqoop、azkaban等），每个应用有一�
 
 # hbase
 配置文件路径：/home/hadoop/soft/hbase/conf
+
 | 文件名 | 作用 |
 |--|--|
 | `hbase-env.sh` | JAVA_HOME,HADOOP_HOME |
@@ -58,17 +60,16 @@ hadoop圈有多个应用（如hive、sqoop、azkaban等），每个应用有一�
 
 # spark
 配置文件路径：/home/hadoop/soft/spark/conf
+
 | 文件名 | 作用 |
 |--|--|
 | slaves | 计算从节点的ip/hostname |
 | `spark-env.sh` | 环境变量，JAVA_HOME、SCALA_HOME，HADOOP_HOME，ip，端口，目录，内存 |
 | spark-defaults.conf | 运行方式，jars，executor，并行度等配置 | 
 
-
-
-
 # presto
 配置文件目录：/home/hadoop/soft/presto/etc
+
 | 文件名 | 作用 |
 |--|--|
 | config.properties | 是否为coordinator，端口，内存使用，uri |
@@ -83,6 +84,7 @@ hadoop圈有多个应用（如hive、sqoop、azkaban等），每个应用有一�
 
 # kylin
 配置目录：/home/hadoop/soft/kylin/conf
+
 | 文件名 | 作用 |
 |--|--|
 | kylin_hive_conf.xml | 操作hive时的参数，是否压缩等（使用默认） |
