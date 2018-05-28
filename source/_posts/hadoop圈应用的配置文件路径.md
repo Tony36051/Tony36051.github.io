@@ -50,8 +50,20 @@ hadoop圈有多个应用（如hive、sqoop、azkaban等），每个应用有一�
 
 # hive
 配置目录：/home/hadoop/soft/hive/conf/，正常来说该目录下不需要`hdfs-site.xml`和`spark-defaults.conf`文件。hive会通过`HADOOP_HOME`和`SPARK_HOME`找到配置文件。
+如果实在没有生效，建立软连接到hive的配置目录。
 >/home/hadoop/soft/hive/conf/hive-env.sh
 >/home/hadoop/soft/hive/conf/hive-site.xml
+
+# spark
+配置文件路径：/home/hadoop/soft/spark/conf
+| 文件名 | 作用 |
+|--|--|
+| slaves | 计算从节点的ip/hostname |
+| `spark-env.sh` | 环境变量，JAVA_HOME、SCALA_HOME，HADOOP_HOME，ip，端口，目录，内存 |
+| spark-defaults.conf | 运行方式，jars，executor，并行度等配置 | 
+
+
+
 
 # presto
 配置文件目录：/home/hadoop/soft/presto/etc
