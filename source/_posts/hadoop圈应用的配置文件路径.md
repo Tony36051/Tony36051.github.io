@@ -19,6 +19,7 @@ hadoop圈有多个应用（如hive、sqoop、azkaban等），每个应用有一�
 
 # hdfs
 配置路径：`/home/hadoop/soft/hadoop/etc/hadoop`
+
 | 文件名 | 作用 |
 |--|--|
 | core-site.xml | zk、文件系统根目录、临时文件 |
@@ -32,7 +33,7 @@ hadoop圈有多个应用（如hive、sqoop、azkaban等），每个应用有一�
 # yarn(mapreduce)
 配置路径：`/home/hadoop/soft/hadoop/etc/hadoop`
 | 文件名 | 作用 |
-|--|--|
+| -- | -- |
 | slaves | 所有从节点的ip(hostname),一般只写DataNode和NodeManager |
 | yarn-site.xml | 核心配置，HA，zk，cpu、mem资源，日志聚集，端口 |
 | mapred-site.xml | mapreduce的默认配置 |
@@ -47,6 +48,7 @@ hadoop圈有多个应用（如hive、sqoop、azkaban等），每个应用有一�
 | hbase-site | 文件系统根目录，zk，临时文件，端口 |
 | regionservers | 从节点的ip/hostname |
 | hdfs-site.xml | 不需要的文件，如果配置了HADOOP_HOME |
+
 
 # hive
 配置目录：/home/hadoop/soft/hive/conf/，正常来说该目录下不需要`hdfs-site.xml`和`spark-defaults.conf`文件。hive会通过`HADOOP_HOME`和`SPARK_HOME`找到配置文件。
