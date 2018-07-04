@@ -163,6 +163,14 @@ ip route|awk '/default/ { print $3 }'
 docker swarm init  #(在manager节点输入，此时会建两个网络)
 docker swarm leave -f 
 ```
+## docker-compose
+### 查看
+`docker-compose ls`
+### 启动
+`docker-compose up`
+### 停止
+`docker-compose down`
+
 # 私人容器
 ## cntlm
 公司代理使用ntlm认证，cntlm是跨系统的一个代理，容器需要自己build一下
