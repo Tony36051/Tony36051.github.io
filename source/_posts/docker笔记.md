@@ -23,8 +23,8 @@ sudo vim /etc/systemd/system/docker.service.d/https-proxy.conf
 [Service]
 Environment="HTTPS_PROXY=http://username:password@proxy.example.com:port"
 ```
-## 仓库改源&安全证书
-如果在公司代理之后，https使用ssl链接经常会出现证书问题(如`x509: certificate signed by unknown authority`)。通常是忽略或添加证书到系统。
+## 仓库改源 信任源
+如果在公司代理之后，https使用ssl链接经常会出现证书问题(如`x509: certificate signed by unknown authority`)，可以选择其他镜像，或忽略安全证书。
 参考：https://docs.docker.com/registry/insecure/#use-self-signed-certificates
 ```bash
 sudo vim /etc/docker/daemon.json
@@ -33,6 +33,17 @@ sudo vim /etc/docker/daemon.json
   "insecure-registries" : ["registry.docker-cn.com:5000"]
 }
 ```
+## 安全证书
+如果在公司代理之后，https使用ssl链接经常会出现证书问题(如`x509: certificate signed by unknown authority`)，也可以选择添加证书到系统。
+以`docker pull docker.elastic.co/elasticsearch/elasticsearch:6.3.0`为例，会出现`Error response from daemon: Get https://docker.elastic.co/v2/: x509: certificate signed by unknown authority`可以看到主域名为`elastic.co`
+1. 打开浏览器 https://docker.elastic.co/v2/
+2. (以windows的chrome为例)，点击地址栏左侧绿色的安全两字-->证书-->详细信息-->复制到文件-->选择Base64的cer，导出为elastic.cer文件
+3. 在docker宿主机`etc/docker/certs.d/elastic.co`，elastic.co为对应的主域名
+4. 将elastic.cer文件拷贝到etc/docker/certs.d/elastic.co/elastic.crt
+5. 重启docker，`sudo systemctl restart docker`
+6. 可以正常拉取了
+
+
 ## 重启docker-daemon以生效
 ```bash
 #更新变化
@@ -59,9 +70,36 @@ chown -R 1000:1000 ~/data
 这不是常见问题，但如果你在一家需要代理上网的公司，你有可能遇上。
 ### 描述
 众所周知，docker容器内的ip默认是`172.17.0.0`网段，新建一个docker network的网段是`172.18.0.0`。非常巧的是，我司的代理服务器的ip刚好是`172.18.xx.xx`。此时如果用docker-compose，通常会新建一个网络，然后加到linux路由中，本来应该走代理的请求走到了新建的docker网络。表现为逐个容器都能启动，一旦使用docker-compose或swarm就不行了，无法通过代理拉取新的镜像。
-### 对症下药
+### 手工指定docker-compose使用网络的网段
 知道原因之后就好办了，规避的方法很简单，指定使用默认的网卡docker0。或者手工指定新建网络的网段。
-没有保存相关命令和yaml文件，日后有机会再补充吧。
+手工指定docker-compose使用网络的网段：
+```yml
+networks:
+  default:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 192.168.1.0/24
+          gateway: 192.168.1.1
+```
+### 指定使用默认的网络
+```yml
+---
+version: '2'
+services:
+  zookeeper:
+    image: confluentinc/cp-zookeeper:latest
+    restart: always
+    volumes:
+      - /home/tony/kafka/zk-data:/var/lib/zookeeper/data
+      - /home/tony/kafka/zk-txn-logs:/var/lib/zookeeper/log
+    network_mode: host
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 32181
+      ZOOKEEPER_TICK_TIME: 2000
+    extra_hosts:
+      - "moby:127.0.0.1"
+```
 
 
 # 常用操作
@@ -282,14 +320,108 @@ docker run --name zabbix-web-nginx-mysql --restart always \
 >docker run -it --rm -v $(pwd):/t -w /t izotoff/7zip a test1.7z .
 
 ## zookeeper
+>mkdir -p /home/tony/zookeeper/data /home/tony/zookeeper/datalog
 ```bash
 docker run -d --restart always --name zookeeper \
 -p 2181:2181 \
+-v /home/tony/zookeeper/data:/data \
+-v /home/tony/zookeeper/datalog:/datalog \
 zookeeper:3.4
 ```
 
 ## kafka
+### confluent公司的开源版
+confluent是kafka原创团队自己出来的干的公司，围绕kafka构建相关组件，其中监控模块是收费的企业版，其他好像都有开源部分，我也仅适用开源部分。最主要看中了schema-registry维护avro的元数据，还有proxy估计也能简化一定调试、展示的工作量。相比hub.docker.com上个人维护的版本，在版本更新速度、兼容性也有更好的保障。
+[官方docker操作指南
+](https://docs.confluent.io/current/installation/docker/docs/index.html)默认的getting started部分未添加持久化-v和端口映射，生产使用应该还需要修改配置。
+#### 为zookeeper和kafka准备持久化目录
+```bash
+mkdir -p /home/tony/kafka/zk-data
+mkdir -p /home/tony/kafka/zk-txn-logs
+mkdir -p /home/tony/kafka/kafka-data
+# 不用赋权改用户，容器内是root权限，启动用户有读写权限就好了
+```
+#### 准备docker-compose.yaml文件和环境变量
+```bash
+git clone https://github.com/confluentinc/cp-docker-images
+vim /home/tony/kafka/cp-docker-images/examples/kafka-single-node.
+export localhost_ip=10.75.76.163
+```
+```yml
+---
+version: '2'
+services:
+  zookeeper:
+    image: confluentinc/cp-zookeeper:latest
+    restart: always
+    volumes:
+      - /home/tony/kafka/zk-data:/var/lib/zookeeper/data
+      - /home/tony/kafka/zk-txn-logs:/var/lib/zookeeper/log
+    network_mode: host
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 32181
+      ZOOKEEPER_TICK_TIME: 2000
+    extra_hosts:
+      - "moby:127.0.0.1"
+
+  kafka:
+    image: confluentinc/cp-kafka:latest
+    restart: always
+    volumes:
+      - /home/tony/kafka/kafka-data:/var/lib/kafka/data
+    ports:
+      - "29092:29092"
+    network_mode: host
+    depends_on:
+      - zookeeper
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: localhost:32181
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://${localhost_ip}:29092
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+    depends_on:
+      - zookeeper
+    extra_hosts:
+      - "moby:127.0.0.1"
+
+  schema-reristry:
+    image: confluentinc/cp-schema-registry:latest
+    restart: always
+    ports:
+      - "8081:8081"
+    environment:
+      SCHEMA_REGISTRY_KAFKASTORE_CONNECTION_URL: localhost:32181
+      SCHEMA_REGISTRY_HOST_NAME: localhost
+      SCHEMA_REGISTRY_LISTENERS: http://${localhost_ip}:8081
+      SCHEMA_REGISTRY_DEBUG: "true"
+    depends_on:
+      - zookeeper
+      - kafka
+    network_mode: host
+
+  kafka-rest:
+    image: confluentinc/cp-kafka-rest:latest
+    restart: always
+    ports:
+      - "8082:8082"
+    network_mode: host
+    environment:
+      KAFKA_REST_ZOOKEEPER_CONNECT: localhost:32181
+      KAFKA_REST_LISTENERS: http://${localhost_ip}:8082
+      KAFKA_REST_SCHEMA_REGISTRY_URL: http://localhost:8081
+      KAFKA_REST_HOST_NAME: kafka-rest
+    depends_on:
+      - zookeeper
+      - schema-reristry
+```
+#### zookeeper
+
+
+
+
+### 弃用
 hub.docker.com上有好多镜像，最高的要自己build，在proxy环境下比较麻烦，构建过程中在alpine中用wget下载https报错。有些镜像是捆绑zookeeper，最后选择的是分开的，提供了data和logs映射的镜像。
+远程连接kafka机器的broker需要注意，`config/server.properties`中`advertised.host.name`要配置为宿主机被访问的外网ip。如果是新版（0.10）以后，可以配置`advertised.listeners=PLAINTEXT://59.64.11.22:9092`
 >chown -R 1000:1000 data/ logs/
 ```Dockerfile
 docker run -d --restart always --name kafka \
@@ -297,8 +429,9 @@ docker run -d --restart always --name kafka \
 -p 9092:9092 \
 -v /home/tony/kafka/data:/data \
 -v /home/tony/kafka/logs:/logs \
---link zookeeper:zookeeper \
---env ZOOKEEPER_IP=zookeeper \
+--link zookeeper:zkhost \
+-e ZOOKEEPER_IP=zkhost \
+-e KAFKA_ADVERTISED_HOST_NAME=10.75.76.163 \
 ches/kafka
 ```
 
