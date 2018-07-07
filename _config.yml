@@ -79,3 +79,9 @@ theme: next
 ## Docs: https://hexo.io/docs/deployment.html
 deploy:
   type:
+
+menu:
+  home: /
+  categories: /categories
+  archives: /archives
+  tags: /tags
