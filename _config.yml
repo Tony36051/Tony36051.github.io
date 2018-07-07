@@ -85,3 +85,9 @@ menu:
   categories: /categories
   archives: /archives
   tags: /tags
+
+search:
+  path: search.xml
+  field: post
+  format: html
+  limit: 10000
