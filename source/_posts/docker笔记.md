@@ -38,8 +38,8 @@ sudo vim /etc/docker/daemon.json
 以`docker pull docker.elastic.co/elasticsearch/elasticsearch:6.3.0`为例，会出现`Error response from daemon: Get https://docker.elastic.co/v2/: x509: certificate signed by unknown authority`可以看到主域名为`elastic.co`
 1. 打开浏览器 https://docker.elastic.co/v2/
 2. (以windows的chrome为例)，点击地址栏左侧绿色的安全两字-->证书-->详细信息-->复制到文件-->选择Base64的cer，导出为elastic.cer文件
-3. 在docker宿主机`etc/docker/certs.d/elastic.co`，elastic.co为对应的主域名
-4. 将elastic.cer文件拷贝到etc/docker/certs.d/elastic.co/elastic.crt
+3. 在docker宿主机`mkdir -p /etc/docker/certs.d/elastic.co`，elastic.co为对应的主域名
+4. 将elastic.cer文件拷贝到/etc/docker/certs.d/elastic.co/elastic.crt
 5. 重启docker，`sudo systemctl restart docker`
 6. 可以正常拉取了
 
@@ -253,6 +253,7 @@ docker run -u root --name jenkins --restart always -d \
 --add-host szxsvn02-ex:172.30.45.47 \
 -v /usr/share/zoneinfo/Asia/Shanghai:/etc/localtime \
 -v /home/tony/jenkins-blueocean-data:/var/jenkins_home \
+-v /home/tony/jenkins-blueocean-data/.ssh:/root/.ssh \
 -v /var/run/docker.sock:/var/run/docker.sock \
 -e http_proxy=hwcntlm:3128 \
 -e https_proxy=hwcntlm:3128 \
