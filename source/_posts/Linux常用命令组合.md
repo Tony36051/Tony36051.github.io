@@ -24,7 +24,8 @@ cat /proc/meminfo
 ## 进程相关
 通过ps、grep和kill批量杀死进程
 ```bash
-ps aux|grep hive|awk '{print $2}'|xargs kill -9
+pkill -f <部分进程名>
+ps aux|grep python|awk '{print $2}'|xargs kill -9
 ```
 ## 批量执行
 ### pssh
@@ -38,3 +39,8 @@ pscp -h list_ip.txt chpass.txt /tmp/chpass.txt
 pssh -h list_ip.txt -i -X -tt "sudo chpasswd < /tmp/chpass.txt"
 ```
 
+## centos7设置yum代理
+1.在/etc/yum.conf 添加
+proxy=http://192.168.1.10:8088/
+2.如果代理环境中有证书，回导致源更新失败，可以继续添加
+sslverify=false
