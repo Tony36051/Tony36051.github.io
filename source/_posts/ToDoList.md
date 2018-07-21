@@ -17,11 +17,11 @@ title: TODO
 
 | DDL | 事件 | 状态 |
 |--|--|--|
-| 0-1 | azkaban应用独立机器 | 0%，hdfs，hive完成
-| 07-19 | RCM自动化交接吴亚峰 | 早上9.30 |
-| 07-19 | 传递自动化迁移的方向,探讨可行性 | 早上11点 |
-| 07-20 | 整理ReportPortal材料, 发TSEG | 下午收集 |
-| 07-20 | azkaban独立部署的问题, 还搞不搞? 申请周末加班 |  |
+| 0-1 | azkaban应用独立机器 | hdfs，hive,azkban完成
+| 07-23 | RCM自动化要不要在A3重搞 | 早上10.30 |
+| 07-23 | 传递自动化迁移的方向,探讨可行性. 邮件转达 | 早上9点 |
+| 07-23 | 阅读ReportPortal代码 | 整天 |
+|  |  |  |
 |  |  |  |
 |  |  |  |
 
@@ -56,6 +56,8 @@ title: TODO
 | 06-27 | 测试日志智能化分析 | 完成结构化数据存表 |
 | 06-28 | 测试日志智能化分析 | RF解析完毕 |
 | 06-28 | 学习**Axure** | 不用了 |
+| 07-20 | 整理ReportPortal材料, 发TSEG | 下午收集 |
+| 07-20 | azkaban独立部署的问题, 还搞不搞? 申请周末加班 | 搞,加.hdfs，hive,azkban完成 |
 |  |  |  |
 |  |  |  |
 |  |  |  |
@@ -213,3 +215,18 @@ owner：吴健松
 	1. 自动化运维与监控技能：在xcube项目中得到大量锻炼，同时对hadoop+大数据组件有了较为深刻的理解。
 	2. 测试结果智能分析：被选为AI测试的其中一项重点工作，当前进度正常偏慢一点点，能将所学与实际工作结合在一起真是太好了。
 	3. 业务能力在自动化实现的过程中得到的潜移默化地提升。
+
+## ReportPortal
+### 第三方服务
+mongodb: 存储
+registry: consul 分布式系统的服务发现与配置
+gateway: traefik HTTP层面的反向代理和负载均衡, 用Go编写
+elasticsearch: 日志存储, 相似度计算
+### ReportPortal自身模块
+jira: reportportal/service-jira, 对接jira
+rally: reportportal/service-rally, 对接CA Agile Central(rally) 缺陷跟踪工具
+uat: reportportal/service-authorization, 统一鉴权服务, 依赖MongoDB
+index: reportportal/service-index, 其他服务不处理的请求, 整合UI所需的信息
+api: reportportal/service-api, 核心, 处理UI和agent的请求
+ui: reportportal/service-ui, React写的前端工程
+analyzer: reportportal/service-analyzer, 用例日志存储与搜索; 自动分析
