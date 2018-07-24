@@ -44,3 +44,11 @@ pssh -h list_ip.txt -i -X -tt "sudo chpasswd < /tmp/chpass.txt"
 proxy=http://192.168.1.10:8088/
 2.如果代理环境中有证书，回导致源更新失败，可以继续添加
 sslverify=false
+
+## 免密登录ssh-copy-id
+**ssh-keygen** 产生公钥与私钥对.
+**ssh-copy-id**  将本机的公钥复制到远程机器的authorized_keys文件中，ssh-copy-id也能让你有到远程机器的home, ~./ssh , 和 ~/.ssh/authorized_keys的权利
+```bash
+ssh-keygen
+ssh-copy-id -i ~/.ssh/id_rsa.pub root@192.168.x.xxx
+```
