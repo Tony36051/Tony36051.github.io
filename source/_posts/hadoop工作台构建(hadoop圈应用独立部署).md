@@ -174,6 +174,7 @@ sudo chown -R hadoop:root /data01
 </configuration>
 ```
 ### beeline
+命令行工具测试是否可用
 >beeline -n hadoop -u jdbc:hive2://10.41.236.209:10000
 
 ## Azkaban-3.0.0
@@ -181,6 +182,7 @@ github编译的3.0.0的二进制包:
 `https://szxsvn02-ex:3690/svn/CP_CCM_SVN/UniSTAR Common/10.Project Team/15.xCube/14 Hadoop环境搭建/package&config/package/azkaban-3.0.0`
 ### 说明
 web工程是UI界面, 用于查看任务等; exec-server工程是执行者的工程, 用于执行任务. Azkaban从3.0.0开始, 支持多个执行器, 本次采用**multiple executor mode**多执行器的部署形式.
+也即Azkaban-web工程只需要部署一个, Azkaban-executor工程可能需要部署多台.
 ### 备份数据库
 有备无患的步骤.
 >mysqldump -h10.41.236.209 -uhive -phuawei123 azkaban --hex-blob > a3.sql
@@ -293,6 +295,7 @@ SVN配置已经改好适配A3环境, 如果是改环境, **mysql**/邮箱地址/
 vim azkaban-exec-server/conf/azkaban.properties
 ```
 #### 手工维护executor信息到数据库
+**非常重要**的步骤, 不要忽略!!!
 ```sql
 insert into executors(host,port) values("EXECUTOR_HOST",EXECUTOR_PORT);
 ```
@@ -305,3 +308,24 @@ sh bin/azkaban-executor-start.sh
 ```
 停止
 >/home/hadoop/soft/azkaban/azkaban-exec-server/bin/azkaban-executor-shutdown.sh
+
+## sqoop
+1. 解压二进制包到/home/hadoop/sqoop, 同时确认为SQOOP_HOME
+2. 拷贝jdbc依赖的ojdbc6.jar到$SQOOP_HOME/lib/下
+3. 修改metastore的地址, 预防在~/.sqoop下占用太多空间, 在xml文件<configuration>节内添加(或解注释)以下内容
+> vim $SQOOP_HOME/conf/sqoop-site.xml
+```xml
+<property>
+    <name>sqoop.metastore.server.location</name>
+    <value>/data01/soft/sqoop-metastore/shared.db</value>
+    <description>Path to the shared metastore database files. If this is not set, it will be placed in ~/.sqoop/.
+    </description>
+</property>
+<property>
+    <name>sqoop.metastore.server.port</name>
+    <value>16000</value>
+    <description>Port that this metastore should listen on.
+    </description>
+</property>
+```
+4. 因为没有配置`$HBASE_HOME/$HCAT_HOME/$ACCUMULO_HOME/$ZOOKEEPER_HOME`这些路径, 所以会`Warining`提示不能导入Hcatalog/Accumulo的任务. 忽略之, 直到需要了再配置
