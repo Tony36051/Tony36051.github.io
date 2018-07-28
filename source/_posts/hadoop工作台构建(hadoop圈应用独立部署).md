@@ -10,12 +10,18 @@ tags:
 # 整体说明
 解决思路是在联通的网络环境下，取一台单独的服务器，不作为集群一部分，仅部署各种应用，应用使用jvm控制内存，更进一步使用独立用户搭配cgroup控制资源的使用，维持整体稳定。这台单独的服务器下称为“工作台”。
 # 试验环境
-workshop: 10.41.236.56
+workshop原版: 10.41.236.56
+## 快速拷贝
+```bash
+export SRC_HOST=10.41.236.56
+sudo scp hadoop@$SRC_HOST:/etc/profile.d/xcube.sh /etc/profile.d/xcube.sh
+scp -r hadoop@$SRC_HOST:/home/hadoop/soft /home/hadoop/soft
 
+```
 # 整体规划
 ## 环境变量
 ```bash
-sudo vim /etc/.bashrc  # 添加以下内容
+sudo vim /etc/profile.d/xcube.sh  # 添加以下内容
 # JAVA
 export JAVA_HOME=/home/hadoop/soft/jdk 
 export JRE_HOME=$JAVA_HOME/jre 
@@ -274,7 +280,7 @@ sh bin/azkaban-web-start.sh
 
 ```
 访问
->https://10.41.236.209:8444
+>https://10.41.236.56:8443
 
 停止
 >/home/hadoop/soft/azkaban/azkaban-web-server/bin/azkaban-web-shutdown.sh
