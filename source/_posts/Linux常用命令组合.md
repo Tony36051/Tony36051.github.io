@@ -6,6 +6,9 @@ tag:
 ---
 身为半个运维人员，日常使用Linux命令组合很多，每次都记不住，特此笔记。
 <!--more-->
+## 查看系统信息
+>lsb_release -a
+
 ## 硬件信息
 ```bash
 # 总核数 = 物理CPU个数 X 每颗物理CPU的核数 
@@ -51,4 +54,15 @@ sslverify=false
 ```bash
 ssh-keygen
 ssh-copy-id -i ~/.ssh/id_rsa.pub root@192.168.x.xxx
+```
+
+## windows换行转为linux版,解决^M问题
+```bash
+**单个的文件装换**  
+sed -i 's/\r//' filename  
+  
+**批量的文件装换**  
+sed -i 's/\r//' filename1 filename2 ...  
+或  
+find conf/ -name "*.*" |xargs sed -i 's/\r//'
 ```
