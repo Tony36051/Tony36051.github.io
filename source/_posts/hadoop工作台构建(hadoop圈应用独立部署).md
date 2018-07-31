@@ -12,12 +12,29 @@ tags:
 # 试验环境
 workshop原版: 10.41.236.56
 ## 快速拷贝
+### shell脚本
+这是从A3的209拷贝任务脚本到"母体"(10.41.236.56), 在母体上执行命令
+```bash
+export SRC_HOST=10.41.236.209
+scp -r hadoop@$SRC_HOST:/home/hadoop/soft/file /home/hadoop/soft
+```
+### 自定义jar包
+这是从A3的209拷贝任务脚本到"母体"(10.41.236.56), 在母体上执行命令
+```bash
+export SRC_HOST=10.41.236.209
+scp hadoop@$SRC_HOST:/home/hadoop/soft/*.jar /home/hadoop/soft/
+```
+### 环境变量与软件
+这命令是从"母体"(10.41.236.56)拷贝到"执行者"executor上, 在执行者的机器上执行命令
 ```bash
 export SRC_HOST=10.41.236.56
 sudo scp hadoop@$SRC_HOST:/etc/profile.d/xcube.sh /etc/profile.d/xcube.sh
 scp -r hadoop@$SRC_HOST:/home/hadoop/soft /home/hadoop/soft
 
 ```
+
+
+
 # 整体规划
 ## 环境变量
 ```bash
@@ -25,9 +42,8 @@ sudo vim /etc/profile.d/xcube.sh  # 添加以下内容
 # JAVA
 export JAVA_HOME=/home/hadoop/soft/jdk 
 export JRE_HOME=$JAVA_HOME/jre 
-export PATH=$JAVA_HOME/bin:$JRE_HOME/bin:$PATH  
-export CLASSPATH=$JAVA_HOME/lib:$CLASSPATH  
-export PATH
+export CLASSPATH=$JAVA_HOME/lib:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar:$JRE_HOME/lib:$CLASSPATH
+export PATH=$PATH:$JAVA_HOME/bin:$JRE_HOME/bin 
 # Hadoop
 export HADOOP_HOME=/home/hadoop/soft/hadoop 
 export HADOOP_DEV_HOME=${HADOOP_HOME}
@@ -36,11 +52,60 @@ export HADOOP_COMMON_HOME=${HADOOP_HOME}
 export HADOOP_HDFS_HOME=${HADOOP_HOME}  
 export YARN_HOME=${HADOOP_HOME}  
 export HADOOP_CONF_DIR=${HADOOP_HOME}/etc/hadoop
-export PATH=$PATH:$HADOOP_HOME/bin 
-export PATH=$PATH:$HADOOP_HOME/sbin
+export PATH=$PATH:$HADOOP_HOME/bin:$HADOOP_HOME/sbin
 # Hive
 export HIVE_HOME=/home/hadoop/soft/hive
+alias bee='beeline -n hadoop -u jdbc:hive2://10.41.236.209:10000'
+export PATH=$PATH:$HIVE_HOME/bin
+#Sqoop
+export SQOOP_HOME=/home/hadoop/soft/sqoop
+export PATH=$PATH:$SQOOP_HOME/bin
+#Hbase
+#export HBASE_HOME=/home/hadoop/soft/hbase
+#Scala
+#export SCALA_HOME=/home/hadoop/soft/scala
+#Spark
+#export SPARK_HOME=/home/hadoop/soft/spark
 
+
+# 账号密码jdbc
+export azkaban_username=azkaban
+export azkaban_password=azkaban%941
+
+export kylin_username=ADMIN
+export kylin_password=KYLIN%258
+
+export tr_url=jdbc:oracle:thin:@//10.41.37.47:1521/dgpffin.huawei.com
+export tr_username=uniccs
+export tr_password=uniccs123
+
+export xcube_url=jdbc:oracle:thin:@//a3xcubeoracle01.beta.hic.cloud:1521/a3xcube_srv
+export xcube_username=xcube
+export xcube_password=huawei123
+
+export xcube_url_kaifa=jdbc:oracle:thin:@//szftdscan02.huawei.com:1521/xcubedt_srv
+export xcube_username_kaifa=xcube
+export xcube_password_kaifa=huawei123
+
+export cpi_url=jdbc:oracle:thin:@//10.98.65.205:1521/nkuatr.huawei.com
+export cpi_username=uniconfigbase_query
+export cpi_password=huawei123
+
+export ccs_url=jdbc:oracle:thin:@//nkdb370371-cls.huawei.com:1521/nka3fin.huawei.com
+export ccs_username=uniccs
+export ccs_password=xhrg#3ddcr
+
+export rcm_url=jdbc:oracle:thin:@//nkgtsp16566-cls.huawei.com:1521/cepd
+export rcm_username=fcquery
+export rcm_password=huawei123
+
+export ccm_url=jdbc:oracle:thin:@//nkgtsp16566-cls.huawei.com:1521/cepd
+export ccm_username=ccm
+export ccm_password=d12aafcddac156c
+
+export tr_url=jdbc:oracle:thin:@//nkdb370371-cls.huawei.com:1521/nka3fin.huawei.com
+export tr_username=starplate
+export tr_password=test
 ```
 
 ## JDK1.8
@@ -130,6 +195,11 @@ dfs.client.failover.proxy.provider.ns1这一项一定要配置，ns1要跟core-s
 ```
 ### yarn-site.xml
 ```xml
+<configuration>
+    <property>
+        <name>yarn.resourcemanager.ha.enabled</name>
+        <value>true</value>
+    </property>
     <property>
         <name>yarn.resourcemanager.cluster-id</name>
         <value>ns1</value>
@@ -146,8 +216,25 @@ dfs.client.failover.proxy.provider.ns1这一项一定要配置，ns1要跟core-s
         <name>yarn.resourcemanager.hostname.rm2</name>
         <value>10.41.236.115</value>
     </property>
+</configuration>
 ```
-
+### mapred-site.xml
+```xml
+<configuration>
+    <property>
+        <name>mapreduce.framework.name</name>
+        <value>yarn</value>
+    </property>
+    <property>
+        <name>mapreduce.jobhistory.address</name>
+        <value>10.41.236.209:10020</value>
+    </property>
+    <property>
+        <name>yarn.app.mapreduce.am.staging-dir</name>
+        <value>/user</value>
+    </property>
+</configuration>
+```
 ## Hive
 
 ### 解压、环境变量
@@ -166,7 +253,7 @@ sudo chown -R hadoop:root /data01
 
 ```
 ### hive-site.xml
-最小化修改
+最小化修改, 长sql有中文名, 导致job name过长, 在此限制一下, 避免在结束时`Job status not available`的问题
 ```xml
 <configuration>
 <property>
@@ -177,6 +264,11 @@ sudo chown -R hadoop:root /data01
     <name>hadoop.tmp.dir</name>
     <value>/home/hadoop/soft/hadoop/tmp</value>
 </property>
+<property>
+    <name>hive.jobname.length</name>
+    <value>10</value>
+    <description>max jobname length</description>
+  </property>
 </configuration>
 ```
 ### beeline
@@ -185,7 +277,7 @@ sudo chown -R hadoop:root /data01
 
 ## Azkaban-3.0.0
 github编译的3.0.0的二进制包:
-`https://szxsvn02-ex:3690/svn/CP_CCM_SVN/UniSTAR Common/10.Project Team/15.xCube/14 Hadoop环境搭建/package&config/package/azkaban-3.0.0`
+`https://szxsvn02-ex:3690/svn/CP_CCM_SVN/UniSTAR Common/10.Project Team/15.xCube/14 Hadoop环境搭建/package&config/package/azkaban-3.35.0`
 ### 说明
 web工程是UI界面, 用于查看任务等; exec-server工程是执行者的工程, 用于执行任务. Azkaban从3.0.0开始, 支持多个执行器, 本次采用**multiple executor mode**多执行器的部署形式.
 也即Azkaban-web工程只需要部署一个, Azkaban-executor工程可能需要部署多台.
@@ -226,7 +318,8 @@ CREATE TABLE executor_events (
   message VARCHAR(512)
 );
 CREATE INDEX executor_log ON executor_events(executor_id, event_time);
-
+---3.20.0-->3.22.0
+ALTER TABLE project_versions ADD resource_id VARCHAR(512);
 ```
 如果出错, 请看: [参考文档](https://azkaban.github.io/azkaban/docs/latest/#upgrade-27)
 ### Azkaban-web-server工程
@@ -234,9 +327,8 @@ CREATE INDEX executor_log ON executor_events(executor_id, event_time);
 ```bash
 mkdir -p /home/hadoop/soft/azkaban
 cd /home/hadoop/soft/azkaban
-unzip azkaban-web-server-3.0.0.zip
-mv azkaban-web-server-3.0.0 azkaban-web-server
-rm -f azkaban-web-server-3.0.0.zip
+unzip azkaban-web-server.zip
+rm -f azkaban-web-server.zip
 ```
 #### 修改配置
 SVN配置已经改好适配A3环境, 如果是改环境, **mysql**/邮箱地址/keystore这三部分
@@ -276,23 +368,22 @@ The JKS keystore uses a proprietary format. It is recommended to migrate to PKCS
 启动
 ```bash
 cd /home/hadoop/soft/azkaban/azkaban-web-server
-sh bin/azkaban-web-start.sh
-
+#sh bin/azkaban-web-start.sh
+sh bin/start-web.sh
 ```
 访问
 >https://10.41.236.56:8443
 
 停止
->/home/hadoop/soft/azkaban/azkaban-web-server/bin/azkaban-web-shutdown.sh
+>sh /home/hadoop/soft/azkaban/azkaban-web-server/bin/azkaban-web-shutdown.sh
 ### Azkaban-exec-server工程
 由于使用的是多个执行器的部署形式, **每个**执行器也应该部署hadoop等软件, 进行配置步骤. executors之间可以考虑拷贝环境变量文件, 拷贝软件目录. 
 #### 下载解压
 ```bash
 mkdir -p /home/hadoop/soft/azkaban
 cd /home/hadoop/soft/azkaban
-unzip azkaban-exec-server-3.0.0.zip
-mv azkaban-exec-server-3.0.0 azkaban-exec-server
-rm -f azkaban-exec-server-3.0.0.zip
+unzip azkaban-exec-server.zip
+rm -f azkaban-exec-server.zip
 ```
 #### 修改配置
 SVN配置已经改好适配A3环境, 如果是改环境, **mysql**/邮箱地址/keystore这三部分
@@ -309,8 +400,8 @@ insert into executors(host,port) values("EXECUTOR_HOST",EXECUTOR_PORT);
 启动
 ```bash
 cd /home/hadoop/soft/azkaban/azkaban-exec-server
-sh bin/azkaban-executor-start.sh
-
+#sh bin/azkaban-executor-start.sh
+sh bin/start-exec.sh
 ```
 停止
 >/home/hadoop/soft/azkaban/azkaban-exec-server/bin/azkaban-executor-shutdown.sh
