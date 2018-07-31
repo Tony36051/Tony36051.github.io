@@ -51,7 +51,11 @@ mr-jobhistory-daemon.sh start historyserver
 ```bash
 hdfs haadmin -failover nn2 nn1
 ```
-9. 切换Active的ResourceManager
+9. 查看hdfs状态
+```bash
+hdfs haadmin -getServiceState nn1
+```  
+10. 切换Active的ResourceManager
 由于yarn rmadmin不支持-failover命令，只能kill掉active的ResourceManager进程，待切换后再查看 
 ```bash
 yarn rmadmin -getServiceState rm1 #查看状态 
@@ -138,6 +142,9 @@ with open(path, 'r') as f:
             print(s1)  
 print("sum: %0.2f GB" % (sum * 1.0 / 1024 / 1024 / 1024))
 ```
+## hadoop mapreduce Job Name指定任务名
+### sqoop参数
+>sqoop export/import -Dmapreduce.job.name="<你指定的任务名>"
 
 
 ## 参考
