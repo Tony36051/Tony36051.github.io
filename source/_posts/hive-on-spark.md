@@ -81,7 +81,9 @@ spark.yarn.jars                     hdfs://ns1/spark/jars/*.jar
 ln -s ~/soft/spark/conf/spark-defaults.conf ~/soft/hive/conf/
 ```
 ### 验证spark
->./bin/spark-submit --class org.apache.spark.examples.SparkPi --master yarn-client ./examples/jars/spark-examples_2.11-2.2.0.jar 10
+```bash
+./bin/spark-submit --class org.apache.spark.examples.SparkPi --master yarn --deploy-mode client ./examples/jars/spark-examples_2.11-2.2.0.jar 10
+```
 ## hive
 ### 添加必要的依赖库
 ```bash
