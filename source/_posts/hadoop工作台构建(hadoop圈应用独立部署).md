@@ -29,6 +29,7 @@ scp hadoop@$SRC_HOST:/home/hadoop/soft/*.jar /home/hadoop/soft/
 ```bash
 export SRC_HOST=10.41.236.56
 sudo scp hadoop@$SRC_HOST:/etc/profile.d/xcube.sh /etc/profile.d/xcube.sh
+source /etc/profile.d/xcube.sh
 scp -r hadoop@$SRC_HOST:/home/hadoop/soft /home/hadoop/soft
 
 ```
@@ -52,6 +53,7 @@ export HADOOP_COMMON_HOME=${HADOOP_HOME}
 export HADOOP_HDFS_HOME=${HADOOP_HOME}  
 export YARN_HOME=${HADOOP_HOME}  
 export HADOOP_CONF_DIR=${HADOOP_HOME}/etc/hadoop
+export YARN_CONF_DIR=${HADOOP_HOME}/etc/hadoop
 export PATH=$PATH:$HADOOP_HOME/bin:$HADOOP_HOME/sbin
 # Hive
 export HIVE_HOME=/home/hadoop/soft/hive
@@ -63,9 +65,11 @@ export PATH=$PATH:$SQOOP_HOME/bin
 #Hbase
 #export HBASE_HOME=/home/hadoop/soft/hbase
 #Scala
-#export SCALA_HOME=/home/hadoop/soft/scala
+export SCALA_HOME=/home/hadoop/soft/scala
+export PATH=$PATH:$SCALA_HOME/bin
 #Spark
-#export SPARK_HOME=/home/hadoop/soft/spark
+export SPARK_HOME=/home/hadoop/soft/spark
+export PATH=$PATH:$SPARK_HOME/bin
 
 
 # 账号密码jdbc
@@ -235,6 +239,9 @@ dfs.client.failover.proxy.provider.ns1这一项一定要配置，ns1要跟core-s
     </property>
 </configuration>
 ```
+### 验证
+>hadoop   jar ~/soft/hadoop/share/hadoop/mapreduce/hadoop-mapreduce-examples-2.7.2.jar pi 10 100000000
+
 ## Hive
 
 ### 解压、环境变量
@@ -253,7 +260,9 @@ sudo chown -R hadoop:root /data01
 
 ```
 ### hive-site.xml
-最小化修改, 长sql有中文名, 导致job name过长, 在此限制一下, 避免在结束时`Job status not available`的问题
+最小化修改.
+1. 长sql有中文名, 导致job name过长, 在此限制一下, 避免在结束时`Job status not available`的问题
+2. 开发sql有时候不是非常严格规范, 需要放宽:hive.strict.checks检查
 ```xml
 <configuration>
 <property>
@@ -269,11 +278,76 @@ sudo chown -R hadoop:root /data01
     <value>10</value>
     <description>max jobname length</description>
   </property>
+  <property>
+    <name>hive.strict.checks.cartesian.product</name>
+    <value>false</value>
+    <description>
+      Enabling strict Cartesian join checks disallows the following:
+        Cartesian product (cross join).
+    </description>
 </configuration>
 ```
 ### beeline
 命令行工具测试是否可用
 >beeline -n hadoop -u jdbc:hive2://10.41.236.209:10000
+
+## sqoop
+1. 解压二进制包到/home/hadoop/sqoop, 同时确认为SQOOP_HOME
+2. 拷贝jdbc依赖的ojdbc6.jar到$SQOOP_HOME/lib/下
+3. 修改metastore的地址, 预防在~/.sqoop下占用太多空间, 在xml文件<configuration>节内添加(或解注释)以下内容
+> vim $SQOOP_HOME/conf/sqoop-site.xml
+```xml
+<property>
+    <name>sqoop.metastore.server.location</name>
+    <value>/data01/soft/sqoop-metastore/shared.db</value>
+    <description>Path to the shared metastore database files. If this is not set, it will be placed in ~/.sqoop/.
+    </description>
+</property>
+<property>
+    <name>sqoop.metastore.server.port</name>
+    <value>16000</value>
+    <description>Port that this metastore should listen on.
+    </description>
+</property>
+```
+4. 因为没有配置`$HBASE_HOME/$HCAT_HOME/$ACCUMULO_HOME/$ZOOKEEPER_HOME`这些路径, 所以会`Warining`提示不能导入Hcatalog/Accumulo的任务. 忽略之, 直到需要了再配置
+
+## spark
+### 配置
+`spark-env.sh`如果环境变量已经有, 改配置文件基本不需要改
+```bash
+vim ~/soft/spark/conf/spark-env.sh
+# 当系统的环境变量配置好后,不需要下方的配置, SPARK_DRIVER_MEMORY属于优化配置, 可省略
+#export SPARK_MASTER_WEBUI_PORT=8081 # default:8080
+SPARK_DRIVER_MEMORY=4G
+```
+`spark-defaults.conf`以下配置按照NodeManager是12C12G计算
+```bash
+vim ~/soft/spark/conf/spark-defaults.conf
+spark.master                        yarn
+spark.submit.deployMode				cluster
+spark.home                          /home/hadoop/soft/spark
+spark.eventLog.enabled              true
+spark.eventLog.dir                  hdfs://ns1/spark/spark-log
+spark.serializer                    org.apache.spark.serializer.KryoSerializer
+# hive on spark 建议5/6/7
+spark.executor.cores                6
+# 按6*12G/12vcores计算
+spark.executor.memory               5222m
+# 28个计算节点*每个节点2个executor
+spark.executor.instances            56
+# 所有core的两三倍：56*6*3=1008
+spark.default.parallelism           1000
+# 15% * spark.executor.memory
+spark.yarn.executor.memoryOverhead  921m
+spark.driver.memory                 4g
+spark.yarn.driver.memoryOverhead    400m
+spark.yarn.jars                     hdfs://ns1/spark/jars/*.jar
+```
+### 验证
+```
+./bin/spark-submit --class org.apache.spark.examples.SparkPi ./examples/jars/spark-examples_2.11-2.2.0.jar 10
+```
 
 ## Azkaban-3.0.0
 github编译的3.0.0的二进制包:
@@ -406,23 +480,5 @@ sh bin/start-exec.sh
 停止
 >/home/hadoop/soft/azkaban/azkaban-exec-server/bin/azkaban-executor-shutdown.sh
 
-## sqoop
-1. 解压二进制包到/home/hadoop/sqoop, 同时确认为SQOOP_HOME
-2. 拷贝jdbc依赖的ojdbc6.jar到$SQOOP_HOME/lib/下
-3. 修改metastore的地址, 预防在~/.sqoop下占用太多空间, 在xml文件<configuration>节内添加(或解注释)以下内容
-> vim $SQOOP_HOME/conf/sqoop-site.xml
-```xml
-<property>
-    <name>sqoop.metastore.server.location</name>
-    <value>/data01/soft/sqoop-metastore/shared.db</value>
-    <description>Path to the shared metastore database files. If this is not set, it will be placed in ~/.sqoop/.
-    </description>
-</property>
-<property>
-    <name>sqoop.metastore.server.port</name>
-    <value>16000</value>
-    <description>Port that this metastore should listen on.
-    </description>
-</property>
-```
-4. 因为没有配置`$HBASE_HOME/$HCAT_HOME/$ACCUMULO_HOME/$ZOOKEEPER_HOME`这些路径, 所以会`Warining`提示不能导入Hcatalog/Accumulo的任务. 忽略之, 直到需要了再配置
+
+
