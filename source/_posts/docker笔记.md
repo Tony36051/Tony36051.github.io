@@ -56,6 +56,7 @@ sudo systemctl restart docker
 有一类容器需要在宿主机读写文件做持久化，宿主机的目录data属于userA，然而容器内运行的用户是userB，通常会造成没有写权限而报错。更准确地说，不是根据用户名，而是根据uid/gid来判断权限的。
 
 `cat /etc/passwd`可以看出系统所有用户，`whoami`可以查看当前的用户名，`id username`可以查看username的用户uid和gid。通常来说，宿主机和容器内的uid/gid有以下对应关系：
+
 | 用户 | 宿主机 | 容器内 |
 |--|--|--|
 | root | 0 | 0 |
@@ -191,12 +192,13 @@ docker run --name hwcntlm --restart always -d \
 hwcntlm
 ```
 ## MySQL
+max-allowed-packet=1024M这个配置给azkaban3.x使用
 ```
 docker run --name mysql --restart always -d \
 -v /home/tony/mysql_data:/var/lib/mysql \
 -p 3306:3306 \
 -e MYSQL_ROOT_PASSWORD=huawei123 \
-mysql:5.6
+mysql:5.6 --max-allowed-packet=1024M
 ```
 ## Nginx(Autoindex)
 ```
@@ -268,6 +270,7 @@ docker run -d --name gogs --restart always \
 -p 10022:22 \
 -p 3000:3000 \
 -v /home/tony/gogs:/data \
+-v /usr/share/zoneinfo/Asia/Shanghai:/etc/localtime \
 gogs/gogs
 ```
 ## semaphore(ansible-tower替代者)
