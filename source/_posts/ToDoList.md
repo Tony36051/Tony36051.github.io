@@ -17,13 +17,9 @@ title: TODO
 
 | DDL | 事件 | 状态 |
 |--|--|--|
-| 0-1 | azkaban应用独立机器 | hdfs，hive,azkban完成
-| 07-23 | RCM自动化要不要在A3重搞 | 早上10.30 |
-| 07-23 | 传递自动化迁移的方向,探讨可行性. 邮件转达 | 早上9点 |
-| 07-23 | 阅读ReportPortal代码 | 整天 |
-|  |  |  |
-|  |  |  |
-|  |  |  |
+| 0-1 | azkaban应用独立机器 | hdfs，hive,azkban,spark完成,正在验证
+| 8.3 | hoc云龙 |  |
+| 8.6 | [解决能读问题]仿rp读取日志,做聚类解析 |  |
 
 
 ### Done
@@ -58,6 +54,11 @@ title: TODO
 | 06-28 | 学习**Axure** | 不用了 |
 | 07-20 | 整理ReportPortal材料, 发TSEG | 下午收集 |
 | 07-20 | azkaban独立部署的问题, 还搞不搞? 申请周末加班 | 搞,加.hdfs，hive,azkban完成 |
+| 07-23 | 阅读ReportPortal代码 | done|
+| 07-23 | 传递自动化迁移的方向,探讨可行性. 邮件转达 | 早上9点, 放弃 |
+| 07-23 | RCM自动化要不要在A3重搞 | 早上10.30, 还在自动化环境搞 |
+| 07-31 | Hexo-mermaid,开启  | 在家搞定了 |
+| 07-30 | agent-python-RobotFramework | 1 launch=1 suite = 1 case |
 |  |  |  |
 |  |  |  |
 |  |  |  |
