@@ -349,17 +349,17 @@ spark.yarn.jars                     hdfs://ns1/spark/jars/*.jar
 ./bin/spark-submit --class org.apache.spark.examples.SparkPi ./examples/jars/spark-examples_2.11-2.2.0.jar 10
 ```
 
-## Azkaban-3.0.0
-github编译的3.0.0的二进制包:
-`https://szxsvn02-ex:3690/svn/CP_CCM_SVN/UniSTAR Common/10.Project Team/15.xCube/14 Hadoop环境搭建/package&config/package/azkaban-3.35.0`
+## Azkaban-3.50.2
+github编译的3.50.2的二进制包:
+`https://szxsvn02-ex:3690/svn/CP_CCM_SVN/UniSTAR Common/10.Project Team/15.xCube/14 Hadoop环境搭建/package&config/package/azkaban-3.50.2`
 ### 说明
 web工程是UI界面, 用于查看任务等; exec-server工程是执行者的工程, 用于执行任务. Azkaban从3.0.0开始, 支持多个执行器, 本次采用**multiple executor mode**多执行器的部署形式.
 也即Azkaban-web工程只需要部署一个, Azkaban-executor工程可能需要部署多台.
 ### 备份数据库
-有备无患的步骤.
+有备无患的步骤, 其中参数`hex-blob`不可省略
 >mysqldump -h10.41.236.209 -uhive -phuawei123 azkaban --hex-blob > a3.sql
 ### 升级数据库
-生产和测试环境使用的2.5.0版本, 需要执行`azkaban-sql-3.0.0.zip`中的的4个脚本, 分别是以下. 
+生产和测试环境使用的2.5.0版本, 需要执行`azkaban-sql-3.0.0.zip`中的的4个脚本, 升级到3.0时代, 然后再执行`azkaban-db-3.50.2.zip`中的2个upgrade脚本.
 ```
 create.executors.sql
 update.active_executing_flows.3.0.sql
@@ -394,6 +394,8 @@ CREATE TABLE executor_events (
 CREATE INDEX executor_log ON executor_events(executor_id, event_time);
 ---3.20.0-->3.22.0
 ALTER TABLE project_versions ADD resource_id VARCHAR(512);
+ALTER DATABASE azkaban CHARACTER SET utf8 COLLATE utf8_general_ci;
+ALTER TABLE projects MODIFY name VARCHAR(64) CHARACTER SET utf8 COLLATE utf8_general_ci;
 ```
 如果出错, 请看: [参考文档](https://azkaban.github.io/azkaban/docs/latest/#upgrade-27)
 ### Azkaban-web-server工程
@@ -405,7 +407,7 @@ unzip azkaban-web-server.zip
 rm -f azkaban-web-server.zip
 ```
 #### 修改配置
-SVN配置已经改好适配A3环境, 如果是改环境, **mysql**/邮箱地址/keystore这三部分
+10.41.236.56上已经改好适配A3环境, 如果是改环境, **mysql**/邮箱地址/keystore这三部分
 ```bash
 # 改conf配置, 主要是mysql/邮箱地址/keystore
 vim azkaban-web-server/conf/azkaban.properties
@@ -460,16 +462,12 @@ unzip azkaban-exec-server.zip
 rm -f azkaban-exec-server.zip
 ```
 #### 修改配置
-SVN配置已经改好适配A3环境, 如果是改环境, **mysql**/邮箱地址/keystore这三部分
+10.41.236.56和10.41.236.44已经改好适配A3环境, 如果是改环境, **mysql**/邮箱地址/keystore这三部分
 ```bash
 # 改conf配置, 主要是mysql/邮箱地址/keystore
 vim azkaban-exec-server/conf/azkaban.properties
 ```
-#### 手工维护executor信息到数据库
-**非常重要**的步骤, 不要忽略!!!
-```sql
-insert into executors(host,port) values("EXECUTOR_HOST",EXECUTOR_PORT);
-```
+
 #### 启动与停止
 启动
 ```bash
