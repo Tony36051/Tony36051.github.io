@@ -74,42 +74,22 @@ dependencyManagement {
     </dependencyManagement>
 ```
 应该在一些插件和其他设置中还隐含了一些依赖, 导致mvn install时还有一些依赖没有找到, 逐个手动加上. 建议google搜索`maven 类名`
-# 构建fat jar
-直接使用`mvn package -Dmaven.test.skip=true`终于可以构建成功, 发现只有一两MB, 肯定没有相关依赖, 为了符合微服务的fat jar, 在project节点下加入以下部分
+
+# springboot no manifest
+在pom中加入:
 ```xml
-<build>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-assembly-plugin</artifactId>
-                <version>3.1.0</version>
-                <configuration>
-                    <descriptorRefs>
-                        <descriptorRef>jar-with-dependencies</descriptorRef>
-                    </descriptorRefs>
-                </configuration>
-                <executions>
-                    <execution>
-                        <id>assemble-all</id>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>single</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-jar-plugin</artifactId>
-                <configuration>
-                    <archive>
-                        <manifest>
-                            <addClasspath>true</addClasspath>
-                            <mainClass>fully.qualified.MainClass</mainClass>
-                        </manifest>
-                    </archive>
-                </configuration>
-            </plugin>
-        </plugins>
-    </build>
+
+        <plugin>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-maven-plugin</artifactId>
+            <version>1.2.5.RELEASE</version>
+            <executions>
+                <execution>
+                    <goals>
+                        <goal>repackage</goal>
+                    </goals>
+                </execution>
+            </executions>
+        </plugin>
+
 ```
