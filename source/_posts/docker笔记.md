@@ -251,15 +251,14 @@ sudo chown -R 1000:1000 /home/tony/jenkins   #赋权，容器内是1000的root
 
 docker run -u root --name jenkins --restart always -d \
 -p 8083:8080 -p 50000:50000 \
---link hwcntlm:hwcntlm \
 --add-host szxsvn02-ex:172.30.45.47 \
 -v /usr/share/zoneinfo/Asia/Shanghai:/etc/localtime \
 -v /home/tony/jenkins-blueocean-data:/var/jenkins_home \
 -v /home/tony/jenkins-blueocean-data/.ssh:/root/.ssh \
 -v /var/run/docker.sock:/var/run/docker.sock \
--e http_proxy=hwcntlm:3128 \
--e https_proxy=hwcntlm:3128 \
--e JAVA_OPTS="-DproxyHost=hwcntlm -DproxyPort=3128 -Dhudson.model.DirectoryBrowserSupport.CSP= -Duser.timezone=Asia/Shanghai" \
+-e http_proxy=10.75.76.163:3128 \
+-e https_proxy=10.75.76.163:3128 \
+-e JAVA_OPTS="-DproxyHost=10.75.76.163-DproxyPort=3128 -Dhudson.model.DirectoryBrowserSupport.CSP= -Duser.timezone=Asia/Shanghai" \
 jenkinsci/blueocean
 ```
 ## GIT(gogs)
