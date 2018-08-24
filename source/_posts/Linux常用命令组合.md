@@ -64,5 +64,15 @@ sed -i 's/\r//' filename
 **批量的文件装换**  
 sed -i 's/\r//' filename1 filename2 ...  
 或  
-find conf/ -name "*.*" |xargs sed -i 's/\r//'
+find ./  -name "*.sh" |xargs sed -i 's/\r//'
 ```
+## 压缩成带有时间文件名的文件
+```bash
+tar -zcvf somedir-$(date +%Y%m%d-%H%M).tar.gz somedir/
+```
+## 自动删除n天前日志
+```bash
+# 将/opt/soft/log/目录下所有30天前带".log"的文件删除
+find /opt/soft/log/ -mtime +30 -name "*.log" -exec rm -rf {} \;
+```
+
