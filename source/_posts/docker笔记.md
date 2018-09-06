@@ -7,8 +7,13 @@ tags:
 docker的配置要点、常见问题、命令、姿势。
 <!-- more -->
 # 安装&配置
+## docker-ce
 官网指南：https://docs.docker.com/install/
 中文翻译：https://yeasy.gitbooks.io/docker_practice/content/install/ubuntu.html
+## docker-compose
+https://github.com/docker/compose/releases/
+sudo chmod +x /usr/local/bin/docker-compose
+
 ## 配置代理
 ```bash
 sudo mkdir /etc/systemd/system/docker.service.d
@@ -258,7 +263,7 @@ docker run -u root --name jenkins --restart always -d \
 -v /var/run/docker.sock:/var/run/docker.sock \
 -e http_proxy=10.75.76.163:3128 \
 -e https_proxy=10.75.76.163:3128 \
--e JAVA_OPTS="-DproxyHost=10.75.76.163-DproxyPort=3128 -Dhudson.model.DirectoryBrowserSupport.CSP= -Duser.timezone=Asia/Shanghai" \
+-e JAVA_OPTS="-DproxyHost=10.75.76.163 -DproxyPort=3128 -Dhudson.model.DirectoryBrowserSupport.CSP= -Duser.timezone=Asia/Shanghai" \
 jenkinsci/blueocean
 ```
 ## GIT(gogs)
