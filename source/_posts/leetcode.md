@@ -2,8 +2,63 @@
 title: leetcode
 
 ---
+
 无聊时候刷刷题
 <!--more-->
+# 乱入的C++
+```cpp
+class ListNode
+{
+public:
+    int val;
+    ListNode *next;
+    ListNode(int val)
+    {
+        this->val = val;
+        this->next=NULL;
+    }
+};
+
+ListNode* findInsertionPos(ListNode* dummy, ListNode* candidate);
+void insertNode(ListNode* pos, ListNode * node);
+bool isNextValBiggerThanCandidate(ListNode * node, ListNode * candidate);
+ListNode* insertionSortList(ListNode * head)
+{
+    ListNode* dummy = new ListNode(0);
+    ListNode* unsortedPointer = head;
+    ListNode* unsortedNextPointer = NULL;
+    while(unsortedPointer)
+    {
+        unsortedNextPointer = unsortedPointer->next;
+        ListNode* rightPos = findInsertionPos(dummy, unsortedPointer);
+        insertNode(rightPos, unsortedPointer);
+        unsortedPointer = unsortedNextPointer;
+    }
+    return dummy->next;
+
+}
+ListNode* findInsertionPos(ListNode* dummy, ListNode* candidate)
+{
+    ListNode* rightPos = dummy;
+    while(isNextValBiggerThanCandidate(rightPos, candidate))
+    {
+        rightPos = rightPos->next;
+    }
+    return rightPos;
+}
+bool isNextValBiggerThanCandidate(ListNode * node, ListNode * candidate)
+{
+    return node->next && node->next->val < candidate->val;
+}
+void insertNode(ListNode* pos, ListNode * node)
+{
+    node->next = pos->next;
+    pos->next = node;
+}
+```
+# 基本算法
+## 二分查找
+
 ## 2sum
 不排序，暴力。注意边界
 ```java
@@ -22,30 +77,6 @@ public class Solution {
 }
 ```
 ## 3sum
-暴力算法会超时
-```java
-public List<List<Integer>> threeSum(int[] nums) {
-    Arrays.sort(nums);
-    List<List<Integer>> results = new ArrayList<List<Integer>>();
-    for (int i = 0; i < nums.length - 2; i++) {
-        if (i > 0 && nums[i - 1] == nums[i]) continue;
-        for (int j = i + 1; j < nums.length - 1; j++) {
-            if(j>i+1 && nums[j-1]==nums[j]) continue;
-            for (int k = j + 1; k < nums.length; k++) {
-                if(k>j+1 && nums[k-1]==nums[k]) continue;
-                if (nums[i] + nums[j] + nums[k] == 0) {
-                    List<Integer> tmp = new ArrayList<Integer>(3);
-                    tmp.add(nums[i]);
-                    tmp.add(nums[j]);
-                    tmp.add(nums[k]);
-                    results.add(tmp);
-                }
-            }
-        }
-    }
-    return results;
-}
-```
 twosum的转化思路, 二分查找
 ```java
 public List<List<Integer>> threeSum(int[] nums) {
