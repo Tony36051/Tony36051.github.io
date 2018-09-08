@@ -5,6 +5,9 @@ node_js: stable
 # cache:
 #   directories:
 #     - node_modules
+cache:
+  directories:
+    - $HOME/.npm
 
 # S: Build Lifecycle
 install:
