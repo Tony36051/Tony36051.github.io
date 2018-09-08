@@ -1,23 +1,18 @@
 language: node_js
-node_js: node
-dist: trusty
+node_js: stable
 
 # Travis-CI Caching
-# cache:
-#   directories:
-#     - node_modules
+cache:
+  directories:
+    - node_modules
 # cache:
 #   directories:
 #     - $HOME/.npm
 
 # S: Build Lifecycle
 install:
-  # - npm install
-  - npm ci
-  # - npm install hexo-generator-searchdb --save
-
-# before_script:
-#  - npm install -g gulp
+  - npm install
+  # - npm ci
 
 script:
   - hexo g
