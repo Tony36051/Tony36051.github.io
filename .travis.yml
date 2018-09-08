@@ -15,7 +15,7 @@ install:
 #  - npm install -g gulp
 
 script:
-  - hexo g --config source/_data/next.yml
+  - hexo g
 
 after_script:
   - cd ./public

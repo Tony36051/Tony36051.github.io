@@ -4,10 +4,10 @@
 
 # Site
 title: 幻煞幽穹
-subtitle:
-description:
-author: 360517703@163.com
-language: zh-Hans
+subtitle: 
+description: 幽寰证此约，七魄俱为凭，</br> 魂袅还无明，诸厉化纷英，</br>吾心共天契，请凭神御临
+author: 夏侯仪
+language: zh-CN # zh-CN for NexT6.0.3, zh-Hans for NexT5.1.4
 timezone: Asia/Shanghai
 
 # URL
@@ -72,19 +72,21 @@ pagination_dir: page
 # Extensions
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://hexo.io/themes/
-theme: next
-#theme: landscape
+# theme: next 
+theme: next-reloaded # NexT 6 
+# theme: landscape
 
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
 deploy:
   type:
 
-menu:
-  home: /
-  categories: /categories
-  archives: /archives
-  tags: /tags
+# use theme 
+# menu:
+#   home: /
+#   categories: /categories
+#   archives: /archives
+#   tags: /tags
 
 search:
   path: search.xml
