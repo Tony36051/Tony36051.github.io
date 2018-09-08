@@ -5,13 +5,14 @@ node_js: stable
 # cache:
 #   directories:
 #     - node_modules
-cache:
-  directories:
-    - $HOME/.npm
+# cache:
+#   directories:
+#     - $HOME/.npm
 
 # S: Build Lifecycle
 install:
-  - npm install
+  # - npm install
+  - npm ci
   # - npm install hexo-generator-searchdb --save
 
 # before_script:
