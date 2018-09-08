@@ -4,9 +4,9 @@
 
 # Site
 title: 幻煞幽穹
-subtitle:
-description:
-author: 360517703@163.com
+subtitle: 
+description: 幽寰证此约，七魄俱为凭，</br> 魂袅还无明，诸厉化纷英，</br>吾心共天契，请凭神御临
+author: 夏侯仪
 language: zh-Hans
 timezone: Asia/Shanghai
 
@@ -256,7 +256,7 @@ links_layout: block
 # Sidebar Avatar
 # in theme directory(source/images): /images/avatar.gif
 # in site  directory(source/uploads): /uploads/avatar.gif
-#avatar: /images/avatar.gif
+avatar: /uploads/avatar.jpg
 
 # Table Of Contents in the Sidebar
 toc:
