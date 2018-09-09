@@ -17,3 +17,6 @@ tag:
 3. 参数名可含参数的顺序, 减少记忆负担. 如 findByNameAndScore(name, score)
 
 
+<!--stackedit_data:
+eyJoaXN0b3J5IjpbLTEyMzQ1NTkyNzRdfQ==
+-->
