@@ -1,5 +1,5 @@
 ---
-title: 离线yum安装通用方法(Docker为例)
+title: yum离线安装通用方法(Docker为例)
 date: 2018-03-13 10:00:00
 tags:
 - centos

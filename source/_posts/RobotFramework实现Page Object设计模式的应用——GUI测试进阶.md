@@ -1,5 +1,5 @@
 ---
-title: 基于RobotFramework的Page Object设计模式的应用——GUI测试进阶
+title: RobotFramework实现Page Object设计模式的应用——GUI测试进阶
 date: 2018-04-17 10:20
 tags: 
 - RobotFramework
