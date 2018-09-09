@@ -5,7 +5,7 @@ tags:
 - kafka
 - docker
 categories:
-- 大数据
+- BigData
 ---
 在智能测试日志分析方案中，使用kafka作为消息集成的关键组件，简单记录一下使用的命令和docker搭建笔记。
 <!--more-->
