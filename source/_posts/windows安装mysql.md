@@ -3,7 +3,8 @@ title: windows安装mysql
 date: 2018-05-30
 tags:
 - mysql
-
+categories:
+- 运维
 ---
 以前的一篇笔记，转一下
 <!--more-->

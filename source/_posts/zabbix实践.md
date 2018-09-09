@@ -3,6 +3,8 @@ title: Zabbix实践
 date: 2018-03-12 14:52:00
 tags: 
 - zabbix
+categories:
+- 运维
 ---
 # Zabbix实践(持续更新中)
 ## 安装

@@ -4,7 +4,8 @@ date: 2018-05-19
 tags:
 - avro
 - kafka
-- bigdata
+categories:
+- BigData
 
 ---
 测试岗位却不甘止步于业务测试，遂尝试智能化测试，当前的思路是通过日志大数据分析，协助自动化用例的诊断和建议。其中传输协议打算使用avro，原因是使用hadoop集群。本文使用confluent公司提供的schema-registry存放avro的schema。

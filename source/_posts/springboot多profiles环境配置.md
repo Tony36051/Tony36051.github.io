@@ -3,9 +3,9 @@ title: springboot多profiles环境配置
 date: 2018-07-14
 tags:
 - springboot
-
+- Java
 categories:
-- springboot
+- 开发
 ---
 spring boot开发通常由多个环境, 不同环境用的数据库密码等都不一样, 怎么可以灵活切换呢? 最简单方法可以用spring boot的profiles切换方法.
 <!--more-->

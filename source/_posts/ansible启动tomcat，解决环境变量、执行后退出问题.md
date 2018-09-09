@@ -3,6 +3,8 @@ title: Ansible启动tomcat，解决环境变量、执行后退出问题
 date: 2018-05-08
 tags:
 - Ansible
+- SSH
+- tomcat
 categories:
 - 运维
 ---

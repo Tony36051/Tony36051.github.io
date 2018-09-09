@@ -1,6 +1,9 @@
 ---
 title: leetcode
-
+tags:
+- leetcode
+categories:
+- 算法
 ---
 
 无聊时候刷刷题

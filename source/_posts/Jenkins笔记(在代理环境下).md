@@ -4,6 +4,8 @@ date: 2018-04-25 20:20
 tags:
 - docker
 - jenkins
+categories:
+- 运维
 ---
 记录Jenkins上使用的经验，另外在公司内部使用Jenkins会遇到一些代理问题，记录一些解决方法。
 <!-- more -->

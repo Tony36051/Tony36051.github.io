@@ -1,6 +1,8 @@
 ---
 title: Anaconda入坑
 date: 2018-07-22
+tags:
+- python
 categories:
 - AI
 ---

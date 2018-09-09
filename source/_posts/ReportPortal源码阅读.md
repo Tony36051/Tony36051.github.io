@@ -1,7 +1,11 @@
 ---
 title: ReportPortal源码阅读
 date: 2018-07-23
-
+tags:
+- ReportPortal
+- java
+categories:
+- 测试
 ---
 在智能测试日志智能洞察的实现过程中,发现已经有epam公司的ReportPortal已经以GPLv3开源了, 实现的功能非常一致. 遂需要对其进行调研, 看看二次开发成本和拿来主义的实施成本.
 <!--more-->

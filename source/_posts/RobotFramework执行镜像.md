@@ -4,6 +4,8 @@ date: 2018-04-25 20:36
 tags:
 - docker
 - jenkins
+categories:
+- 测试
 ---
 团队使用RobotFramework作为主要自动化工具，将执行环境容器化，方便部署和扩展，以下为构建的Dockerfile
 <!-- more -->

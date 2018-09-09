@@ -3,7 +3,8 @@ title: 内网使用pip
 date: 2018-03-21 10:58
 tags:
 - pip
-
+categories:
+- 运维
 ---
 # 离线安装pip包
 ## pip安装

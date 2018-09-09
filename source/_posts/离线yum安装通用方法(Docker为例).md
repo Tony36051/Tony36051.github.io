@@ -4,6 +4,8 @@ date: 2018-03-13 10:00:00
 tags:
 - centos
 - docker
+categories:
+- 运维
 ---
 # 原理
 yum install有参数\-\-downloadonly，可以只下载不安装，搭配\-\-downloaddir=DLDIR参数可以下载依赖包，完成离线安装。

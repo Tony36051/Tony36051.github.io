@@ -3,6 +3,8 @@ title: MySQL导入导出(blob)注意事项
 date: 2018-07-21 17:28
 tag: 
 - mysql
+categories:
+- 运维
 ---
 MySQL用Heidisql直接导出blob字段会出问题, 顺便记录mysqldump相关命令和注意点.
 <!--more-->

@@ -2,8 +2,10 @@
 title: 基于RobotFramework的Page Object设计模式的应用——GUI测试进阶
 date: 2018-04-17 10:20
 tags: 
-- 测试
+- RobotFramework
 - PageObject
+categories:
+- 测试
 ---
 第一次用RobotFramework-SeleniumLibrary写网页的GUI测试，封装关键字，按功能模块划分关键字。后来一次系统层面的UI重构，所有用例要重新写，成本很大，遂找到2013年提出，2015成熟的Page Object设计模式。基于页面或重用组件封装，仅将人类能交互的操作封装为方法。抽象后，可读性、可维护性大增。
 <!-- more -->

@@ -6,7 +6,7 @@ tags:
 - jenkins
 
 categories:
-- jenkins
+- 运维
 ---
 jenkins打包springboot程序后, 发送到远程服务器, 然后启动任务. 这次选择了较为偷懒的方式. 
 <!--more-->
