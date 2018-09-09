@@ -955,3 +955,21 @@ vendors:
 css: css
 js: js
 images: images
+
+
+##hexo-neat页面压缩
+neat_enable: true 
+neat_html:
+  enable: true
+  exclude: 
+neat_css:
+  enable: true
+  exclude:
+    - '*.min.css'
+neat_js:
+  enable: true
+  mangle: true
+  output:
+  compress:
+  exclude:
+    - '*.min.js'
