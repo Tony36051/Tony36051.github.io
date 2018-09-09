@@ -2,15 +2,13 @@
 title: TODO
 
 ---
+临时笔记
+<!--more-->
 ### 长期计划
 1. 智能化测试
 2. 算法
 3. 
 
-
-
-### 定时任务
-【每周四】uSupply自动化总览
 
 
 ### 近期任务
@@ -75,166 +73,9 @@ title: TODO
 | 时间 | 事件 | 状态 |
 |--|--|--|
 | 05-28 | twoSum | ok |
-| 05-29 | threeSum |  |
+| 05-29 | threeSum | ok |
 |  |  |  |
 |  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-
-```java
-public List<List<Integer>> threeSum(int[] nums) {
-        List<List<Integer>> result = new ArrayList<>();
-        Arrays.sort(nums);
-        int len = nums.length;
-        if (len < 3) return result;
-        for (int i = 0; i < len - 2; i++) {
-            if (i > 0 && nums[i] == nums[i - 1]) continue;
-            for (int j = i + 1; j < len - 1; j++) {
-                if (j > i+1 && nums[j] == nums[j - 1]) continue;
-                int k = Arrays.binarySearch(nums, j + 1, len, -nums[i] - nums[j]);
-                if (k > 0 && nums[i] + nums[j] + nums[k] == 0) {
-                    ArrayList<Integer> tmp = new ArrayList<>(3);
-                    tmp.add(nums[i]);
-                    tmp.add(nums[j]);
-                    tmp.add(nums[k]);
-                    result.add(tmp);
-                }
-            }
-        }
-        return result;
-    }
-```
-
-
-## 临时
-
-问了下黎智宽的意见，有一些建议和结论：
-1. 怎么区分API还是GUI？
-业务逻辑在js端就写GUI，在java端就写API；
-实现成本：如在GUI只有一两个点击，而API很复杂，多个接口调用，则应写在GUI层。
-2. CCO自动化现在怎么搞？
-【单元测试】vuejs的单元测试框架。测试学会，review开发的单元测试。
-【接口测试】都可以
-【GUI】环境稳定，页面少改动
-【mock】智宽还是推荐我们用mock，自动化的时候自己玩；
-3. 结论
-我建议还是按照我们讨论的结果来走。
-单元测试由我去学一下，看下开发的js质量。
-mock的话，你们的看法怎么样？（智宽毕竟在局外可能不够清楚）
-
-## 头脑风暴——发现你的AI场景
-【报名截止】6月13日下班前
-【时间】6月15日周五下午
-【与会人】AI测试感兴趣的人，想做出点尝试
-【前提】
-- 思考当前工作中重复低效率的任务
-- 从听说的AI实践脑洞大开想到能否“迁移”到测试动作
-
-【形式】
-- 第一轮：准备主题便签，发散讨论 5mins/主题，不评论。限制1小时
-- 第二轮：将上轮主题归类，再集中讨论 10mins/主题。限制0.5小时
-- 场景Owner竞选
-
- 
-PS：
-1. AI测试：本次讨论将AI应用到测试中，而非如何测试AI功能
-2. 仅限对AI测试感兴趣者，每个Line最多2人参与，不设下限
-
-
-## 2018-06-13早上谈话记录
-### AI测试
-想象自己是“AI测试”的产品经理，对它从生到死负责，立项、计划、运作、技术、呈现、运维一条龙。
-### 技术众筹
-一个技术方向，找人一起搞完
-
-
-1. flume采集应用日志
-2. kafka信息集成
-3. 解析协议自动化和RF执行日志，存入部门统一的智能化分析
-4. 解析协议自动化和RF执行结果，存入部门统一的质量看板
-5. 简单统计
-
-
-## 阿萨德f
-1. 【05-20完成】目录下所有历史日志（递归地）；不断增长未经全面测试（已调通）
-2. 【06-01完成】kafka可以完成实时采集
-3. 【七月中】RF与协议自动化结果，清洗提取
-4. 【七月底】RF与协议自动化日志，清洗提取
-5. 【08-10】
-
-# AI在测试工作的应用场景
-## ①自动生成用例
-owner：罗人源+王志坤
-1. 自动单元测试
-2. AI录制
-3. 需求变更时，智能修复失败的自动化
-
-## ②用例管理
-1. 自动场景分类
-2. 用例中，业务数据自动关联修改
-
-## ③交付与风险
-owner：黎智宽
-1. 过程数据收集
-2. 版本质量、风险预测
-3. FP版本质量分析与预警，人员、风险
-4. 问题单智能分类
-
-
-## ⑤运营
-owner：胡建华
-1. 分析操作热点，提升易用性
-2. 分析热点功能，定制测试策略
-
-## ⑥问答系统
-owner：粟烂芝
-1. LMT问答，历史问题咨询与解决方案
-
-## ⑦精准测试
-owner：罗皓
-1. 多次代码修改定位用例
-2. 结合测试结果
-
-## ⑧测试结果分析
-owner：吴健松
-1. 自动化结果聚类、分类
-2. 人工标定结果滚动更新模型
-
-
-
-## 年中PBC
-自评综述*请基于PBC完成情况及岗位职责履行情况进行客观自我总结，建议字数不超过500字
-总体目标：
-	1. 业务能力有所提升，对CCO、xcube项目熟知各大模块、核心功能和基本操作。
-	2. 继续广泛地熟悉业界其他通用的测试工具，学习其使用场景。
-	3. 在xcube项目中学习并应用自动化运维与监控技术，在底层组件自运营时担任核心角色，自动化地完成运维动作提升效率100%以上。
-主要目标：
-	1. 引进GUI测试中的PageObject设计思想，应用到cco自动化中，提升50%的编写效率。
-	2. 测试结果智能分析中，已经完成了RF的结果解析，结构化存储。并额外地完成了整体方案设计及通用存储接口，拉到伙伴方伟一起完成。其中统计聚类和预测稳定性等功能延后到下半年完成。
-	3. Hadoop大数据集群的自动化运维与监控已经实现，使用zabbix作为监控及触发平台，编写ansible与shell脚本在Jenkins上触发，日常95%以上的运维动作都是自助式的。
-	4. 解决方案测试自动化完成情况不理想，CCO的长业务流程的自动化由ISC+完成。华荣与我提出将流程切割，系统之间两两先验证接口是否满足契约。这样可以避免由于上游系统故障导致下游拉通阻塞的情况，加快整体进度。具体尝试将会在下半年开展。
-个人总结：
-	1. 自动化运维与监控技能：在xcube项目中得到大量锻炼，同时对hadoop+大数据组件有了较为深刻的理解。
-	2. 测试结果智能分析：被选为AI测试的其中一项重点工作，当前进度正常偏慢一点点，能将所学与实际工作结合在一起真是太好了。
-	3. 业务能力在自动化实现的过程中得到的潜移默化地提升。
-
-## ReportPortal
-### 第三方服务
-mongodb: 存储
-registry: consul 分布式系统的服务发现与配置
-gateway: traefik HTTP层面的反向代理和负载均衡, 用Go编写
-elasticsearch: 日志存储, 相似度计算
-### ReportPortal自身模块
-jira: reportportal/service-jira, 对接jira
-rally: reportportal/service-rally, 对接CA Agile Central(rally) 缺陷跟踪工具
-uat: reportportal/service-authorization, 统一鉴权服务, 依赖MongoDB
-index: reportportal/service-index, 其他服务不处理的请求, 整合UI所需的信息
-api: reportportal/service-api, 核心, 处理UI和agent的请求
-ui: reportportal/service-ui, React写的前端工程
-analyzer: reportportal/service-analyzer, 用例日志存储与搜索; 自动分析
 
 # Tony关于智能化测试的听后感
 ## DevOps下测试的出路
@@ -286,3 +127,6 @@ Tony参考VSTS基于JADE的理念, 提出研发流程端到端如果应用DI/AI�
 3. 持久化一段时间(一年)
 4. 快速检索
 
+<!--stackedit_data:
+eyJoaXN0b3J5IjpbMTEyNDIyOTcwNl19
+-->
