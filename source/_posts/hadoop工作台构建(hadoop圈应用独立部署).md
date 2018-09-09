@@ -3,7 +3,8 @@ title: hadoop工作台构建(hadoop圈应用独立部署)
 date: 2018-05-03 
 tags:
 - hadoop
-
+categories:
+- BigData
 ---
 之前hadoop圈的应用（如hive、sqoop、azkaban等）都在master节点部署，一次性多个应用同时启动，耗尽内存后Linux随机删掉进程，影响集群和应用的稳定性。
 <!--more-->

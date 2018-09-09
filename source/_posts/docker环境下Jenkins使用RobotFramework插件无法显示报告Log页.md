@@ -5,6 +5,8 @@ tags:
 - docker
 - jenkins
 - RobotFramework
+categories:
+- 运维
 ---
 摘要Abstract
 较新版本Jenkins限制了js和css的运行，然而RobotFramework的日志log.html和报告report.html都严重依赖js和css。docker平台上最简单解决方法就是用JAVA_OPTS-Dhudson.model.DirectoryBrowserSupport.CSP=，放松Jenkins的安全策略，详细在StackOverFlow和Jenkins的wiki上都有说明。

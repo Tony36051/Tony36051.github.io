@@ -3,7 +3,8 @@ title: Hadoop配置文件研读
 date: 2018-04-26
 tags:
 - hadoop
-
+categories:
+- BigData
 ---
 团队下来一个任务，要求我研究hadoop的三个基本配置文件core-site.xml,hdfs-site.xml,mapred-site.xml。以下为研读笔记
 <!--more-->

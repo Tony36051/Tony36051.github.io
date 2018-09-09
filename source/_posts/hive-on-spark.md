@@ -4,6 +4,8 @@ date: 2018-03-27 21:27
 tag: 
 - hadoop 
 - spark
+categories:
+- BigData
 ---
 # hive on spark 安装配置
 ## 简介

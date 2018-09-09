@@ -3,7 +3,8 @@ title: hadoop运维调优笔记
 date: 2018-05-02 11:39
 tags: 
 - hadoop
-
+categories:
+- BigData
 ---
 
 # hadoop运维调优笔记

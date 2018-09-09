@@ -3,6 +3,10 @@ title: Gradle转Maven小记(ReportPortal为例)
 date: 2018-08-21
 tag: 
 - java
+- gradle
+- maven
+categories:
+- 开发
 ---
 公司访问外网要代理, 证书也替换了, gradle不能忽略证书验证, 替换证书未果, 遂起了转化maven工程的念头
 <!--more-->

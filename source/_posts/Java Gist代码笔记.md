@@ -3,6 +3,8 @@ title: Java Gist代码笔记
 date: 2018-08-17
 tag: 
 - java
+categories:
+- 开发
 ---
 工作中主要用Java和Python, 有些用法老是忘记, 做个小笔记.
 <!--more-->

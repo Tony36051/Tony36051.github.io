@@ -3,7 +3,8 @@ title: hadoop圈应用的配置文件路径
 date: 2018-05-28
 tags:
 - hadoop
-
+categories:
+- BigData
 ---
 hadoop圈有多个应用（如hive、sqoop、azkaban等），每个应用有一个或多个配置文件，简单记录一下应用、配置，路径的关系。
 <!--more-->

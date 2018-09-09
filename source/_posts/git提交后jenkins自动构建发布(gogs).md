@@ -6,7 +6,7 @@ tags:
 - jenkins
 
 categories:
-- jenkins
+- 运维
 ---
 代码提交git后自动发消息给jenkins, 开启构建和部署的动作. 做到全自动
 <!--more-->

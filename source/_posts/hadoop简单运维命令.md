@@ -3,7 +3,8 @@ title: Hadoop组件运维命令
 date: 2018-04-06
 tags:
 - hadoop
-
+categories:
+- BigData
 ---
 
 # Hadoop组件运维命令
