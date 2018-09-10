@@ -5,7 +5,7 @@ tags:
 - avro
 - kafka
 categories:
-- BigData
+- BbigDdata
 
 ---
 测试岗位却不甘止步于业务测试，遂尝试智能化测试，当前的思路是通过日志大数据分析，协助自动化用例的诊断和建议。其中传输协议打算使用avro，原因是使用hadoop集群。本文使用confluent公司提供的schema-registry存放avro的schema。
@@ -358,3 +358,6 @@ public class SchemaMain {
 2. [schema-registry的API文档](https://docs.confluent.io/current/schema-registry/docs/api.html)
 3. [confluent opensource简单部署(不用KSQL只用执行到"Step 3")](https://docs.confluent.io/current/quickstart/cos-quickstart.html)
 
+<!--stackedit_data:
+eyJoaXN0b3J5IjpbNjQyNjEyMTg1XX0=
+-->
