@@ -4,7 +4,7 @@ date: 2018-05-26
 tags:
 - flume
 categories:
-- BigData
+- BbigDdata
 
 ---
 测试岗位却不甘止步于业务测试，遂尝试智能化测试，当前的思路是通过日志大数据分析，协助自动化用例的诊断和建议。其中本地日志采用flume采集，发送到kafka
@@ -103,3 +103,6 @@ taildirr.sinks.k1.channel = c1
 2. [taildir递归多层目录](https://blog.csdn.net/m0_37739193/article/details/72962192)
 3. [flume官方文档](https://flume.apache.org/FlumeUserGuide.html)
 4. 
+<!--stackedit_data:
+eyJoaXN0b3J5IjpbMTMzNjE3MjAyXX0=
+-->
