@@ -6,7 +6,7 @@ tags:
 - jenkins
 
 categories:
-- 运维
+- 运维jenkins
 ---
 代码提交git后自动发消息给jenkins, 开启构建和部署的动作. 做到全自动
 <!--more-->
@@ -23,3 +23,6 @@ ide: idea
 2. jenkins项目配置-触发构建器选"Build when a change is pushed to Gogs"
 3. 在gogs的仓库设置中配置web hook, 密码可以不设, 其他默认, 地址如下格式:
 >http://10.75.76.163:8083/gogs-webhook/?job=AILog
+<!--stackedit_data:
+eyJoaXN0b3J5IjpbLTEzNzM1NzQyMzhdfQ==
+-->
