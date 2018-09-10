@@ -4,7 +4,8 @@ date: 2018-04-20 18:09
 tags:
 - 人脸
 categories:
-- AI
+- AI机器学习
+
 ---
 # 试验数据
 ## 各类特征pca512后，直接串连
@@ -569,3 +570,6 @@ mae = sklearn.metrics.mean_absolute_error(y_test, pre)
 print("mae: %f" % mae)
 
 ```
+<!--stackedit_data:
+eyJoaXN0b3J5IjpbODQzNzcwMjk5XX0=
+-->
