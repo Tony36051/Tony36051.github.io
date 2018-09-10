@@ -2,7 +2,7 @@
 title: Ansible 注释或取消注释配置文件行
 date: 2018-03-08
 tags:
-- Ansible
+- Aansible
 categories:
 - 运维
 ---
@@ -45,3 +45,6 @@ cat config.yml
     become: yes
 ```
 
+<!--stackedit_data:
+eyJoaXN0b3J5IjpbODExNDU2NDI2XX0=
+-->
