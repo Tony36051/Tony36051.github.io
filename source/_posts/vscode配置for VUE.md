@@ -5,7 +5,7 @@ tags:
 - VUE
 - 前端
 categories:
-- 开发
+- 开发VUE
 ---
 测试开发要做点什么东东,几乎就是全栈的节奏了, 记录一下vscode的一些配置
 <!--more-->
@@ -30,3 +30,6 @@ categories:
     ]
 }
 ```
+<!--stackedit_data:
+eyJoaXN0b3J5IjpbLTEzODYwMzk0NTldfQ==
+-->
