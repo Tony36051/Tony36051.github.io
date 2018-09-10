@@ -1,7 +1,7 @@
 ---
 title: Anaconda入坑
 date: 2018-07-22
-tags:
+tags: 
 - python
 categories:
 - AI
@@ -28,3 +28,6 @@ proxy_servers:
 ssl_verify: False
 ```
 
+<!--stackedit_data:
+eyJoaXN0b3J5IjpbLTI0OTI3NTA2N119
+-->
