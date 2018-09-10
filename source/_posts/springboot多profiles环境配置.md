@@ -5,7 +5,7 @@ tags:
 - springboot
 - Java
 categories:
-- 开发
+- 开发springboot
 ---
 spring boot开发通常由多个环境, 不同环境用的数据库密码等都不一样, 怎么可以灵活切换呢? 最简单方法可以用spring boot的profiles切换方法.
 <!--more-->
@@ -50,3 +50,6 @@ ref :https://docs.spring.io/spring-boot/docs/current-SNAPSHOT/reference/htmlsing
 >export SPRING_PROFILES_ACTIVE=prod && java -jar /tmp/ailog.jar
 
  网络上说可以`java -jar /tmp/ailog.jar --spring.profiles.active=prod`的方式启用prod的profile, 我实测**不行**! springboot 2.0.3
+<!--stackedit_data:
+eyJoaXN0b3J5IjpbMTA3MzQ5NTYwNF19
+-->
