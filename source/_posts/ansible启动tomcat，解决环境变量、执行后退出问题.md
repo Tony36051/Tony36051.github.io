@@ -1,8 +1,8 @@
 ---
-title: Ansible启动tomcat，解决环境变量、执行后退出问题
+title: Aansible启动tomcat，解决环境变量、执行后退出问题
 date: 2018-05-08
 tags:
-- Ansible
+- Aansible
 - SSH
 - tomcat
 categories:
@@ -51,3 +51,6 @@ nohup一下即可
 ```bash
 nohup /home/hadoop/soft/kylin/bin/kylin.sh start &
 ```
+<!--stackedit_data:
+eyJoaXN0b3J5IjpbLTEyMjY1NjE5MTNdfQ==
+-->
