@@ -175,7 +175,8 @@ response:
 ### 修改vm.max_map_count
 修改此项之后, elastic才能使用
 >sysctl -w vm.max_map_count=262144
-
+### 目录权限
+elastic不能以root执行, 在docker-compose.yml同目录下执行yix
 docker-compose 方式启动, 为了不影响我司代理, 暴露部分端口, 改为以下:
 ```yml
 
@@ -183,5 +184,5 @@ docker-compose 方式启动, 为了不影响我司代理, 暴露部分端口, �
 ```
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbNDIyMDIzNTgsMjAyNTQxOTMyNF19
+eyJoaXN0b3J5IjpbMTA3NTMzNjA0LDIwMjU0MTkzMjRdfQ==
 -->
