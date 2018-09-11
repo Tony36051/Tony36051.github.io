@@ -176,13 +176,124 @@ response:
 修改此项之后, elastic才能使用
 >sysctl -w vm.max_map_count=262144
 ### 目录权限
-elastic不能以root执行, 在docker-compose.yml同目录下执行yix
+elastic不能以root执行, 在docker-compose.yml同目录下执行以下命令:
+```bash
+mkdir -p data/elasticsearch
+chown -R 1000:1000 data/elasticsearch
+```
+
 docker-compose 方式启动, 为了不影响我司代理, 暴露部分端口, 改为以下:
 ```yml
+version: '2'
+services:
+  mongodb:
+    image: 'mongo:3.4'
+    restart: always
+    ports:
+      - '27017:27017'
+    environment:
+      - TZ=Asia/Shanghai
+    volumes:
+      - ./data/mongo:/data/db
+    restart: always
+
+  registry:
+    image: 'consul:1.0.6'
+    volumes:
+      - './/data/consul:/consul/data'
+    ports:
+      - '8500:8500'
+    command: agent -server -bootstrap-expect=1 -ui -client 0.0.0.0
+    environment:
+      - 'CONSUL_LOCAL_CONFIG={"leave_on_terminate": true}'
+      - TZ=Asia/Shanghai
+    restart: always
+  uat:
+    image: 'reportportal/service-authorization:4.2.0'
+    depends_on:
+      - mongodb
+    environment:
+      - RP_PROFILES=docker
+      - RP_SESSION_LIVE=86400
+      - TZ=Asia/Shanghai
+    restart: always
+  gateway:
+    image: 'traefik:1.6.3'
+    ports:
+      - '8080:8080'
+    environment:
+      - TZ=Asia/Shanghai
+    command:
+      - '--consulcatalog.endpoint=registry:8500'
+      - '--defaultEntryPoints=http'
+      - '--entryPoints=Name:http Address::8080'
+      - '--web'
+      - '--web.address=:8081'
+    restart: always
+  index:
+    image: 'reportportal/service-index:4.2.0'
+    environment:
+      - RP_SERVER_PORT=8080
+      - RP_PROXY_CONSUL=true
+      - TZ=Asia/Shanghai
+    depends_on:
+      - registry
+      - gateway
+    restart: always
+  api:
+    image: 'reportportal/service-api:4.2.1'
+    depends_on:
+      - mongodb
+    volumes:
+      - ./rp-api-1.0.0-SNAPSHOT.jar:/app.jar
+    environment:
+      - TZ=Asia/Shanghai
+      - RP_PROFILES=docker
+      - 'JAVA_OPTS=-Xmx1g -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=/tmp -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=8081'
+    restart: always
+    ports:
+      - '8081:8081'
+      - '8082:8080'
+  ui:
+    image: 'reportportal/service-ui:4.2.2'
+    environment:
+      - RP_SERVER.PORT=8080
+      - RP_CONSUL.TAGS=urlprefix-/ui opts strip=/ui
+      - 'RP_CONSUL.ADDRESS=registry:8500'
+      - TZ=Asia/Shanghai
+    restart: always
+  analyzer:
+    image: 'reportportal/service-analyzer:4.2.0'
+    depends_on:
+      - registry
+      - gateway
+      - elasticsearch
+    restart: always
+
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch-oss:6.1.1
+    restart: always
+    volumes:
+        - ./data/elasticsearch:/usr/share/elasticsearch/data
+    environment:
+      - bootstrap.memory_lock=true
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+
+networks:
+  default:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 192.168.1.0/24
+          gateway: 192.168.1.1
+
 
 
 ```
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTA3NTMzNjA0LDIwMjU0MTkzMjRdfQ==
+eyJoaXN0b3J5IjpbNzI4NDY3NjE3LDIwMjU0MTkzMjRdfQ==
 -->
