@@ -171,6 +171,11 @@ response:
 }
 ```
 # 部署
+## 宿主机修改
+### 修改vm.max_map_count
+修改此项之后, elastic才能使用
+>sysctl -w vm.max_map_count=262144
+
 docker-compose 方式启动, 为了不影响我司代理, 暴露部分端口, 改为以下:
 ```yml
 
@@ -178,5 +183,5 @@ docker-compose 方式启动, 为了不影响我司代理, 暴露部分端口, �
 ```
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMjAyNTQxOTMyNF19
+eyJoaXN0b3J5IjpbNDIyMDIzNTgsMjAyNTQxOTMyNF19
 -->
