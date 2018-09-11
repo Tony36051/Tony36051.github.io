@@ -170,3 +170,8 @@ response:
     "msg": "Launch with ID = '5b5a7b29f7eecc0001c39c0d' successfully finished."
 }
 ```
+
+
+<!--stackedit_data:
+eyJoaXN0b3J5IjpbNDgwNjUwODUxXX0=
+-->
