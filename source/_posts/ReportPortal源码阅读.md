@@ -170,8 +170,13 @@ response:
     "msg": "Launch with ID = '5b5a7b29f7eecc0001c39c0d' successfully finished."
 }
 ```
-# 
+# 部署
+docker-compose 方式启动, 为了不影响我司代理, 暴露部分端口, 改为以下:
+```yml
+
+
+```
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTg0NDAwNjc0Nl19
+eyJoaXN0b3J5IjpbMjAyNTQxOTMyNF19
 -->
