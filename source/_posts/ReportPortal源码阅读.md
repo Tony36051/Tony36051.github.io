@@ -290,10 +290,8 @@ networks:
         - subnet: 192.168.1.0/24
           gateway: 192.168.1.1
 
-
-
 ```
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbNzI4NDY3NjE3LDIwMjU0MTkzMjRdfQ==
+eyJoaXN0b3J5IjpbLTIxNjgyMjQwMywyMDI1NDE5MzI0XX0=
 -->
