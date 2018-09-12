@@ -3,8 +3,6 @@ title: Linux常用命令组合
 date: 2018-05-02 09:57
 tag: 
 - Linux
-categories:
-- 运维
 ---
 身为半个运维人员，日常使用Linux命令组合很多，每次都记不住，特此笔记。
 <!--more-->
@@ -77,4 +75,7 @@ tar -zcvf somedir-$(date +%Y%m%d-%H%M).tar.gz somedir/
 # 将/opt/soft/log/目录下所有30天前带".log"的文件删除
 find /opt/soft/log/ -mtime +30 -name "*.log" -exec rm -rf {} \;
 ```
+## vim 粘贴带注释
+>set paste
 
+##
