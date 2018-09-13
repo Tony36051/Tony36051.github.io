@@ -3,6 +3,8 @@ title: Linux常用命令组合
 date: 2018-05-02 09:57
 tag: 
 - Linux
+categories:
+- 运维
 ---
 身为半个运维人员，日常使用Linux命令组合很多，每次都记不住，特此笔记。
 <!--more-->
@@ -79,3 +81,6 @@ find /opt/soft/log/ -mtime +30 -name "*.log" -exec rm -rf {} \;
 >set paste
 
 ##
+<!--stackedit_data:
+eyJoaXN0b3J5IjpbMTE2MzU4MTAyOV19
+-->
