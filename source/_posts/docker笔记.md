@@ -3,8 +3,6 @@ title: docker笔记
 date: 2018-04-25 14:14
 tags:
 - docker
-categories:
-- 运维
 ---
 docker的配置要点、常见问题、命令、姿势。
 <!-- more -->
@@ -15,6 +13,12 @@ docker的配置要点、常见问题、命令、姿势。
 ## docker-compose
 https://github.com/docker/compose/releases/
 sudo chmod +x /usr/local/bin/docker-compose
+## docker-machine
+```bash
+base=https://github.com/docker/machine/releases/download/v0.14.0 &&
+  curl -L $base/docker-machine-$(uname -s)-$(uname -m) >/tmp/docker-machine &&
+  sudo install /tmp/docker-machine /usr/local/bin/docker-machine
+```
 
 ## 配置代理
 ```bash
@@ -78,7 +82,7 @@ chown -R 1000:1000 ~/data
 这不是常见问题，但如果你在一家需要代理上网的公司，你有可能遇上。
 ### 描述
 众所周知，docker容器内的ip默认是`172.17.0.0`网段，新建一个docker network的网段是`172.18.0.0`。非常巧的是，我司的代理服务器的ip刚好是`172.18.xx.xx`。此时如果用docker-compose，通常会新建一个网络，然后加到linux路由中，本来应该走代理的请求走到了新建的docker网络。表现为逐个容器都能启动，一旦使用docker-compose或swarm就不行了，无法通过代理拉取新的镜像。
-### 手工指定docker-compose使用网络的网段
+### 手工指定docker-compose使用网络的网段对症下药
 知道原因之后就好办了，规避的方法很简单，指定使用默认的网卡docker0。或者手工指定新建网络的网段。
 手工指定docker-compose使用网络的网段：
 ```yml
@@ -109,7 +113,6 @@ services:
       - "moby:127.0.0.1"
 ```
 
-
 # 常用操作
 ## 调试&生产启动命令
 
@@ -120,7 +123,7 @@ services:
 在实际生产环境使用时，希望以daemon形式、固定的名字运行，最好能自动重启。
 >docker run -d -name mysql5.6 --restart always mysql
 
-# 常用命令
+# 基本命令
 ## 构建镜像
 ```bash
 docker build -t target_name <directory>
@@ -166,18 +169,28 @@ docker network rm
 #容器内获取宿主机ip, 容器内执行
 ip route|awk '/default/ { print $3 }'
 ```
-## swarm集群
+# swarm集群
 ```
 docker swarm init  #(在manager节点输入，此时会建两个网络)
 docker swarm leave -f 
+docker stack deploy --compose-file=./docker-compose.yml cluster-name
+docker stack rm cluster-name
 ```
-## docker-compose
-### 查看
-`docker-compose ls`
-### 启动
-`docker-compose up`
-### 停止
-`docker-compose down`
+# docker-compose
+## 简单命令
+- 查看 `docker-compose ls`
+- 启动 `docker-compose up`
+- 停止 `docker-compose down`
+
+# docker-machine
+## 管理远程主机
+堡垒机(docker-machine所在机器)能免密登录远程主机, 登陆后要有免密sudo权限. 可用ssh-keygen和ssh-copy-id达成.
+>docker-machine create --driver generic --generic-ip-address=100.100.154.250 se-hub
+>docker-machine create --driver generic --generic-ip-address=100.100.154.150 se-node
+
+generic的driver适合现成的主机, 以上命令执行后则可将远程主机纳入docker-machine管理.
+## swarm参数
+
 
 # 私人容器
 ## cntlm
@@ -263,9 +276,9 @@ docker run -u root --name jenkins --restart always -d \
 -v /home/tony/jenkins-blueocean-data:/var/jenkins_home \
 -v /home/tony/jenkins-blueocean-data/.ssh:/root/.ssh \
 -v /var/run/docker.sock:/var/run/docker.sock \
--e http_proxy=10.75.76.163:3128 \
--e https_proxy=10.75.76.163:3128 \
--e JAVA_OPTS="-DproxyHost=10.75.76.163 -DproxyPort=3128 -Dhudson.model.DirectoryBrowserSupport.CSP= -Duser.timezone=Asia/Shanghai" \
+-e http_proxy=10.75.76.163hwcntlm:3128 \
+-e https_proxy=10.75.76.163hwcntlm:3128 \
+-e JAVA_OPTS="-DproxyHost=10.75.76.163hwcntlm -DproxyPort=3128 -Dhudson.model.DirectoryBrowserSupport.CSP= -Duser.timezone=Asia/Shanghai" \
 jenkinsci/blueocean
 ```
 ## GIT(gogs)
