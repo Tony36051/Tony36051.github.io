@@ -12,7 +12,7 @@ categories:
 | 时间 | 进度 | 交付件 |
 |--|--|--|
 | 4.09 | 方案、技术选型、元数据 | **总体设计方案.pptx** |
-| 5.25 | 采集、传输、存储 | Only Code
+| 5.25 | 采集、传输、存储 | Only Code 	|
 | 6.01 | 统计、<small>可视化<small> | RF、Cloud Test执行结果统计展示
 | 7.20 | 整合被测应用日志、时间同步 | 关联展示日志片段
 | 8.10 | 人工打Tag | 聚类展示
@@ -226,3 +226,6 @@ public class TreePathPK implements Serializable {
   }  
 }
 ```
+<!--stackedit_data:
+eyJoaXN0b3J5IjpbMTEyNDYxODgxNl19
+-->
