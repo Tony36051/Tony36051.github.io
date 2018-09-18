@@ -3,6 +3,8 @@ title: docker笔记
 date: 2018-04-25 14:14
 tags:
 - docker
+categories:
+- 运维
 ---
 docker的配置要点、常见问题、命令、姿势。
 <!-- more -->
@@ -178,9 +180,11 @@ docker stack rm cluster-name
 ```
 # docker-compose
 ## 简单命令
-- 查看 `docker-compose ls`
-- 启动 `docker-compose up`
-- 停止 `docker-compose down`
+- 查看`docker-compose ls`
+- 启动
+`docker-compose up`
+- 停止
+`docker-compose down`
 
 # docker-machine
 ## 管理远程主机
@@ -537,3 +541,6 @@ RUN pip install -U pip \
     mv /etc/localtime /etc/localtime.bak && cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
 
 ```
+<!--stackedit_data:
+eyJoaXN0b3J5IjpbMjA0MjMxODk1MF19
+-->
