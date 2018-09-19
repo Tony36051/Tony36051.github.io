@@ -876,15 +876,15 @@ vendors:
 
   # Internal version: 1.2.1
   # See: http://VelocityJS.org
-  velocity: //cdn.bootcss.com/velocity/1.3.1/velocity.min.js
+  velocity: //cdn.bootcss.com/velocity/1.2.1/velocity.min.js
 
   # Internal version: 1.2.1
   # See: http://VelocityJS.org
-  velocity_ui: //cdn.bootcss.com/velocity/1.3.1/velocity.ui.min.js
+  velocity_ui: //cdn.bootcss.com/velocity/1.2.1/velocity.ui.min.js
 
   # Internal version: 0.7.9
   # See: https://faisalman.github.io/ua-parser-js/
-  ua_parser: //cdn.bootcss.com/UAParser.js/0.7.12/ua-parser.min.js
+  ua_parser: //cdn.bootcss.com/UAParser.js/0.7.9/ua-parser.min.js
 
   # Internal version: 4.6.2
   # See: http://fontawesome.io/
