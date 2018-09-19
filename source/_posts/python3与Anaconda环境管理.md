@@ -54,8 +54,39 @@ conda config --set show_channel_urls yes
 
 ### 命令
 
-conda create -n py27 python=2.7  创建名为py27的环境, 版本为python2.7
+#### 增删查改环境
+
+conda create -n rf python=3.6  创建名为rf 的环境, 版本为python3.6
 
 conda info -e  命令查看已有的环境
 
 conda remove -n env_name --all来删除指定的环境（如果不添--all参数，而是指明某个库名，则是删除该库）
+
+conda create --name new_env_name --clone old_env_name 复制一个环境
+
+![命令示例](python3与Anaconda环境管理\commands.png)
+
+#### 包管理
+
+activate rf   进入某个环境(rf), 可以看到提示符最左侧已经变化
+
+deactivate 退出环境
+
+conda list 当前环境所有包
+
+conda install -n rf robotframework   在rf环境中安装robotframework包
+
+pip install robotframework   在activate激活rf环境后, 也可以直接使用pip命令
+
+#### 导入导出分享
+
+activate target_env  切换到目标环境
+
+conda env export > environment.yml 导出成为yml文件
+
+conda env create -f environment.yml 导入yml
+
+
+
+
+
