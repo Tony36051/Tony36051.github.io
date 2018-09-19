@@ -6,7 +6,7 @@ tags:
 - Robot Framework
 category:
 - 测试
-
+typora-root-url: python3与Anaconda环境管理
 ---
 
 # 下载
@@ -64,7 +64,7 @@ conda remove -n env_name --all来删除指定的环境（如果不添--all参数
 
 conda create --name new_env_name --clone old_env_name 复制一个环境
 
-![命令示例](python3与Anaconda环境管理\commands.png)
+![命令示例](commands.png)
 
 #### 包管理
 
