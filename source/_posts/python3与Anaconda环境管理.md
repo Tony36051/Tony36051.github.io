@@ -9,6 +9,9 @@ category:
 typora-root-url: python3与Anaconda环境管理
 ---
 
+python安装和环境管理 on windows
+<!--more-->
+
 # 下载
 
 ## python2 vs python3
