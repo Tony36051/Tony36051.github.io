@@ -1,11 +1,11 @@
 ---
-title: pycharm简单使用
+title: pycharm
 categories:
   - 测试
 tags:
   - python
 date: 2018-09-20 23:02:43
-typora-root-url: pycharm安装
+typora-root-url: pycharm简单使用
 ---
 PyCharm是写python工程的利器, 如果是分析数据或单文件的python作业用Jupiter会更合适.
 <!--more-->
@@ -24,11 +24,11 @@ PyCharm是写python工程的利器, 如果是分析数据或单文件的python�
 
 使用默认安装到个人使用的Anaconda的安装目录一般在C:\Users\<username>\Anaconda3, 在安装目录下有envs记录各环境, 其下目录名就是环境名
 
-![创建新环境](/创建新环境.png)
+![](创建新环境.png)
 
 选择Existing interpreter可以选择本地安装的python.exe文件, 可以在python安装目录/Anaconda目录, 但使用独立环境的话, 选择的是环境内的python.exe文件.
 
-![选择本地Conda环境中的解释器](/选择conda环境.png)
+![选择本地Conda环境中的解释器](选择conda环境.png)
 
 ## 模板文件
 
