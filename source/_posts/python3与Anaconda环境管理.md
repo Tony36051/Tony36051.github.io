@@ -44,7 +44,7 @@ python3没有烦人的字符串编码问题, 这个理由已经足够了.
 
 清华的源: https://mirrors.tuna.tsinghua.edu.cn/anaconda/archive/
 
-Anaconda3对应python3, 选择exe的安装版本, 未研究x86和x86_x64有何区别.
+Anaconda3对应python3, 选择exe的安装版本. Anaconda自带python, 所以这里选择版本跟上文一样. 由此一来, 都不用自己手动安装python了.
 
 安装过程中, 如果选择仅安装给个人使用, 推荐用默认路径; 如果要安装在D盘, 建议选择安装给所有人使用.
 
