@@ -3,8 +3,6 @@ title: docker笔记
 date: 2018-04-25 14:14
 tags:
 - docker
-categories:
-- 运维
 ---
 docker的配置要点、常见问题、命令、姿势。
 <!-- more -->
@@ -135,6 +133,9 @@ docker build -t friendlyhello .
 `docker save -o outputImage.tar <repo>/<image>:<tag>`
 ## 加载镜像
 `docker load --input some_image.tar`
+## 重命名镜像
+`docker tag <image_id> <repo>/<image>:<tag>`
+
 ## 启动容器
 ```bash
 docker run -p 4000:80 friendlyhello
@@ -171,20 +172,24 @@ docker network rm
 #容器内获取宿主机ip, 容器内执行
 ip route|awk '/default/ { print $3 }'
 ```
+docker network rm xxx
+报错>daemon: network docker_gwbridge id b5ec2be36c4cd7f3dc0b04e3a20ed3e5a193985ed543a29a751b9740fef896ae has active endpoints
+此时需要看看谁在用这个网络
+docker inspect 
+
 # swarm集群
 ```
 docker swarm init  #(在manager节点输入，此时会建两个网络)
 docker swarm leave -f 
-docker stack deploy --compose-file=./docker-compose.yml cluster-name
+docker stack deploy --compose-file=docker-compose.yml cluster-name
 docker stack rm cluster-name
+docker stack ps cluster-name
 ```
 # docker-compose
 ## 简单命令
-- 查看`docker-compose ls`
-- 启动
-`docker-compose up`
-- 停止
-`docker-compose down`
+- 查看 `docker-compose ls`
+- 启动 `docker-compose up`
+- 停止 `docker-compose down`
 
 # docker-machine
 ## 管理远程主机
@@ -193,8 +198,11 @@ docker stack rm cluster-name
 >docker-machine create --driver generic --generic-ip-address=100.100.154.150 se-node
 
 generic的driver适合现成的主机, 以上命令执行后则可将远程主机纳入docker-machine管理.
-## swarm参数
-
+## 切换机器
+>docker-machine env se-hub
+  eval $(docker-machine env se-hub)
+## swarm
+>
 
 # 私人容器
 ## cntlm
@@ -470,6 +478,49 @@ docker run -d --restart always --name kafka \
 ches/kafka
 ```
 
+## selenium-hub
+### docker-compose.yml
+这个文件是v3版本, 适用于docker stack部署.
+```yml
+version: "3"
+
+services:
+  hub:
+    image: selenium/hub
+    ports:
+      - "4444:4444"
+    environment:
+      - GRID_BROWSER_TIMEOUT=60
+      - GRID_TIMEOUT=90
+    deploy:
+      mode: global
+      placement:
+        constraints:
+          - node.role == manager
+
+  chrome:
+    image: gzwjs/node-chrome-cn # 仅在selenium/node-chrome上加入中文
+    depends_on:
+      - hub
+    environment:
+      - HUB_PORT_4444_TCP_ADDR=hub
+      - HUB_PORT_4444_TCP_PORT=4444
+      - SCREEN_WIDTH=1920
+      - SCREEN_HEIGHT=1080
+     # - SE_OPTS=-host $$HOSTNAME
+    volumes:
+      - /dev/shm:/dev/shm
+    deploy:
+      replicas: 24
+    entrypoint: bash -c 'SE_OPTS="-host $$HOSTNAME -port 5556" /opt/bin/entry_point.sh'
+```
+## cheat sheet
+>docker stack deploy se -c docker-compose.yml
+  docker stack ps se
+  docker service scale --detach=false se_chrome=12
+  docker stack rm se
+
+
 # Dockerfile
 ## RobotFramework执行器
 ```Dockerfile
@@ -541,6 +592,3 @@ RUN pip install -U pip \
     mv /etc/localtime /etc/localtime.bak && cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
 
 ```
-<!--stackedit_data:
-eyJoaXN0b3J5IjpbMjA0MjMxODk1MF19
--->
