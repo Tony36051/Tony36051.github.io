@@ -3,8 +3,6 @@ title: Linux常用命令组合
 date: 2018-05-02 09:57
 tag: 
 - Linux
-categories:
-- 运维
 ---
 身为半个运维人员，日常使用Linux命令组合很多，每次都记不住，特此笔记。
 <!--more-->
@@ -80,7 +78,7 @@ find /opt/soft/log/ -mtime +30 -name "*.log" -exec rm -rf {} \;
 ## vim 粘贴带注释
 >set paste
 
-##
-<!--stackedit_data:
-eyJoaXN0b3J5IjpbMTE2MzU4MTAyOV19
--->
+## Jenkins中命令忽略错误, 返回0
+>command || true  # 无论command是否成功, 都能继续执行后续动作
+
+## 
