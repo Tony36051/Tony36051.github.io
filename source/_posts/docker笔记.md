@@ -61,6 +61,7 @@ sudo vim /etc/docker/daemon.json
 sudo systemctl daemon-reload
 #重启docker
 sudo systemctl restart docker
+
 ```
 # 常见问题
 ## 挂载的volume没有写权限
@@ -185,6 +186,19 @@ docker stack deploy --compose-file=docker-compose.yml cluster-name
 docker stack rm cluster-name
 docker stack ps cluster-name
 ```
+如果需要指定swarm使用的网络, 需要在所有节点先创建docker_gwbridge, 再使用.
+
+```bash
+docker network create \
+--subnet=192.168.2.0/24 \
+--gateway 192.168.2.1 \
+-o com.docker.network.bridge.enable_icc=false \
+-o com.docker.network.bridge.name=docker_gwbridge \
+-o com.docker.network.bridge.enable_ip_masquerade=true \
+docker_gwbridge
+```
+
+
 # docker-compose
 ## 简单命令
 - 查看 `docker-compose ls`
