@@ -81,4 +81,9 @@ find /opt/soft/log/ -mtime +30 -name "*.log" -exec rm -rf {} \;
 ## Jenkins中命令忽略错误, 返回0
 >command || true  # 无论command是否成功, 都能继续执行后续动作
 
-## 
+## shell文件所在目录/当前目录
+```bash
+#!/bin/bash
+cur_dir=`dirname $0`
+docker stack deploy --compose-file ${cur_dir}/docker-compose.yml cco
+```
