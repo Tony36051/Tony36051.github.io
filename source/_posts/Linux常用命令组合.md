@@ -87,3 +87,15 @@ find /opt/soft/log/ -mtime +30 -name "*.log" -exec rm -rf {} \;
 cur_dir=`dirname $0`
 docker stack deploy --compose-file ${cur_dir}/docker-compose.yml cco
 ```
+## nohup
+```bash
+#!/bin/bash
+dir=`dirname $0`
+nohup java -Dhudson.model.DirectoryBrowserSupport.CSP= -Duser.timezone=Asia/Shanghai -jar ${dir}/jenkins.war 2>${dir}/jenkins.log &
+```
+
+```bash
+nohup abc.sh > nohup.log 2>&1 &
+```
+其中2>&1 指将STDERR重定向到前面标准输出定向到的同名文件中，即&1就是nohup.log
+那么结果就是当执行的命令发生标准错误，那么这个错误也会输出到你指定的输出文件中
