@@ -99,3 +99,9 @@ nohup abc.sh > nohup.log 2>&1 &
 ```
 其中2>&1 指将STDERR重定向到前面标准输出定向到的同名文件中，即&1就是nohup.log
 那么结果就是当执行的命令发生标准错误，那么这个错误也会输出到你指定的输出文件中
+在jenkins中需要这样用:
+```bash
+pkill -f excelhelper || true
+BUILD_ID=dontKillMe nohup java -jar ${WORKSPACE}/excelhelper/target/excelhelper-1.0-SNAPSHOT.jar > /tmp/excelhelper.log 2>&1 &
+```
+
