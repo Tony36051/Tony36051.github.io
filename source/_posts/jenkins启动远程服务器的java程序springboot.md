@@ -1,12 +1,12 @@
 ---
-title: Jjenkins启动远程服务器的java程序springboot
+title: jenkins启动远程服务器的java程序springboot
 date: 2018-07-14 
 tags:
 - springboot
 - jenkins
 
 categories:
-- 运维jenkins
+- jenkins
 ---
 jenkins打包springboot程序后, 发送到远程服务器, 然后启动任务. 这次选择了较为偷懒的方式. 
 <!--more-->
@@ -41,6 +41,8 @@ ssh root@remote_host "cd /tmp; nohup java -jar -Dspring.profiles.active=prod /tm
 1. `|| true` 可以让该命令的执行结果返回成功, 让后续步骤可以继续
 2. pkill -f可以匹配部分启动命令,然后kill之. 如果没有找到会返回失败
 3. nohup & 可以使进程后台执行. 重定向结果能让ssh马上返回
-<!--stackedit_data:
-eyJoaXN0b3J5IjpbMTYyODU2NTYxOV19
--->
+如果是本地执行命令, 需要这样:
+```bash
+pkill -f excelhelper || true
+BUILD_ID=dontKillMe nohup java -jar ${WORKSPACE}/excelhelper/target/excelhelper-1.0-SNAPSHOT.jar > /tmp/excelhelper.log 2>&1 &
+```
