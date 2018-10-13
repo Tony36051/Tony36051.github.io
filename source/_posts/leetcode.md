@@ -1,65 +1,11 @@
 ---
 title: leetcode
-date: 2018-09-18
-tags:
-- leetcode
-categories:
-- 算法
+
 ---
 
 无聊时候刷刷题
 <!--more-->
-# 乱入的C++
-```cpp
-class ListNode
-{
-public:
-    int val;
-    ListNode *next;
-    ListNode(int val)
-    {
-        this->val = val;
-        this->next=NULL;
-    }
-};
 
-ListNode* findInsertionPos(ListNode* dummy, ListNode* candidate);
-void insertNode(ListNode* pos, ListNode * node);
-bool isNextValBiggerThanCandidate(ListNode * node, ListNode * candidate);
-ListNode* insertionSortList(ListNode * head)
-{
-    ListNode* dummy = new ListNode(0);
-    ListNode* unsortedPointer = head;
-    ListNode* unsortedNextPointer = NULL;
-    while(unsortedPointer)
-    {
-        unsortedNextPointer = unsortedPointer->next;
-        ListNode* rightPos = findInsertionPos(dummy, unsortedPointer);
-        insertNode(rightPos, unsortedPointer);
-        unsortedPointer = unsortedNextPointer;
-    }
-    return dummy->next;
-
-}
-ListNode* findInsertionPos(ListNode* dummy, ListNode* candidate)
-{
-    ListNode* rightPos = dummy;
-    while(isNextValBiggerThanCandidate(rightPos, candidate))
-    {
-        rightPos = rightPos->next;
-    }
-    return rightPos;
-}
-bool isNextValBiggerThanCandidate(ListNode * node, ListNode * candidate)
-{
-    return node->next && node->next->val < candidate->val;
-}
-void insertNode(ListNode* pos, ListNode * node)
-{
-    node->next = pos->next;
-    pos->next = node;
-}
-```
 # 基本算法
 ## 二分查找
 
@@ -105,6 +51,39 @@ public List<List<Integer>> threeSum(int[] nums) {
     return result;
 }
 ```
-<!--stackedit_data:
-eyJoaXN0b3J5IjpbLTE0MTAyNzczMDZdfQ==
--->
+# 数组
+## Container With Most Water
+最佳答案:
+i++的表达式是计算当前ij组成的容器的容量, 然后双指针往中间靠.
+证明: 
+一开始ij在最左(h[0]]和最右(h[n-1]), 假设最左比最右短(h[i]<h[j]), 此时体积就是含有i的容器中最大的容积(max), 下一次肯定是i++而不是j--, 此时则考虑当前最大值max和h[i]和h[n-1]之前的情况即可.
+```java
+public int maxArea(int[] height) {  
+    int max = 0;  
+    for (int i = 0, j = height.length - 1; i < j; ) {  
+	    int h = height[i] < height[j] ? height[i++] : height[j--];  
+		int b = j - i + 1;  
+		max = Math.max(h * b, max);  
+    }  
+    return max;  
+}
+```
+我的答案.
+我的想法是先算最宽的容器的s,  然后考虑子问题少掉左面一根或者少掉右面一根. 比较三者最大的. 两个子问题可以迅速判断大小, 去掉最左或最右, 中间都一样, 显然去掉短的能获得更大的s. 
+```java
+	public int maxArea(int[] height) {
+        return s(height, 0, height.length - 1);
+    }
+
+    private int s(int[] height, int a, int b) {
+        if (a==b) return 0;
+        int max = (b-a) * Math.min(height[a], height[b]);
+        int part_max = 0;
+        if (height[a]<height[b]){
+            part_max = s(height, a + 1, b);
+        }else{
+            part_max = s(height, a, b - 1);
+        }
+        return Math.max(max, part_max);
+    }
+```
