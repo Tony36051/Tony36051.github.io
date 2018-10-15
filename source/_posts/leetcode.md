@@ -87,3 +87,76 @@ public int maxArea(int[] height) {
         return Math.max(max, part_max);
     }
 ```
+## 
+傻叉版, 需要考虑边界条件太多, n*n*n*logn
+```java
+public int threeSumClosest(int[] nums, int target) {
+        Arrays.sort(nums);
+        int len = nums.length;
+        int minDiff = Integer.MAX_VALUE;
+        int nearestSum = nums[0] + nums[1] + nums[2];
+        for (int i = 0; i < len - 2; i++) {
+            for (int j = i + 1; j < len - 1; j++) {
+                int sum = calculateCurClosestSum(target, nums, i, j);
+                int diff = Math.abs(sum - target);
+                if (diff < minDiff) {
+                    minDiff = diff;
+                    nearestSum = sum;
+                }
+            }
+        }
+        return nearestSum;
+    }
+
+    int calculateCurClosestSum(int target, int[] nums, int i, int j) {
+        int k = Arrays.binarySearch(nums, j + 1, nums.length, target - nums[i] - nums[j]);
+        if (k >= 0) {
+            return target;
+        }
+        int sum = nums[i] + nums[j];
+        k = -1 - k;
+        if (k == nums.length) {
+            sum += nums[k - 1];
+        } else if (k == j+1) {
+            sum += nums[k];
+        } else {
+            int sum1 = sum + nums[k - 1];
+            int sum2 = sum + nums[k];
+            int diff1 = Math.abs(target - sum1);
+            int diff2 = Math.abs(target - sum2);
+            if (diff1 < diff2) {
+                sum = sum1;
+            } else {
+                sum = sum2;
+            }
+        }
+        return sum;
+    }
+```
+最佳答案, 先排序，然后左右夹逼，复杂度 O(n^2)O(n​2​​)。
+```java
+public int threeSumClosest(int[] nums, int target) {
+        Arrays.sort(nums);
+        final int len = nums.length;
+        int minDiff = Integer.MAX_VALUE;
+        int nearestSum = nums[0] + nums[1] + nums[2];
+        for (int i = 0; i < len - 1; i++) {
+            int j = i+1;
+            int k = len-1;
+            while (j < k) {
+                final int sum = nums[i] + nums[j] + nums[k];
+                final int diff = Math.abs(sum - target);
+                if (diff < minDiff) {
+                    minDiff = diff;
+                    nearestSum = sum;
+                }
+                if (sum > target) {
+                    k--;
+                }else{
+                    j++;
+                }
+            }
+        }
+        return nearestSum;
+    }
+```
