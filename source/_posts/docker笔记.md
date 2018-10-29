@@ -546,7 +546,9 @@ FROM python:2.7-slim
 
 MAINTAINER Wu Jiansong <360517703@163.com>
 
-ENV REMOTE_URL=http://localhost:4444/wd/hub
+ENV http_proxy=http://100.100.154.250:3128
+ENV http_proxy=http://100.100.154.250:3128
+ENV REMOTE_URL=http://100.100.154.250:4444/wd/hub
 
 # Install Ubuntu packages
 RUN apt-get update && apt-get install -y --no-install-recommends \
@@ -584,10 +586,11 @@ RUN pip install -U pip \
     xlrd \
     cx-Oracle \
     pyhive \
-    pymysql \
+    pymysql==0.8.0 \
     robotframework \
     dbbot \
-    robotframework-selenium2library \
+    robotframework-selenium2library==3.0.0 \
+    robotframework-pageobjectlibrary \
     robotframework-databaselibrary \
     robotframework-requests \
     robotframework-sshlibrary \
@@ -604,5 +607,6 @@ RUN pip install -U pip \
     >> /usr/local/lib/python2.7/site-packages/RequestsLibrary/RequestsKeywords.py && \
     echo Asia/Shanghai > /etc/timezone && \
     mv /etc/localtime /etc/localtime.bak && cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
-
+ENV http_proxy= \
+    https_proxy=
 ```
