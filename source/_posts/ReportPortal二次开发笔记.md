@@ -79,3 +79,18 @@ db.getCollection('launch').aggregate([
 // TODO
 因为有些日志仅有几个字符差距, 本质上是一样的. 
 使用topic生成, 编辑距离, 还是什么ai算法可以将 `f(logMsg)-->group cond`??
+
+## 两个let赋值语句build之后并行了
+```js
+let curUser = window.localStorage.getItem('curUser')
+let projectName = window.localStorage.getItem(curUser + '_lastInsideHash')
+if (projectName) {
+  projectName = projectName.replace(/\/aimark/gi, '').replace(/#/gi, '')
+} else {
+  projectName = 'wjs-debug'
+}
+```
+这个语句在build之后, 会变成类似以下代码, 导致projectName取不到值
+```js
+var i=window.localStorage.getItem('curUser'), n=window.localStorage.getItem(curUser + '_lastInsideHash')
+```
