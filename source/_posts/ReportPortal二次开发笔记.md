@@ -97,13 +97,13 @@ var i=window.localStorage.getItem('curUser'), n=window.localStorage.getItem(curU
 
 ## Agent修改
 ### 官方与第三方
+第三方关于step的理解比原版更准确, 故使用第三方版本.
 官方:
 https://github.com/reportportal/agent-Python-RobotFramework
-
 第三方:
 https://github.com/ailjushkin/robotframework-reportportal-ng/
 
-第三方关于step的理解比原版更准确, 故使用第三方版本.
+
 ### 修改第三方, 减少依赖
 修改文件: `reportportal_listener/service.py`
 ~~from robot.utils import PY2~~
@@ -112,7 +112,7 @@ import sys
 ~~from urllib3.exceptions import ResponseError~~
 将后文中的ResponseError改为`Exception`
 ### 修改初始化rp, 去掉异常
-reportportal_listener/service.py
+修改文件: `reportportal_listener/service.py`
 ```python
 	@staticmethod
     def init_service(endpoint, project, uuid):
@@ -131,4 +131,11 @@ reportportal_listener/service.py
         # else:
         #     raise Exception("RobotFrameworkService is already initialized.")
 ```
-
+### 修改listener
+修改文件: `reportportal_listener/__init__.py`
+入参name没有使用, 修改方法最后一行. 用name比attributes['longname']更短, 展示的时候更符合testdata时候的结构.
+```python
+	def start_suite(self, name, attributes):
+		if attributes['tests']:  
+	    self.robot_service.start_suite(name=name, suite=suite)
+```
