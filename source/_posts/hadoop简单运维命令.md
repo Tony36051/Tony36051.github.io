@@ -3,8 +3,7 @@ title: Hadoop组件运维命令
 date: 2018-04-06
 tags:
 - hadoop
-categories:
-- BigData
+
 ---
 
 # Hadoop组件运维命令
@@ -57,12 +56,33 @@ hdfs haadmin -failover nn2 nn1
 hdfs haadmin -getServiceState nn1
 ```  
 10. 切换Active的ResourceManager
+
 由于yarn rmadmin不支持-failover命令，只能kill掉active的ResourceManager进程，待切换后再查看 
 ```bash
 yarn rmadmin -getServiceState rm1 #查看状态 
 yarn rmadmin -getServiceState rm2 #查看状态
 ```
 nn1是namenode1，nn2是namenode2. 对应的配置文件是**hdfs-site.xml**
+
+12. 平衡
+
+参考文章:
+[原因](https://community.hortonworks.com/articles/43615/hdfs-balancer-1-100x-performance-improvement.html#)
+[参数](https://community.hortonworks.com/articles/43849/hdfs-balancer-2-configurations-cli-options.html)
+[算法](https://community.hortonworks.com/articles/44148/hdfs-balancer-3-cluster-balancing-algorithm.html)
+任意节点执行: dfsadmin -setBalancerBandwidth 10485760 (=10MB/s)  
+该命令会在两个NameNode节点生效. 后续执行 hdfs balancer 会快很多.  
+默认是每个DataNode节点是1MB/s  
+
+生产环境点对点大约是60MB/s, 这样配置大约会占用六分之一的带宽.  
+不要再设置更大了, 因为多对机器传输累积到网关的速度就很大了.
+
+hdfs balancer命令原本设计是常驻后台进程, 所以默认参数平衡时很慢的. 适用于长期运行, 不影响业务操作. 无限期后台`hdfs balancer -idleiterations -1`
+```bash
+dfsadmin -setBalancerBandwidth 10485760
+hdfs balancer 
+```
+
 ## Hbase
 1. 启动HMaster
 ```bash
