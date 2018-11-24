@@ -104,4 +104,13 @@ nohup abc.sh > nohup.log 2>&1 &
 pkill -f excelhelper || true
 BUILD_ID=dontKillMe nohup java -jar ${WORKSPACE}/excelhelper/target/excelhelper-1.0-SNAPSHOT.jar > /tmp/excelhelper.log 2>&1 &
 ```
+## cp复制覆盖
+cp -fr src dest
+但是因为`cp`在不少服务器被别名为`cp -i`, 所以我们可以这样:
+```bash
+\cp -fr src dest # \取消别名
+yes | cp cp -fr src dest # 让管道自动输入一大堆yes
+``` 
+如果是dos命令` xcopy /y src dest` 来实现强行复制。
+
 
