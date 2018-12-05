@@ -3,6 +3,8 @@ title: Linux常用命令组合
 date: 2018-05-02 09:57
 tag: 
 - Linux
+categories:
+- 运维
 ---
 身为半个运维人员，日常使用Linux命令组合很多，每次都记不住，特此笔记。
 <!--more-->
@@ -114,3 +116,6 @@ yes | cp cp -fr src dest # 让管道自动输入一大堆yes
 如果是dos命令` xcopy /y src dest` 来实现强行复制。
 
 
+<!--stackedit_data:
+eyJoaXN0b3J5IjpbNjQ0MDA5NzMyXX0=
+-->
