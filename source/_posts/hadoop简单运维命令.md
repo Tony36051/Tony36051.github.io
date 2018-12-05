@@ -3,7 +3,8 @@ title: Hadoop组件运维命令
 date: 2018-04-06
 tags:
 - hadoop
-
+categories:
+- BigData
 ---
 
 # Hadoop组件运维命令
@@ -173,3 +174,6 @@ print("sum: %0.2f GB" % (sum * 1.0 / 1024 / 1024 / 1024))
 2. [Hadoop+ZooKeeper+HBase 启动顺序](http://blog.csdn.net/u011414200/article/details/50437356)
 3. [HBASE启动脚本/Shell解析](http://zjushch.iteye.com/blog/1736065)
 4. 
+<!--stackedit_data:
+eyJoaXN0b3J5IjpbLTIwNDUxNDk2N119
+-->
