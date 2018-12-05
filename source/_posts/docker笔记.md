@@ -3,6 +3,8 @@ title: docker笔记
 date: 2018-04-25 14:14
 tags:
 - docker
+categories:
+- 运维
 ---
 docker的配置要点、常见问题、命令、姿势。
 <!-- more -->
@@ -114,6 +116,7 @@ services:
       - "moby:127.0.0.1"
 ```
 
+
 # 常用操作
 ## 调试&生产启动命令
 
@@ -124,7 +127,7 @@ services:
 在实际生产环境使用时，希望以daemon形式、固定的名字运行，最好能自动重启。
 >docker run -d -name mysql5.6 --restart always mysql
 
-# 基本命令
+# 基本常用命令
 ## 构建镜像
 ```bash
 docker build -t target_name <directory>
@@ -199,11 +202,19 @@ docker_gwbridge
 ```
 
 
-# docker-compose
+## swarm集群
+```
+docker swarm init  #(在manager节点输入，此时会建两个网络)
+docker swarm leave -f 
+```
+## docker-compose
 ## 简单命令
-- 查看 `docker-compose ls`
-- 启动 `docker-compose up`
-- 停止 `docker-compose down`
+-# 查看 
+`docker-compose ls`
+-### 启动 
+`docker-compose up`
+-### 停止 
+`docker-compose down`
 
 # docker-machine
 ## 管理远程主机
@@ -548,7 +559,7 @@ MAINTAINER Wu Jiansong <360517703@163.com>
 
 ENV http_proxy=http://100.100.154.250:3128
 ENV http_proxy=http://100.100.154.250:3128
-ENV REMOTE_URL=http://100.100.154.250:4444/wd/hub
+ENV REMOTE_URL=http://100.100.154.250localhost:4444/wd/hub
 
 # Install Ubuntu packages
 RUN apt-get update && apt-get install -y --no-install-recommends \
@@ -610,3 +621,6 @@ RUN pip install -U pip \
 ENV http_proxy= \
     https_proxy=
 ```
+<!--stackedit_data:
+eyJoaXN0b3J5IjpbLTE2MjIxNjk0OTZdfQ==
+-->
