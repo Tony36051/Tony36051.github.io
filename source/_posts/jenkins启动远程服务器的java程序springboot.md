@@ -1,12 +1,12 @@
 ---
-title: jenkins启动远程服务器的java程序springboot
+title: Jjenkins启动远程服务器的java程序springboot
 date: 2018-07-14 
 tags:
 - springboot
 - jenkins
 
 categories:
-- jenkins
+- 运维jenkins
 ---
 jenkins打包springboot程序后, 发送到远程服务器, 然后启动任务. 这次选择了较为偷懒的方式. 
 <!--more-->
@@ -46,3 +46,6 @@ ssh root@remote_host "cd /tmp; nohup java -jar -Dspring.profiles.active=prod /tm
 pkill -f excelhelper || true
 BUILD_ID=dontKillMe nohup java -jar ${WORKSPACE}/excelhelper/target/excelhelper-1.0-SNAPSHOT.jar > /tmp/excelhelper.log 2>&1 &
 ```
+<!--stackedit_data:
+eyJoaXN0b3J5IjpbLTg3NDMzMjA4M119
+-->
