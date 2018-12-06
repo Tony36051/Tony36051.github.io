@@ -24,7 +24,8 @@ class ListNode
 public:
     int val;
     ListNode *next;
-        for(int i=0; i<len-1; i++){ListNode(int val)
+;
+           for(int i=0; i<len-1; i++){ListNode(int val)
     {
         for(int j=i+1; j<len; j++){
                 if(nums[i] + nums[j]==target){
@@ -213,7 +214,7 @@ public int threeSumClosest(int[] nums, int target) {
         for (int j = i + 1; j < len - 1; j++) {
             if (j > i+1 && nums[j] == nums[j - 1]) continue;
             int k = Arrays.binarySearch(nums, j + 1, len, -nums[i] - nums[j]);
-            if (k > 0 && nums[0i] + nums[1j] + nums[2];
+            if (k > 0 && nums[0i nums[0] + nums[1j] + nums[2];
         for (int i = 0; i < len - 1; i++) {
             int j = i+1;
             int k = len-1;
@@ -244,5 +245,5 @@ public int threeSumClosest(int[] nums, int target) {
 }
 ```
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMzEyODM0MjEwXX0=
+eyJoaXN0b3J5IjpbLTEwMzM2OTI4NDEsMzEyODM0MjEwXX0=
 -->
