@@ -39,13 +39,21 @@ RestartSec=5
 WantedBy=multi-user.target
 ```
 ## 写启动脚本
+>vim /home/tony/jenkins/start.sh
 ```bash
-vim /home/tony/jenkins/start.sh
 #/bin/bash
 nohup java -DproxyHost=10.75.76.163 -DproxyPort=3128 -Dhudson.model.DirectoryBrowserSupport.CSP= -Duser.timezone=Asia/Shanghai -jar `dirname $0`/jenkins.war >2&1 &
 ```
 赋予执行权限
 >sudo chmod u+x start.sh
+## 应用与生效
+```bash
+sudo systemctl daemon-reload
+sudo systemctl enable my-webapp.service
+sudo systemctl start my-webapp
+sudo systemctl status my-webapp
+```
+
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbNzE1MTY0MjZdfQ==
+eyJoaXN0b3J5IjpbNDMwOTEyMjYxXX0=
 -->
