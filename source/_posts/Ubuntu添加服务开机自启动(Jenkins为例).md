@@ -8,8 +8,12 @@ categories:
 - 运维
 
 ---
-翻译一篇gu
+翻译一篇国外添加自启动服务到systemd的文章.
 <!--more-->
+# 背景
+今天重启执行机, 又忘记开Jenkins了, 还是改成自启动吧.
+# 实现
+
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTkwNDc4NDk4OV19
+eyJoaXN0b3J5IjpbMjA4MjY2MTkyM119
 -->
