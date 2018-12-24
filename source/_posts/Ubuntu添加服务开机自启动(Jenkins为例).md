@@ -38,7 +38,14 @@ RestartSec=5
 [Install]
 WantedBy=multi-user.target
 ```
-## 写启动jiaobe
+## 写启动脚本
+```bash
+vim /home/tony/jenkins/start.sh
+#/bin/bash
+nohup java -DproxyHost=10.75.76.163 -DproxyPort=3128 -Dhudson.model.DirectoryBrowserSupport.CSP= -Duser.timezone=Asia/Shanghai -jar `dirname $0`/jenkins.war >2&1 &
+```
+赋予执行权限
+>sudo chmod u+x start.sh
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTg1NDk1MjQzNV19
+eyJoaXN0b3J5IjpbNzE1MTY0MjZdfQ==
 -->
