@@ -42,7 +42,7 @@ WantedBy=multi-user.target
 nohup java -DproxyHost=10.75.76.163 -DproxyPort=3128 -Dhudson.model.DirectoryBrowserSupport.CSP= -Duser.timezone=Asia/Shanghai -jar `dirname $0`/jenkins.war >2&1 &
 ```
 赋予执行权限
->sudo chmod u+x > /home/tony/jenkins/start.sh
+>sudo chmod u+x > /home/tony/jenkins/jenkins/start.sh
 
 ## 应用与生效
 ```bash
@@ -53,6 +53,6 @@ sudo systemctl status jenkins
 ```
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTE0MjczMjgwNCwtMzgzNDEzNzkwLDQzMD
-kxMjI2MV19
+eyJoaXN0b3J5IjpbNTExMzUwMTEsLTE0MjczMjgwNCwtMzgzND
+EzNzkwLDQzMDkxMjI2MV19
 -->
