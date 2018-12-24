@@ -29,11 +29,8 @@ WorkingDirectory=/home/tony/jenkins
 
 #path to executable. 
 #executable is a bash script which calls jar file
-ExecStart=/home/tony/jenkins/start.sh
-SuccessExitStatus=143
-TimeoutStopSec=10
+ExecStart=/usr/bin/java -jar /home/jenkins_user/jenkins.war
 Restart=on-failure
-RestartSec=5
 
 [Install]
 WantedBy=multi-user.target
@@ -56,5 +53,6 @@ sudo systemctl status jenkins
 ```
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTM4MzQxMzc5MCw0MzA5MTIyNjFdfQ==
+eyJoaXN0b3J5IjpbLTE0MjczMjgwNCwtMzgzNDEzNzkwLDQzMD
+kxMjI2MV19
 -->
