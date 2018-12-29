@@ -43,7 +43,8 @@ v 8 打电话 过程 中 断 移动 [1, 11, 1, 1, 1, 1, 1]
 1. num_words参数限制了转换后的word_index为[1,20]
 2. 所有低频的词都认为是oov_token(</s>)了
 3. 统计词频的word_count比word_index少一项, 就是没有统计</s>的词频. 如果统计了, 应该是词频最高的词之一了.
-4. 实际上是将低频词(词频在前num_words开外)的词都认为是一个词(低频词), 在词向量里面用一个在0的正态分布随机向量代替, 即yuxu
+4. 实际上是将低频词(词频在前num_words开外)的词都认为是一个词(低频词), 在词向量里面用一个在0的正态分布随机向量代替, 即预训练权重中unk未知词.
+
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTE4OTM2NjY3ODIsNDg0MzcxNjIwXX0=
+eyJoaXN0b3J5IjpbOTY0NDA5NDQyLDQ4NDM3MTYyMF19
 -->
