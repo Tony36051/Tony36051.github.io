@@ -40,7 +40,8 @@ plus 标配 版 中国移动 全 网通 定制 版本 3 gb + 32 gb ( toronto-tl 
 v 8 打电话 过程 中 断 移动 [1, 11, 1, 1, 1, 1, 1]
 ```
 ## 观察
-1. 最长20
+1. num_words参数限制了转换后的word_index为[1,20]
+2. 所有低频的词都r
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTEzMDc1NTQ4NzMsNDg0MzcxNjIwXX0=
+eyJoaXN0b3J5IjpbLTMyMDEyNTkyMCw0ODQzNzE2MjBdfQ==
 -->
