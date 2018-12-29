@@ -8,7 +8,8 @@ categories:
 ---
 使用Keras的Tokenizer的一些笔记
 <!--more-->
-## 
+## 例子
+
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTcwMDkzNzc4N119
+eyJoaXN0b3J5IjpbNDg0MzcxNjIwXX0=
 -->
