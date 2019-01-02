@@ -29,20 +29,12 @@ WorkingDirectory=/home/tony/jenkins
 
 #path to executable. 
 #executable is a bash script which calls jar file
-ExecStart=/usr/bin/java -jar /home/jenkins_user/jenkins.war
+ExecStart=/usr/bin/java -DproxyHost=10.75.76.163 -DproxyPort=3128 -Dhudson.model.DirectoryBrowserSupport.CSP= -Duser.timezone=Asia/Shanghai -jar `dirname $0`/jenkins.war
 Restart=on-failure
 
 [Install]
 WantedBy=multi-user.target
 ```
-## 写启动脚本
->vim /home/tony/jenkins/start.sh
-```bash
-#/bin/bash
-nohup java -DproxyHost=10.75.76.163 -DproxyPort=3128 -Dhudson.model.DirectoryBrowserSupport.CSP= -Duser.timezone=Asia/Shanghai -jar `dirname $0`/jenkins.war >2&1 &
-```
-赋予执行权限
->sudo chmod u+x > /home/tony/jenkins/jenkins/start.sh
 
 ## 应用与生效
 ```bash
@@ -53,6 +45,6 @@ sudo systemctl status jenkins
 ```
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbNTExMzUwMTEsLTE0MjczMjgwNCwtMzgzND
-EzNzkwLDQzMDkxMjI2MV19
+eyJoaXN0b3J5IjpbMTU2NjcxNTU3NCw1MTEzNTAxMSwtMTQyNz
+MyODA0LC0zODM0MTM3OTAsNDMwOTEyMjYxXX0=
 -->
