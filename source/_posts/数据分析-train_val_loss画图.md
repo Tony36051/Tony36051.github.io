@@ -103,13 +103,9 @@ def training_vis(hist):
     ax2.set_title('Accuracy  on Training and Validation Data')
     ax2.legend()
     plt.tight_layout()
---------------------- 
-作者：GoHust_Liu 
-来源：CSDN 
-原文：https://blog.csdn.net/qq_33039859/article/details/79439534 
-版权声明：本文为博主原创文章，转载请附上博文链接！
 ```
+
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTM4NjQ4MTE4NSwtNjIwODA2OTU0LDQxNz
+eyJoaXN0b3J5IjpbMTk5NTY1NTk3MywtNjIwODA2OTU0LDQxNz
 I1MjA2Ml19
 -->
