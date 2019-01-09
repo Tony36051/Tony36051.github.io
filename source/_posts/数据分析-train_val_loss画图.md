@@ -1,12 +1,12 @@
 ---
 title: 数据分析-train_val_loss画图
-date: 2019-01-09
+date: 2019-01-09 16:52
 tag:
 - 数据分析
 categories:
 - AI
 ---
-以工单分类为例
+在训练过程中, 需
 <!--more-->
 # 术语实体
 有字典最好, 没有的话从训练集挖掘一下.
@@ -22,5 +22,5 @@ categories:
 6. pseg.cut() 按词性过滤后, 紧密关联, 按char划分取(1,8) gram
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbNzcwMTcwMDc3XX0=
+eyJoaXN0b3J5IjpbMTUyMDM3OTg0OV19
 -->
