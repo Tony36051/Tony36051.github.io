@@ -78,34 +78,49 @@ model.fit(x_train, y_train, epochs=10,
 # 事后画图: keras的history
 ```python
 # define the function
-def training_vis(hist):
-    loss = hist.history['loss']
-    val_loss = hist.history['val_loss']
-    acc = hist.history['acc']
-    val_acc = hist.history['val_acc']
+class LossHistory(keras.callbacks.Callback):
+    def on_train_begin(self, logs={}):
+        self.losses = {'batch': [], 'epoch': []}
+        self.accuracy = {'batch': [], 'epoch': []}
+        self.val_loss = {'batch': [], 'epoch': []}
+        self.val_acc = {'batch': [], 'epoch': []}
 
-    # make a figure
-    fig = plt.figure(figsize=(8,4))
-    # subplot loss
-    ax1 = fig.add_subplot(121)
-    ax1.plot(loss,label='train_loss')
-    ax1.plot(val_loss,label='val_loss')
-    ax1.set_xlabel('Epochs')
-    ax1.set_ylabel('Loss')
-    ax1.set_title('Loss on Training and Validation Data')
-    ax1.legend()
-    # subplot acc
-    ax2 = fig.add_subplot(122)
-    ax2.plot(acc,label='train_acc')
-    ax2.plot(val_acc,label='val_acc')
-    ax2.set_xlabel('Epochs')
-    ax2.set_ylabel('Accuracy')
-    ax2.set_title('Accuracy  on Training and Validation Data')
-    ax2.legend()
-    plt.tight_layout()
+    def on_batch_end(self, batch, logs={}):
+        self.losses['batch'].append(logs.get('loss'))
+        self.accuracy['batch'].append(logs.get('acc'))
+        self.val_loss['batch'].append(logs.get('val_loss'))
+        self.val_acc['batch'].append(logs.get('val_acc'))
+
+    def on_epoch_end(self, batch, logs={}):
+        self.losses['epoch'].append(logs.get('loss'))
+        self.accuracy['epoch'].append(logs.get('acc'))
+        self.val_loss['epoch'].append(logs.get('val_loss'))
+        self.val_acc['epoch'].append(logs.get('val_acc'))
+
+    def loss_plot(self, loss_type):
+        iters = range(len(self.losses[loss_type]))
+        #创建一个图
+        plt.figure()
+        # acc
+        plt.plot(iters, self.accuracy[loss_type], 'r', label='train acc')#plt.plot(x,y)，这个将数据画成曲线
+        # loss
+        plt.plot(iters, self.losses[loss_type], 'g', label='train loss')
+        if loss_type == 'epoch':
+            # val_acc
+            plt.plot(iters, self.val_acc[loss_type], 'b', label='val acc')
+            # val_loss
+            plt.plot(iters, self.val_loss[loss_type], 'k', label='val loss')
+        plt.grid(True)#设置网格形式
+        plt.xlabel(loss_type)
+        plt.ylabel('acc-loss')#给x，y轴加注释
+        plt.legend(loc="upper right")#设置图例显示位置
+        plt.show()
+
+#创建一个实例LossHistory
+history = LossHistory()
 ```
-
+```
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTk5NTY1NTk3MywtNjIwODA2OTU0LDQxNz
+eyJoaXN0b3J5IjpbLTI5NjExOTA4NSwtNjIwODA2OTU0LDQxNz
 I1MjA2Ml19
 -->
