@@ -75,6 +75,8 @@ model.fit(x_train, y_train, epochs=10,
           validation_data=(x_test, y_test),
           callbacks=[TrainValTensorBoard(write_graph=False)])
 ```
+#
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTYyMDgwNjk1NCw0MTcyNTIwNjJdfQ==
+eyJoaXN0b3J5IjpbLTExMDQ0MDExMzksLTYyMDgwNjk1NCw0MT
+cyNTIwNjJdfQ==
 -->
