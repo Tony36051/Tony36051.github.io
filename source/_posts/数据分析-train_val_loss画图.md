@@ -1,6 +1,6 @@
 ---
 title: 数据分析-train_val_loss画图
-date: 2018-12-05 20:41
+date: 2019-01-09
 tag:
 - 数据分析
 categories:
@@ -22,5 +22,5 @@ categories:
 6. pseg.cut() 按词性过滤后, 紧密关联, 按char划分取(1,8) gram
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTUyODE3MzI5NV19
+eyJoaXN0b3J5IjpbNzcwMTcwMDc3XX0=
 -->
