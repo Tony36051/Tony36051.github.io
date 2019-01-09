@@ -9,7 +9,7 @@ categories:
 在训练过程中, 常需要查看train/val的loss图, 看是否拟合/过拟合.
 <!--more-->
 # TensorBoard在训练过程中
-在
+新建一个类, 封装TensorBoard的callback, keras实现.
 ```python
 class TrainValTensorBoard(TensorBoard):
     def __init__(self, log_dir='./logs', **kwargs):
@@ -47,6 +47,34 @@ class TrainValTensorBoard(TensorBoard):
         super(TrainValTensorBoard, self).on_train_end(logs)
         self.val_writer.close()
 ```
+使用
+```python
+from tensorflow.keras.datasets import mnist
+from tensorflow.keras.models import Sequential
+from tensorflow.keras.layers import Dense
+from tensorflow.train import AdamOptimizer
+
+tf.enable_eager_execution()
+
+(x_train, y_train), (x_test, y_test) = mnist.load_data()
+x_train = x_train.reshape(60000, 784)
+x_test = x_test.reshape(10000, 784)
+x_train = x_train.astype('float32')
+x_test = x_test.astype('float32')
+x_train /= 255
+x_test /= 255
+y_train = y_train.astype(int)
+y_test = y_test.astype(int)
+
+model = Sequential()
+model.add(Dense(64, activation='relu', input_shape=(784,)))
+model.add(Dense(10, activation='softmax'))
+model.compile(loss='sparse_categorical_crossentropy', optimizer=AdamOptimizer(), metrics=['accuracy'])
+
+model.fit(x_train, y_train, epochs=10,
+          validation_data=(x_test, y_test),
+          callbacks=[TrainValTensorBoard(write_graph=False)])
+```
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMjMzMjE1ODg2LDQxNzI1MjA2Ml19
+eyJoaXN0b3J5IjpbMTg5MjQyOTAwNiw0MTcyNTIwNjJdfQ==
 -->
