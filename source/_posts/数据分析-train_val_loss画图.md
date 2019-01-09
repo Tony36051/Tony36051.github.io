@@ -47,7 +47,7 @@ class TrainValTensorBoard(TensorBoard):
         super(TrainValTensorBoard, self).on_train_end(logs)
         self.val_writer.close()
 ```
-使用
+使用上就在callbacks列表中加入类的实例即可.
 ```python
 from tensorflow.keras.datasets import mnist
 from tensorflow.keras.models import Sequential
@@ -76,5 +76,5 @@ model.fit(x_train, y_train, epochs=10,
           callbacks=[TrainValTensorBoard(write_graph=False)])
 ```
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTg5MjQyOTAwNiw0MTcyNTIwNjJdfQ==
+eyJoaXN0b3J5IjpbLTYyMDgwNjk1NCw0MTcyNTIwNjJdfQ==
 -->
