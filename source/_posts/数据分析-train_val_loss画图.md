@@ -119,8 +119,19 @@ class LossHistory(keras.callbacks.Callback):
 #创建一个实例LossHistory
 history = LossHistory()
 ```
+```python
+model.fit(X_train, Y_train,
+            batch_size=batch_size, nb_epoch=nb_epoch,
+            verbose=1,
+            validation_data=(X_test, Y_test),
+            callbacks=[history])#callbacks回调，将数据传给history
+
+```
+```python
+history.loss_plot('epoch')
+history.loss_plot('batch')
 ```
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTI5NjExOTA4NSwtNjIwODA2OTU0LDQxNz
-I1MjA2Ml19
+eyJoaXN0b3J5IjpbLTEwNzYwNjkxNDcsLTYyMDgwNjk1NCw0MT
+cyNTIwNjJdfQ==
 -->
