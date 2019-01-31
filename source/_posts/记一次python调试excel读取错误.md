@@ -30,8 +30,26 @@ Traceback (most recent call last):
 从日志可以看到, 在打开文件的时候就报错了, 大约在do_sheet中, 在取`visibility_map`时发生`KeyError: 'null'`
 
 ## 走读代码
-
+```python
+    def do_sheet(self, elem):
+        bk = self.bk
+        sheetx = bk.nsheets
+        # print elem.attrib
+        rid = elem.get(U_ODREL + 'id')
+        sheetId = int(elem.get('sheetId'))
+        name = unescape(ensure_unicode(elem.get('name')))
+        reltype = self.relid2reltype[rid]
+        target = self.relid2path[rid]
+        # 此处省略几行
+        state = elem.get('state')
+        visibility_map = {
+            None: 0,
+            'visible': 0,
+            'hidden': 1,
+            'veryHidden': 2
+            }
+```
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTE4OTQwMjA3NDIsNzA0OTE1MTA4XX0=
+eyJoaXN0b3J5IjpbLTE4MjkwNzU3OTgsNzA0OTE1MTA4XX0=
 -->
