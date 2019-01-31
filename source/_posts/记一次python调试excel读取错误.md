@@ -74,9 +74,13 @@ Traceback (most recent call last):
 可以看到sheet这个节点真的有属性state, 其值为null, 根据xlrd的标准来看, 这个值不对. 询问了测试人员, 没有对该文件修改, 从系统直接下载一份新的文件, 也是有这个属性. 至此基本实锤了是开发写错了. 
 那么, 开发又是怎么写错的呢? 我们再去看看java端的代码, 由于没有开发的代码库, 盲猜一下.
 ## 溯源POI
-在Java世界
+在Java世界说到操作excel, POI是首选, 那么查看一下文档, 发现有几个可以操作sheet也是否可见的接口
+```java
+
+```
+
 
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMzExMDU4MjMzLDcwNDkxNTEwOF19
+eyJoaXN0b3J5IjpbLTE3OTY3NzY4MjksNzA0OTE1MTA4XX0=
 -->
