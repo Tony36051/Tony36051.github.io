@@ -71,9 +71,12 @@ Traceback (most recent call last):
     <calcPr xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main" calcId="0" />
 </workbook>
 ```
-可以看到sheet这个节点真的有属性state, 其值为null, 根据xlrd的标准来看, 这个值不对. 询问了测试人员, 没有
+可以看到sheet这个节点真的有属性state, 其值为null, 根据xlrd的标准来看, 这个值不对. 询问了测试人员, 没有对该文件修改, 从系统直接下载一份新的文件, 也是有这个属性. 至此基本实锤了是开发写错了. 
+那么, 开发又是怎么写错的呢? 我们再去看看java端的代码, 由于没有开发的代码库, 盲猜一下.
+## 溯源POI
+在Java世界
 
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTQ5ODI0NzY5NSw3MDQ5MTUxMDhdfQ==
+eyJoaXN0b3J5IjpbMzExMDU4MjMzLDcwNDkxNTEwOF19
 -->
