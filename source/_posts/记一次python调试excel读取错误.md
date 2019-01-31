@@ -49,8 +49,11 @@ Traceback (most recent call last):
             'veryHidden': 2
             }
 ```
-在调试器查看对象的属性`elem.items()`, 返回的list(tuple)中, 有这么一项`('state', 'null')` 跟日志一致.
+在调试器查看对象的属性`elem.items()`, 返回的list(tuple)中, 有这么一项`('state', 'null')` 跟日志一致. 为什么会有这个属性呢, 查看了xlrd最新的代码, 在visibility_map里面确实只有这几个key啊, 不存在`null`这个key.
+
+## 打开excel看看
+众所周知, xlsx文件其实外层是一个zip压缩格式, 用7zzhijiedaik
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTYzODA0ODk2NCw3MDQ5MTUxMDhdfQ==
+eyJoaXN0b3J5IjpbMTU0NTYzMjc2Nyw3MDQ5MTUxMDhdfQ==
 -->
