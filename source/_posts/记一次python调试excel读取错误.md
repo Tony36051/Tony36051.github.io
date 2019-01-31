@@ -10,7 +10,11 @@ categories:
 ---
 日常工作之一就是帮助合作方解决自动化问题, 今天的问题是python写的Robotframework扩展库ExcelRobot在读取xlsx报错, 同样的文件昨天还是OK的. 带着疑惑开始debug
 <!--more-->
-## 缘起
+## 日志
+将Robotframework的执行日志调到trace, 获取报告如下:
+```
+Traceback (most recent call last): File "D:\python\lib\site-packages\robotframework_excel-1.0.0b4-py2.7.egg\ExcelRobot\base.py", line 33, in open_excel self.reader = ExcelReader(file_path, self.date_format, self.number_format, self.bool_format) File "D:\python\lib\site-packages\robotframework_excel-1.0.0b4-py2.7.egg\ExcelRobot\reader.py", line 21, in __init__ self._workbook = open_workbook(self.file_path, formatting_info=self.is_xls, on_demand=True) File "D:\python\lib\site-packages\xlrd\__init__.py", line 143, in open_workbook ragged_rows=ragged_rows, File "D:\python\lib\site-packages\xlrd\xlsx.py", line 808, in open_workbook_2007_xml x12book.process_stream(zflo, 'Workbook') File "D:\python\lib\site-packages\xlrd\xlsx.py", line 265, in process_stream meth(self, elem) File "D:\python\lib\site-packages\xlrd\xlsx.py", line 391, in do_sheet bk._sheet_visibility.append(visibility_map[state])
+```
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMjAyNzc3NTEyMF19
+eyJoaXN0b3J5IjpbLTQ4MjEwMzQxNF19
 -->
