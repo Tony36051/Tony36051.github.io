@@ -55,11 +55,25 @@ Traceback (most recent call last):
 众所周知, xlsx文件其实外层是一个zip压缩格式, 用7z直接打开或将后缀名改为zip解压即可. docx和pptx也一样.
 在`xl/workbook.xml`文件中, 可以看到如下内容
 ```xml
-
+<?xml version="1.0" encoding="UTF-8"?>
+<workbook xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:x15="http://schemas.microsoft.com/office/spreadsheetml/2010/11/main">
+    <fileVersion xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main" appName="xl" lastEdited="6" lowestEdited="6" rupBuild="14420" />
+    <workbookPr xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main" defaultThemeVersion="124226" />
+    <bookViews xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main">
+        <workbookView xWindow="0" yWindow="0" windowWidth="17208" windowHeight="10512" />
+    </bookViews>
+    <sheets>
+        <sheet name="A Material" sheetId="2" state="null" r:id="rId66cdf1e0-93bc-4c96-9369-4f0664e2752b" />
+    </sheets>
+    <definedNames xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main">
+        <definedName name="_xlnm._FilterDatabase" localSheetId="0" hidden="1">'A Material'!$A$1:$O$1</definedName>
+    </definedNames>
+    <calcPr xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main" calcId="0" />
+</workbook>
 ```
-
+可以看到sheet这个节点真的有属性state, 其值为null, 根据xlrd的标准来看, 这个值不对. 询问了测试人员, 没有
 
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTkxMzUzMDY3Myw3MDQ5MTUxMDhdfQ==
+eyJoaXN0b3J5IjpbLTQ5ODI0NzY5NSw3MDQ5MTUxMDhdfQ==
 -->
