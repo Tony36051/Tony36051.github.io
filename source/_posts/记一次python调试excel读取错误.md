@@ -76,11 +76,14 @@ Traceback (most recent call last):
 ## 溯源POI
 在Java世界说到操作excel, POI是首选, 那么查看一下文档, 发现有几个可以操作sheet也是否可见的接口
 ```java
-
+void	setSheetHidden(int sheetIx, boolean hidden)
+Hide or unhide a sheet.
+void	setSheetVisibility(int sheetIx, SheetVisibility visibility)
+Hide or unhide a sheet.
 ```
-
+从入参来看, 不可能是setSheetHidden, 以为Java必须要设初始值, 而原始类型的hidden的值只能是true/false, 基本确定开发用的是下面的变量, 但
 
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTE3OTY3NzY4MjksNzA0OTE1MTA4XX0=
+eyJoaXN0b3J5IjpbMTQxNDE3OTc1Miw3MDQ5MTUxMDhdfQ==
 -->
