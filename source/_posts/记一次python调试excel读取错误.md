@@ -27,7 +27,11 @@ Traceback (most recent call last):
   File "D:\python\lib\site-packages\xlrd\xlsx.py", line 391, in do_sheet
     bk._sheet_visibility.append(visibility_map[state])
 ```
-从日志可以看到, 在打开文件的时候就报错了, 大约在do_sheet中, 在取`visibility_map`时候
+从日志可以看到, 在打开文件的时候就报错了, 大约在do_sheet中, 在取`visibility_map`时发生`KeyError: 'null'`
+
+## 走读代码
+
+
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbNzA0OTE1MTA4XX0=
+eyJoaXN0b3J5IjpbLTE4OTQwMjA3NDIsNzA0OTE1MTA4XX0=
 -->
