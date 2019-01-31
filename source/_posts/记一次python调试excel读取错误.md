@@ -52,8 +52,14 @@ Traceback (most recent call last):
 在调试器查看对象的属性`elem.items()`, 返回的list(tuple)中, 有这么一项`('state', 'null')` 跟日志一致. 为什么会有这个属性呢, 查看了xlrd最新的代码, 在visibility_map里面确实只有这几个key啊, 不存在`null`这个key.
 
 ## 打开excel看看
-众所周知, xlsx文件其实外层是一个zip压缩格式, 用7zzhijiedaik
+众所周知, xlsx文件其实外层是一个zip压缩格式, 用7z直接打开或将后缀名改为zip解压即可. docx和pptx也一样.
+在`xl/workbook.xml`文件中, 可以看到如下内容
+```xml
+
+```
+
+
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTU0NTYzMjc2Nyw3MDQ5MTUxMDhdfQ==
+eyJoaXN0b3J5IjpbLTkxMzUzMDY3Myw3MDQ5MTUxMDhdfQ==
 -->
