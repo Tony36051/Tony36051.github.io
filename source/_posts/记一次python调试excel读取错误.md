@@ -81,9 +81,10 @@ Hide or unhide a sheet.
 void	setSheetVisibility(int sheetIx, SheetVisibility visibility)
 Hide or unhide a sheet.
 ```
-从入参来看, 不可能是setSheetHidden, 以为Java必须要设初始值, 而原始类型的hidden的值只能是true/false, 基本确定开发用的是下面的变量, 但
+从入参来看, 不可能是setSheetHidden, 以为Java必须要设初始值, 而原始类型的hidden的值只能是true/false, 基本确定开发用的是下面的变量.
+由于还没问开发, 目前就先到这里吧.
 
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTQxNDE3OTc1Miw3MDQ5MTUxMDhdfQ==
+eyJoaXN0b3J5IjpbOTkwMjQ2MzU1LDcwNDkxNTEwOF19
 -->
