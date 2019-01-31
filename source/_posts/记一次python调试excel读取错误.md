@@ -49,7 +49,8 @@ Traceback (most recent call last):
             'veryHidden': 2
             }
 ```
+在调试器查看对象的属性`elem.items()`, 返回的list(tuple)中, 有这么一项`('state', 'null')` 跟日志一致.
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTE4MjkwNzU3OTgsNzA0OTE1MTA4XX0=
+eyJoaXN0b3J5IjpbMTYzODA0ODk2NCw3MDQ5MTUxMDhdfQ==
 -->
