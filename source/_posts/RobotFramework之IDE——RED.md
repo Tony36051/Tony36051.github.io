@@ -4,12 +4,11 @@ categories:
   - 测试
 tags:
   - RobotFramework
-date: 2018-09-22 19:45:10
-typora-root-url: RobotFramework入门级概览
+date: 2019-03-21 19:45:10
 ---
 基于RobotFramework官方的Quick Start简化而成, 包括了安装, 编写, 执行, 查看等基本流程.
 <!--more-->
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTQ3OTE0ODU3N119
+eyJoaXN0b3J5IjpbMTgwODkzMjM3XX0=
 -->
