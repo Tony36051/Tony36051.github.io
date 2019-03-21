@@ -1,5 +1,5 @@
 ---
-title: RobotFramework入门级概览
+title: RobotFramework之IDE——RED
 categories:
   - 测试
 tags:
@@ -11,5 +11,5 @@ typora-root-url: RobotFramework入门级概览
 <!--more-->
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTE0NTUxNjk4MTddfQ==
+eyJoaXN0b3J5IjpbLTQ3OTE0ODU3N119
 -->
