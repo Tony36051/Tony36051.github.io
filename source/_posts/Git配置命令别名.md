@@ -1,13 +1,13 @@
 ---
 title: Git配置命令别名
-date: 2019-03-25 14:14
+date: 2019-03-21 10:14
 tags:
-- docker
+- git
 categories:
-- 运维
+- 小技巧
 ---
-docker的配置要点、常见问题、命令、姿势。
+有时候会忘记git命令，或者手快敲错，配置别名减少记忆，减少s
 <!-- more -->
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTA4MTIyNjQ4OV19
+eyJoaXN0b3J5IjpbLTEwNDIyMzk2NDJdfQ==
 -->
