@@ -1,15 +1,29 @@
 ---
-title: Centos 6/7的防火墙pei
-date: 2018-05-14
+title: Centos 6/7的防火墙配置
+date: 2017-08-23
 tags:
-- avro
-- 序列化
-categories:
-- BbigDdata
-
+- Linux
 ---
-测试岗位却不甘止步于业务测试，遂尝试智能化测试，当前的思路是通过日志大数据分析，协助自动化用例的诊断和建议。其中传输协议打算使用avro，原因是使用hadoop集群。本文记录官网入门步骤中未尽之处与项目实际应用经验
+Centos 6/7的防火墙配置略有差异，仅作小记。
 <!--more-->
+## Centos 6 防火墙端口
+```bash
+iptables -I INPUT -p tcp --dport 8080 -j ACCEPT #开启8080端口  
+iptables save #保存配置  
+iptables restart #重启服务  
+```
+
+
+## Centos 7 
+开启端口
+firewall-cmd --zone=public --add-port=80/tcp --permanent
+命令含义：
+--zone #作用域
+--add-port=80/tcp  #添加端口，格式为：端口/通讯协议
+--permanent  #永久生效，没有此参数重启后失效
+
+重启防火墙
+firewall-cmd --reload
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTg0NjUxMzM5MV19
+eyJoaXN0b3J5IjpbLTI3NDg3MDU0OV19
 -->
