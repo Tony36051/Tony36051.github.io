@@ -27,13 +27,17 @@ iptables restart #重启服务
 > firewall-cmd --reload
 
 ## mermaid
-​```mermaid
-graph LR
-A[Hard edge] -->B(Round edge)
-    B --> C{Decision}
-    C -->|One| D[Result one]
-    C -->|Two| E[Result two]
-​```
+
+```flow
+st=>start: Start
+e=>end
+op=>operation: My Operation
+cond=>condition: Yes or No?
+
+st->op->cond
+cond(yes)->e
+cond(no)->op
+```
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTYyNDgwMDQ4NiwxMjg2ODkwMzMzXX0=
+eyJoaXN0b3J5IjpbLTEyNDM5NzU3ODEsMTI4Njg5MDMzM119
 -->
