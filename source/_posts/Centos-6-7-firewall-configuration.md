@@ -26,6 +26,14 @@ iptables restart #重启服务
 重启防火墙
 > firewall-cmd --reload
 
+## mermaid
+​```mermaid
+graph LR
+A[Hard edge] -->B(Round edge)
+    B --> C{Decision}
+    C -->|One| D[Result one]
+    C -->|Two| E[Result two]
+​```
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTI4Njg5MDMzM119
+eyJoaXN0b3J5IjpbMTYyNDgwMDQ4NiwxMjg2ODkwMzMzXX0=
 -->
