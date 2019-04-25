@@ -13,7 +13,15 @@ date: 2019-04-24 11:26:26
 ```
 如果这里的`${Url_A3}`没有定义，会报错`Non-existing variable '${Url_A3}'.`
 
+### 打开chromedriver时候，增加（命令行）参数
+```
+${args_list}	Create List	user-data-dir=${OUTPUT DIR}${/}chrome_data	enable-precise-memory-info
+${chromeOptions}	Create Dictionary	args	${args_list}
+${cap_dict}	Create Dictionary	chromeOptions	${chromeOptions}
+Open Browser	${url}	chrome	desired_capabilities=${cap_dict}
+```
+
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTEzMTE3MjMwMTddfQ==
+eyJoaXN0b3J5IjpbNTE5MTQzNzA3LC0xMzExNzIzMDE3XX0=
 -->
