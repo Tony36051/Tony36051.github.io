@@ -3,6 +3,7 @@ title: JMeter 跨线程组共享变量（单点登录Cookie无法保存）
 date: 2019-05-05 15:46
 tag: 
 - JMeter
+
 categories:
 - 测试
 ---
@@ -11,5 +12,5 @@ categories:
 # JMeter 跨线程组共享变量（单点登录Cookie无法保存）
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTE2ODYwNzQ3MjRdfQ==
+eyJoaXN0b3J5IjpbMTIzMjg3OTI3OCwtMTY4NjA3NDcyNF19
 -->
