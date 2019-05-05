@@ -6,10 +6,10 @@ tag:
 categories:
 - 测试
 ---
-迁移升级Azkaban时候发现根据文档升级总是报错, 抛出的错误只有sql错误, 没有更具体的错误, 此时只能祭出远程调试大法了.
+我司采用单点登录用Cookie做身份认证，在进行JMeter性能测试时，仅使用HTTP Cookie Manager无法将c
 <!--more-->
 # JMeter 跨线程组共享变量（单点登录Cookie无法保存）
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTE3OTQwOTc3MTBdfQ==
+eyJoaXN0b3J5IjpbODE3ODE2OTcwXX0=
 -->
