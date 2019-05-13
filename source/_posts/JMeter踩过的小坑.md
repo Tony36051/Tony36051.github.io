@@ -12,7 +12,10 @@ categories:
 ```
 Set-Cookie: login_sip=1D-8B-35; Path=/; Domain=.example.com
 ```
-SSO单点登录后，返回的头信息中应该包括若干条`Set-Cookie`，上述的Cookie说明此key-value的Cookie能用于*.example.com所有二级域名，`Path=/`表示后续所有路径都可以使用
+SSO单点登录后，返回的头信息中应该包括若干条`Set-Cookie`，上述的Cookie说明此key-value的Cookie能用于*.example.com所有二级域名，`Path=/`表示后续所有路径都可以使用。
+
+- Path=/; Domain=.example.com
+- Path=/; Domain=account.example.com
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbNTU3NTk4OTUsODY5MzQ2NTE1XX0=
+eyJoaXN0b3J5IjpbODMzMzkyNTEyLDg2OTM0NjUxNV19
 -->
