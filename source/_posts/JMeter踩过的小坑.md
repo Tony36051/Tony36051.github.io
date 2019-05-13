@@ -13,11 +13,13 @@ categories:
 Set-Cookie: login_sip=1D-8B-35; Path=/; Domain=.example.com
 ```
 SSO单点登录后，返回的头信息中应该包括若干条`Set-Cookie`，上述的Cookie说明此key-value的Cookie能用于*.example.com所有二级域名，`Path=/`表示后续所有路径都可以使用。
-下面说的suoyou
+下面说的所有二级域名当然包括一级域名。
 - Path=/; Domain=.example.com 所有二级域名，所有uri
 - Path=/; Domain=account.example.com 仅account.example.com这个二级域名可用，所有uri
 - Path=/openapi; Domain=.example.com 所有二级域名，仅匹配/openapi的uri
 
+## 坑重现
+JMeter的`Server Name or IP`中，域名或ip后不应该添加任何东西，`perf.example.com`或`192.168.1.1`都是对的，
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTgyNDkyOTE4NCw4NjkzNDY1MTVdfQ==
+eyJoaXN0b3J5IjpbLTE4MzgyOTc1MzQsODY5MzQ2NTE1XX0=
 -->
