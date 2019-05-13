@@ -99,7 +99,11 @@ vars.put("responsecookie", response_cookie_final);
 ![sleep_30s](sleep_30s.png)
 
 
+## 遗留问题
+如果cookie很长，会有性能问题，导致elapsed time和latency time变长。
+后面发现我们项目的sso给的cookie都是一级域名的，不存在跨域问题。
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTIzMjg3OTI3OCwtMTY4NjA3NDcyNF19
+eyJoaXN0b3J5IjpbLTIwODA5MzQ2NDAsMTIzMjg3OTI3OCwtMT
+Y4NjA3NDcyNF19
 -->
