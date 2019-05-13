@@ -19,7 +19,13 @@ SSO单点登录后，返回的头信息中应该包括若干条`Set-Cookie`，�
 - Path=/openapi; Domain=.example.com 所有二级域名，仅匹配/openapi的uri
 
 ## 坑重现
-JMeter的`Server Name or IP`中，域名或ip后不应该添加任何东西，`perf.example.com`或`192.168.1.1`都是对的，
+JMeter的`Server Name or IP`中，域名或ip后不应该添加任何东西，`perf.example.com`或`192.168.1.1`都是对的，以下都是错误的例子。
+
+- perf.example.com/
+- perf.example.com/zoo
+- 192.168.1.1:8080
+
+错误信息：
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTE4MzgyOTc1MzQsODY5MzQ2NTE1XX0=
+eyJoaXN0b3J5IjpbLTExNjM4MjUxMDksODY5MzQ2NTE1XX0=
 -->
