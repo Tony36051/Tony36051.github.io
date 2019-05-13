@@ -25,7 +25,7 @@ JMeter的`Server Name or IP`中，域名或ip后不应该添加任何东西，`p
 - perf.example.com/zoo
 - 192.168.1.1:8080
 
-错误信息：
+错误信息：Not storing invalid cookie: <aasso_login=""; Path=/; Domain=.example.com> for URL http://perf.example.com//zoo/services/N (Illegal 'domain' attribute "example.com". Domain of origin: "kweweb-perf.huawei.com/")
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTExNjM4MjUxMDksODY5MzQ2NTE1XX0=
+eyJoaXN0b3J5IjpbLTc3MTE3Mzc2NSw4NjkzNDY1MTVdfQ==
 -->
