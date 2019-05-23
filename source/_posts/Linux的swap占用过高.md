@@ -21,7 +21,32 @@ Swapon –a 或 swapon /dev/sda2
 ```
 ### 内存占用多少后启动物理内存
 >cat /proc/sys/vm/swappiness
+60
 
+上面这个60代表物理内存在使用60%的时候才会使用swap
+swappiness=0的时候表示最大限度使用物理内存，然后才是 swap空间，
+swappiness＝100的时候表示积极的使用swap分区，并且把内存上的数据及时的搬运到swap空间里面。
+
+通常情况下：
+swap分区设置建议是内存的两倍 （内存小于等于4G时），如果内存大于4G，swap只要比内存大就行。另外尽量的将swappiness调低，这样系统的性能会更好。  
+
+修改swappiness参数  
+临时性修改：
+>sysctl vm.swappiness=10
+vm.swappiness = 10
+
+> cat /proc/sys/vm/swappiness
+10
+
+永久性修改：
+>vim /etc/sysctl.conf
+vm.swappiness = 35
+
+>sysctl -p  
+
+查看是否生效：
+cat /proc/sys/vm/swappiness
+35
 
 ### 检查哪个进程使用最多swap内存
 手动命令：
@@ -75,5 +100,5 @@ END{
 
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTU3ODE4ODk3MCwxOTYzMzEwODUwXX0=
+eyJoaXN0b3J5IjpbMTIwOTMwNjc1MywxOTYzMzEwODUwXX0=
 -->
