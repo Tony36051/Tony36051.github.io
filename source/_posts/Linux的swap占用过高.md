@@ -19,7 +19,12 @@ Swapoff –a 或 swapoff /dev/sda2
 Swapon –a 或 swapon /dev/sda2
 # 启动swap 使用free查看，成功后swap回复
 ```
-### 
+### 内存占用多少后启动物理内存
+>cat /proc/sys/vm/swappiness
+
+
+### 检查哪个进程使用最多swap内存
+
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTk3MzU5MjgyNSwxOTYzMzEwODUwXX0=
+eyJoaXN0b3J5IjpbLTQxMjUwMDY0NiwxOTYzMzEwODUwXX0=
 -->
