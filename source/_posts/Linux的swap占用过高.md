@@ -98,7 +98,10 @@ END{
 }'
 ```
 
-
+## 补充
+1. 打开大的文件或物理内存被占用，都可能导致swap过高。
+2. 内存很大的机器建议直接不要swap内存
+3. 最后gan
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTIwOTMwNjc1MywxOTYzMzEwODUwXX0=
+eyJoaXN0b3J5IjpbLTE0MzIwMzMyNSwxOTYzMzEwODUwXX0=
 -->
