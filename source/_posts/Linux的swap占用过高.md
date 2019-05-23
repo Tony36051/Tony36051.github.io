@@ -1,13 +1,15 @@
 ---
 title: Linux的swap占用过高
-date: 2019-07-22
+date: 2019-05-18
 tags: 
-- python
+- Linux
 categories:
-- AI
+- 运维
 ---
-工作之余, 还是对AI/数据分析念念不忘, 先磨一磨刀, 然后就可以收工了. (*/ω＼*)
+OS的监控告警，swap占用超过80%，记录解决思路
 <!--more-->
+## 事件
+监控告警
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTEzMzUzOTY1NTBdfQ==
+eyJoaXN0b3J5IjpbMTU5MTIyNDgzXX0=
 -->
