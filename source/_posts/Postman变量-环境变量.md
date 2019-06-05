@@ -1,14 +1,15 @@
 ---
 title: Postman变量-环境变量
 tags:
-- leetcode
+- Postman
 categories:
-- 算法
+- 测试
 ---
-
-无聊时候刷刷题
+Postman作为常用测试工具，一个接口在多个环境都需要测试，怎么设置呢？
 <!--more-->
 
+
+
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTEyODg1NzYwMDRdfQ==
+eyJoaXN0b3J5IjpbMTAyNzI5MzE5N119
 -->
