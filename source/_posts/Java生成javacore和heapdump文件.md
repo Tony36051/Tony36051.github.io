@@ -22,7 +22,7 @@ categories:
 
 - 手动生成
 	- jstack： jstack -l 37320 > /tmp/threadDump.txt
-	- jcmd：jcmd 3426 Thread.print > //tmp/threadDump.txt
+	- jcmd：jcmd 3426 Thread.print > /tmp/$HOSTNAME-threadDump.txt
 	- JVisualVM：图形化工具
 	- Java Mission Control：oracle jdk自带图形化工具
 	- 
@@ -50,12 +50,13 @@ HeapDump文件是一个二进制文件，它保存了某一时刻JVM堆中对象
 Heap Dump的格式有很多种，而且不同的格式包含的信息也可能不一样。但总的来说，Heap Dump一般都包含了一个堆中的Java Objects, Class等基本信息。同时，当你在执行一个转储操作时，往往会**触发一次GC**，所以你转储得到的文件里包含的信息通常是有效的内容（包含比较少，或没有垃圾对象了） 。
 
   ### 生成方式
-```
+```bash
 # dump live会触发full gc；all就没gc，线上系统慎用
 jmap -dump:live,format=b,file=/tmp/heap.hprof <pid>
 ```
-```
-jcmd <pid> GC.heap_dump /tmp/heap.hprof
+```bash
+
+jcmd <pid> GC.heap_dump /tmp/heap.hprof # 回触发full gc
 ```
 - JVM参数 -XX:+HeapDumpOnOutOfMemoryError  当OutOfMemoryError发生时自动生成 Heap Dump 文件。
 - jvisualvm
@@ -66,7 +67,7 @@ jcmd <pid> GC.heap_dump /tmp/heap.hprof
 ### 分析工具
 IBM HeapAnalyzer
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTM4MjU0MDgxNiw2NjI1MTU3OSwtNTA2ND
+eyJoaXN0b3J5IjpbLTY2NzYxMjk1OCw2NjI1MTU3OSwtNTA2ND
 I1MTMzLC0zOTIwOTQ3MDcsLTE4MzA3MjI1MDcsOTY2ODc4MTM0
 LDEyNDU0ODE2MzMsMzkwMzcxMTYzXX0=
 -->
