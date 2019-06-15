@@ -22,9 +22,11 @@ categories:
 -   发送中断signal  
     AIX和Linux: SIGQUIT,  **kill -3 PID**  
     Windows: Ctrl+Break, DrAdmin in WAS(未验证过)
-   -   系统在异常时自动throw(**程序不一定退出**)  
+    
+- 系统在异常时自动throw(**程序不一定退出**)  
     严重的本地调用出错  
     内存不足(例如 OutOfMemory)
+
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbODA4ODMwMzE3XX0=
+eyJoaXN0b3J5IjpbMzkwMzcxMTYzXX0=
 -->
