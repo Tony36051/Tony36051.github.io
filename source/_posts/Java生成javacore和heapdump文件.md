@@ -38,7 +38,7 @@ categories:
 -   如有必要,获取heapdump分析(oom)
 
 ## 什么是Heap Dump
-
+HeapDump文件是一个二进制文件，它保存了某一时刻JVM堆中对象使用情况，这种文件需要相应的工具进行分析，如IBM Heap Analyzer这类工具。这类文件最重要的作用就是分析系统中是否存在内存溢出的情况。
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbODc4MjkzODk0LDM5MDM3MTE2M119
+eyJoaXN0b3J5IjpbMTI0NTQ4MTYzMywzOTAzNzExNjNdfQ==
 -->
