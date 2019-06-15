@@ -32,6 +32,11 @@ cat /proc/meminfo
 pkill -f <部分进程名>
 ps aux|grep python|awk '{print $2}'|xargs kill -9
 ```
+### 查看某进程CPU、内存占用
+```bash
+top -p 2913
+cat /proc/2913/status
+```
 ## 批量执行
 ### pssh
 #### pssh使用sudo
@@ -117,5 +122,5 @@ yes | cp cp -fr src dest # 让管道自动输入一大堆yes
 
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbNjQ0MDA5NzMyXX0=
+eyJoaXN0b3J5IjpbLTcwMzEyNjQ4MCw2NDQwMDk3MzJdfQ==
 -->
