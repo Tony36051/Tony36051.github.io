@@ -55,7 +55,7 @@ jmap -dump:live,format=b,file=d:\dump\heap.hprof <pid>
 ```
 jcmd <pid> GC.heap_dump d:\dump\heap.hprof
 ```
-- JVM参数-XX:+HeapDumpOnOutOfMemoryError 
+- JVM参数 -XX:+HeapDumpOnOutOfMemoryError  当OutOfMemoryError发生时自动生成 Heap Dump 文件。
 - jvisualvm
 - JProfile
 - Eclipse memory analyzer（jmat）
@@ -64,7 +64,7 @@ jcmd <pid> GC.heap_dump d:\dump\heap.hprof
 ### 分析工具
 IBM HeapAnalyzer
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbNjc1MDA2Mjg2LC0zOTIwOTQ3MDcsLTE4Mz
-A3MjI1MDcsOTY2ODc4MTM0LDEyNDU0ODE2MzMsMzkwMzcxMTYz
-XX0=
+eyJoaXN0b3J5IjpbLTUwNjQyNTEzMywtMzkyMDk0NzA3LC0xOD
+MwNzIyNTA3LDk2Njg3ODEzNCwxMjQ1NDgxNjMzLDM5MDM3MTE2
+M119
 -->
