@@ -48,13 +48,23 @@ categories:
 HeapDump文件是一个二进制文件，它保存了某一时刻JVM堆中对象使用情况，这种文件需要相应的工具进行分析，如IBM Heap Analyzer这类工具。这类文件最重要的作用就是分析系统中是否存在内存溢出的情况。
 Heap Dump的格式有很多种，而且不同的格式包含的信息也可能不一样。但总的来说，Heap Dump一般都包含了一个堆中的Java Objects, Class等基本信息。同时，当你在执行一个转储操作时，往往会**触发一次GC**，所以你转储得到的文件里包含的信息通常是有效的内容（包含比较少，或没有垃圾对象了） 。
 
-  
+  ### 生成方式
+  ```
+jmap -dump:live,format=b,file=d:\dump\heap.hprof <pid>
+```
+```
+jcmd <pid> GC.heap_dump d:\dump\heap.hprof
+```
+- JVM参数-XX:+HeapDumpOnOutOfMemoryError 
+- jvisualvm
+- JProfile
+- Eclipse memory analyzer（jmat）
   
   
 ### 分析工具
 IBM HeapAnalyzer
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTM4MzI2NTI3MCwtMzkyMDk0NzA3LC0xOD
-MwNzIyNTA3LDk2Njg3ODEzNCwxMjQ1NDgxNjMzLDM5MDM3MTE2
-M119
+eyJoaXN0b3J5IjpbNjc1MDA2Mjg2LC0zOTIwOTQ3MDcsLTE4Mz
+A3MjI1MDcsOTY2ODc4MTM0LDEyNDU0ODE2MzMsMzkwMzcxMTYz
+XX0=
 -->
