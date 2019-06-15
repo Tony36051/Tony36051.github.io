@@ -35,7 +35,7 @@ ps aux|grep python|awk '{print $2}'|xargs kill -9
 ### 查看某进程CPU、内存占用
 ```bash
 top -p 2913
-cat /proc/2913/status
+cat /proc/2913/status  # VmRSS对应的值就是物理内存占用
 ```
 ## 批量执行
 ### pssh
@@ -122,5 +122,5 @@ yes | cp cp -fr src dest # 让管道自动输入一大堆yes
 
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTcwMzEyNjQ4MCw2NDQwMDk3MzJdfQ==
+eyJoaXN0b3J5IjpbLTI2NTUyNjY3MSw2NDQwMDk3MzJdfQ==
 -->
