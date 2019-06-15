@@ -21,7 +21,7 @@ categories:
 ### 生成方式
 
 - 手动生成
-	- jstack： jstack -l pid /path/to/file
+	- jstack： jstack -l 37320 > /tmp/threadDump.txt
 	- 
 	- 
 
@@ -48,6 +48,6 @@ HeapDump文件是一个二进制文件，它保存了某一时刻JVM堆中对象
 ### 分析工具
 IBM HeapAnalyzer
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTY1MTQxNjYxMSw5NjY4NzgxMzQsMTI0NT
-Q4MTYzMywzOTAzNzExNjNdfQ==
+eyJoaXN0b3J5IjpbLTE4MzA3MjI1MDcsOTY2ODc4MTM0LDEyND
+U0ODE2MzMsMzkwMzcxMTYzXX0=
 -->
