@@ -56,7 +56,8 @@ jmap -dump:live,format=b,file=/tmp/heap.hprof <pid>
 ```
 ```bash
 
-jcmd <pid> GC.heap_dump /tmp/heap.hprof # 回触发full gc
+jcmd <pid> GC.heap_dump /tmp/heap.hprof # 触发full gc
+jcmd 100373 GC.heap_dump /tmp/$HOSTNAME-heap.hprof # 回触发full gc
 ```
 - JVM参数 -XX:+HeapDumpOnOutOfMemoryError  当OutOfMemoryError发生时自动生成 Heap Dump 文件。
 - jvisualvm
@@ -67,7 +68,7 @@ jcmd <pid> GC.heap_dump /tmp/heap.hprof # 回触发full gc
 ### 分析工具
 IBM HeapAnalyzer
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTY2NzYxMjk1OCw2NjI1MTU3OSwtNTA2ND
-I1MTMzLC0zOTIwOTQ3MDcsLTE4MzA3MjI1MDcsOTY2ODc4MTM0
-LDEyNDU0ODE2MzMsMzkwMzcxMTYzXX0=
+eyJoaXN0b3J5IjpbOTk5MzQ0NzAwLDY2MjUxNTc5LC01MDY0Mj
+UxMzMsLTM5MjA5NDcwNywtMTgzMDcyMjUwNyw5NjY4NzgxMzQs
+MTI0NTQ4MTYzMywzOTAzNzExNjNdfQ==
 -->
