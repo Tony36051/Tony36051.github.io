@@ -51,10 +51,10 @@ Heap Dump的格式有很多种，而且不同的格式包含的信息也可能�
   ### 生成方式
 ```
 # dump通常会gc，线上系统慎用
-jmap -dump:live,format=b,file=d:\dump\heap.hprof <pid>
+jmap -dump:live,format=b,file=/tmp/heap.hprof <pid>
 ```
 ```
-jcmd <pid> GC.heap_dump d:\dump\heap.hprof
+jcmd <pid> GC.heap_dump /tmp/heap.hprof
 ```
 - JVM参数 -XX:+HeapDumpOnOutOfMemoryError  当OutOfMemoryError发生时自动生成 Heap Dump 文件。
 - jvisualvm
@@ -65,7 +65,7 @@ jcmd <pid> GC.heap_dump d:\dump\heap.hprof
 ### 分析工具
 IBM HeapAnalyzer
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTc0MjQ4OTQ1OSwtNTA2NDI1MTMzLC0zOT
-IwOTQ3MDcsLTE4MzA3MjI1MDcsOTY2ODc4MTM0LDEyNDU0ODE2
-MzMsMzkwMzcxMTYzXX0=
+eyJoaXN0b3J5IjpbNjYyNTE1NzksLTUwNjQyNTEzMywtMzkyMD
+k0NzA3LC0xODMwNzIyNTA3LDk2Njg3ODEzNCwxMjQ1NDgxNjMz
+LDM5MDM3MTE2M119
 -->
