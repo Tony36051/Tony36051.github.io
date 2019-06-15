@@ -10,7 +10,7 @@ categories:
 <!--more-->
 ## 什么是javacore
 
-- javacore是java应用程序在某个时间点的**线程转储文件**，通常也称为**Thead Dump**
+- javacore是java应用程序在某个时间点的**线程转储文件**，通常也称为**Thead Dump**，是个文本文档
 - 记录了整个JVM的运行情况(线程, 垃圾回收, JVM运行参数, 内存地址等信息)
 ### 用途
 诊断程序问题,其中比较典型的包括线程阻塞, CPU使用率过高, JVM Crash, 堆内存不足和类装载等问题
@@ -26,7 +26,7 @@ categories:
 - 系统在异常时自动throw(**程序不一定退出**)  
     严重的本地调用出错  
     内存不足(例如 OutOfMemory)
-## 策略分析
+### 策略分析
 
 -   数百K的纯文本,最好借助工具,例如jca分析工具
 -   **采集连续的多个时间点的javacore,方便对比(手动)**  
@@ -36,6 +36,9 @@ categories:
 -   问题出现时,多了解周边情况(cpu,io,外围),记录现状
 -   **对thread状态进行分类,业务分布情况,资源等待情况(细化)**
 -   如有必要,获取heapdump分析(oom)
+
+## 什么是Heap Dump
+
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTUwMzI0MzYzOCwzOTAzNzExNjNdfQ==
+eyJoaXN0b3J5IjpbODc4MjkzODk0LDM5MDM3MTE2M119
 -->
