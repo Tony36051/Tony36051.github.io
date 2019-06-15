@@ -50,7 +50,7 @@ Heap Dump的格式有很多种，而且不同的格式包含的信息也可能�
 
   ### 生成方式
 ```
-# dump live会触发full gc；，线上系统慎用
+# dump live会触发full gc；all就没gc，线上系统慎用
 jmap -dump:live,format=b,file=/tmp/heap.hprof <pid>
 ```
 ```
@@ -65,7 +65,7 @@ jcmd <pid> GC.heap_dump /tmp/heap.hprof
 ### 分析工具
 IBM HeapAnalyzer
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMjExODM4OTI0Miw2NjI1MTU3OSwtNTA2ND
+eyJoaXN0b3J5IjpbMjAxMTU1MTc4NSw2NjI1MTU3OSwtNTA2ND
 I1MTMzLC0zOTIwOTQ3MDcsLTE4MzA3MjI1MDcsOTY2ODc4MTM0
 LDEyNDU0ODE2MzMsMzkwMzcxMTYzXX0=
 -->
