@@ -22,7 +22,8 @@ categories:
 
 - 手动生成
 	- jstack： jstack -l 37320 > /tmp/threadDump.txt
-	- JVisualVM：图形化g
+	- JVisualVM：图形化工具
+	- Java Mission Control：oracle jdk自带图形化工具
 	- 
 
 -   发送中断signal  
@@ -48,6 +49,6 @@ HeapDump文件是一个二进制文件，它保存了某一时刻JVM堆中对象
 ### 分析工具
 IBM HeapAnalyzer
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTUyODY3MDMzMywtMTgzMDcyMjUwNyw5Nj
+eyJoaXN0b3J5IjpbLTM5MjA5NDcwNywtMTgzMDcyMjUwNyw5Nj
 Y4NzgxMzQsMTI0NTQ4MTYzMywzOTAzNzExNjNdfQ==
 -->
