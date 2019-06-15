@@ -25,7 +25,7 @@ categories:
 	- jcmd：jcmd 100373 Thread.print -l=true > /tmp/$HOSTNAME-threadDump.txt
 	- JVisualVM：图形化工具
 	- Java Mission Control：oracle jdk自带图形化工具
-	- 
+	- kill -3 :在 VM 处理此信号后，VM 会继续运行。
 
 -   发送中断signal  
     AIX和Linux: SIGQUIT,  **kill -3 PID**  
@@ -69,7 +69,8 @@ jcmd 100373 GC.heap_dump -all=true /tmp/$HOSTNAME-heap-all.hprof # 不会触发f
 ### 分析工具
 IBM HeapAnalyzer
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMjAzOTAzMDQ3NCw5OTkzNDQ3MDAsNjYyNT
-E1NzksLTUwNjQyNTEzMywtMzkyMDk0NzA3LC0xODMwNzIyNTA3
-LDk2Njg3ODEzNCwxMjQ1NDgxNjMzLDM5MDM3MTE2M119
+eyJoaXN0b3J5IjpbMTMwNzY2ODg4MiwyMDM5MDMwNDc0LDk5OT
+M0NDcwMCw2NjI1MTU3OSwtNTA2NDI1MTMzLC0zOTIwOTQ3MDcs
+LTE4MzA3MjI1MDcsOTY2ODc4MTM0LDEyNDU0ODE2MzMsMzkwMz
+cxMTYzXX0=
 -->
