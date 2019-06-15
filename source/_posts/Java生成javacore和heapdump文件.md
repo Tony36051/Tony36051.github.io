@@ -22,7 +22,7 @@ categories:
 
 - 手动生成
 	- jstack： jstack -l 37320 > /tmp/threadDump.txt
-	- 
+	- JVisualVM：图形化g
 	- 
 
 -   发送中断signal  
@@ -48,6 +48,6 @@ HeapDump文件是一个二进制文件，它保存了某一时刻JVM堆中对象
 ### 分析工具
 IBM HeapAnalyzer
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTE4MzA3MjI1MDcsOTY2ODc4MTM0LDEyND
-U0ODE2MzMsMzkwMzcxMTYzXX0=
+eyJoaXN0b3J5IjpbLTUyODY3MDMzMywtMTgzMDcyMjUwNyw5Nj
+Y4NzgxMzQsMTI0NTQ4MTYzMywzOTAzNzExNjNdfQ==
 -->
