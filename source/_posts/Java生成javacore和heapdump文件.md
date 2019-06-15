@@ -26,7 +26,16 @@ categories:
 - 系统在异常时自动throw(**程序不一定退出**)  
     严重的本地调用出错  
     内存不足(例如 OutOfMemory)
+## 策略分析
 
+-   数百K的纯文本,最好借助工具,例如jca分析工具
+-   **采集连续的多个时间点的javacore,方便对比(手动)**  
+    一般的线程执行都会非常快，如果出现某个资源的阻塞，在短时间内的两个javacore，该线程的堆栈会变化不大。 或多次javacore的线程都集中在等待某些资源。
+-   了解app的性质,基本处理流程
+-   app相关的处理能力(以前的数据,用于对比)
+-   问题出现时,多了解周边情况(cpu,io,外围),记录现状
+-   **对thread状态进行分类,业务分布情况,资源等待情况(细化)**
+-   如有必要,获取heapdump分析(oom)
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMzkwMzcxMTYzXX0=
+eyJoaXN0b3J5IjpbLTUwMzI0MzYzOCwzOTAzNzExNjNdfQ==
 -->
