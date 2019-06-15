@@ -28,7 +28,7 @@ categories:
     内存不足(例如 OutOfMemory)
 ### 策略分析
 
--   数百K的纯文本,最好借助工具,例如jca分析工具
+-   数百K的纯文本,最好借助工具,例如`jca`分析工具
 -   **采集连续的多个时间点的javacore,方便对比(手动)**  
     一般的线程执行都会非常快，如果出现某个资源的阻塞，在短时间内的两个javacore，该线程的堆栈会变化不大。 或多次javacore的线程都集中在等待某些资源。
 -   了解app的性质,基本处理流程
@@ -39,6 +39,9 @@ categories:
 
 ## 什么是Heap Dump
 HeapDump文件是一个二进制文件，它保存了某一时刻JVM堆中对象使用情况，这种文件需要相应的工具进行分析，如IBM Heap Analyzer这类工具。这类文件最重要的作用就是分析系统中是否存在内存溢出的情况。
+### 分析工具
+IBM HeapAnalyzer
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTI0NTQ4MTYzMywzOTAzNzExNjNdfQ==
+eyJoaXN0b3J5IjpbOTY2ODc4MTM0LDEyNDU0ODE2MzMsMzkwMz
+cxMTYzXX0=
 -->
