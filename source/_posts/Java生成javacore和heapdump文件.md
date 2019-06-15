@@ -22,7 +22,7 @@ categories:
 
 - 手动生成
 	- jstack： jstack -l 37320 > /tmp/threadDump.txt
-	- jcmd：jcmd 3426 Thread.print > /tmp/$HOSTNAME-threadDump.txt
+	- jcmd：jcmd 100373 Thread.print -l=true > /tmp/$HOSTNAME-threadDump.txt
 	- JVisualVM：图形化工具
 	- Java Mission Control：oracle jdk自带图形化工具
 	- 
@@ -68,7 +68,7 @@ jcmd 100373 GC.heap_dump /tmp/$HOSTNAME-heap.hprof # 回触发full gc
 ### 分析工具
 IBM HeapAnalyzer
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTEwNTUyODY4NDIsOTk5MzQ0NzAwLDY2Mj
+eyJoaXN0b3J5IjpbLTEyNTkzMjcxNzUsOTk5MzQ0NzAwLDY2Mj
 UxNTc5LC01MDY0MjUxMzMsLTM5MjA5NDcwNywtMTgzMDcyMjUw
 Nyw5NjY4NzgxMzQsMTI0NTQ4MTYzMywzOTAzNzExNjNdfQ==
 -->
