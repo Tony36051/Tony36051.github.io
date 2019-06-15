@@ -19,6 +19,12 @@ categories:
 通常以txt方式结尾,名称格式主要是以javacore开头, **加上日期,产生的时间,当时的线程编号**,如javacore.20100719.003424.299228.txt(**Unix**)
 
 ### 生成方式
+
+- 手动生成
+	- jstack： jstack -l pid /path/to/file
+	- 
+	- 
+
 -   发送中断signal  
     AIX和Linux: SIGQUIT,  **kill -3 PID**  
     Windows: Ctrl+Break, DrAdmin in WAS(未验证过)
@@ -42,6 +48,6 @@ HeapDump文件是一个二进制文件，它保存了某一时刻JVM堆中对象
 ### 分析工具
 IBM HeapAnalyzer
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbOTY2ODc4MTM0LDEyNDU0ODE2MzMsMzkwMz
-cxMTYzXX0=
+eyJoaXN0b3J5IjpbMTY1MTQxNjYxMSw5NjY4NzgxMzQsMTI0NT
+Q4MTYzMywzOTAzNzExNjNdfQ==
 -->
