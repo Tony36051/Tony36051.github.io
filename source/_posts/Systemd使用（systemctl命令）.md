@@ -52,6 +52,82 @@ systemctl status <服务项名称>
 ```text
 [root: ~]# systemctl status nginx.service
 ```
+### **2.6 查看出错的服务**
+
+```text
+systemctl list-units --type=service --state=failed
+```
+## 管理服务
+### **3.1 启动服务**
+
+```text
+systemctl start <服务项名称>
+```
+
+### **3.2 停止服务**
+
+```text
+systemctl stop <服务项名称>
+```
+
+### **3.3 重启服务**
+
+```text
+systemctl restart <服务项名称>
+```
+
+### **3.4 重新读取配置文件**
+
+如果该服务不能重启，但又必须使用新的配置，这条命令会很有用。
+
+```text
+systemctl reload <服务项名称>
+```
+
+### **3.5 使服务开机自启动**
+
+```text
+systemctl enable <服务项名称>
+```
+
+### **3.6 使服务不要开机自启动**
+
+```text
+systemctl disable <服务项名称>
+```
+
+## 创建服务
+### **4.1 服务文件的位置**
+
+我们自己建立的服务文件直接放在  `/etc/systemd/system/`  里面就好了。服务文件要使用  `.service`  后缀名。
+
+如需修改软件包或系统自带的服务文件，请先将原版服务文件从  `/lib/systemd/system/`  拷贝到  `/etc/systemd/system/`  再进行修改。
+
+### **4.2 服务文件的模版**
+
+以下是最简单的配置模版，直接根据提示或注释修改参数值，然后去掉所有注释即可。
+
+```text
+[Unit]
+Description=<服务描述>
+After=<在哪个模块（服务）之后启动（可选）>
+
+[Service]
+Type=<simple|forking|oneshot>
+ExecStart=<程序或命令参数>
+# 如果 "ExecStart=" 后面的程序或命令是在前台持续运行的，那么 "Type=" 后面应填写 "simple"。
+# 如果 "ExecStart=" 后面的程序或命令是在后台持续运行的，那么 "Type=" 后面应填写 "forking"。
+# 如果 "ExecStart=" 后面的程序或命令是在前台运行一下就退出的，那么 "Type=" 后面应填写 "oneshot"。
+ExecReload=<重新读取配置文件的命令（可选）>
+KillSignal=SIGTERM
+KillMode=mixed
+
+[Install]
+WantedBy=multi-user.target
+```
+
+> **说明**  
+> • 创建服务文件之后，最好执行一下  `systemctl daemon-reload`  再启用。
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTEyODY1NjYxODcsNjcwMzc0NTEwXX0=
+eyJoaXN0b3J5IjpbNTE0MzQ2NTU5LDY3MDM3NDUxMF19
 -->
