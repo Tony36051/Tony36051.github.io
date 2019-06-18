@@ -167,9 +167,22 @@ systemctl enable nginx.service
 
 ## 实例
 ```
+[Unit]
+Description=Tony's Jenkins
 
+[Service]
+WorkingDirectory=/root/.jenkins
+Type=simple
+ExecStart=/bin/sh -c "/usr/bin/java -Dhudson.model.DirectoryBrowserSupport.CSP= -Duser.timezone=Asia/Shanghai -jar /home/jenkins/jenkins.war"
+KillSignal=SIGTERM
+KillMode=mixed
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
 ```
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTE1MzQ2NDI3OTEsNTE0MzQ2NTU5LDY3MD
-M3NDUxMF19
+eyJoaXN0b3J5IjpbLTE5NzM0MDU0NTQsLTE1MzQ2NDI3OTEsNT
+E0MzQ2NTU5LDY3MDM3NDUxMF19
 -->
