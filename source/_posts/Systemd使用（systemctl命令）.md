@@ -98,10 +98,12 @@ systemctl disable <服务项名称>
 
 ## 创建服务
 ### **4.1 服务文件的位置**
-
-我们自己建立的服务文件直接放在  `/etc/systemd/system/`  里面就好了。服务文件要使用  `.service`  后缀名。
-
-如需修改软件包或系统自带的服务文件，请先将原版服务文件从  `/lib/systemd/system/`  拷贝到  `/etc/systemd/system/`  再进行修改。
+CentOS 7的服务systemctl脚本存放在：/usr/lib/systemd/，有系统 system 和用户 user 之分。
+```
+/lib/systemd/system  
+/run/systemd/system  
+/etc/systemd/system
+```
 
 ### **4.2 服务文件的模版**
 
@@ -129,5 +131,6 @@ WantedBy=multi-user.target
 > **说明**  
 > • 创建服务文件之后，最好执行一下  `systemctl daemon-reload`  再启用。
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbNTE0MzQ2NTU5LDY3MDM3NDUxMF19
+eyJoaXN0b3J5IjpbMTg1NDIwOTg3OSw1MTQzNDY1NTksNjcwMz
+c0NTEwXX0=
 -->
