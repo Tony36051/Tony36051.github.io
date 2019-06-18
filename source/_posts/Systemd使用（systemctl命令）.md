@@ -107,30 +107,69 @@ CentOS 7的服务systemctl脚本存放在：/usr/lib/systemd/，有系统 system
 在`/etc/systemd/system`下面创建`nginx.service.d`目录，在这个目录里面新建任何以.conf结尾的文件，然后写入我们自己的配置。
 ### **4.2 服务文件的模版**
 
-以下是最简单的配置模版，直接根据提示或注释修改参数值，然后去掉所有注释即可。
+每一个服务以.service结尾，一般会分为3部分：[Unit]、[Service]和[Install]，就以nginx为例吧，具体内容如下：
 
 ```text
 [Unit]
-Description=<服务描述>
-After=<在哪个模块（服务）之后启动（可选）>
+Description=nginx - high performance web server
+Documentation=http://nginx.org/en/docs/
+After=network.target remote-fs.target nss-lookup.target
 
 [Service]
-Type=<simple|forking|oneshot>
-ExecStart=<程序或命令参数>
-# 如果 "ExecStart=" 后面的程序或命令是在前台持续运行的，那么 "Type=" 后面应填写 "simple"。
-# 如果 "ExecStart=" 后面的程序或命令是在后台持续运行的，那么 "Type=" 后面应填写 "forking"。
-# 如果 "ExecStart=" 后面的程序或命令是在前台运行一下就退出的，那么 "Type=" 后面应填写 "oneshot"。
-ExecReload=<重新读取配置文件的命令（可选）>
-KillSignal=SIGTERM
-KillMode=mixed
+Type=forking
+PIDFile=/usr/local/nginx/logs/nginx.pid
+ExecStartPre=/usr/local/nginx/sbin/nginx -t -c /usr/local/nginx/conf/nginx.conf
+ExecStart=/usr/local/nginx/sbin/nginx -c /usr/local/nginx/conf/nginx.conf
+ExecReload=/bin/kill -s HUP $MAINPID
+ExecStop=/bin/kill -s QUIT $MAINPID
+PrivateTmp=true
 
 [Install]
 WantedBy=multi-user.target
 ```
 
-> **说明**  
-> • 创建服务文件之后，最好执行一下  `systemctl daemon-reload`  再启用。
+## 配置项说明
+
+下面分别解释下着三部分的含义
+
+_[Unit]_
+
+-   Description : 服务的简单描述
+-   Documentation ： 服务文档
+-   After= : 依赖，仅当依赖的服务启动之后再启动自定义的服务单元
+
+_[Service]_
+
+-   Type : 启动类型simple、forking、oneshot、notify、dbus
+    -   Type=simple（默认值）：systemd认为该服务将立即启动，服务进程不会fork。如果该服务要启动其他服务，不要使用此类型启动，除非该服务是socket激活型
+    -   Type=forking：systemd认为当该服务进程fork，且父进程退出后服务启动成功。对于常规的守护进程（daemon），除非你确定此启动方式无法满足需求， 使用此类型启动即可。使用此启动类型应同时指定`PIDFile=`，以便systemd能够跟踪服务的主进程。
+    -   Type=oneshot：这一选项适用于只执行一项任务、随后立即退出的服务。可能需要同时设置  `RemainAfterExit=yes`  使得  `systemd`  在服务进程退出之后仍然认为服务处于激活状态。
+    -   Type=notify：与  `Type=simple`  相同，但约定服务会在就绪后向  `systemd`  发送一个信号，这一通知的实现由  `libsystemd-daemon.so`  提供
+    -   Type=dbus：若以此方式启动，当指定的 BusName 出现在DBus系统总线上时，systemd认为服务就绪。
+-   PIDFile ： pid文件路径
+-   ExecStartPre ：启动前要做什么，上文中是测试配置文件 －t
+-   ExecStart：启动
+-   ExecReload：重载
+-   ExecStop：停止
+-   PrivateTmp：True表示给服务分配独立的临时空间
+
+_[Install]_
+
+-   WantedBy：服务安装的用户模式，从字面上看，就是想要使用这个服务的有是谁？上文中使用的是：`multi-user.target`  ，就是指想要使用这个服务的目录是多用户。
+
+每一个.target实际上是链接到我们单位文件的集合,当我们执行
+
+1  
+
+systemctl enable nginx.service  
+
+就会在  `/etc/systemd/system/multi-user.target.wants/`  目录下新建一个  `/usr/lib/systemd/system/nginx.service`  文件的链接。
+
+## 实例
+```
+
+```
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTUyNDMwNTU2Niw1MTQzNDY1NTksNjcwMz
-c0NTEwXX0=
+eyJoaXN0b3J5IjpbLTE1MzQ2NDI3OTEsNTE0MzQ2NTU5LDY3MD
+M3NDUxMF19
 -->
