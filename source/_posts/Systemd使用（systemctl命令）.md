@@ -14,10 +14,9 @@ categories:
 ## 查看
 ### **2.1 查看系统所有安装的服务项**
 
-```text
+```bash
 systemctl list-unit-files --type=service
 ```
-
 使用  `PageUp`  或  `PageDown`  翻页，查看完毕后按  `q`  退出。
 
 ### **2.2 查看系统所有运行的服务项**
@@ -54,5 +53,5 @@ systemctl status <服务项名称>
 [root: ~]# systemctl status nginx.service
 ```
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbNjcwMzc0NTEwXX0=
+eyJoaXN0b3J5IjpbLTEyODY1NjYxODcsNjcwMzc0NTEwXX0=
 -->
