@@ -104,7 +104,7 @@ CentOS 7的服务systemctl脚本存放在：/usr/lib/systemd/，有系统 system
 /run/systemd/system  
 /etc/systemd/system
 ```
-
+在`/etc/systemd/system`下面创建`nginx.service.d`目录，在这个目录里面新建任何以.conf结尾的文件，然后写入我们自己的配置。
 ### **4.2 服务文件的模版**
 
 以下是最简单的配置模版，直接根据提示或注释修改参数值，然后去掉所有注释即可。
@@ -131,6 +131,6 @@ WantedBy=multi-user.target
 > **说明**  
 > • 创建服务文件之后，最好执行一下  `systemctl daemon-reload`  再启用。
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTg1NDIwOTg3OSw1MTQzNDY1NTksNjcwMz
+eyJoaXN0b3J5IjpbMTUyNDMwNTU2Niw1MTQzNDY1NTksNjcwMz
 c0NTEwXX0=
 -->
