@@ -11,6 +11,7 @@ categories:
 <!--more-->
 
 ##  Exercise: Web Crawler
+最佳答案[https://stackoverflow.com/questions/13217547/trouble-with-go-tour-crawler-exercise](https://stackoverflow.com/questions/13217547/trouble-with-go-tour-crawler-exercise)
 ```go
 type VisitRecord struct {
     url_visited map[string]bool
@@ -66,5 +67,5 @@ func main() {
 }
 ```
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTY3Nzg0NTAzOV19
+eyJoaXN0b3J5IjpbMjc0MzEwMTE1XX0=
 -->
