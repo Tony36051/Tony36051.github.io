@@ -1,16 +1,16 @@
 ---
 title: Golang笔记
-date: 2019-06-26
+date: 2019-06-26 02:08
 tags:
-- git
-- jenkins
+- Golang
 
 categories:
-- 运维jenkins
+- dev
 ---
-代码提交git后自动发消息给jenkins, 开启构建和部署的动作. 做到全自动
+学习的简单笔记
 <!--more-->
 
+##  Exercise: Web Crawler
 ```go
 type VisitRecord struct {
     url_visited map[string]bool
@@ -66,5 +66,5 @@ func main() {
 }
 ```
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMzk5NDk3NjQ2XX0=
+eyJoaXN0b3J5IjpbMTY3Nzg0NTAzOV19
 -->
