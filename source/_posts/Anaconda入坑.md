@@ -26,8 +26,20 @@ proxy_servers:
     http: http://domain\username:password@corp.com:8080
     https: http://domain\username:password@corp.com:8080
 ssl_verify: False
+
+```
+
+```mermaid
+st=>start: Start  
+e=>end  
+op=>operation: My Operation  
+cond=>condition: Yes or No?  
+  
+st->op->cond  
+cond(yes)->e  
+cond(no)->op
 ```
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTI0OTI3NTA2N119
+eyJoaXN0b3J5IjpbMTE5MTEyMDk4MSwtMjQ5Mjc1MDY3XX0=
 -->
