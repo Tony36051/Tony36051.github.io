@@ -15,9 +15,13 @@ categories:
 >ansible调用playbook远程mvn执行打包时发现执行出错，找不到`JAVA_HOME`
 
 >Please make sure the user has the privilege to run hbase shell
+
 ## 排查
+
 登录远程服务器执行env与ansible执行env命令，看到环境变量不一样
+
 ## 原因
+
 login shell 和 non-login shell的区别造成的，该情况还可能出现在ssh登录后执行命令。
 具体分析请看：[关于ansible远程执行的环境变量问题（login shell & nonlogin shelll）](https://blog.csdn.net/u010871982/article/details/78525367)
 敲黑板，记笔记！

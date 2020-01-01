@@ -12,10 +12,6 @@ date: 2019-04-25 18:00:26
 
 前端应用越来越复杂，反复操作可能导致dom或js对象没有被正确回收，导致内存占用持续高位。
 
-
-
-![测试结果图](测试结果图.png)
-
 ## 测试原理
 
 - Selenium 控制浏览器反复操作
@@ -23,7 +19,6 @@ date: 2019-04-25 18:00:26
 - window.performance.memory 获取浏览器V8引擎级别js堆内存使用情况（chrome only）
 - openpyxl 记录到excel
 - robotframework 包装降低学习成本
-
 
 
 ```mermaid
@@ -36,17 +31,12 @@ graph LR
 ```
 
 
-
 ```mermaid
 graph TD
 	A[Selenium: 获取chromedriver进程号] --> B[psutil: 获取多个子进程chrome的进程号]
 	B --> C[psutil: 获取子进程的内存占用]
 	C --> D[chrome: 执行js获取js使用情况]
 ```
-
-
-
-
 
 ## 工程目录介绍
 

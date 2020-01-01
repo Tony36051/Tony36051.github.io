@@ -65,6 +65,7 @@ categories:
 ```
 
 # json定义文件存放目录
+
 这一步比较特殊，需要将`user.avsc`放在main下的avro目录，以avsc结尾。然后调用maven插件`mvn org.apache.avro:avro-maven-plugin:schema`，maven插件好像有bug，不能在pom.xml中指定sourceDirectory。
 也可以手工调用`java -jar /path/to/avro-tools-1.8.1.jar compile schema user.avsc .`
 ```
