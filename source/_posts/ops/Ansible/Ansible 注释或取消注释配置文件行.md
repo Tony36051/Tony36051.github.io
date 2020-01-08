@@ -4,7 +4,7 @@ date: 2018-03-08
 tags:
 - Aansible
 categories:
-- 运维
+- ops
 ---
 # Ansible 注释或取消注释配置文件行
 ## 简介
