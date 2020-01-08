@@ -4,7 +4,7 @@ date: 2018-04-25 14:14
 tags:
 - Docker
 categories:
-- 运维
+- ops
 ---
 docker的配置要点、常见问题、命令、姿势。
 
