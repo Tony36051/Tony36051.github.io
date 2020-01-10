@@ -2,7 +2,7 @@
 title: Zabbix 实践
 date: 2018-03-12 14:52:00
 tags: 
-- zabbix
+- Zabbix
 categories:
 - ops
 ---
@@ -204,7 +204,10 @@ fi
 ```
 #### 监控项 <small>示例</small>
 外部检查：
-cluster-hadoop-plugin.sh\[{$HADOOP\_NAMENODE\_HOST},{$HADOOP\_NAMENODE\_METRICS\_PORT},{$ZABBIX\_NAME},DFS\]
+```bash
+cluster-hadoop-plugin.sh ${HADOOP_NAMENODE_HOST} ${HADOOP_NAMENODE_METRICS_PORT} ${ZABBIX_NAME} DFS
+```
+
 监控项
 Zabbix采集器：键值live_nodes 
 
@@ -213,9 +216,4 @@ Zabbix采集器：键值live_nodes
 ### agent机器进入zabbix用户调试
 如果需要在被监控机器执行脚本获取监控数据，可以使用UserParameter功能，Agent将会在被监控机器上以zabbix用户执行对应的命令。经常会出现权限问题等，调试时需要切换用户，以下是切换用户的命令：
 > sudo su -s /bin/bash zabbix
-
-
-
-## 坑(注意点)
-### 待补充
 

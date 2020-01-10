@@ -21,7 +21,36 @@ categories:
 3. Build User Vars Plugin 将用户变为变量
 4. Build Name Setter Plugin 可以将构建名中插入变量
 
-# 踩过的坑
-## docker部署
-docker部署确实方便，当扩展slave使用时，需要有一样的目录结构，然后slave的host机也需要保持跟master的host机保持一致，比较麻烦。`也许是我不会用，应该有好方法，请赐教`
 
+
+# 部署后启动启动远程服务器
+
+## 免密登录
+
+1. 可以看见将/root/.ssh目录持久化到宿主机目录了
+2. ssh-keygen 一路回车即可
+3. ssh-copy-id -i ~/.ssh/id_rsa.pub user@server
+
+## maven构建
+
+选择Invoke top-level Maven targets
+package
+-Dmaven.test.skip=true
+
+## 停止任务
+
+```bash
+ssh root@remote_host "pkill -f ailog.jar " || true
+scp ${WORKSPACE}/target/ailog.jar root@remote_host:/tmp/ailog.jar
+ssh root@remote_host "cd /tmp; nohup java -jar -Dspring.profiles.active=prod /tmp/ailog.jar > /tmp/ailog.log &"
+```
+
+1. `|| true` 可以让该命令的执行结果返回成功, 让后续步骤可以继续
+2. pkill -f可以匹配部分启动命令,然后kill之. 如果没有找到会返回失败
+3. nohup & 可以使进程后台执行. 重定向结果能让ssh马上返回
+   如果是本地执行命令, 需要这样:
+
+```bash
+pkill -f excelhelper || true
+BUILD_ID=dontKillMe nohup java -jar ${WORKSPACE}/excelhelper/target/excelhelper-1.0-SNAPSHOT.jar > /tmp/excelhelper.log 2>&1 &
+```
