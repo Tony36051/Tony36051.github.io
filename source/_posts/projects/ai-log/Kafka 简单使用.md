@@ -1,9 +1,9 @@
 ---
-title: kafka简单使用
+title: Kafka 简单使用
 date: 2018-05-10
 tags:
-- kafka
-- docker
+- Kafka 
+- Docker
 categories:
 - BigData
 ---
