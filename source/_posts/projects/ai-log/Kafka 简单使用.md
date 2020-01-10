@@ -2,6 +2,7 @@
 title: Kafka 简单使用
 date: 2018-05-10
 tags:
+- AILog
 - Kafka 
 - Docker
 categories:

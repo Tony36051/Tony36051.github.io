@@ -2,6 +2,7 @@
 title: Kafka 实战之 schema-registry
 date: 2018-05-19
 tags:
+- AILog
 - Avro
 - Kafka
 categories:

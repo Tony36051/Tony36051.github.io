@@ -2,6 +2,7 @@
 title: Avro 序列化传输协议实战
 date: 2018-05-14
 tags:
+- AILog
 - Avro
 - 序列化
 categories:
@@ -215,4 +216,3 @@ public class LocalDemo {
 2. [实战代码](http://www.cnblogs.com/agoodegg/p/3309041.html)
 
 
-   

@@ -2,6 +2,7 @@
 title: Flume 笔记
 date: 2018-05-26
 tags:
+- AILog
 - Flume
 categories:
 - BigData
