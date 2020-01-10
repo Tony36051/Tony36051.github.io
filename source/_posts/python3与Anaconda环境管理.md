@@ -55,6 +55,29 @@ conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/f
 conda config --set show_channel_urls yes
 ```
 
+或者修改配置文件
+
+> C:\Users\<username>\.condarc
+
+```ini
+channels:
+  - https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main/
+#  - https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free/
+  - defaults
+
+# Show channel URLs when displaying what is going to be downloaded and
+# in 'conda list'. The default is False.
+show_channel_urls: True
+allow_other_channels: True
+
+proxy_servers:
+    http: http://domain\username:password@corp.com:8080
+    https: http://domain\username:password@corp.com:8080
+ssl_verify: False
+```
+
+
+
 ### 命令
 
 #### 增删查改环境
