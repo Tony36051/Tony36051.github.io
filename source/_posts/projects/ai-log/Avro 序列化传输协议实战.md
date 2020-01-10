@@ -1,15 +1,16 @@
 ---
-title: avro序列化传输协议实战
+title: Avro 序列化传输协议实战
 date: 2018-05-14
 tags:
-- avro
+- Avro
 - 序列化
 categories:
-- BbigDdata
+- BigData
 
 ---
 测试岗位却不甘止步于业务测试，遂尝试智能化测试，当前的思路是通过日志大数据分析，协助自动化用例的诊断和建议。其中传输协议打算使用avro，原因是使用hadoop集群。本文记录官网入门步骤中未尽之处与项目实际应用经验
 <!--more-->
+
 # pom
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -212,7 +213,6 @@ public class LocalDemo {
 # 参考
 1. [Avro是什么](http://blog.kazaff.me/2014/07/07/%E6%98%AF%E4%BB%80%E4%B9%88%E7%B3%BB%E5%88%97%E4%B9%8BAvro/)
 2. [实战代码](http://www.cnblogs.com/agoodegg/p/3309041.html)
-3. 
-<!--stackedit_data:
-eyJoaXN0b3J5IjpbMTU4OTE0ODY3Ml19
--->
+
+
+   

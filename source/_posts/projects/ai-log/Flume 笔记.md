@@ -1,10 +1,10 @@
 ---
-title: flume笔记
+title: Flume 笔记
 date: 2018-05-26
 tags:
-- flume
+- Flume
 categories:
-- BbigDdata
+- BigData
 
 ---
 测试岗位却不甘止步于业务测试，遂尝试智能化测试，当前的思路是通过日志大数据分析，协助自动化用例的诊断和建议。其中本地日志采用flume采集，发送到kafka
