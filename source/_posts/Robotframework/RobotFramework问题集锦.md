@@ -1,7 +1,7 @@
 ---
 title: RobotFramework问题集锦
 categories:
-  - 测试
+  - Test
 tags:
   - RobotFramework
 date: 2019-04-24 11:26:26
@@ -21,7 +21,3 @@ ${cap_dict}	Create Dictionary	chromeOptions	${chromeOptions}
 Open Browser	${url}	chrome	desired_capabilities=${cap_dict}
 ```
 
-
-<!--stackedit_data:
-eyJoaXN0b3J5IjpbNTE5MTQzNzA3LC0xMzExNzIzMDE3XX0=
--->

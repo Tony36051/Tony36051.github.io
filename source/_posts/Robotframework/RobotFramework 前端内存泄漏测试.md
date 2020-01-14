@@ -1,7 +1,7 @@
 ---
 title: RobotFramework 前端内存泄漏测试
 categories:
-  - 测试
+  - Test
 tags:
   - RobotFramework
 date: 2019-04-25 18:00:26
@@ -103,6 +103,3 @@ graph LR
 
 ## 项目地址
 [https://github.com/Tony36051/js-mem-leak-test/](https://github.com/Tony36051/js-mem-leak-test/)
-<!--stackedit_data:
-eyJoaXN0b3J5IjpbODQ5ODYzNzE5XX0=
--->

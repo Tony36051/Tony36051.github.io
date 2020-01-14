@@ -5,7 +5,7 @@ tags:
 - RobotFramework
 - PageObject
 categories:
-- 测试
+- Test
 ---
 第一次用RobotFramework-SeleniumLibrary写网页的GUI测试，封装关键字，按功能模块划分关键字。后来一次系统层面的UI重构，所有用例要重新写，成本很大，遂找到2013年提出，2015成熟的Page Object设计模式。基于页面或重用组件封装，仅将人类能交互的操作封装为方法。抽象后，可读性、可维护性大增。
 <!-- more -->
@@ -13,8 +13,11 @@ categories:
 一开始选择的[NCBI](https://github.com/ncbi/robotframework-pageobjects)的，文档详尽，功能较多，缺点是实现较复杂，坑是要指定对应的Selenium2Library的版本，对新的版本要改import，觉得不方便，什么还有别的问题。
 后来选择使用较新的[boakley的实现](https://github.com/boakley/robotframework-pageobjectlibrary)，实现上比较简单，功能与PageObject的意思都到了。缺点是没有完全按照PageObject的设计理念，方法返回值不一定是某页面或具体值，如果学院派地看，甚至可以说没有实现PageObject也是成立的。
 
+# 实战后总结
+**2020-01-14 Updated**：
+PageObject定义页面和元素xpath关系即可，页面动作如果非必要，不用为某个页面定义动作。因为大部分的操作还是点击和输入，这个在更底层应该封装好。无论在RobotFramework还是纯代码实现上，都可遵从此原则
 
-# 页面与方法
+# 实际项目举例
 ## 草稿
 ### commodityIndex 商品首页
 1. click_n_frame_contract(index) 点击第n个框架
@@ -64,6 +67,3 @@ select_xxx
 组合动作按实际业务命名
 click_n_xxx：xxx取列头的名字，或类型
 
-<!--stackedit_data:
-eyJoaXN0b3J5IjpbNjM5MTU0MjM1XX0=
--->

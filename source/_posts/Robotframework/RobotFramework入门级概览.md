@@ -1,7 +1,7 @@
 ---
 title: RobotFramework入门级概览
 categories:
-  - 测试
+  - Test
 tags:
   - RobotFramework
 date: 2018-09-22 19:45:10
@@ -20,7 +20,7 @@ typora-root-url: RobotFramework入门级概览
 
 测试目标是一个登陆模块, 涵盖了注册/登陆/修改密码的命令行工具, 编写一个测试脚本对其功能进行验证.
 
-测试脚本的官方术语叫测试数据(Test Data), 测试数据分为四个部分, Settings/Test Cases/Keywords/Variables. 每个部分以*号开始, 可以加任意空行提高可读性.
+测试脚本的官方术语叫测试数据(Test Data), 测试数据分为四个部分, Settings/Test Cases/Keywords/Variables. 每个部分以\*号开始, 可以加任意空行提高可读性.
 
 关键字和参数直接用两个或以上的空格分隔, 建议使用4个, 是否需要上下行对齐看个人洁癖情况.
 
@@ -88,4 +88,61 @@ RobotFramework3使用robot作为主要命令, 旧版2.9及以前使用pybot作�
 # 结果
 
 测试用例执行后, 首先生成的是xUnit兼容的xml文件, 里面记录了测试执行的输出, 然后从output.xml文件中解析生成用于调试查看的`log.html`和查看整体结果的`report.html`报告文件.
+
+# 被测对象 login.py
+
+程序来源: https://github.com/robotframework/QuickStartGuide
+
+该程序是RobotFramework官方Quick Start教程的被测程序, 以下简单说明其功能.
+
+该程序是一个简单的用户登录例子, 这是个命令行实现的验证程序, 允许调用者进行以下三个操作:
+
+- 用合规的密码创建用户
+- 用有效的账号和密码登录
+- 修改现有账号的密码
+
+以下是一些调用的实例:
+
+不存在的用户使用合规的密码登录, 将得到一样的错误提示
+
+```bash
+> python sut/login.py login nobody P4ssw0rd
+Access Denied
+```
+
+创建用户之后, 可以成功登录
+
+```bash
+> python sut/login.py create fred P4ssw0rd
+SUCCESS
+
+> python sut/login.py login fred P4ssw0rd
+Logged In
+```
+
+密码合规的验证规则: 7-12位, 必须包含大小写字母和数字, 但不允许包含特殊字符.
+
+```bash
+> python sut/login.py create fred short
+Creating user failed: Password must be 7-12 characters long
+
+> python sut/login.py create fred invalid
+Creating user failed: Password must be a combination of lowercase and
+uppercase letters and numbers
+```
+
+修改密码的用例:
+
+```bash
+> python sut/login.py change-password fred wrong NewP4ss
+Changing password failed: Access Denied
+
+> python sut/login.py change-password fred P4ssw0rd short
+Changing password failed: Password must be 7-12 characters long
+
+> python sut/login.py change-password fred P4ssw0rd NewP4ss
+SUCCESS
+```
+
+该应用程序使用简单的"数据库"去保存用户的信息, 其实是保存在操作系统的临时文件所在的目录, 文件名默认为`robotframework-quickstart-db.txt`
 

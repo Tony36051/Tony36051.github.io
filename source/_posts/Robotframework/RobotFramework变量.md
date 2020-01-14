@@ -1,7 +1,7 @@
 ---
 title: RobotFramework变量
 categories:
-  - 测试
+  - Test
 tags:
   - RobotFramework
 date: 2018-09-27 01:00:26
