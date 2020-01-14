@@ -6,7 +6,7 @@ tags:
 - SSH
 - Tomcat
 categories:
-- ops
+- Ops
 ---
 作为团队QA角色，在环境搭建上使用ansible作为部署运维的自动化工具，在启动tomcat、presto、kylin时，遇到环境变量不对，无法启动；启动没报错但发现没有启动，发现进程启动了又退出了。本文简要记述相关原因与解决方案。
 <!--more-->

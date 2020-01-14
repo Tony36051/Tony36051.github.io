@@ -5,7 +5,7 @@ tags:
 - Centos
 - Docker
 categories:
-- ops
+- Ops
 ---
 # 原理
 yum install有参数\-\-downloadonly，可以只下载不安装，搭配\-\-downloaddir=DLDIR参数可以下载依赖包，完成离线安装。

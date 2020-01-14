@@ -4,7 +4,7 @@ date: 2018-03-12 14:52:00
 tags: 
 - Zabbix
 categories:
-- ops
+- Ops
 ---
 # Zabbix实践
 ## 安装

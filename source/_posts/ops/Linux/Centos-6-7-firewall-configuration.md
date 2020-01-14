@@ -5,7 +5,7 @@ tags:
 - Linux
 - Firewall
 categories:
-- ops
+- Ops
 ---
 Centos 6/7的防火墙配置略有差异，仅作小记。
 <!--more-->

@@ -4,7 +4,7 @@ date: 2018-04-25 14:14
 tags:
 - Docker
 categories:
-- ops
+- Ops
 ---
 docker的配置要点、常见问题、命令、姿势。
 

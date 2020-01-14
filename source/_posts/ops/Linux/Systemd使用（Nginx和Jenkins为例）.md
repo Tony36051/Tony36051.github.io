@@ -5,7 +5,7 @@ tag:
 - Linux
 - Systemd
 categories:
-- ops
+- Ops
 ---
 作为一个测试+运维人员，经常需要使用jenkins做持续集成，将jenkins作为守护进程有很多方法，其中一个就是用systemd。
 <!--more-->

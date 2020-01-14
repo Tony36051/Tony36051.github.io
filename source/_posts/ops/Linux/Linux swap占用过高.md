@@ -4,7 +4,7 @@ date: 2019-05-18
 tags: 
 - Linux
 categories:
-- ops
+- Ops
 ---
 OS的监控告警，swap占用超过80%，记录解决思路
 <!--more-->
