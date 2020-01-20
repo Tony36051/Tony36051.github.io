@@ -3,4 +3,6 @@
 ```bash
 cd Tony36051.github.io
 npm install
+hexo g
+hexo s
 ```
