@@ -1,7 +1,7 @@
 ---
-title: pycharm
+title: pycharm 简单使用
 categories:
-  - 测试
+  - Test
 tags:
   - python
 date: 2018-09-20 23:02:43

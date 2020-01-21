@@ -5,7 +5,7 @@ tag:
 - JMeter
 
 categories:
-- 测试
+- Test
 typora-root-url: JMeter 跨线程组共享变量（单点登录Cookie无法保存）
 ---
 我司采用单点登录用Cookie做身份认证，在进行JMeter性能测试时，仅使用HTTP Cookie Manager仍提示未登录。原因在于单点登录服务器的域名与待测试的服务器域名不一致，Cookie Manager不支持跨域Cookie。本文介绍两种方法来处理。

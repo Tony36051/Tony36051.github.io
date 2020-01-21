@@ -4,7 +4,7 @@ date: 2018-06-07 15:56
 tag: 
 - xpath
 categories:
-- 测试
+- Test
 ---
 PageObject封装过程中难免大量使用xpath，记录一些比较好用的xpath。
 <!--more-->

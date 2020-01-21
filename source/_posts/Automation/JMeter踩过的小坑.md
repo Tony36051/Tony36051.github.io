@@ -5,7 +5,7 @@ tag:
 - JMeter
 
 categories:
-- 测试
+- Test
 ---
 # Cookie的domain和path
 ## domain
