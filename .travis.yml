@@ -2,12 +2,10 @@ language: node_js
 node_js: stable
 
 # Travis-CI Caching
-# cache:
-#   directories:
-#     - node_modules
-# cache:
-#   directories:
-#     - $HOME/.npm
+cache:
+  apt: true
+  directories:
+    - node_modules
 
 # S: Build Lifecycle
 install:
@@ -15,6 +13,7 @@ install:
   # - npm ci
 
 script:
+  - hexo clean
   - hexo g
 
 after_script:
