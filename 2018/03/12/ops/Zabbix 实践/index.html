@@ -1,0 +1,1449 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+<link href="//cdn.jsdelivr.net/npm/font-awesome@4/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.4.1" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.4.1">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.4.1">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.4.1">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.4.1" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '6.4.1',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="Zabbix实践安装zabbix安装需要3大块，server负责整理数据，agent采集数据，web负责展示与GUI配置。server和web都依赖关系型数据库，这里以mysql为例，也是docker形式。12345docker run --name mysql --restart=always \-v /home/tony/mysql_data:/var/lib/mysql \-p 3306:3">
+<meta name="keywords" content="Zabbix">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Zabbix 实践">
+<meta property="og:url" content="http://yoursite.com/2018/03/12/ops/Zabbix 实践/index.html">
+<meta property="og:site_name" content="幻煞幽穹">
+<meta property="og:description" content="Zabbix实践安装zabbix安装需要3大块，server负责整理数据，agent采集数据，web负责展示与GUI配置。server和web都依赖关系型数据库，这里以mysql为例，也是docker形式。12345docker run --name mysql --restart=always \-v /home/tony/mysql_data:/var/lib/mysql \-p 3306:3">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2020-12-08T16:09:34.558Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Zabbix 实践">
+<meta name="twitter:description" content="Zabbix实践安装zabbix安装需要3大块，server负责整理数据，agent采集数据，web负责展示与GUI配置。server和web都依赖关系型数据库，这里以mysql为例，也是docker形式。12345docker run --name mysql --restart=always \-v /home/tony/mysql_data:/var/lib/mysql \-p 3306:3">
+
+
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/03/12/ops/Zabbix 实践/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>Zabbix 实践 | 幻煞幽穹</title>
+  
+
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?d66eda2527c113168f7066a7705fa234";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">幻煞幽穹</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br />首页</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+    <a href="/categories/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-th"></i> <br />分类</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+    <a href="/tags/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+    <a href="/about/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-user"></i> <br />关于</a>
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/12/ops/Zabbix 实践/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="夏侯仪">
+      <meta itemprop="description" content="幽寰证此约 七魄俱为凭</br>魂袅还无明 诸厉化纷英</br>吾心共天契 请凭神御临">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="幻煞幽穹">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Zabbix 实践
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2018-03-12 14:52:00" itemprop="dateCreated datePublished" datetime="2018-03-12T14:52:00+08:00">2018-03-12</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2020-12-09 00:09:34" itemprop="dateModified" datetime="2020-12-09T00:09:34+08:00">2020-12-09</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Ops/" itemprop="url" rel="index"><span itemprop="name">Ops</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/03/12/ops/Zabbix 实践/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count valine-comment-count" data-xid="/2018/03/12/ops/Zabbix 实践/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2018/03/12/ops/Zabbix 实践/" class="leancloud_visitors" data-flag-title="Zabbix 实践">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数：</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-symbolscount">
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">本文字数：</span>
+                
+                <span title="本文字数">9.2k</span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">8 分钟</span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="Zabbix实践"><a href="#Zabbix实践" class="headerlink" title="Zabbix实践"></a>Zabbix实践</h1><h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><p>zabbix安装需要3大块，server负责整理数据，agent采集数据，web负责展示与GUI配置。<br>server和web都依赖关系型数据库，这里以mysql为例，也是docker形式。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">docker run --name mysql --restart=always \</span><br><span class="line">-v /home/tony/mysql_data:/var/lib/mysql \</span><br><span class="line">-p 3306:3306 \</span><br><span class="line">-e MYSQL_ROOT_PASSWORD=huawei123 \</span><br><span class="line">-d mysql:5.6</span><br></pre></td></tr></table></figure></p>
+<h3 id="Server端"><a href="#Server端" class="headerlink" title="Server端"></a>Server端</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">docker run --name zabbix-server-mysql --restart always \</span><br><span class="line">--link mysql:mysql_host \</span><br><span class="line">-p 10051:10051 \</span><br><span class="line">-e DB_SERVER_HOST=<span class="string">"mysql_host"</span> \</span><br><span class="line">-e MYSQL_USER=<span class="string">"root"</span> \</span><br><span class="line">-e MYSQL_PASSWORD=<span class="string">"huawei123"</span> \</span><br><span class="line">-v /home/tony/zabbix/externalscripts:/usr/lib/zabbix/externalscripts \</span><br><span class="line">-d zabbix/zabbix-server-mysql</span><br></pre></td></tr></table></figure>
+<h3 id="Web端"><a href="#Web端" class="headerlink" title="Web端"></a>Web端</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">docker run --name zabbix-web-nginx-mysql \</span><br><span class="line">--restart always \</span><br><span class="line">--link mysql:mysql_host \</span><br><span class="line">--link zabbix-server-mysql:zabbix-server-mysql \</span><br><span class="line">-p 81:80 \</span><br><span class="line">-e DB_SERVER_HOST=<span class="string">"mysql_host"</span> \</span><br><span class="line">-e MYSQL_USER=<span class="string">"root"</span> \</span><br><span class="line">-e MYSQL_PASSWORD=<span class="string">"huawei123"</span> \</span><br><span class="line">-e ZBX_SERVER_HOST=<span class="string">"zabbix-server-mysql"</span> \</span><br><span class="line">-e PHP_TZ=<span class="string">"Asia/Shanghai"</span> \</span><br><span class="line">-v /home/tony/zabbix/msyh.ttf:/usr/share/zabbix/fonts/graphfont.ttf \</span><br><span class="line">-d zabbix/zabbix-web-nginx-mysql:latest</span><br></pre></td></tr></table></figure>
+<h3 id="Agent"><a href="#Agent" class="headerlink" title="Agent"></a>Agent</h3><p>Agent用原生的rpm包安装，centos7.2下直接安装无依赖。生产环境要离线安装，找到以下仓库 <a href="http://repo.zabbix.com/zabbix/3.4/rhel/7/x86_64/" target="_blank" rel="noopener">http://repo.zabbix.com/zabbix/3.4/rhel/7/x86_64/</a><br>笔者在编辑时候，版本号为3.4，<a href="http://repo.zabbix.com/zabbix/3.4/rhel/7/x86_64/zabbix-get-3.4.7-1.el7.x86_64.rpm" target="_blank" rel="noopener">zabbix-get-3.4.7-1.el7.x86_64.rpm</a></p>
+<blockquote>
+<p>sudo rpm -ivh zabbix-get-3.4.7-1.el7.x86_64.rpm</p>
+</blockquote>
+<p>默认路径</p>
+<blockquote>
+<p>/etc/zabbix  #配置<br>/var/log/zabbix  #日志<br>sudo systemctl restart zabbix-agent.service    #systemd 重启</p>
+</blockquote>
+<h2 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h2><h3 id="判断进程是否存在、获取进程号"><a href="#判断进程是否存在、获取进程号" class="headerlink" title="判断进程是否存在、获取进程号"></a>判断进程是否存在、获取进程号</h3><p>使用UserParameter功能，能在agent端执行自定义命令，命令的返回值会送到server作为键值对应的数值。</p>
+<h4 id="流程"><a href="#流程" class="headerlink" title="流程"></a>流程</h4><ol>
+<li><p>在Agent端/etc/zabbix/zabbix_agentd.d/目录下新建参数自定义命令。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo vim /etc/zabbix/zabbix_agentd.d/userparameter_script.conf</span><br><span class="line">UserParameter=ps[*],ps -ef | grep <span class="variable">$1</span> | grep -v zabbix | wc -l</span><br><span class="line">UserParameter=pid[*],ps -ef | grep <span class="string">"<span class="variable">$1</span>"</span> | grep -v grep | sed -r <span class="string">'s/ +/ /g'</span> | cut -d <span class="string">" "</span> -f 2</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在web端配置监控项，可以是active或passive，键值ps[NameNode]，对应地会在agent端执行命令ps -ef | grep NameNode | grep -v zabbix | wc -l</p>
+</li>
+<li>server端收到对应的返回值，正常来说是1。</li>
+</ol>
+<h3 id="Hadoop参数"><a href="#Hadoop参数" class="headerlink" title="Hadoop参数"></a>Hadoop参数</h3><h4 id="流程-1"><a href="#流程-1" class="headerlink" title="流程"></a>流程</h4><ol>
+<li>server端执行外部检查，外部检查调用zabbix/externalscripts目录下执行系统命令（如调用 python get_dfs_info.py master1 50070）。</li>
+<li>调用系统命令后，被调用程序应使用zabbix-sender给server端发送相关数据。<br>这里发送的是文本文件，每行一条记录，空格划分三列，第一列是被监控机器在web上显示的hostname，第二列是键值，第三列是具体的数据。</li>
+<li>zabbix-server监控项用zabbix采集器，键值对应发送文件的第二列，数据类型要区分整数和字符串等。<h4 id="脚本"><a href="#脚本" class="headerlink" title="脚本"></a>脚本</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/sh</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#--------------------------------------------------------------------------------------------</span></span><br><span class="line"><span class="comment"># Expecting the following arguments in order -</span></span><br><span class="line"><span class="comment"># &lt;host&gt; = hostname/ip-address of Hadoop cluster NameNode server.</span></span><br><span class="line"><span class="comment">#        This is made available as a macro in host configuration.</span></span><br><span class="line"><span class="comment"># &lt;port&gt; = Port # on which the NameNode metrics are available (default = 50070)</span></span><br><span class="line"><span class="comment">#        This is made available as a macro in host configuration.</span></span><br><span class="line"><span class="comment"># &lt;name_in_zabbix&gt; = Name by which the Hadoop NameNode is configured in Zabbix.</span></span><br><span class="line"><span class="comment">#        This is made available as a macro in host configuration.</span></span><br><span class="line"><span class="comment"># &lt;monitor_type&gt; is the parameter (NN or DFS) you want to monitor.</span></span><br><span class="line"><span class="comment">#--------------------------------------------------------------------------------------------</span></span><br><span class="line"></span><br><span class="line">COMMAND_LINE=<span class="string">"<span class="variable">$0</span> $*"</span> </span><br><span class="line"><span class="built_in">export</span> SCRIPT_NAME=<span class="string">"<span class="variable">$0</span>"</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="title">usage</span></span>() &#123;</span><br><span class="line">   <span class="built_in">echo</span> <span class="string">"Usage: <span class="variable">$SCRIPT_NAME</span> &lt;host&gt; &lt;port&gt; &lt;name_in_zabbix&gt; &lt;monitor_type&gt;"</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> [ <span class="variable">$#</span> -ne 4 ]</span><br><span class="line"><span class="keyword">then</span></span><br><span class="line">    usage ;</span><br><span class="line">    <span class="built_in">exit</span> ;</span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">#--------------------------------------------------------------------------------------------</span></span><br><span class="line"><span class="comment"># First 2 parameters are required for connecting to Hadoop NameNode</span></span><br><span class="line"><span class="comment"># The 3th parameter HADOOP_NAME_IN_ZABBIX is required to be sent back to Zabbix to identify the </span></span><br><span class="line"><span class="comment"># Zabbix host/entity for which these metrics are destined.</span></span><br><span class="line"><span class="comment"># The 4th parameter MONITOR_TYPE is to specify the type to monitoring(NN or DFS)</span></span><br><span class="line"><span class="comment">#--------------------------------------------------------------------------------------------</span></span><br><span class="line"><span class="built_in">export</span> CLUSTER_HOST=<span class="variable">$1</span></span><br><span class="line"><span class="built_in">export</span> METRICS_PORT=<span class="variable">$2</span></span><br><span class="line"><span class="built_in">export</span> HADOOP_NAME_IN_ZABBIX=<span class="variable">$3</span></span><br><span class="line"><span class="built_in">export</span> MONITOR_TYPE=<span class="variable">$4</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#--------------------------------------------------------------------------------------------</span></span><br><span class="line"><span class="comment"># Set the data output file and the log fle from zabbix_sender</span></span><br><span class="line"><span class="comment">#--------------------------------------------------------------------------------------------</span></span><br><span class="line"><span class="built_in">export</span> DATA_FILE=<span class="string">"/tmp/<span class="variable">$&#123;HADOOP_NAME_IN_ZABBIX&#125;</span>_<span class="variable">$&#123;MONITOR_TYPE&#125;</span>.txt"</span></span><br><span class="line"><span class="built_in">export</span> JSON_FILE=<span class="string">"/tmp/<span class="variable">$&#123;HADOOP_NAME_IN_ZABBIX&#125;</span>_<span class="variable">$&#123;MONITOR_TYPE&#125;</span>.json"</span></span><br><span class="line"><span class="built_in">export</span> BAK_DATA_FILE=<span class="string">"/tmp/<span class="variable">$&#123;HADOOP_NAME_IN_ZABBIX&#125;</span>_<span class="variable">$&#123;MONITOR_TYPE&#125;</span>_bak.txt"</span></span><br><span class="line"><span class="built_in">export</span> LOG_FILE=<span class="string">"/tmp/<span class="variable">$&#123;HADOOP_NAME_IN_ZABBIX&#125;</span>.log"</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">#--------------------------------------------------------------------------------------------</span></span><br><span class="line"><span class="comment"># Use python to get the metrics data from Hadoop NameNode and use screen-scraping to extract</span></span><br><span class="line"><span class="comment"># metrics. </span></span><br><span class="line"><span class="comment"># The final result of screen scraping is a file containing data in the following format -</span></span><br><span class="line"><span class="comment"># &lt;HADOOP_NAME_IN_ZABBIX&gt; &lt;METRIC_NAME&gt; &lt;METRIC_VALUE&gt;</span></span><br><span class="line"><span class="comment">#--------------------------------------------------------------------------------------------</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># python `dirname $0`/zabbix-hadoop.py $CLUSTER_HOST $METRICS_PORT $DATA_FILE $HADOOP_NAME_IN_ZABBIX $MONITOR_TYPE</span></span><br><span class="line">wget -q -O <span class="variable">$DATA_FILE</span> http://<span class="variable">$CLUSTER_HOST</span>:<span class="variable">$METRICS_PORT</span>/jmx?qry=Hadoop:*</span><br><span class="line"></span><br><span class="line">sh `dirname <span class="variable">$0</span>`/JSON.sh -l &lt; <span class="variable">$DATA_FILE</span> &gt; <span class="variable">$JSON_FILE</span></span><br><span class="line"><span class="comment">#NN &gt; JvmMetrics</span></span><br><span class="line">heap_memory_used=<span class="string">"`grep 'MemHeapUsedM' <span class="variable">$JSON_FILE</span> | sed -n '1,1p' | cut -f 2`"</span></span><br><span class="line">heap_memory=<span class="string">"`grep 'MemHeapCommittedM' <span class="variable">$JSON_FILE</span> | sed -n '1,1p' | cut -f 2`"</span></span><br><span class="line">max_heap_memory=<span class="string">"`grep 'MemHeapMaxM' <span class="variable">$JSON_FILE</span> | sed -n '1,1p' | cut -f 2`"</span></span><br><span class="line">non_heap_memory_used=<span class="string">"`grep 'MemNonHeapUsedM' <span class="variable">$JSON_FILE</span> | sed -n '1,1p' | cut -f 2`"</span></span><br><span class="line">commited_non_heap_memory=<span class="string">"`grep 'MemNonHeapCommittedM' <span class="variable">$JSON_FILE</span> | sed -n '1,1p' | cut -f 2`"</span></span><br><span class="line">all_memory_used=`awk <span class="string">'BEGIN&#123;print $heap_memory_used + $non_heap_memory_used&#125;'</span>`</span><br><span class="line"><span class="comment">#NN &gt; NameNodeStatus</span></span><br><span class="line">namenode_state=<span class="string">"`grep 'tag.HAState' <span class="variable">$JSON_FILE</span> | sed -n '1,1p' | cut -f 2`"</span></span><br><span class="line"><span class="comment">#NN &gt; NameNodeInfo</span></span><br><span class="line">start_time=<span class="string">"`grep 'BlockDeletionStartTime' <span class="variable">$JSON_FILE</span> | sed -n '1,1p' | cut -f 2`"</span></span><br><span class="line">hadoop_version=`grep <span class="string">'SoftwareVersion'</span> <span class="variable">$JSON_FILE</span> | sed -n <span class="string">'1,1p'</span> | cut -f 2 | cut -d \<span class="string">" -f 2`</span></span><br><span class="line"><span class="string"># DFS &gt; FSNamesystemState</span></span><br><span class="line"><span class="string">live_nodes="</span>`grep <span class="string">'NumLiveDataNodes'</span> <span class="variable">$JSON_FILE</span> | sed -n <span class="string">'1,1p'</span> | cut -f 2`<span class="string">" </span></span><br><span class="line"><span class="string">dead_nodes="</span>`grep <span class="string">'NumDeadDataNodes'</span> <span class="variable">$JSON_FILE</span> | sed -n <span class="string">'1,1p'</span> | cut -f 2`<span class="string">" </span></span><br><span class="line"><span class="string">decommissioning_nodes="</span>`grep <span class="string">'NumDecommissioningDataNodes'</span> <span class="variable">$JSON_FILE</span> | sed -n <span class="string">'1,1p'</span> | cut -f 2`<span class="string">"</span></span><br><span class="line"><span class="string">under_replicated_blocks="</span>`grep <span class="string">'UnderReplicatedBlocks'</span> <span class="variable">$JSON_FILE</span> | sed -n <span class="string">'1,1p'</span> | cut -f 2`<span class="string">"</span></span><br><span class="line"><span class="string"># DFS &gt; NameNodeInfo</span></span><br><span class="line"><span class="string">files_and_directorys="</span>`grep <span class="string">'TotalFiles'</span> <span class="variable">$JSON_FILE</span> | sed -n <span class="string">'1,1p'</span> | cut -f 2`<span class="string">"</span></span><br><span class="line"><span class="string">blocks="</span>`grep <span class="string">'TotalBlocks'</span> <span class="variable">$JSON_FILE</span> | sed -n <span class="string">'1,1p'</span> | cut -f 2`<span class="string">"</span></span><br><span class="line"><span class="string">configured_capacity="</span>`grep <span class="string">'\"Total\"'</span> <span class="variable">$JSON_FILE</span> | sed -n <span class="string">'1,1p'</span> | cut -f 2`<span class="string">"</span></span><br><span class="line"><span class="string">dfs_used="</span>`grep <span class="string">'CapacityUsed'</span> <span class="variable">$JSON_FILE</span> | sed -n <span class="string">'1,1p'</span> | cut -f 2`<span class="string">"</span></span><br><span class="line"><span class="string">dfs_used_persent="</span>`grep <span class="string">'PercentUsed'</span> <span class="variable">$JSON_FILE</span> | sed -n <span class="string">'1,1p'</span> | cut -f 2`<span class="string">"</span></span><br><span class="line"><span class="string">non_dfs_used="</span>`grep <span class="string">'NonDfsUsedSpace'</span> <span class="variable">$JSON_FILE</span> | sed -n <span class="string">'1,1p'</span> | cut -f 2`<span class="string">"</span></span><br><span class="line"><span class="string">dfs_remaining="</span>`grep <span class="string">'Free'</span> <span class="variable">$JSON_FILE</span> | sed -n <span class="string">'1,1p'</span> | cut -f 2`<span class="string">"</span></span><br><span class="line"><span class="string">dfs_remaining_persent="</span>`grep <span class="string">'PercentRemaining'</span> <span class="variable">$JSON_FILE</span> | sed -n <span class="string">'1,1p'</span> | cut -f 2`<span class="string">"</span></span><br><span class="line"><span class="string">datanodes_usages="</span>`grep <span class="string">'NodeUsage'</span> <span class="variable">$JSON_FILE</span> | sed -n <span class="string">'1,1p'</span> | cut -f 2`<span class="string">"</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">echo "</span><span class="variable">$HADOOP_NAME_IN_ZABBIX</span> heap_memory_used <span class="variable">$heap_memory_used</span></span><br><span class="line"><span class="variable">$HADOOP_NAME_IN_ZABBIX</span> heap_memory <span class="variable">$heap_memory</span></span><br><span class="line"><span class="variable">$HADOOP_NAME_IN_ZABBIX</span> max_heap_memory <span class="variable">$max_heap_memory</span></span><br><span class="line"><span class="variable">$HADOOP_NAME_IN_ZABBIX</span> non_heap_memory_used <span class="variable">$non_heap_memory_used</span></span><br><span class="line"><span class="variable">$HADOOP_NAME_IN_ZABBIX</span> commited_non_heap_memory <span class="variable">$commited_non_heap_memory</span></span><br><span class="line"><span class="variable">$HADOOP_NAME_IN_ZABBIX</span> all_memory_used <span class="variable">$all_memory_used</span></span><br><span class="line"><span class="variable">$HADOOP_NAME_IN_ZABBIX</span> namenode_state <span class="variable">$namenode_state</span></span><br><span class="line"><span class="variable">$HADOOP_NAME_IN_ZABBIX</span> start_time <span class="variable">$start_time</span></span><br><span class="line"><span class="variable">$HADOOP_NAME_IN_ZABBIX</span> hadoop_version <span class="variable">$hadoop_version</span></span><br><span class="line"><span class="variable">$HADOOP_NAME_IN_ZABBIX</span> live_nodes <span class="variable">$live_nodes</span></span><br><span class="line"><span class="variable">$HADOOP_NAME_IN_ZABBIX</span> dead_nodes <span class="variable">$dead_nodes</span></span><br><span class="line"><span class="variable">$HADOOP_NAME_IN_ZABBIX</span> decommissioning_nodes <span class="variable">$decommissioning_nodes</span></span><br><span class="line"><span class="variable">$HADOOP_NAME_IN_ZABBIX</span> under_replicated_blocks <span class="variable">$under_replicated_blocks</span></span><br><span class="line"><span class="variable">$HADOOP_NAME_IN_ZABBIX</span> files_and_directorys <span class="variable">$files_and_directorys</span></span><br><span class="line"><span class="variable">$HADOOP_NAME_IN_ZABBIX</span> blocks <span class="variable">$blocks</span></span><br><span class="line"><span class="variable">$HADOOP_NAME_IN_ZABBIX</span> configured_capacity <span class="variable">$configured_capacity</span></span><br><span class="line"><span class="variable">$HADOOP_NAME_IN_ZABBIX</span> dfs_used <span class="variable">$dfs_used</span></span><br><span class="line"><span class="variable">$HADOOP_NAME_IN_ZABBIX</span> dfs_used_persent <span class="variable">$dfs_used_persent</span></span><br><span class="line"><span class="variable">$HADOOP_NAME_IN_ZABBIX</span> non_dfs_used <span class="variable">$non_dfs_used</span></span><br><span class="line"><span class="variable">$HADOOP_NAME_IN_ZABBIX</span> dfs_remaining <span class="variable">$dfs_remaining</span></span><br><span class="line"><span class="variable">$HADOOP_NAME_IN_ZABBIX</span> dfs_remaining_persent <span class="variable">$dfs_remaining_persent</span></span><br><span class="line"><span class="variable">$HADOOP_NAME_IN_ZABBIX</span> datanodes_usages <span class="variable">$datanodes_usages</span><span class="string">" &gt; <span class="variable">$DATA_FILE</span></span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">#--------------------------------------------------------------------------------------------</span></span><br><span class="line"><span class="string"># Check the size of <span class="variable">$DATA_FILE</span>. If it is not empty, use zabbix_sender to send data to Zabbix.</span></span><br><span class="line"><span class="string">#--------------------------------------------------------------------------------------------</span></span><br><span class="line"><span class="string">if [[ -s <span class="variable">$DATA_FILE</span> ]]</span></span><br><span class="line"><span class="string">then</span></span><br><span class="line"><span class="string">   zabbix_sender -vv -z 127.0.0.1 -i <span class="variable">$DATA_FILE</span> 2&gt;&gt;<span class="variable">$LOG_FILE</span> 1&gt;&gt;<span class="variable">$LOG_FILE</span></span></span><br><span class="line"><span class="string">   echo  -e "</span>Successfully executed <span class="variable">$COMMAND_LINE</span><span class="string">" &gt;&gt;<span class="variable">$LOG_FILE</span></span></span><br><span class="line"><span class="string">   mv <span class="variable">$DATA_FILE</span> <span class="variable">$BAK_DATA_FILE</span></span></span><br><span class="line"><span class="string">   echo "</span>OK<span class="string">"</span></span><br><span class="line"><span class="string">else</span></span><br><span class="line"><span class="string">   echo "</span>Error <span class="keyword">in</span> executing <span class="variable">$COMMAND_LINE</span><span class="string">" &gt;&gt; <span class="variable">$LOG_FILE</span></span></span><br><span class="line"><span class="string">   echo "</span>ERROR<span class="string">"</span></span><br><span class="line"><span class="string">fi</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string"># debug: sh cluster-hadoop-plugin.sh 10.41.236.209 50070 master1 DFS</span></span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h4 id="监控项-示例"><a href="#监控项-示例" class="headerlink" title="监控项 示例"></a>监控项 <small>示例</small></h4><p>外部检查：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cluster-hadoop-plugin.sh <span class="variable">$&#123;HADOOP_NAMENODE_HOST&#125;</span> <span class="variable">$&#123;HADOOP_NAMENODE_METRICS_PORT&#125;</span> <span class="variable">$&#123;ZABBIX_NAME&#125;</span> DFS</span><br></pre></td></tr></table></figure></p>
+<p>监控项<br>Zabbix采集器：键值live_nodes </p>
+<h2 id="如何调试"><a href="#如何调试" class="headerlink" title="如何调试"></a>如何调试</h2><h3 id="agent机器进入zabbix用户调试"><a href="#agent机器进入zabbix用户调试" class="headerlink" title="agent机器进入zabbix用户调试"></a>agent机器进入zabbix用户调试</h3><p>如果需要在被监控机器执行脚本获取监控数据，可以使用UserParameter功能，Agent将会在被监控机器上以zabbix用户执行对应的命令。经常会出现权限问题等，调试时需要切换用户，以下是切换用户的命令：</p>
+<blockquote>
+<p>sudo su -s /bin/bash zabbix</p>
+</blockquote>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>如果觉得对你有帮助，请让我看到！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/uploads/wechat-reward-image.jpg" alt="夏侯仪 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/uploads/alipay-reward-image.jpg" alt="夏侯仪 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Zabbix/" rel="tag"># Zabbix</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/03/07/ops/Ansible/Ansible 注释或取消注释配置文件行/" rel="next" title="Ansible 注释或取消注释配置文件行">
+                <i class="fa fa-chevron-left"></i> Ansible 注释或取消注释配置文件行
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/03/13/ops/Linux/Centos 离线安装通用方法(Docker为例)/" rel="prev" title="Centos 离线安装通用方法(Docker为例)">
+                Centos 离线安装通用方法(Docker为例) <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/uploads/avatar.jpg"
+                alt="夏侯仪" />
+            
+              <p class="site-author-name" itemprop="name">夏侯仪</p>
+              <p class="site-description motion-element" itemprop="description">幽寰证此约 七魄俱为凭</br>魂袅还无明 诸厉化纷英</br>吾心共天契 请凭神御临</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">64</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">13</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">47</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/Tony36051" target="_blank" title="GitHub"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                  
+                </span>
+              
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Zabbix实践"><span class="nav-number">1.</span> <span class="nav-text">Zabbix实践</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#安装"><span class="nav-number">1.1.</span> <span class="nav-text">安装</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Server端"><span class="nav-number">1.1.1.</span> <span class="nav-text">Server端</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Web端"><span class="nav-number">1.1.2.</span> <span class="nav-text">Web端</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Agent"><span class="nav-number">1.1.3.</span> <span class="nav-text">Agent</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#配置"><span class="nav-number">1.2.</span> <span class="nav-text">配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#判断进程是否存在、获取进程号"><span class="nav-number">1.2.1.</span> <span class="nav-text">判断进程是否存在、获取进程号</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#流程"><span class="nav-number">1.2.1.1.</span> <span class="nav-text">流程</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Hadoop参数"><span class="nav-number">1.2.2.</span> <span class="nav-text">Hadoop参数</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#流程-1"><span class="nav-number">1.2.2.1.</span> <span class="nav-text">流程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#脚本"><span class="nav-number">1.2.2.2.</span> <span class="nav-text">脚本</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#监控项-示例"><span class="nav-number">1.2.2.3.</span> <span class="nav-text">监控项 示例</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#如何调试"><span class="nav-number">1.3.</span> <span class="nav-text">如何调试</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#agent机器进入zabbix用户调试"><span class="nav-number">1.3.1.</span> <span class="nav-text">agent机器进入zabbix用户调试</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">夏侯仪</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+    <span title="站点总字数">218k</span>
+  
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    
+    <span title="站点阅读时长">3:18</span>
+  
+</div>
+
+
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动 v3.7.1</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 – <a class="theme-link" target="_blank" href="https://theme-next.org">NexT.Gemini</a> v6.4.1</div>
+
+
+
+
+
+  <script src='https://unpkg.com/mermaid@7.1.2/dist/mermaid.min.js'></script>
+  <script>
+    if (window.mermaid) {
+      mermaid.initialize("");
+    }
+  </script>
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+	
+    
+
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="//cdn.jsdelivr.net/npm/jquery@2/dist/jquery.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//cdn.jsdelivr.net/npm/velocity-animate@1/velocity.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//cdn.jsdelivr.net/npm/velocity-animate@1/velocity.ui.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.4.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.4.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=6.4.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=6.4.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.4.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.4.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.4.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  
+  
+  <script src="//cdn.jsdelivr.net/npm/valine/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(function (item) {
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: false,
+        appId: 'qaLpAmH0lK9W5o4j33seHqus-gzGzoHsz',
+        appKey: 'Y1Xf8mRILiBEFQCsGlOFG5kA',
+        placeholder: 'Just go go',
+        avatar:'mm',
+        meta:guest,
+        pageSize:'10' || 10,
+        visitor: true
+    });
+  </script>
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,1489 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+<link href="//cdn.jsdelivr.net/npm/font-awesome@4/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.4.1" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.4.1">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.4.1">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.4.1">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.4.1" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '6.4.1',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="在智能测试日志智能洞察的实现过程中,发现已经有epam公司的ReportPortal已经以GPLv3开源了, 实现的功能非常一致. 遂需要对其进行调研, 看看二次开发成本和拿来主义的实施成本.">
+<meta name="keywords" content="Java,ReportPortal">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ReportPortal 源码阅读">
+<meta property="og:url" content="http://yoursite.com/2018/07/22/projects/ReportPortal-Customization/ReportPortal-源码阅读/index.html">
+<meta property="og:site_name" content="幻煞幽穹">
+<meta property="og:description" content="在智能测试日志智能洞察的实现过程中,发现已经有epam公司的ReportPortal已经以GPLv3开源了, 实现的功能非常一致. 遂需要对其进行调研, 看看二次开发成本和拿来主义的实施成本.">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2020-12-08T16:09:34.562Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="ReportPortal 源码阅读">
+<meta name="twitter:description" content="在智能测试日志智能洞察的实现过程中,发现已经有epam公司的ReportPortal已经以GPLv3开源了, 实现的功能非常一致. 遂需要对其进行调研, 看看二次开发成本和拿来主义的实施成本.">
+
+
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/07/22/projects/ReportPortal-Customization/ReportPortal-源码阅读/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>ReportPortal 源码阅读 | 幻煞幽穹</title>
+  
+
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?d66eda2527c113168f7066a7705fa234";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">幻煞幽穹</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br />首页</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+    <a href="/categories/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-th"></i> <br />分类</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+    <a href="/tags/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+    <a href="/about/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-user"></i> <br />关于</a>
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/07/22/projects/ReportPortal-Customization/ReportPortal-源码阅读/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="夏侯仪">
+      <meta itemprop="description" content="幽寰证此约 七魄俱为凭</br>魂袅还无明 诸厉化纷英</br>吾心共天契 请凭神御临">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="幻煞幽穹">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">ReportPortal 源码阅读
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2018-07-23 00:00:00" itemprop="dateCreated datePublished" datetime="2018-07-23T00:00:00+08:00">2018-07-23</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2020-12-09 00:09:34" itemprop="dateModified" datetime="2020-12-09T00:09:34+08:00">2020-12-09</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Dev/" itemprop="url" rel="index"><span itemprop="name">Dev</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/07/22/projects/ReportPortal-Customization/ReportPortal-源码阅读/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count valine-comment-count" data-xid="/2018/07/22/projects/ReportPortal-Customization/ReportPortal-源码阅读/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2018/07/22/projects/ReportPortal-Customization/ReportPortal-源码阅读/" class="leancloud_visitors" data-flag-title="ReportPortal 源码阅读">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数：</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-symbolscount">
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">本文字数：</span>
+                
+                <span title="本文字数">7.9k</span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">7 分钟</span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>在智能测试日志智能洞察的实现过程中,发现已经有epam公司的ReportPortal已经以GPLv3开源了, 实现的功能非常一致. 遂需要对其进行调研, 看看二次开发成本和拿来主义的实施成本.<br><a id="more"></a></p>
+<h1 id="service-api"><a href="#service-api" class="headerlink" title="service-api"></a>service-api</h1><h2 id="gradle看第三方库依赖"><a href="#gradle看第三方库依赖" class="headerlink" title="gradle看第三方库依赖"></a>gradle看第三方库依赖</h2><p>本质应该是一个springboot, 对接springcloud, 列举一些使用的到内外的包:<br>内:<br>commons-dao/commons-rules/commons-model/commons<br>外:<br>spring: retry/consul/security/aop/web/freemarker/actuator/oauth2/mongodb<br>commons-fileupload/commons-validator/javax.mail<br>slf4j/logback<br>quartz<br>poi/jasperreports<br>swagger<br>test: hamcrest/junit/mockito/jsonpath/fakemongo</p>
+<h2 id="RP的相关包介绍"><a href="#RP的相关包介绍" class="headerlink" title="RP的相关包介绍"></a>RP的相关包介绍</h2><h3 id="commons-dao数据库实体层"><a href="#commons-dao数据库实体层" class="headerlink" title="commons-dao数据库实体层"></a>commons-dao数据库实体层</h3><p>com.epam.ta.reportportal.database.entity <code>实体对象</code><br>XXXRepository: 持久层<br>com.epam.ta.reportportal.database.dao <code>数据访问层</code>: 接口多继承领域接口<br>com.epam.ta.reportportal.database.search, controller条件到查询条件的转化</p>
+<h3 id="commons-model模型DTO"><a href="#commons-model模型DTO" class="headerlink" title="commons-model模型DTO"></a>commons-model模型DTO</h3><p>com.epam.ta.reportportal.ws.model.* <code>DTO</code>定义和序列化<br><code>xxxRS</code>: 服务器返回Result<br><code>xxxRQ</code>: 请求服务器的Request</p>
+<h3 id="service-api核心服务"><a href="#service-api核心服务" class="headerlink" title="service-api核心服务"></a>service-api核心服务</h3><p>com.epam.ta.reportportal.ws.controller(.impl) <code>controller层</code><br>com.epam.ta.reportportal.ws.converter 转化<br>com.epam.ta.reportportal.core.*(.impl) <code>service服务层</code><br><code>xxxHandler</code>: 其实就是各种服务, 相当于xxxService</p>
+<h2 id="调用链"><a href="#调用链" class="headerlink" title="调用链"></a>调用链</h2><pre class="mermaid">graph LR
+  client-->|json|controller
+  controller-->|xxxRQ|handler(handler:查)
+  handler-->|condi|repository
+  repository-->|自定义Query|MongoDB</pre>
+<pre class="mermaid">graph RL
+  MongoDB-->|entity|handler(handler:业务规则做鉴权/存在校验,构造)
+  handler-->|xxxResource|controller
+  controller-->|xxxRS|client
+  subgraph handler返回值流程
+    entity-->BussinessRule
+    BussinessRule-->entity
+    entity-->xxxAssembler
+    xxxAssembler-->xxxConventer(xxxConventer:流式map)
+    xxxConventer-->xxxResource
+  end</pre>
+
+<h2 id="controller看对外接口"><a href="#controller看对外接口" class="headerlink" title="controller看对外接口"></a>controller看对外接口</h2><p>14个controller, 可以从<a href="http://10.75.76.163:8080/ui/#api看swagger界面" target="_blank" rel="noopener">http://10.75.76.163:8080/ui/#api看swagger界面</a><br>Activity: 关联用户和项目, 有历史信息, 应该是某人在某个项目操作过的一些kv<br>Dashboard: 关联项目, 看板, 内含widget的id/size/pos<br>External System: 外部缺陷跟踪系统, 注册实例, 提单<br>File Storage: 内部文件存储, 上传图片, <strong>仅包括用户头像</strong><br>Launch: 执行任务, 新建/停止/查询by用户/-项目<br><strong>Log</strong>: 测试日志, 下挂在test item(用例)下, 时间/内容/级别<br>Plugin: 插件, 只有心跳<br><strong>Project</strong>: 项目, 配置分析/邮件/外部系统/job间隔/用户列表, 分配用户/删除项目移除es索引<br>Project Settings: 项目配置<br>Settings: 系统设置, 按profile粒度<br><strong>Test Item</strong>: 既是<code>用例</code>也是<code>用例套</code></p>
+<ol>
+<li>查询: 可以按父亲/缺陷类型/路径/外部系统/id/参数的kv/launch/tags/时间; </li>
+<li>历史情况: 跟在Launch下, 原因/launchId/参数kv/统计</li>
+<li>新建用例, 提供父亲/参数KV/tags/type(SUITE, CASE)/id</li>
+</ol>
+<p>User: 用户, 注册/改密/查询/登录, 登录信息存Principal<br>User Filter: (某人)项目的过滤条件, 描述/实体/名字/排序和分页/是否共享/launch<br>Widget: 内容/小工具/元数据/名字/是否共享, 可以获取预览</p>
+<h1 id="agent-python-RobotFramework"><a href="#agent-python-RobotFramework" class="headerlink" title="agent-python-RobotFramework"></a>agent-python-RobotFramework</h1><h2 id="service"><a href="#service" class="headerlink" title="service"></a>service</h2><p>这个类对python-client做了简单的封装和异常处理, 用的都是静态方法. uuid作为token</p>
+<h2 id="variable"><a href="#variable" class="headerlink" title="variable"></a>variable</h2><p>检查listener所需的变量是否存在, 打印提示信息. 记录变量值到类中</p>
+<h2 id="model"><a href="#model" class="headerlink" title="model"></a>model</h2><p>这里的listener用的RobotFramework的listener API 2版本, model做了attributes到模型对象的封装</p>
+<h2 id="listener"><a href="#listener" class="headerlink" title="listener"></a>listener</h2><blockquote>
+<p>ROBOT_LISTENER_API_VERSION = 2 # 这行指定了试用api2的版本, 可以支持到keyword的信息获取, 但api v2都是不能修改的, 已经足够了</p>
+</blockquote>
+<ol>
+<li>依旧使用list模拟stack, 完成树的遍历</li>
+<li>start/end_suite中的<code>attributes[&quot;id&quot;] == &quot;s1&quot;</code> 判断是否为根的用例套<h2 id="bug坑"><a href="#bug坑" class="headerlink" title="bug坑"></a>bug坑</h2>然而官方的这个版本有问题, 虽然agent传值是对的, 但是在页面上展示的层级是错的, 用例被展示为suite, keyword/step被识别为test.<br>翻看github的issue发现有人已经针对这个bug做了魔改, 刻意把返回类型给改了<br><a href="https://github.com/ailjushkin/robotframework-reportportal-ng/" target="_blank" rel="noopener">https://github.com/ailjushkin/robotframework-reportportal-ng/</a></li>
+</ol>
+<h1 id="client-python"><a href="#client-python" class="headerlink" title="client-python"></a>client-python</h1><h2 id="service-1"><a href="#service-1" class="headerlink" title="service"></a>service</h2><p>封装http请求, 处理launch的开闭, test item的开闭, 日志的发送.</p>
+<ol>
+<li>用requests处理http请求, 应该是同步的</li>
+<li>launch开始, 记录launch id, agent每次使用应该都会先开launch</li>
+<li>test item是树状结构, 用栈顶记录父亲id, 结束testitem时候出栈, 其实就是用栈深度遍历的思路, 刚好也是树状结构的测试步骤执行的顺序.</li>
+<li>log如果没有附件, 直接post即可. 如果有(多个)附件, 将多个文件单独构造为合适的请求格式, 这里比较绕, 主要是适配requests库post文件的格式, 同时对齐service-api的接口定义.<h2 id="service-async"><a href="#service-async" class="headerlink" title="service_async"></a>service_async</h2>用队列封装service的同步动作, 使其有异步的特性.</li>
+<li>队列存的是方法名和参数, 异步调用即将方法名和参数入队</li>
+<li>由_monitor方法循环检查能否出队, 出队调用handle方法处理(里面用process_item调同步方法)</li>
+<li>另外单独起进程管理队列的生命周期</li>
+</ol>
+<h1 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h1><h2 id="版本说明"><a href="#版本说明" class="headerlink" title="版本说明"></a>版本说明</h2><ol>
+<li>client用官方的</li>
+<li>agent用民间魔改版<br>然而官方的这个版本有问题, 虽然agent传值是对的, 但是在页面上展示的层级是错的, 用例被展示为suite, keyword/step被识别为test.<br>翻看github的issue发现有人已经针对这个bug做了魔改, 刻意把返回类型给改了<br><a href="https://github.com/ailjushkin/robotframework-reportportal-ng/" target="_blank" rel="noopener">https://github.com/ailjushkin/robotframework-reportportal-ng/</a></li>
+</ol>
+<h2 id="命令"><a href="#命令" class="headerlink" title="命令"></a>命令</h2><h3 id="agent管理launch"><a href="#agent管理launch" class="headerlink" title="agent管理launch"></a>agent管理launch</h3><blockquote>
+<p>pybot -v RP_UUID:”58b1b092-6305-46fe-a15f-16c2e2081e25” -v RP_ENDPOINT:”<a href="http://100.84.93.68:8080&quot;" target="_blank" rel="noopener">http://100.84.93.68:8080&quot;</a> -v RP_LAUNCH:”demo-launch” -v RP_PROJECT:”wjs-debug” -P D:\git\rf-agent\client-Python-3.2.0 -P D:\git\rf-agent\robotframework-reportportal-ng-master –listener reportportal_listener &lt;后续原命令参数&gt;</p>
+</blockquote>
+<h3 id="人工管理launch"><a href="#人工管理launch" class="headerlink" title="人工管理launch"></a>人工管理launch</h3><p>其中<code>5b5a7b29f7eecc0001c39c0d</code>为launchId</p>
+<blockquote>
+<p>pybot -v RP_UUID:”58b1b092-6305-46fe-a15f-16c2e2081e25” -v RP_ENDPOINT:”<a href="http://100.84.93.68:8080&quot;" target="_blank" rel="noopener">http://100.84.93.68:8080&quot;</a> -v RP_LAUNCH:”demo-launch” -v RP_PROJECT:”wjs-debug” -P D:\git\rf-agent\client-Python-3.2.0 -P D:\git\rf-agent\robotframework-reportportal-ng-master –listener reportportal_listener:5b5a7b29f7eecc0001c39c0d &lt;后续原命令参数&gt;</p>
+</blockquote>
+<h2 id="并行执行多launch任务"><a href="#并行执行多launch任务" class="headerlink" title="并行执行多launch任务"></a>并行执行多launch任务</h2><p>每个pybot命令会起一个agent, 每次agent都会先开一个luanch, 最后结束掉.<br>如果需要多个pybot命令的执行结果汇总在一起, 需要共用一个launchId. 这就要求执行者手工管理launch的开启和结束</p>
+<h3 id="请求的公共部分"><a href="#请求的公共部分" class="headerlink" title="请求的公共部分"></a>请求的公共部分</h3><p>uuid作为token:58b1b092-6305-46fe-a15f-16c2e2081e25<br>Headers:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Authorization:bearer 58b1b092-6305-46fe-a15f-16c2e2081e25</span><br><span class="line">Content-Type:application/json</span><br></pre></td></tr></table></figure></p>
+<h3 id="开启"><a href="#开启" class="headerlink" title="开启"></a>开启</h3><p>url地址以:/api/v1为开始, wjs-debug为项目名<br>POST <a href="http://100.84.93.68:8080/api/v1/wjs-debug/launch" target="_blank" rel="noopener">http://100.84.93.68:8080/api/v1/wjs-debug/launch</a><br><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">request:</span><br><span class="line">&#123;</span><br><span class="line">  <span class="attr">"name"</span>: <span class="string">"demo-launch"</span>,</span><br><span class="line">  <span class="attr">"start_time"</span>: <span class="string">"2018-07-27T09:53:42+08:00"</span></span><br><span class="line">&#125;</span><br><span class="line">response</span><br><span class="line">&#123;</span><br><span class="line">    <span class="attr">"number"</span>: <span class="number">31</span>,</span><br><span class="line">    <span class="attr">"id"</span>: <span class="string">"5b5a7b29f7eecc0001c39c0d"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="结束"><a href="#结束" class="headerlink" title="结束"></a>结束</h3><p>url地址以:/api/v1为开始, wjs-debug为项目名, launch后的5b5a7b29f7eecc0001c39c0d为launchId<br>PUT <a href="http://100.84.93.68:8080/api/v1/wjs-debug/launch/5b5a7b29f7eecc0001c39c0d/finish" target="_blank" rel="noopener">http://100.84.93.68:8080/api/v1/wjs-debug/launch/5b5a7b29f7eecc0001c39c0d/finish</a><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">request:</span><br><span class="line">&#123;</span><br><span class="line">  &quot;end_time&quot;: &quot;2018-07-27T09:55:42+08:00&quot;,</span><br><span class="line">  &quot;status&quot;: &quot;PASSED&quot;</span><br><span class="line">&#125;</span><br><span class="line">response:</span><br><span class="line">&#123;</span><br><span class="line">    &quot;msg&quot;: &quot;Launch with ID = &apos;5b5a7b29f7eecc0001c39c0d&apos; successfully finished.&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h1 id="部署"><a href="#部署" class="headerlink" title="部署"></a>部署</h1><h2 id="宿主机修改"><a href="#宿主机修改" class="headerlink" title="宿主机修改"></a>宿主机修改</h2><h3 id="修改vm-max-map-count"><a href="#修改vm-max-map-count" class="headerlink" title="修改vm.max_map_count"></a>修改vm.max_map_count</h3><p>修改此项之后, elastic才能使用</p>
+<blockquote>
+<p>sysctl -w vm.max_map_count=262144</p>
+</blockquote>
+<h3 id="目录权限"><a href="#目录权限" class="headerlink" title="目录权限"></a>目录权限</h3><p>elastic不能以root执行, 在docker-compose.yml同目录下执行以下命令:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mkdir -p data/elasticsearch</span><br><span class="line">chown -R 1000:1000 data/elasticsearch</span><br></pre></td></tr></table></figure></p>
+<p>docker-compose 方式启动, 为了不影响我司代理, 暴露部分端口, 改为以下:<br><figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">version:</span> <span class="string">'2'</span></span><br><span class="line"><span class="attr">services:</span></span><br><span class="line"><span class="attr">  mongodb:</span></span><br><span class="line"><span class="attr">    image:</span> <span class="string">'mongo:3.4'</span></span><br><span class="line"><span class="attr">    restart:</span> <span class="string">always</span></span><br><span class="line"><span class="attr">    ports:</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">'27017:27017'</span></span><br><span class="line"><span class="attr">    environment:</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">TZ=Asia/Shanghai</span></span><br><span class="line"><span class="attr">    volumes:</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">./data/mongo:/data/db</span></span><br><span class="line"><span class="attr">    restart:</span> <span class="string">always</span></span><br><span class="line"></span><br><span class="line"><span class="attr">  registry:</span></span><br><span class="line"><span class="attr">    image:</span> <span class="string">'consul:1.0.6'</span></span><br><span class="line"><span class="attr">    volumes:</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">'.//data/consul:/consul/data'</span></span><br><span class="line"><span class="attr">    ports:</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">'8500:8500'</span></span><br><span class="line"><span class="attr">    command:</span> <span class="string">agent</span> <span class="bullet">-server</span> <span class="bullet">-bootstrap-expect=1</span> <span class="bullet">-ui</span> <span class="bullet">-client</span> <span class="number">0.0</span><span class="number">.0</span><span class="number">.0</span></span><br><span class="line"><span class="attr">    environment:</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">'CONSUL_LOCAL_CONFIG=&#123;"leave_on_terminate": true&#125;'</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">TZ=Asia/Shanghai</span></span><br><span class="line"><span class="attr">    restart:</span> <span class="string">always</span></span><br><span class="line"><span class="attr">  uat:</span></span><br><span class="line"><span class="attr">    image:</span> <span class="string">'reportportal/service-authorization:4.2.0'</span></span><br><span class="line"><span class="attr">    depends_on:</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">mongodb</span></span><br><span class="line"><span class="attr">    environment:</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">RP_PROFILES=docker</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">RP_SESSION_LIVE=86400</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">TZ=Asia/Shanghai</span></span><br><span class="line"><span class="attr">    restart:</span> <span class="string">always</span></span><br><span class="line"><span class="attr">  gateway:</span></span><br><span class="line"><span class="attr">    image:</span> <span class="string">'traefik:1.6.3'</span></span><br><span class="line"><span class="attr">    ports:</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">'8080:8080'</span></span><br><span class="line"><span class="attr">    environment:</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">TZ=Asia/Shanghai</span></span><br><span class="line"><span class="attr">    command:</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">'--consulcatalog.endpoint=registry:8500'</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">'--defaultEntryPoints=http'</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">'--entryPoints=Name:http Address::8080'</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">'--web'</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">'--web.address=:8081'</span></span><br><span class="line"><span class="attr">    restart:</span> <span class="string">always</span></span><br><span class="line"><span class="attr">  index:</span></span><br><span class="line"><span class="attr">    image:</span> <span class="string">'reportportal/service-index:4.2.0'</span></span><br><span class="line"><span class="attr">    environment:</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">RP_SERVER_PORT=8080</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">RP_PROXY_CONSUL=true</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">TZ=Asia/Shanghai</span></span><br><span class="line"><span class="attr">    depends_on:</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">registry</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">gateway</span></span><br><span class="line"><span class="attr">    restart:</span> <span class="string">always</span></span><br><span class="line"><span class="attr">  api:</span></span><br><span class="line"><span class="attr">    image:</span> <span class="string">'reportportal/service-api:4.2.1'</span></span><br><span class="line"><span class="attr">    depends_on:</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">mongodb</span></span><br><span class="line"><span class="attr">    volumes:</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">./rp-api-1.0.0-SNAPSHOT.jar:/app.jar</span></span><br><span class="line"><span class="attr">    environment:</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">TZ=Asia/Shanghai</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">RP_PROFILES=docker</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">'JAVA_OPTS=-Xmx1g -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=/tmp -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=8081'</span></span><br><span class="line"><span class="attr">    restart:</span> <span class="string">always</span></span><br><span class="line"><span class="attr">    ports:</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">'8081:8081'</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">'8082:8080'</span></span><br><span class="line"><span class="attr">  ui:</span></span><br><span class="line"><span class="attr">    image:</span> <span class="string">'reportportal/service-ui:4.2.2'</span></span><br><span class="line"><span class="attr">    environment:</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">RP_SERVER.PORT=8080</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">RP_CONSUL.TAGS=urlprefix-/ui</span> <span class="string">opts</span> <span class="string">strip=/ui</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">'RP_CONSUL.ADDRESS=registry:8500'</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">TZ=Asia/Shanghai</span></span><br><span class="line"><span class="attr">    restart:</span> <span class="string">always</span></span><br><span class="line"><span class="attr">  analyzer:</span></span><br><span class="line"><span class="attr">    image:</span> <span class="string">'reportportal/service-analyzer:4.2.0'</span></span><br><span class="line"><span class="attr">    depends_on:</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">registry</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">gateway</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">elasticsearch</span></span><br><span class="line"><span class="attr">    restart:</span> <span class="string">always</span></span><br><span class="line"></span><br><span class="line"><span class="attr">  elasticsearch:</span></span><br><span class="line"><span class="attr">    image:</span> <span class="string">docker.elastic.co/elasticsearch/elasticsearch-oss:6.1.1</span></span><br><span class="line"><span class="attr">    restart:</span> <span class="string">always</span></span><br><span class="line"><span class="attr">    volumes:</span></span><br><span class="line"><span class="bullet">        -</span> <span class="string">./data/elasticsearch:/usr/share/elasticsearch/data</span></span><br><span class="line"><span class="attr">    environment:</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">bootstrap.memory_lock=true</span></span><br><span class="line"><span class="attr">    ulimits:</span></span><br><span class="line"><span class="attr">      memlock:</span></span><br><span class="line"><span class="attr">        soft:</span> <span class="bullet">-1</span></span><br><span class="line"><span class="attr">        hard:</span> <span class="bullet">-1</span></span><br><span class="line"></span><br><span class="line"><span class="attr">networks:</span></span><br><span class="line"><span class="attr">  default:</span></span><br><span class="line"><span class="attr">    driver:</span> <span class="string">bridge</span></span><br><span class="line"><span class="attr">    ipam:</span></span><br><span class="line"><span class="attr">      config:</span></span><br><span class="line"><span class="attr">        - subnet:</span> <span class="number">192.168</span><span class="number">.1</span><span class="number">.0</span><span class="string">/24</span></span><br><span class="line"><span class="attr">          gateway:</span> <span class="number">192.168</span><span class="number">.1</span><span class="number">.1</span></span><br></pre></td></tr></table></figure></p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>如果觉得对你有帮助，请让我看到！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/uploads/wechat-reward-image.jpg" alt="夏侯仪 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/uploads/alipay-reward-image.jpg" alt="夏侯仪 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Java/" rel="tag"># Java</a>
+          
+            <a href="/tags/ReportPortal/" rel="tag"># ReportPortal</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/07/21/Java/Java远程调试/" rel="next" title="Java远程调试">
+                <i class="fa fa-chevron-left"></i> Java远程调试
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/08/16/Java/Java Gist代码笔记/" rel="prev" title="Java Gist代码笔记">
+                Java Gist代码笔记 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/uploads/avatar.jpg"
+                alt="夏侯仪" />
+            
+              <p class="site-author-name" itemprop="name">夏侯仪</p>
+              <p class="site-description motion-element" itemprop="description">幽寰证此约 七魄俱为凭</br>魂袅还无明 诸厉化纷英</br>吾心共天契 请凭神御临</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">64</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">13</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">47</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/Tony36051" target="_blank" title="GitHub"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                  
+                </span>
+              
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#service-api"><span class="nav-number">1.</span> <span class="nav-text">service-api</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#gradle看第三方库依赖"><span class="nav-number">1.1.</span> <span class="nav-text">gradle看第三方库依赖</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#RP的相关包介绍"><span class="nav-number">1.2.</span> <span class="nav-text">RP的相关包介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#commons-dao数据库实体层"><span class="nav-number">1.2.1.</span> <span class="nav-text">commons-dao数据库实体层</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#commons-model模型DTO"><span class="nav-number">1.2.2.</span> <span class="nav-text">commons-model模型DTO</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#service-api核心服务"><span class="nav-number">1.2.3.</span> <span class="nav-text">service-api核心服务</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#调用链"><span class="nav-number">1.3.</span> <span class="nav-text">调用链</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#controller看对外接口"><span class="nav-number">1.4.</span> <span class="nav-text">controller看对外接口</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#agent-python-RobotFramework"><span class="nav-number">2.</span> <span class="nav-text">agent-python-RobotFramework</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#service"><span class="nav-number">2.1.</span> <span class="nav-text">service</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#variable"><span class="nav-number">2.2.</span> <span class="nav-text">variable</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#model"><span class="nav-number">2.3.</span> <span class="nav-text">model</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#listener"><span class="nav-number">2.4.</span> <span class="nav-text">listener</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#bug坑"><span class="nav-number">2.5.</span> <span class="nav-text">bug坑</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#client-python"><span class="nav-number">3.</span> <span class="nav-text">client-python</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#service-1"><span class="nav-number">3.1.</span> <span class="nav-text">service</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#service-async"><span class="nav-number">3.2.</span> <span class="nav-text">service_async</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#说明"><span class="nav-number">4.</span> <span class="nav-text">说明</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#版本说明"><span class="nav-number">4.1.</span> <span class="nav-text">版本说明</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#命令"><span class="nav-number">4.2.</span> <span class="nav-text">命令</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#agent管理launch"><span class="nav-number">4.2.1.</span> <span class="nav-text">agent管理launch</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#人工管理launch"><span class="nav-number">4.2.2.</span> <span class="nav-text">人工管理launch</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#并行执行多launch任务"><span class="nav-number">4.3.</span> <span class="nav-text">并行执行多launch任务</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#请求的公共部分"><span class="nav-number">4.3.1.</span> <span class="nav-text">请求的公共部分</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#开启"><span class="nav-number">4.3.2.</span> <span class="nav-text">开启</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#结束"><span class="nav-number">4.3.3.</span> <span class="nav-text">结束</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#部署"><span class="nav-number">5.</span> <span class="nav-text">部署</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#宿主机修改"><span class="nav-number">5.1.</span> <span class="nav-text">宿主机修改</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#修改vm-max-map-count"><span class="nav-number">5.1.1.</span> <span class="nav-text">修改vm.max_map_count</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#目录权限"><span class="nav-number">5.1.2.</span> <span class="nav-text">目录权限</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">夏侯仪</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+    <span title="站点总字数">218k</span>
+  
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    
+    <span title="站点阅读时长">3:18</span>
+  
+</div>
+
+
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动 v3.7.1</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 – <a class="theme-link" target="_blank" href="https://theme-next.org">NexT.Gemini</a> v6.4.1</div>
+
+
+
+
+
+  <script src='https://unpkg.com/mermaid@7.1.2/dist/mermaid.min.js'></script>
+  <script>
+    if (window.mermaid) {
+      mermaid.initialize("");
+    }
+  </script>
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+	
+    
+
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="//cdn.jsdelivr.net/npm/jquery@2/dist/jquery.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//cdn.jsdelivr.net/npm/velocity-animate@1/velocity.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//cdn.jsdelivr.net/npm/velocity-animate@1/velocity.ui.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.4.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.4.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=6.4.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=6.4.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.4.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.4.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.4.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  
+  
+  <script src="//cdn.jsdelivr.net/npm/valine/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(function (item) {
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: false,
+        appId: 'qaLpAmH0lK9W5o4j33seHqus-gzGzoHsz',
+        appKey: 'Y1Xf8mRILiBEFQCsGlOFG5kA',
+        placeholder: 'Just go go',
+        avatar:'mm',
+        meta:guest,
+        pageSize:'10' || 10,
+        visitor: true
+    });
+  </script>
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

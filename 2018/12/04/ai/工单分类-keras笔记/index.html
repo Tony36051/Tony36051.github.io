@@ -1,0 +1,1455 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+<link href="//cdn.jsdelivr.net/npm/font-awesome@4/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.4.1" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.4.1">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.4.1">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.4.1">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.4.1" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '6.4.1',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="之前参加公司内的文本分类（工单分类）比赛，记录中间过程。">
+<meta name="keywords" content="数据分析">
+<meta property="og:type" content="article">
+<meta property="og:title" content="工单分类-keras笔记">
+<meta property="og:url" content="http://yoursite.com/2018/12/04/ai/工单分类-keras笔记/index.html">
+<meta property="og:site_name" content="幻煞幽穹">
+<meta property="og:description" content="之前参加公司内的文本分类（工单分类）比赛，记录中间过程。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2020-12-08T16:09:34.558Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="工单分类-keras笔记">
+<meta name="twitter:description" content="之前参加公司内的文本分类（工单分类）比赛，记录中间过程。">
+
+
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/12/04/ai/工单分类-keras笔记/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>工单分类-keras笔记 | 幻煞幽穹</title>
+  
+
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?d66eda2527c113168f7066a7705fa234";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">幻煞幽穹</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br />首页</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+    <a href="/categories/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-th"></i> <br />分类</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+    <a href="/tags/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+    <a href="/about/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-user"></i> <br />关于</a>
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/12/04/ai/工单分类-keras笔记/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="夏侯仪">
+      <meta itemprop="description" content="幽寰证此约 七魄俱为凭</br>魂袅还无明 诸厉化纷英</br>吾心共天契 请凭神御临">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="幻煞幽穹">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">工单分类-keras笔记
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2018-12-05 00:41:00" itemprop="dateCreated datePublished" datetime="2018-12-05T00:41:00+08:00">2018-12-05</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2020-12-09 00:09:34" itemprop="dateModified" datetime="2020-12-09T00:09:34+08:00">2020-12-09</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/AI/" itemprop="url" rel="index"><span itemprop="name">AI</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/12/04/ai/工单分类-keras笔记/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count valine-comment-count" data-xid="/2018/12/04/ai/工单分类-keras笔记/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2018/12/04/ai/工单分类-keras笔记/" class="leancloud_visitors" data-flag-title="工单分类-keras笔记">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数：</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-symbolscount">
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">本文字数：</span>
+                
+                <span title="本文字数">8.1k</span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">7 分钟</span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>之前参加公司内的文本分类（工单分类）比赛，记录中间过程。<br><a id="more"></a></p>
+<h1 id="工具准备"><a href="#工具准备" class="headerlink" title="工具准备"></a>工具准备</h1><h2 id="Anaconda"><a href="#Anaconda" class="headerlink" title="Anaconda"></a>Anaconda</h2><p>Anaconda安装好后, 如果jupyter插件没有显示, 请确认是否安装到对应的环境里了<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 配置清华的源</span></span><br><span class="line">conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free/</span><br><span class="line">conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main/</span><br><span class="line">conda config --<span class="built_in">set</span> show_channel_urls yes</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 创建虚拟环境</span></span><br><span class="line">conda create -n py3 python=3 ipykernel</span><br><span class="line"><span class="comment"># 激活环境</span></span><br><span class="line">conda activate py3</span><br><span class="line"><span class="comment"># 安装jupyter</span></span><br><span class="line">pip install -U jupyter</span><br><span class="line"><span class="comment"># 将环境写入ipython的kernel中</span></span><br><span class="line">python -m ipykernel install --user --name py3 --display-name <span class="string">"py3"</span></span><br><span class="line"><span class="comment"># 安装jupyter插件</span></span><br><span class="line">pip install jupyter_contrib_nbextensions</span><br><span class="line">jupyter contrib nbextension install --user</span><br><span class="line">pip install jupyter_nbextensions_configurator</span><br><span class="line">jupyter nbextensions_configurator <span class="built_in">enable</span> --user</span><br><span class="line"></span><br><span class="line"><span class="comment"># 删除环境</span></span><br><span class="line">deactivate</span><br><span class="line">conda env remove -n py3</span><br><span class="line">conda remove -n py3 --all</span><br></pre></td></tr></table></figure>
+<h2 id="远程访问jupyter"><a href="#远程访问jupyter" class="headerlink" title="远程访问jupyter"></a>远程访问jupyter</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">jupyter notebook password</span><br><span class="line">jupyter notebook --generate-config</span><br><span class="line">vim xxx.py</span><br><span class="line">c.NotebookApp.ip=<span class="string">'0.0.0.0'</span></span><br><span class="line">c.NotebookApp.open_browser = False</span><br><span class="line"><span class="comment">#c.NotebookApp.port =8888 #可自行指定一个端口, 访问时使用该端口</span></span><br></pre></td></tr></table></figure>
+<h2 id="pip配置"><a href="#pip配置" class="headerlink" title="pip配置"></a>pip配置</h2><ul>
+<li>Unix:<code>$HOME/.config/pip/pip.conf</code></li>
+<li>Mac:  <code>$HOME/Library/Application Support/pip/pip.conf</code></li>
+<li>Windows：<code>%APPDATA%\pip\pip.ini</code>，<code>%APPDATA%</code>的实际路径我电脑上是<code>C:\Users\user_xxx\AppData\Roaming</code>，可在cmd里执行<code>echo %APPDATA%</code>命令查看</li>
+</ul>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">[global]</span></span><br><span class="line"><span class="attr">proxy</span>=http://<span class="number">100.100</span>.<span class="number">154.250</span>:<span class="number">3128</span></span><br><span class="line"><span class="attr">index-url</span> = https://pypi.tuna.tsinghua.edu.cn/simple</span><br><span class="line"><span class="attr">trusted-host</span>=tuna.tsinghua.edu.cn</span><br></pre></td></tr></table></figure>
+<h2 id="临时pip"><a href="#临时pip" class="headerlink" title="临时pip"></a>临时pip</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python.exe -m pip install numpy --proxy=<span class="string">"proxy.com:8080"</span></span><br></pre></td></tr></table></figure>
+<h1 id="文本清洗"><a href="#文本清洗" class="headerlink" title="文本清洗"></a>文本清洗</h1><h2 id="术语实体"><a href="#术语实体" class="headerlink" title="术语实体"></a>术语实体</h2><p>有字典最好, 没有的话从训练集挖掘一下. 没啥作用</p>
+<ol>
+<li>按工单类型(标签)将工单内容连接在一起, 分词后做word count, 高频词汇中应该有术语, 添加到字典中, 让分词器不要清理.</li>
+<li>分词之后直接tfidf扔线性分类器, 然后看被过滤的stop_word. 应该可以看CountVectorizer的高频词.</li>
+</ol>
+<h2 id="提取关键字"><a href="#提取关键字" class="headerlink" title="提取关键字"></a>提取关键字</h2><p>最后用的HanLP分词</p>
+<ol>
+<li>词频获取, jiaba.extract_tags</li>
+<li>TextRank, jieba.textrank</li>
+<li>jieba.cut(cut_all=True)</li>
+<li>jieba.cut_for_search()</li>
+<li>pseg.cut() 按词性过滤</li>
+<li>pseg.cut() 按词性过滤后, 紧密关联, 按char划分取(1,8) gram</li>
+</ol>
+<h1 id="Tokenizer"><a href="#Tokenizer" class="headerlink" title="Tokenizer"></a>Tokenizer</h1><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> keras_preprocessing.text <span class="keyword">import</span> Tokenizer</span><br><span class="line">texts = [<span class="string">'手机 偶尔 充 不 进 电'</span>, <span class="string">'酷狗 打开 提示 检测 不到 sd 卡'</span>, <span class="string">'平板 连接 wifi 无法 上网'</span>,</span><br><span class="line"> <span class="string">'华为 p 20 耗电 太快 \u200b\u200b'</span>,</span><br><span class="line"> <span class="string">'耗电 快 7月 中旬 网点 换 了 电池 现在 又 耗电 快 一早 上 两 小时 百分之 30 mate 8 全 网通 64 保外 付费 更换 的 保修期'</span>,</span><br><span class="line"> <span class="string">'p 20 电信卡 使用 通话质量 不好 ， 有 杂音'</span>,</span><br><span class="line"> <span class="string">'查询 长沙 的 售后 网点 地址 和 联系方式 手机 有 质量 问题 屏幕 与 机身 分离 了 没有人 为 导致 的 也 没有 摔 过'</span></span><br><span class="line"> <span class="string">'后 壳 碎裂'</span>,</span><br><span class="line"> <span class="string">'plus 标配 版 中国移动 全 网通 定制 版本 3 gb + 32 gb ( toronto-tl 10 ) trt-tl 10 充满 电 用 四 五小 时 ， 主要 看 视频'</span>,</span><br><span class="line"> <span class="string">'v 8 打电话 过程 中 断 移动'</span>]</span><br><span class="line"></span><br><span class="line">tt = Tokenizer(num_words=<span class="number">20</span>, oov_token=<span class="string">'&lt;/s&gt;'</span>)</span><br><span class="line">tt.fit_on_texts(texts)</span><br><span class="line">print(len(tt.word_counts),len(tt.word_index))</span><br><span class="line">seq = tt.texts_to_sequences(texts)</span><br><span class="line"><span class="keyword">for</span> (a,b) <span class="keyword">in</span> zip(texts, seq):</span><br><span class="line">    print(a,b)</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">104 105</span><br><span class="line">手机 偶尔 充 不 进 电 [4, 19, 1, 1, 1, 5]</span><br><span class="line">酷狗 打开 提示 检测 不到 sd 卡 [1, 1, 1, 1, 1, 1, 1]</span><br><span class="line">平板 连接 wifi 无法 上网 [1, 1, 1, 1, 1]</span><br><span class="line">华为 p 20 耗电 太快 ​​ [1, 6, 7, 2, 1, 1]</span><br><span class="line">耗电 快 7月 中旬 网点 换 了 电池 现在 又 耗电 快 一早 上 两 小时 百分之 30 mate 8 全 网通 64 保外 付费 更换 的 保修期 [2, 8, 1, 1, 9, 1, 10, 1, 1, 1, 2, 8, 1, 1, 1, 1, 1, 1, 1, 11, 12, 13, 1, 1, 1, 1, 3, 1]</span><br><span class="line">p 20 电信卡 使用 通话质量 不好 ， 有 杂音 [6, 7, 1, 1, 1, 1, 14, 15, 1]</span><br><span class="line">查询 长沙 的 售后 网点 地址 和 联系方式 手机 有 质量 问题 屏幕 与 机身 分离 了 没有人 为 导致 的 也 没有 摔 过后 壳 碎裂 [1, 1, 3, 1, 9, 1, 1, 1, 4, 15, 1, 1, 1, 1, 1, 1, 10, 1, 1, 1, 3, 1, 1, 1, 1, 1, 1]</span><br><span class="line">plus 标配 版 中国移动 全 网通 定制 版本 3 gb + 32 gb ( toronto-tl 10 ) trt-tl 10 充满 电 用 四 五小 时 ， 主要 看 视频 [1, 1, 1, 1, 12, 13, 1, 1, 1, 16, 1, 16, 1, 17, 18, 1, 17, 18, 1, 5, 1, 1, 1, 1, 14, 1, 1, 1]</span><br><span class="line">v 8 打电话 过程 中 断 移动 [1, 11, 1, 1, 1, 1, 1]</span><br></pre></td></tr></table></figure>
+<h2 id="观察"><a href="#观察" class="headerlink" title="观察"></a>观察</h2><ol>
+<li>num_words参数限制了转换后的word_index为[1,20]</li>
+<li>所有低频的词都认为是oov_token()了</li>
+<li>统计词频的word_count比word_index少一项, 就是没有统计的词频. 如果统计了, 应该是词频最高的词之一了.</li>
+<li>实际上是将低频词(词频在前num_words开外)的词都认为是一个词(低频词), 在词向量里面用一个在0的正态分布随机向量代替, 即预训练权重中unk未知词.</li>
+</ol>
+<h1 id="画图"><a href="#画图" class="headerlink" title="画图"></a>画图</h1><p>在训练过程中, 常需要查看train/val的loss图, 看是否拟合/过拟合.</p>
+<h2 id="训练过程中画图-TensorBoard"><a href="#训练过程中画图-TensorBoard" class="headerlink" title="训练过程中画图 TensorBoard"></a>训练过程中画图 TensorBoard</h2><p>新建一个类, 封装TensorBoard的callback, keras实现.<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">TrainValTensorBoard</span><span class="params">(TensorBoard)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, log_dir=<span class="string">'./logs'</span>, **kwargs)</span>:</span></span><br><span class="line">        self.val_log_dir = os.path.join(log_dir, <span class="string">'validation'</span>)</span><br><span class="line">        training_log_dir = os.path.join(log_dir, <span class="string">'training'</span>)</span><br><span class="line">        super(TrainValTensorBoard, self).__init__(training_log_dir, **kwargs)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">set_model</span><span class="params">(self, model)</span>:</span></span><br><span class="line">        <span class="keyword">if</span> context.executing_eagerly():</span><br><span class="line">            self.val_writer = tf.contrib.summary.create_file_writer(self.val_log_dir)</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            self.val_writer = tf.summary.FileWriter(self.val_log_dir)</span><br><span class="line">        super(TrainValTensorBoard, self).set_model(model)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">_write_custom_summaries</span><span class="params">(self, step, logs=None)</span>:</span></span><br><span class="line">        logs = logs <span class="keyword">or</span> &#123;&#125;</span><br><span class="line">        val_logs = &#123;k.replace(<span class="string">'val_'</span>, <span class="string">''</span>): v <span class="keyword">for</span> k, v <span class="keyword">in</span> logs.items() <span class="keyword">if</span> <span class="string">'val_'</span> <span class="keyword">in</span> k&#125;</span><br><span class="line">        <span class="keyword">if</span> context.executing_eagerly():</span><br><span class="line">            <span class="keyword">with</span> self.val_writer.as_default(), tf.contrib.summary.always_record_summaries():</span><br><span class="line">                <span class="keyword">for</span> name, value <span class="keyword">in</span> val_logs.items():</span><br><span class="line">                    tf.contrib.summary.scalar(name, value.item(), step=step)</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">for</span> name, value <span class="keyword">in</span> val_logs.items():</span><br><span class="line">                summary = tf.Summary()</span><br><span class="line">                summary_value = summary.value.add()</span><br><span class="line">                summary_value.simple_value = value.item()</span><br><span class="line">                summary_value.tag = name</span><br><span class="line">                self.val_writer.add_summary(summary, step)</span><br><span class="line">        self.val_writer.flush()</span><br><span class="line"></span><br><span class="line">        logs = &#123;k: v <span class="keyword">for</span> k, v <span class="keyword">in</span> logs.items() <span class="keyword">if</span> <span class="keyword">not</span> <span class="string">'val_'</span> <span class="keyword">in</span> k&#125;</span><br><span class="line">        super(TrainValTensorBoard, self)._write_custom_summaries(step, logs)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">on_train_end</span><span class="params">(self, logs=None)</span>:</span></span><br><span class="line">        super(TrainValTensorBoard, self).on_train_end(logs)</span><br><span class="line">        self.val_writer.close()</span><br></pre></td></tr></table></figure></p>
+<p>使用上就在callbacks列表中加入类的实例即可.<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> tensorflow.keras.datasets <span class="keyword">import</span> mnist</span><br><span class="line"><span class="keyword">from</span> tensorflow.keras.models <span class="keyword">import</span> Sequential</span><br><span class="line"><span class="keyword">from</span> tensorflow.keras.layers <span class="keyword">import</span> Dense</span><br><span class="line"><span class="keyword">from</span> tensorflow.train <span class="keyword">import</span> AdamOptimizer</span><br><span class="line"></span><br><span class="line">tf.enable_eager_execution()</span><br><span class="line"></span><br><span class="line">(x_train, y_train), (x_test, y_test) = mnist.load_data()</span><br><span class="line">x_train = x_train.reshape(<span class="number">60000</span>, <span class="number">784</span>)</span><br><span class="line">x_test = x_test.reshape(<span class="number">10000</span>, <span class="number">784</span>)</span><br><span class="line">x_train = x_train.astype(<span class="string">'float32'</span>)</span><br><span class="line">x_test = x_test.astype(<span class="string">'float32'</span>)</span><br><span class="line">x_train /= <span class="number">255</span></span><br><span class="line">x_test /= <span class="number">255</span></span><br><span class="line">y_train = y_train.astype(int)</span><br><span class="line">y_test = y_test.astype(int)</span><br><span class="line"></span><br><span class="line">model = Sequential()</span><br><span class="line">model.add(Dense(<span class="number">64</span>, activation=<span class="string">'relu'</span>, input_shape=(<span class="number">784</span>,)))</span><br><span class="line">model.add(Dense(<span class="number">10</span>, activation=<span class="string">'softmax'</span>))</span><br><span class="line">model.compile(loss=<span class="string">'sparse_categorical_crossentropy'</span>, optimizer=AdamOptimizer(), metrics=[<span class="string">'accuracy'</span>])</span><br><span class="line"></span><br><span class="line">model.fit(x_train, y_train, epochs=<span class="number">10</span>,</span><br><span class="line">          validation_data=(x_test, y_test),</span><br><span class="line">          callbacks=[TrainValTensorBoard(write_graph=<span class="keyword">False</span>)])</span><br></pre></td></tr></table></figure></p>
+<h1 id="事后画图-keras的history"><a href="#事后画图-keras的history" class="headerlink" title="事后画图: keras的history"></a>事后画图: keras的history</h1><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># define the function</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">LossHistory</span><span class="params">(keras.callbacks.Callback)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">on_train_begin</span><span class="params">(self, logs=&#123;&#125;)</span>:</span></span><br><span class="line">        self.losses = &#123;<span class="string">'batch'</span>: [], <span class="string">'epoch'</span>: []&#125;</span><br><span class="line">        self.accuracy = &#123;<span class="string">'batch'</span>: [], <span class="string">'epoch'</span>: []&#125;</span><br><span class="line">        self.val_loss = &#123;<span class="string">'batch'</span>: [], <span class="string">'epoch'</span>: []&#125;</span><br><span class="line">        self.val_acc = &#123;<span class="string">'batch'</span>: [], <span class="string">'epoch'</span>: []&#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">on_batch_end</span><span class="params">(self, batch, logs=&#123;&#125;)</span>:</span></span><br><span class="line">        self.losses[<span class="string">'batch'</span>].append(logs.get(<span class="string">'loss'</span>))</span><br><span class="line">        self.accuracy[<span class="string">'batch'</span>].append(logs.get(<span class="string">'acc'</span>))</span><br><span class="line">        self.val_loss[<span class="string">'batch'</span>].append(logs.get(<span class="string">'val_loss'</span>))</span><br><span class="line">        self.val_acc[<span class="string">'batch'</span>].append(logs.get(<span class="string">'val_acc'</span>))</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">on_epoch_end</span><span class="params">(self, batch, logs=&#123;&#125;)</span>:</span></span><br><span class="line">        self.losses[<span class="string">'epoch'</span>].append(logs.get(<span class="string">'loss'</span>))</span><br><span class="line">        self.accuracy[<span class="string">'epoch'</span>].append(logs.get(<span class="string">'acc'</span>))</span><br><span class="line">        self.val_loss[<span class="string">'epoch'</span>].append(logs.get(<span class="string">'val_loss'</span>))</span><br><span class="line">        self.val_acc[<span class="string">'epoch'</span>].append(logs.get(<span class="string">'val_acc'</span>))</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">loss_plot</span><span class="params">(self, loss_type)</span>:</span></span><br><span class="line">        iters = range(len(self.losses[loss_type]))</span><br><span class="line">        <span class="comment">#创建一个图</span></span><br><span class="line">        plt.figure()</span><br><span class="line">        <span class="comment"># acc</span></span><br><span class="line">        plt.plot(iters, self.accuracy[loss_type], <span class="string">'r'</span>, label=<span class="string">'train acc'</span>)<span class="comment">#plt.plot(x,y)，这个将数据画成曲线</span></span><br><span class="line">        <span class="comment"># loss</span></span><br><span class="line">        plt.plot(iters, self.losses[loss_type], <span class="string">'g'</span>, label=<span class="string">'train loss'</span>)</span><br><span class="line">        <span class="keyword">if</span> loss_type == <span class="string">'epoch'</span>:</span><br><span class="line">            <span class="comment"># val_acc</span></span><br><span class="line">            plt.plot(iters, self.val_acc[loss_type], <span class="string">'b'</span>, label=<span class="string">'val acc'</span>)</span><br><span class="line">            <span class="comment"># val_loss</span></span><br><span class="line">            plt.plot(iters, self.val_loss[loss_type], <span class="string">'k'</span>, label=<span class="string">'val loss'</span>)</span><br><span class="line">        plt.grid(<span class="keyword">True</span>)<span class="comment">#设置网格形式</span></span><br><span class="line">        plt.xlabel(loss_type)</span><br><span class="line">        plt.ylabel(<span class="string">'acc-loss'</span>)<span class="comment">#给x，y轴加注释</span></span><br><span class="line">        plt.legend(loc=<span class="string">"upper right"</span>)<span class="comment">#设置图例显示位置</span></span><br><span class="line">        plt.show()</span><br><span class="line"></span><br><span class="line"><span class="comment">#创建一个实例LossHistory</span></span><br><span class="line">history = LossHistory()</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">model.fit(X_train, Y_train,</span><br><span class="line">            batch_size=batch_size, nb_epoch=nb_epoch,</span><br><span class="line">            verbose=<span class="number">1</span>,</span><br><span class="line">            validation_data=(X_test, Y_test),</span><br><span class="line">            callbacks=[history])<span class="comment">#callbacks回调，将数据传给history</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">history.loss_plot(<span class="string">'epoch'</span>)</span><br><span class="line">history.loss_plot(<span class="string">'batch'</span>)</span><br></pre></td></tr></table></figure>
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>如果觉得对你有帮助，请让我看到！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/uploads/wechat-reward-image.jpg" alt="夏侯仪 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/uploads/alipay-reward-image.jpg" alt="夏侯仪 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/数据分析/" rel="tag"># 数据分析</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/10/24/projects/ReportPortal-Customization/ReportPortal-二次开发笔记/" rel="next" title="ReportPortal 二次开发笔记">
+                <i class="fa fa-chevron-left"></i> ReportPortal 二次开发笔记
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/01/31/Python/记一次python调试excel读取错误/" rel="prev" title="记一次python调试excel读取错误">
+                记一次python调试excel读取错误 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/uploads/avatar.jpg"
+                alt="夏侯仪" />
+            
+              <p class="site-author-name" itemprop="name">夏侯仪</p>
+              <p class="site-description motion-element" itemprop="description">幽寰证此约 七魄俱为凭</br>魂袅还无明 诸厉化纷英</br>吾心共天契 请凭神御临</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">64</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">13</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">47</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/Tony36051" target="_blank" title="GitHub"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                  
+                </span>
+              
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#工具准备"><span class="nav-number">1.</span> <span class="nav-text">工具准备</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Anaconda"><span class="nav-number">1.1.</span> <span class="nav-text">Anaconda</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#远程访问jupyter"><span class="nav-number">1.2.</span> <span class="nav-text">远程访问jupyter</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#pip配置"><span class="nav-number">1.3.</span> <span class="nav-text">pip配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#临时pip"><span class="nav-number">1.4.</span> <span class="nav-text">临时pip</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#文本清洗"><span class="nav-number">2.</span> <span class="nav-text">文本清洗</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#术语实体"><span class="nav-number">2.1.</span> <span class="nav-text">术语实体</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#提取关键字"><span class="nav-number">2.2.</span> <span class="nav-text">提取关键字</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Tokenizer"><span class="nav-number">3.</span> <span class="nav-text">Tokenizer</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#观察"><span class="nav-number">3.1.</span> <span class="nav-text">观察</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#画图"><span class="nav-number">4.</span> <span class="nav-text">画图</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#训练过程中画图-TensorBoard"><span class="nav-number">4.1.</span> <span class="nav-text">训练过程中画图 TensorBoard</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#事后画图-keras的history"><span class="nav-number">5.</span> <span class="nav-text">事后画图: keras的history</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">夏侯仪</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+    <span title="站点总字数">218k</span>
+  
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    
+    <span title="站点阅读时长">3:18</span>
+  
+</div>
+
+
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动 v3.7.1</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 – <a class="theme-link" target="_blank" href="https://theme-next.org">NexT.Gemini</a> v6.4.1</div>
+
+
+
+
+
+  <script src='https://unpkg.com/mermaid@7.1.2/dist/mermaid.min.js'></script>
+  <script>
+    if (window.mermaid) {
+      mermaid.initialize("");
+    }
+  </script>
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+	
+    
+
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="//cdn.jsdelivr.net/npm/jquery@2/dist/jquery.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//cdn.jsdelivr.net/npm/velocity-animate@1/velocity.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//cdn.jsdelivr.net/npm/velocity-animate@1/velocity.ui.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.4.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.4.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=6.4.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=6.4.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.4.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.4.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.4.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  
+  
+  <script src="//cdn.jsdelivr.net/npm/valine/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(function (item) {
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: false,
+        appId: 'qaLpAmH0lK9W5o4j33seHqus-gzGzoHsz',
+        appKey: 'Y1Xf8mRILiBEFQCsGlOFG5kA',
+        placeholder: 'Just go go',
+        avatar:'mm',
+        meta:guest,
+        pageSize:'10' || 10,
+        visitor: true
+    });
+  </script>
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

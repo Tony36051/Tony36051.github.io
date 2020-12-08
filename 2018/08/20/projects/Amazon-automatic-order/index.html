@@ -1,0 +1,1454 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+<link href="//cdn.jsdelivr.net/npm/font-awesome@4/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.4.1" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.4.1">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.4.1">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.4.1">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.4.1" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '6.4.1',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="朋友老婆做亚马逊电商，总有人跟卖，做一个自动下单的工具，将部分入门的跟卖卖家的库存给买掉。新建账号，虚假付款信息，订单可以锁定数个小时。主要的诉求就是从注册购物付款，全自动。接口自动化因为安全和加密的原因，分析起来比较费劲，所以使用的GUI的自动化，选型用的是熟悉的Selenium而没用 puppeteer">
+<meta name="keywords" content="python,Selenium">
+<meta property="og:type" content="article">
+<meta property="og:title" content="亚马逊自动下单 Selenium 自动化">
+<meta property="og:url" content="http://yoursite.com/2018/08/20/projects/Amazon-automatic-order/index.html">
+<meta property="og:site_name" content="幻煞幽穹">
+<meta property="og:description" content="朋友老婆做亚马逊电商，总有人跟卖，做一个自动下单的工具，将部分入门的跟卖卖家的库存给买掉。新建账号，虚假付款信息，订单可以锁定数个小时。主要的诉求就是从注册购物付款，全自动。接口自动化因为安全和加密的原因，分析起来比较费劲，所以使用的GUI的自动化，选型用的是熟悉的Selenium而没用 puppeteer">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2020-12-08T16:09:34.558Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="亚马逊自动下单 Selenium 自动化">
+<meta name="twitter:description" content="朋友老婆做亚马逊电商，总有人跟卖，做一个自动下单的工具，将部分入门的跟卖卖家的库存给买掉。新建账号，虚假付款信息，订单可以锁定数个小时。主要的诉求就是从注册购物付款，全自动。接口自动化因为安全和加密的原因，分析起来比较费劲，所以使用的GUI的自动化，选型用的是熟悉的Selenium而没用 puppeteer">
+
+
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/08/20/projects/Amazon-automatic-order/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>亚马逊自动下单 Selenium 自动化 | 幻煞幽穹</title>
+  
+
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?d66eda2527c113168f7066a7705fa234";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">幻煞幽穹</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br />首页</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+    <a href="/categories/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-th"></i> <br />分类</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+    <a href="/tags/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+    <a href="/about/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-user"></i> <br />关于</a>
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/08/20/projects/Amazon-automatic-order/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="夏侯仪">
+      <meta itemprop="description" content="幽寰证此约 七魄俱为凭</br>魂袅还无明 诸厉化纷英</br>吾心共天契 请凭神御临">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="幻煞幽穹">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">亚马逊自动下单 Selenium 自动化
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2018-08-21 00:00:00" itemprop="dateCreated datePublished" datetime="2018-08-21T00:00:00+08:00">2018-08-21</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2020-12-09 00:09:34" itemprop="dateModified" datetime="2020-12-09T00:09:34+08:00">2020-12-09</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Test/" itemprop="url" rel="index"><span itemprop="name">Test</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/08/20/projects/Amazon-automatic-order/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count valine-comment-count" data-xid="/2018/08/20/projects/Amazon-automatic-order/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2018/08/20/projects/Amazon-automatic-order/" class="leancloud_visitors" data-flag-title="亚马逊自动下单 Selenium 自动化">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数：</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-symbolscount">
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">本文字数：</span>
+                
+                <span title="本文字数">10k</span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">9 分钟</span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>朋友老婆做亚马逊电商，总有人跟卖，做一个自动下单的工具，将部分入门的跟卖卖家的库存给买掉。新建账号，虚假付款信息，订单可以锁定数个小时。主要的诉求就是从注册购物付款，全自动。接口自动化因为安全和加密的原因，分析起来比较费劲，所以使用的GUI的自动化，选型用的是熟悉的Selenium而没用 puppeteer<br><a id="more"></a></p>
+<h1 id="亚马逊自动下单-Selenium-自动化"><a href="#亚马逊自动下单-Selenium-自动化" class="headerlink" title="亚马逊自动下单 Selenium 自动化"></a>亚马逊自动下单 Selenium 自动化</h1><h2 id="业务流程"><a href="#业务流程" class="headerlink" title="业务流程"></a>业务流程</h2><p>跟大部分工程一样，都是从业务流程开始，有一个清楚的流程，能很好指导代码开发。</p>
+<p>比如新注册用户会提示是否使用prime账号，如果研究业务流程的时候用老号就发现不了。自动化中间多出一个页面，就走不下去了</p>
+<h2 id="Page-Object-山寨版"><a href="#Page-Object-山寨版" class="headerlink" title="Page Object 山寨版"></a>Page Object 山寨版</h2><p>没有完全使用标准的Page Object设计模式，只是将xpath提取为变量，在部分重复的页面（很少）抽象出有业务含义的动作。比如下面的填写收货地址</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Address</span><span class="params">(BaseSelenium)</span>:</span></span><br><span class="line">    ADDRESS_BOOK_ENTRY_XPATH = <span class="string">"//div[@id='address-book-entry-0']"</span></span><br><span class="line">    DELIVER_BUTTON_PATH = ADDRESS_BOOK_ENTRY_XPATH + <span class="string">"/div[contains(@class,'ship-to-this-address')]/span/a"</span></span><br><span class="line">    FULL_NAME_INPUT_XPATH = <span class="string">"(//form)[1]//input[@id='enterAddressFullName']"</span></span><br><span class="line">    ADDR_LINE_1_INPUT_XPATH = <span class="string">"(//form)[1]//input[@id='enterAddressAddressLine1']"</span></span><br><span class="line">    CITY_INPUT_XPATH = <span class="string">"(//form)[1]//input[@id='enterAddressCity']"</span></span><br><span class="line">    PROVINCE_SELECT_PATH = <span class="string">"(//form)[1]//select[@id='enterAddressStateOrRegion']"</span></span><br><span class="line">    PROVINCE_OPTION_PATH = <span class="string">"(//form)[1]//select[@id='enterAddressStateOrRegion']/option[text()='&#123;&#125;']"</span></span><br><span class="line">    POSTAL_INPUT_XPATH = <span class="string">"(//form)[1]//input[@id='enterAddressPostalCode']"</span></span><br><span class="line">    TEL_INPUT_ID = <span class="string">"(//form)[1]//input[@id='enterAddressPhoneNumber']"</span></span><br><span class="line">    SHIP_TO_THIS_ADDR = <span class="string">"(//form)[1]//input[@name='shipToThisAddress']"</span></span><br><span class="line">    SHIPPING_OPTIONS_CONTINUE_BUTTON = <span class="string">"(//input[@type='submit'])[1]"</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, driver)</span>:</span></span><br><span class="line">        super().__init__(driver)</span><br><span class="line"></span><br><span class="line">        self.cf = configparser.ConfigParser()</span><br><span class="line">        self.cf.read(<span class="string">'config.ini'</span>)</span><br><span class="line">        self.name = self.cf.get(<span class="string">"buyer"</span>, <span class="string">"name"</span>)</span><br><span class="line">        self.address = self.cf.get(<span class="string">"buyer"</span>, <span class="string">"address"</span>)</span><br><span class="line">        self.city = self.cf.get(<span class="string">"buyer"</span>, <span class="string">"city"</span>)</span><br><span class="line">        self.province = self.cf.get(<span class="string">"buyer"</span>, <span class="string">"province"</span>)</span><br><span class="line">        self.post = self.cf.get(<span class="string">"buyer"</span>, <span class="string">"post"</span>)</span><br><span class="line">        self.tel = self.cf.get(<span class="string">"buyer"</span>, <span class="string">"tel"</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">enter_shipping_address</span><span class="params">(self)</span>:</span></span><br><span class="line">        logger = get_logger(<span class="string">'addr'</span>)</span><br><span class="line">        <span class="keyword">if</span> self._check_exists_by_xpath_with_wait(Address.ADDRESS_BOOK_ENTRY_XPATH, self.checking_wait):</span><br><span class="line">            logger.info(<span class="string">"选择已有的地址"</span>)</span><br><span class="line">            self._click_by_xpath(Address.DELIVER_BUTTON_PATH)</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            logger.info(<span class="string">"填写送货地址"</span>)</span><br><span class="line">            self._input_by_xpath(Address.FULL_NAME_INPUT_XPATH, self.name)</span><br><span class="line">            self._input_by_xpath(Address.ADDR_LINE_1_INPUT_XPATH, self.address)</span><br><span class="line">            self._input_by_xpath(Address.CITY_INPUT_XPATH, self.city)</span><br><span class="line">            self._input_by_xpath(Address.POSTAL_INPUT_XPATH, self.post)</span><br><span class="line">            self._input_by_xpath(Address.TEL_INPUT_ID, self.tel)</span><br><span class="line">            self._click_by_xpath(Address.PROVINCE_SELECT_PATH)</span><br><span class="line">            self._click_by_xpath(Address.PROVINCE_OPTION_PATH.format(self.province))</span><br><span class="line">            self._click_by_xpath(Address.SHIP_TO_THIS_ADDR)</span><br><span class="line">        <span class="comment"># choose your shipping options</span></span><br><span class="line">        logger.info(<span class="string">"送货信息完毕，点击继续"</span>)</span><br><span class="line">        self._click_by_xpath(Address.SHIPPING_OPTIONS_CONTINUE_BUTTON)</span><br></pre></td></tr></table></figure>
+<h2 id="Selenium-简单封装"><a href="#Selenium-简单封装" class="headerlink" title="Selenium 简单封装"></a>Selenium 简单封装</h2><p>大部分操作都是点击和输入，还有大量就是判断页面元素是否存在。</p>
+<p>又因为亚马逊是海外网站，访问速度非常感人，也很不稳定，所以在等待条件上也需要非常小心设计，大部分debug时间都在处理等待问题。</p>
+<p>本来看着页面设计基本都有id和name，打算偷懒不用xpath，后面发现复杂的页面元素还是xpath出马，适用面广，以后再有这样的工程，就一个xpath打天下算了。</p>
+<p>设计了两个超时时间，<code>implicitly_wait</code>和<code>checking_wait</code>，一个是默认的等待时间，用于等待页面加载一会需要操作的元素，另一个是用来检查元素是否存在，判断当前页面究竟是哪个，这种情况通常页面已经基本加载完成，所以比前者短一些。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/python</span></span><br><span class="line"><span class="comment"># -*- coding: UTF-8 -*-</span></span><br><span class="line"><span class="keyword">import</span> configparser</span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> selenium.common.exceptions <span class="keyword">import</span> NoSuchElementException, TimeoutException</span><br><span class="line"><span class="keyword">from</span> selenium.webdriver.common.by <span class="keyword">import</span> By</span><br><span class="line"><span class="keyword">from</span> selenium.webdriver.support <span class="keyword">import</span> expected_conditions <span class="keyword">as</span> EC</span><br><span class="line"><span class="keyword">from</span> selenium.webdriver.support.wait <span class="keyword">import</span> WebDriverWait</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">BaseSelenium</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, driver)</span>:</span></span><br><span class="line">        self._driver = driver</span><br><span class="line">        self.cf = configparser.ConfigParser()</span><br><span class="line">        self.cf.read(<span class="string">'config.ini'</span>)</span><br><span class="line">        self.implicitly_wait = int(self.cf.get(<span class="string">"selenium"</span>, <span class="string">"implicitly_wait"</span>))</span><br><span class="line">        self.checking_wait = int(self.cf.get(<span class="string">"selenium"</span>, <span class="string">"checking_wait"</span>))</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">_wait_and_get_element_by_id</span><span class="params">(self, id, wait_in_sec=None)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> WebDriverWait(self._driver, wait_in_sec <span class="keyword">if</span> wait_in_sec <span class="keyword">else</span> self.implicitly_wait).until(</span><br><span class="line">            EC.visibility_of_element_located((By.ID, id)))</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">_wait_and_get_element_by_xpath</span><span class="params">(self, xpath, wait_in_sec=None)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> WebDriverWait(self._driver, wait_in_sec <span class="keyword">if</span> wait_in_sec <span class="keyword">else</span> self.implicitly_wait).until(</span><br><span class="line">            EC.visibility_of_element_located((By.XPATH, xpath)))</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">_check_exists_by_id_without_wait</span><span class="params">(self, id)</span>:</span></span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            self._driver.find_element_by_id(id)</span><br><span class="line">        <span class="keyword">except</span> NoSuchElementException:</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">False</span></span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">True</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">_check_exists_by_xpath_with_wait</span><span class="params">(self, xpath, wait_in_sec=None)</span>:</span></span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            WebDriverWait(self._driver, wait_in_sec <span class="keyword">if</span> wait_in_sec <span class="keyword">else</span> self.implicitly_wait).until(</span><br><span class="line">                EC.visibility_of_element_located((By.XPATH, xpath)))</span><br><span class="line">        <span class="keyword">except</span> (NoSuchElementException, TimeoutException):</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">False</span></span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">True</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">_input_by_id</span><span class="params">(self, id, text)</span>:</span></span><br><span class="line">        element = self._wait_and_get_element_by_id(id)</span><br><span class="line">        element.send_keys(text)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">_click_by_id</span><span class="params">(self, id)</span>:</span></span><br><span class="line">        element = self._wait_and_get_element_by_id(id)</span><br><span class="line">        element.click()</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">_input_by_xpath</span><span class="params">(self, xpath, text)</span>:</span></span><br><span class="line">        element = self._wait_and_get_element_by_xpath(xpath)</span><br><span class="line">        element.send_keys(text)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">_click_by_xpath</span><span class="params">(self, xpath)</span>:</span></span><br><span class="line">        element = self._wait_and_get_element_by_xpath(xpath)</span><br><span class="line">        element.click()</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">go_url</span><span class="params">(self, url)</span>:</span></span><br><span class="line">        self._driver.get(url)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">get_url</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> self._driver.current_url</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">_wait_until_clickable_by_xpath</span><span class="params">(self, xpath, wait_in_sec=None)</span>:</span></span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            WebDriverWait(self._driver, wait_in_sec <span class="keyword">if</span> wait_in_sec <span class="keyword">else</span> self.implicitly_wait).until(</span><br><span class="line">                EC.element_to_be_clickable((By.XPATH, xpath)))</span><br><span class="line">        <span class="keyword">except</span> (NoSuchElementException, TimeoutException):</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">False</span></span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">True</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">_get_element_attribute_by_xpath</span><span class="params">(self, xpath, attr_name, wait_in_sec=None)</span>:</span></span><br><span class="line">        element = self._wait_and_get_element_by_xpath(xpath, wait_in_sec)</span><br><span class="line">        <span class="keyword">return</span> element.get_attribute(attr_name)</span><br></pre></td></tr></table></figure>
+<h2 id="获取邮箱OTP一次性密码"><a href="#获取邮箱OTP一次性密码" class="headerlink" title="获取邮箱OTP一次性密码"></a>获取邮箱OTP一次性密码</h2><p>自建邮件服务最方便，然后要多少账号就有多少账号，免注册邮箱。</p>
+<p>用pop3协议，多次拉取确保最新邮件，用正则匹配6位数字就可以获得。</p>
+<p>虽然设计3次最大重试次数，但是没触发过。</p>
+<h2 id="数据存储"><a href="#数据存储" class="headerlink" title="数据存储"></a>数据存储</h2><p>程序的配置项，打码平台的账号密码，永远一样的收货地址就放<code>config.ini</code>。每次都要更新的卖家和商品就放<code>pin.xlsx</code></p>
+<h2 id="异常处理"><a href="#异常处理" class="headerlink" title="异常处理"></a>异常处理</h2><p>GUI自动化遇到异常的机会非常大，定义错误码（错误状态）往上层传递很重要。</p>
+<p>用try-exception控制异常减少程序提前结束是非常必要的。</p>
+<h2 id="打码平台"><a href="#打码平台" class="headerlink" title="打码平台"></a>打码平台</h2><p>验证码自己识别太难了，接入打码平台也不贵。500条1元试用，小包月也是几十块，够打了。</p>
+<p>如果使用requests等库处理图片的保存，一定要<strong>设置超时</strong>，因为amazon有些云计算服务（图片）的链接一直打不开，程序表现就是卡死。</p>
+<h2 id="浏览器优化"><a href="#浏览器优化" class="headerlink" title="浏览器优化"></a>浏览器优化</h2><p>主要流程打通后，不再需要观察页面元素而是通过日志来观察程序的流程时，可以尽情打开加速的配置了。</p>
+<p>关闭图片加载，开启无头模式等，都能大大地加快程序运行时间，我觉得个puppeteer应该差不远了。</p>
+<p>无头模式一定要设置窗口大小，不然默认的大小会让元素在窗口范围内不可见，所有等待条件都失败，具体表现为程序卡住一动不动，其实是在等待元素出现在窗口范围。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">open_chrome_driver</span><span class="params">(buyer: Buyer)</span>:</span></span><br><span class="line">    chrome_options = Options()</span><br><span class="line">    <span class="keyword">if</span> ConfigUtil.get_config_value_by_section_key_as_str(<span class="string">"selenium"</span>, <span class="string">"headless"</span>).strip().upper() == <span class="string">"TRUE"</span>:</span><br><span class="line">        chrome_options.add_argument(<span class="string">'--headless'</span>)</span><br><span class="line">        chrome_options.add_argument(<span class="string">'--window-size=1080,3000'</span>)</span><br><span class="line">    <span class="comment"># 不加载图片</span></span><br><span class="line">    <span class="keyword">if</span> ConfigUtil.get_config_value_by_section_key_as_str(<span class="string">"selenium"</span>, <span class="string">"disable_pic"</span>).strip().upper() == <span class="string">"TRUE"</span>:</span><br><span class="line">        prefs = &#123;</span><br><span class="line">            <span class="string">'profile.default_content_setting_values'</span>: &#123;</span><br><span class="line">                <span class="string">'images'</span>: <span class="number">2</span>,</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        chrome_options.add_experimental_option(<span class="string">'prefs'</span>, prefs)</span><br><span class="line">        chrome_options.add_argument(<span class="string">'blink-settings=imagesEnabled=false'</span>)</span><br><span class="line">    chrome_options.add_argument(<span class="string">'--no-sandbox'</span>)</span><br><span class="line">    chrome_options.add_argument(<span class="string">'--disable-dev-shm-usage'</span>)</span><br><span class="line">    chrome_options.add_argument(<span class="string">'--disable-gpu'</span>)  <span class="comment"># 谷歌文档提到需要加上这个属性来规避bug</span></span><br><span class="line">    <span class="keyword">with</span> chrome_driver_lock:  <span class="comment"># 同时打开chrome会报错，尽管user-data-dir不一样</span></span><br><span class="line">        driver = webdriver.Chrome(options=chrome_options)</span><br><span class="line">    <span class="keyword">return</span> driver</span><br></pre></td></tr></table></figure>
+<h2 id="并发"><a href="#并发" class="headerlink" title="并发"></a>并发</h2><p>因为要求支持并发，以达到更快的买光库存，需要考虑的东西就多了</p>
+<h3 id="同步"><a href="#同步" class="headerlink" title="同步"></a>同步</h3><p>使用多线程模型，没有用异步。</p>
+<p>因为我是先完成了单线程版本，后续想修改少一些，用装饰器做同步控制</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">synchronized_self</span><span class="params">(func)</span>:</span></span><br><span class="line"><span class="meta">    @functools.wraps(func)</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">wrapper</span><span class="params">(*args, **kwargs)</span>:</span></span><br><span class="line">        <span class="keyword">with</span> BuyerManager.lock:</span><br><span class="line">            <span class="keyword">return</span> func(*args, **kwargs)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> wrapper</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">BuyerManager</span><span class="params">(object)</span>:</span></span><br><span class="line">    lock = threading.Lock()</span><br><span class="line"> 	</span><br><span class="line"><span class="meta">    @synchronized_self</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">get_candidate_buyers</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">if</span> config_util.ConfigUtil.buyer_account_use_only_once():</span><br><span class="line">            valid_buyers = [x <span class="keyword">for</span> x <span class="keyword">in</span> self.buyers <span class="keyword">if</span> <span class="keyword">not</span> x.banned <span class="keyword">and</span> <span class="keyword">not</span> x.registered]</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            valid_buyers = [x <span class="keyword">for</span> x <span class="keyword">in</span> self.buyers <span class="keyword">if</span> <span class="keyword">not</span> x.banned]</span><br><span class="line">        <span class="keyword">assert</span> len(valid_buyers) &gt; <span class="number">0</span>, <span class="string">'已无买家，程序结束'</span></span><br><span class="line">        <span class="keyword">return</span> valid_buyers</span><br></pre></td></tr></table></figure>
+<p>在打开的浏览器的时候，如果同时打开会造成会话错乱。明明已经做了数据目录的区分，同时看了源代码，每个会话也是独立的，但是不知道为什么后面还是串操作，input到了同个浏览器的会话。所以打开浏览器的时候，做了锁控制同步</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">with</span> chrome_driver_lock:  <span class="comment"># 同时打开chrome会报错，尽管user-data-dir不一样</span></span><br><span class="line">    driver = webdriver.Chrome(options=chrome_options</span><br><span class="line">                              <span class="comment"># , desired_capabilities=capabilities</span></span><br><span class="line">                              )</span><br></pre></td></tr></table></figure>
+<h2 id="线程池"><a href="#线程池" class="headerlink" title="线程池"></a>线程池</h2><p>多线程不难，难的是要将每个线程划分清楚。什么时候可以终止</p>
+<p>入参做好同步控制，不要重复。当某一个卖家已经没有库存了，此时线程池内其他线程都应该关掉收工了。但是线程开始了，比较难关闭，除非pthread等方式包装一层。此处只是把线程池中未开始的等待线程取消了。</p>
+<p>假如线程池可以同时4个线程（abcd），当b率先完成任务，此时线程池内是aecd，后续的fghijk…都会被取消掉，可惜aecd这四个还是要继续执行。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">buy_all</span><span class="params">(xlsx_file)</span>:</span></span><br><span class="line">    logger = get_logger(<span class="string">"buy_all"</span>)</span><br><span class="line">    bm = BuyerManager(xlsx_file)</span><br><span class="line">    sm = SellerManager(xlsx_file)</span><br><span class="line">    sellers = sm.get_sellers()</span><br><span class="line">    <span class="keyword">for</span> cur_seller <span class="keyword">in</span> sellers:</span><br><span class="line">        logger.info(<span class="string">"正在处理卖家&#123;&#125;@&#123;&#125;"</span>.format(cur_seller.sku, cur_seller.name))</span><br><span class="line">        <span class="keyword">with</span> ThreadPoolExecutor(ConfigUtil.thread_num(), thread_name_prefix=<span class="string">'pool'</span>) <span class="keyword">as</span> pool:</span><br><span class="line">            result_list = [pool.submit(buy_one, cur_seller, x, bm) <span class="keyword">for</span> x <span class="keyword">in</span> bm.get_candidate_buyers()]</span><br><span class="line">            logger.info(<span class="string">"买家&#123;&#125;个--&gt;卖家&#123;&#125;@&#123;&#125;"</span>.format(len(result_list), cur_seller.sku, cur_seller.name))</span><br><span class="line">            <span class="keyword">for</span> future <span class="keyword">in</span> as_completed(result_list):</span><br><span class="line">                <span class="keyword">if</span> <span class="keyword">not</span> future.cancelled():</span><br><span class="line">                    result = future.result()</span><br><span class="line">                    logger.info(<span class="string">"某一购买流程结束：&#123;&#125;"</span>.format(result))</span><br><span class="line">                    <span class="keyword">if</span> result <span class="keyword">is</span> <span class="keyword">not</span> <span class="keyword">None</span> <span class="keyword">and</span> result == PurchaseFlow.NO_STOCK:</span><br><span class="line">                        logger.info(<span class="string">"卖家&#123;&#125;@&#123;&#125;已无库存，取消未执行的购买流程，已经开始的购买流程无法提前结束"</span></span><br><span class="line">                                    .format(cur_seller.sku, cur_seller.name))</span><br><span class="line">                        sm.set_seller_sold_out(cur_seller)</span><br><span class="line">                        [x.cancel() <span class="keyword">for</span> x <span class="keyword">in</span> result_list]</span><br><span class="line">                        <span class="keyword">break</span></span><br><span class="line">            logger.info(<span class="string">"线程池结束shutdown"</span>)</span><br></pre></td></tr></table></figure>
+<h2 id="网速"><a href="#网速" class="headerlink" title="网速"></a>网速</h2><p>现在pc性能已经很好，但是出过带宽还是太小，以至于虽然想更快，开更多线程，但是开多了，页面元素加载就更加慢了，最终导致失败的机会更加大。</p>
+<h2 id="日志"><a href="#日志" class="headerlink" title="日志"></a>日志</h2><p>多线程或者或多进程后，日志打印会非常混乱，一般来说都按照线程来将日志打印到文件中。但是有部分公共服务的日志怎么知道是哪个线程的呢？</p>
+<p>当前版本是每个方法中获取日志对象，根据线程的关键数据（买家名字）来起名。其实用传递日志对象应该更加合适</p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>如果觉得对你有帮助，请让我看到！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/uploads/wechat-reward-image.jpg" alt="夏侯仪 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/uploads/alipay-reward-image.jpg" alt="夏侯仪 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/python/" rel="tag"># python</a>
+          
+            <a href="/tags/Selenium/" rel="tag"># Selenium</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/08/20/projects/ReportPortal-Customization/Gradle-转-Maven-小记(ReportPortal为例)/" rel="next" title="Gradle 转 Maven 小记(ReportPortal为例)">
+                <i class="fa fa-chevron-left"></i> Gradle 转 Maven 小记(ReportPortal为例)
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/09/03/CleanCode代码整洁之道(读书笔记)/" rel="prev" title="CleanCode代码整洁之道(读书笔记)">
+                CleanCode代码整洁之道(读书笔记) <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/uploads/avatar.jpg"
+                alt="夏侯仪" />
+            
+              <p class="site-author-name" itemprop="name">夏侯仪</p>
+              <p class="site-description motion-element" itemprop="description">幽寰证此约 七魄俱为凭</br>魂袅还无明 诸厉化纷英</br>吾心共天契 请凭神御临</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">64</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">13</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">47</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/Tony36051" target="_blank" title="GitHub"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                  
+                </span>
+              
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#亚马逊自动下单-Selenium-自动化"><span class="nav-number">1.</span> <span class="nav-text">亚马逊自动下单 Selenium 自动化</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#业务流程"><span class="nav-number">1.1.</span> <span class="nav-text">业务流程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Page-Object-山寨版"><span class="nav-number">1.2.</span> <span class="nav-text">Page Object 山寨版</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Selenium-简单封装"><span class="nav-number">1.3.</span> <span class="nav-text">Selenium 简单封装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#获取邮箱OTP一次性密码"><span class="nav-number">1.4.</span> <span class="nav-text">获取邮箱OTP一次性密码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数据存储"><span class="nav-number">1.5.</span> <span class="nav-text">数据存储</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#异常处理"><span class="nav-number">1.6.</span> <span class="nav-text">异常处理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#打码平台"><span class="nav-number">1.7.</span> <span class="nav-text">打码平台</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#浏览器优化"><span class="nav-number">1.8.</span> <span class="nav-text">浏览器优化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#并发"><span class="nav-number">1.9.</span> <span class="nav-text">并发</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#同步"><span class="nav-number">1.9.1.</span> <span class="nav-text">同步</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#线程池"><span class="nav-number">1.10.</span> <span class="nav-text">线程池</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#网速"><span class="nav-number">1.11.</span> <span class="nav-text">网速</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#日志"><span class="nav-number">1.12.</span> <span class="nav-text">日志</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">夏侯仪</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+    <span title="站点总字数">218k</span>
+  
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    
+    <span title="站点阅读时长">3:18</span>
+  
+</div>
+
+
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动 v3.7.1</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 – <a class="theme-link" target="_blank" href="https://theme-next.org">NexT.Gemini</a> v6.4.1</div>
+
+
+
+
+
+  <script src='https://unpkg.com/mermaid@7.1.2/dist/mermaid.min.js'></script>
+  <script>
+    if (window.mermaid) {
+      mermaid.initialize("");
+    }
+  </script>
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+	
+    
+
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="//cdn.jsdelivr.net/npm/jquery@2/dist/jquery.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//cdn.jsdelivr.net/npm/velocity-animate@1/velocity.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//cdn.jsdelivr.net/npm/velocity-animate@1/velocity.ui.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.4.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.4.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=6.4.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=6.4.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.4.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.4.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.4.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  
+  
+  <script src="//cdn.jsdelivr.net/npm/valine/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(function (item) {
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: false,
+        appId: 'qaLpAmH0lK9W5o4j33seHqus-gzGzoHsz',
+        appKey: 'Y1Xf8mRILiBEFQCsGlOFG5kA',
+        placeholder: 'Just go go',
+        avatar:'mm',
+        meta:guest,
+        pageSize:'10' || 10,
+        visitor: true
+    });
+  </script>
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
