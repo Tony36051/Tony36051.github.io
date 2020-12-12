@@ -73,7 +73,7 @@ pagination_dir: page
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://hexo.io/themes/
 # theme: next 
-theme: next-reloaded # NexT 6 
+theme: next # NexT 6 
 # theme: landscape
 
 # Deployment
@@ -94,13 +94,6 @@ search:
   field: post
   format: html
   limit: 10000
-
-# mermaid chart
-mermaid: ## mermaid url https://github.com/knsv/mermaid
-  enable: true  # default true
-  version: "7.1.2" # default v7.1.2
-  options:  # find more api options from https://github.com/knsv/mermaid/blob/master/src/mermaidAPI.js
-    #startOnload: true  // default true
 
 ##hexo-neat页面压缩
 neat_enable: false 
