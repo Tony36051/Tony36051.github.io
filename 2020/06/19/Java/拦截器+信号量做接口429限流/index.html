@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 3.7.1">
+<meta name="generator" content="Hexo 5.2.0">
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
@@ -21,19 +21,19 @@
   </script>
 
   <meta name="description" content="高可用之接口限流限流方案 请求存消息队列，实例根据自己处理能力，拉取消息消费 线程池控制，排满线程池队就直接失败 请求拦截器，维护一个信号量控制同时并发处理数，超出排队值(require排队)就返回429状态码  信号量方案Spring管理唯一bean，内含唯一的限流拦截器。以下是关键变量Semaphore current_model_semaphore 所有请求都共用一个信号量；int sema">
-<meta name="keywords" content="java">
 <meta property="og:type" content="article">
 <meta property="og:title" content="拦截器+信号量做接口429限流">
-<meta property="og:url" content="http://yoursite.com/2020/06/19/Java/拦截器+信号量做接口429限流/index.html">
+<meta property="og:url" content="http://yoursite.com/2020/06/19/Java/%E6%8B%A6%E6%88%AA%E5%99%A8+%E4%BF%A1%E5%8F%B7%E9%87%8F%E5%81%9A%E6%8E%A5%E5%8F%A3429%E9%99%90%E6%B5%81/index.html">
 <meta property="og:site_name" content="幻煞幽穹">
 <meta property="og:description" content="高可用之接口限流限流方案 请求存消息队列，实例根据自己处理能力，拉取消息消费 线程池控制，排满线程池队就直接失败 请求拦截器，维护一个信号量控制同时并发处理数，超出排队值(require排队)就返回429状态码  信号量方案Spring管理唯一bean，内含唯一的限流拦截器。以下是关键变量Semaphore current_model_semaphore 所有请求都共用一个信号量；int sema">
-<meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2020-12-12T10:05:28.599Z">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-06-19T16:00:00.000Z">
+<meta property="article:modified_time" content="2020-12-12T14:45:14.864Z">
+<meta property="article:author" content="夏侯仪">
+<meta property="article:tag" content="java">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="拦截器+信号量做接口429限流">
-<meta name="twitter:description" content="高可用之接口限流限流方案 请求存消息队列，实例根据自己处理能力，拉取消息消费 线程池控制，排满线程池队就直接失败 请求拦截器，维护一个信号量控制同时并发处理数，超出排队值(require排队)就返回429状态码  信号量方案Spring管理唯一bean，内含唯一的限流拦截器。以下是关键变量Semaphore current_model_semaphore 所有请求都共用一个信号量；int sema">
 
-<link rel="canonical" href="http://yoursite.com/2020/06/19/Java/拦截器+信号量做接口429限流/">
+<link rel="canonical" href="http://yoursite.com/2020/06/19/Java/%E6%8B%A6%E6%88%AA%E5%99%A8+%E4%BF%A1%E5%8F%B7%E9%87%8F%E5%81%9A%E6%8E%A5%E5%8F%A3429%E9%99%90%E6%B5%81/">
 
 
 <script id="page-configurations">
@@ -203,7 +203,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/06/19/Java/拦截器+信号量做接口429限流/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/06/19/Java/%E6%8B%A6%E6%88%AA%E5%99%A8+%E4%BF%A1%E5%8F%B7%E9%87%8F%E5%81%9A%E6%8E%A5%E5%8F%A3429%E9%99%90%E6%B5%81/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/uploads/avatar.jpg">
@@ -233,7 +233,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-12-12 18:05:28" itemprop="dateModified" datetime="2020-12-12T18:05:28+08:00">2020-12-12</time>
+                <time title="修改时间：2020-12-12 22:45:14" itemprop="dateModified" datetime="2020-12-12T22:45:14+08:00">2020-12-12</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -241,12 +241,12 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/运维/" itemprop="url" rel="index"><span itemprop="name">运维</span></a>
+                  <a href="/categories/%E8%BF%90%E7%BB%B4/" itemprop="url" rel="index"><span itemprop="name">运维</span></a>
                 </span>
             </span>
 
           
-            <span id="/2020/06/19/Java/拦截器+信号量做接口429限流/" class="post-meta-item leancloud_visitors" data-flag-title="拦截器+信号量做接口429限流" title="阅读次数">
+            <span id="/2020/06/19/Java/%E6%8B%A6%E6%88%AA%E5%99%A8+%E4%BF%A1%E5%8F%B7%E9%87%8F%E5%81%9A%E6%8E%A5%E5%8F%A3429%E9%99%90%E6%B5%81/" class="post-meta-item leancloud_visitors" data-flag-title="拦截器+信号量做接口429限流" title="阅读次数">
               <span class="post-meta-item-icon">
                 <i class="fa fa-eye"></i>
               </span>
@@ -261,26 +261,12 @@
       </span>
       <span class="post-meta-item-text">Valine：</span>
     
-    <a title="valine" href="/2020/06/19/Java/拦截器+信号量做接口429限流/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2020/06/19/Java/拦截器+信号量做接口429限流/" itemprop="commentCount"></span>
+    <a title="valine" href="/2020/06/19/Java/%E6%8B%A6%E6%88%AA%E5%99%A8+%E4%BF%A1%E5%8F%B7%E9%87%8F%E5%81%9A%E6%8E%A5%E5%8F%A3429%E9%99%90%E6%B5%81/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2020/06/19/Java/%E6%8B%A6%E6%88%AA%E5%99%A8+%E4%BF%A1%E5%8F%B7%E9%87%8F%E5%81%9A%E6%8E%A5%E5%8F%A3429%E9%99%90%E6%B5%81/" itemprop="commentCount"></span>
     </a>
   </span>
   
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>0</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
-            </span>
+  
 
         </div>
       </header>
@@ -296,7 +282,7 @@
 <li>线程池控制，排满线程池队就直接失败</li>
 <li>请求拦截器，维护一个信号量控制同时并发处理数，超出排队值(require排队)就返回429状态码</li>
 </ol>
-<h2 id="信号量方案"><a href="#信号量方案" class="headerlink" title="信号量方案"></a>信号量方案</h2><p>Spring管理唯一bean，内含唯一的限流拦截器。以下是关键变量<br>Semaphore current_model_semaphore 所有请求都共用一个信号量；<br>int semaphoreSize 信号量有多少permits<br>int semaphoreMaxQueueSize 设定多少请求可以排队，超了就抛异常了<br>List<string> apiFilterList 哪些URL需要拦截<br>ConcurrentMap&lt;String, AtomicInteger&gt; concurrents 接口对应有多少个当前处理数<br>Boolean returnTooManyRequestError 是否启用429返回</string></p>
+<h2 id="信号量方案"><a href="#信号量方案" class="headerlink" title="信号量方案"></a>信号量方案</h2><p>Spring管理唯一bean，内含唯一的限流拦截器。以下是关键变量<br>Semaphore current_model_semaphore 所有请求都共用一个信号量；<br>int semaphoreSize 信号量有多少permits<br>int semaphoreMaxQueueSize 设定多少请求可以排队，超了就抛异常了<br>List<String> apiFilterList 哪些URL需要拦截<br>ConcurrentMap&lt;String, AtomicInteger&gt; concurrents 接口对应有多少个当前处理数<br>Boolean returnTooManyRequestError 是否启用429返回</p>
 <h2 id="处理逻辑"><a href="#处理逻辑" class="headerlink" title="处理逻辑"></a>处理逻辑</h2><ol>
 <li>判断当前请求的url是否匹配apiFilterList其中一个，不匹配返回filter chain后续处理</li>
 <li>如果未启动429返回，则阻塞地获取信号量。获取成功则继续处理，超时会触发 InterruptedException ，捕捉后抛业务异常</li>
@@ -350,7 +336,7 @@
       <i class="fa fa-chevron-left"></i> 画瓢系列：玩具级别的电商系统的基本功能设计
     </a></div>
       <div class="post-nav-item">
-    <a href="/2020/07/09/Automation/JMeter超大入参返回/" rel="next" title="JMeter超大入参返回">
+    <a href="/2020/07/09/Automation/JMeter%E8%B6%85%E5%A4%A7%E5%85%A5%E5%8F%82%E8%BF%94%E5%9B%9E/" rel="next" title="JMeter超大入参返回">
       JMeter超大入参返回 <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
@@ -412,7 +398,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#高可用之接口限流"><span class="nav-number">1.</span> <span class="nav-text">高可用之接口限流</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#限流方案"><span class="nav-number">1.1.</span> <span class="nav-text">限流方案</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#信号量方案"><span class="nav-number">1.2.</span> <span class="nav-text">信号量方案</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#处理逻辑"><span class="nav-number">1.3.</span> <span class="nav-text">处理逻辑</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%AB%98%E5%8F%AF%E7%94%A8%E4%B9%8B%E6%8E%A5%E5%8F%A3%E9%99%90%E6%B5%81"><span class="nav-number">1.</span> <span class="nav-text">高可用之接口限流</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%99%90%E6%B5%81%E6%96%B9%E6%A1%88"><span class="nav-number">1.1.</span> <span class="nav-text">限流方案</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BF%A1%E5%8F%B7%E9%87%8F%E6%96%B9%E6%A1%88"><span class="nav-number">1.2.</span> <span class="nav-text">信号量方案</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%84%E7%90%86%E9%80%BB%E8%BE%91"><span class="nav-number">1.3.</span> <span class="nav-text">处理逻辑</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -448,7 +434,7 @@
 </div>
   <div class="links-of-author motion-element">
       <span class="links-of-author-item">
-        <a href="https://github.com/Tony36051" title="GitHub → https://github.com/Tony36051" rel="noopener" target="_blank"><i class="github fa-fw"></i>GitHub</a>
+        <a href="https://github.com/Tony36051" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Tony36051" rel="noopener" target="_blank"><i class="github fa-fw"></i>GitHub</a>
       </span>
   </div>
 
@@ -478,18 +464,8 @@
     <i class="fa fa-heart"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">夏侯仪</span>
-    <span class="post-meta-divider">|</span>
-    <span class="post-meta-item-icon">
-      <i class="fa fa-chart-area"></i>
-    </span>
-    <span title="站点总字数">218k</span>
-    <span class="post-meta-divider">|</span>
-    <span class="post-meta-item-icon">
-      <i class="fa fa-coffee"></i>
-    </span>
-    <span title="站点阅读时长">3:18</span>
 </div>
-  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
   </div>
 
         
@@ -509,9 +485,17 @@
   <script src="/lib/anime.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/velocity-animate@1/velocity.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/velocity-animate@1/velocity.ui.min.js"></script>
-<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
 <script src="/js/schemes/pisces.js"></script>
+
+
 <script src="/js/next-boot.js"></script>
+
 
 
 
@@ -520,7 +504,9 @@
 
 
 
-  <script src="/js/local-search.js"></script>
+  
+<script src="/js/local-search.js"></script>
+
 
 
 

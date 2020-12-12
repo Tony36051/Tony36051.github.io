@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 3.7.1">
+<meta name="generator" content="Hexo 5.2.0">
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
@@ -21,17 +21,17 @@
   </script>
 
   <meta name="description" content="之前看了重构的书，最近在公司内部自学网站学习重构的课程，简单记录一些核心要点。">
-<meta name="keywords" content="重构">
 <meta property="og:type" content="article">
 <meta property="og:title" content="重构">
 <meta property="og:url" content="http://yoursite.com/2020/12/11/Dev/refactoring/index.html">
 <meta property="og:site_name" content="幻煞幽穹">
 <meta property="og:description" content="之前看了重构的书，最近在公司内部自学网站学习重构的课程，简单记录一些核心要点。">
-<meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2020-12-12T10:05:28.599Z">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-12-11T16:00:00.000Z">
+<meta property="article:modified_time" content="2020-12-12T14:45:14.864Z">
+<meta property="article:author" content="夏侯仪">
+<meta property="article:tag" content="重构">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="重构">
-<meta name="twitter:description" content="之前看了重构的书，最近在公司内部自学网站学习重构的课程，简单记录一些核心要点。">
 
 <link rel="canonical" href="http://yoursite.com/2020/12/11/Dev/refactoring/">
 
@@ -227,7 +227,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2020-12-12 00:00:00 / 修改时间：18:05:28" itemprop="dateCreated datePublished" datetime="2020-12-12T00:00:00+08:00">2020-12-12</time>
+              <time title="创建时间：2020-12-12 00:00:00 / 修改时间：22:45:14" itemprop="dateCreated datePublished" datetime="2020-12-12T00:00:00+08:00">2020-12-12</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -235,7 +235,7 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/开发/" itemprop="url" rel="index"><span itemprop="name">开发</span></a>
+                  <a href="/categories/%E5%BC%80%E5%8F%91/" itemprop="url" rel="index"><span itemprop="name">开发</span></a>
                 </span>
             </span>
 
@@ -260,21 +260,7 @@
     </a>
   </span>
   
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>0</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
-            </span>
+  
 
         </div>
       </header>
@@ -285,7 +271,9 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>之前看了重构的书，最近在公司内部自学网站学习重构的课程，简单记录一些核心要点。<br><a id="more"></a></p>
+        <p>之前看了重构的书，最近在公司内部自学网站学习重构的课程，简单记录一些核心要点。</p>
+<a id="more"></a>
+
 <h1 id="重构"><a href="#重构" class="headerlink" title="重构"></a>重构</h1><h2 id="代码坏味道"><a href="#代码坏味道" class="headerlink" title="代码坏味道"></a>代码坏味道</h2><ol>
 <li>冗余和重复： 重复代码、过多注释、夸夸其谈未来性（过度设计）</li>
 <li>局部膨胀： 过长的参数列表</li>
@@ -336,7 +324,7 @@
 
       <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/重构/" rel="tag"># 重构</a>
+              <a href="/tags/%E9%87%8D%E6%9E%84/" rel="tag"># 重构</a>
           </div>
 
         
@@ -411,7 +399,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#重构"><span class="nav-number">1.</span> <span class="nav-text">重构</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#代码坏味道"><span class="nav-number">1.1.</span> <span class="nav-text">代码坏味道</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#重构手法"><span class="nav-number">1.2.</span> <span class="nav-text">重构手法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#简化语句"><span class="nav-number">1.2.1.</span> <span class="nav-text">简化语句</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#重组函数"><span class="nav-number">1.2.2.</span> <span class="nav-text">重组函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#重组数据"><span class="nav-number">1.2.3.</span> <span class="nav-text">重组数据</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#重构遗留系统"><span class="nav-number">1.3.</span> <span class="nav-text">重构遗留系统</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%87%8D%E6%9E%84"><span class="nav-number">1.</span> <span class="nav-text">重构</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81%E5%9D%8F%E5%91%B3%E9%81%93"><span class="nav-number">1.1.</span> <span class="nav-text">代码坏味道</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%87%8D%E6%9E%84%E6%89%8B%E6%B3%95"><span class="nav-number">1.2.</span> <span class="nav-text">重构手法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AE%80%E5%8C%96%E8%AF%AD%E5%8F%A5"><span class="nav-number">1.2.1.</span> <span class="nav-text">简化语句</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%87%8D%E7%BB%84%E5%87%BD%E6%95%B0"><span class="nav-number">1.2.2.</span> <span class="nav-text">重组函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%87%8D%E7%BB%84%E6%95%B0%E6%8D%AE"><span class="nav-number">1.2.3.</span> <span class="nav-text">重组数据</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%87%8D%E6%9E%84%E9%81%97%E7%95%99%E7%B3%BB%E7%BB%9F"><span class="nav-number">1.3.</span> <span class="nav-text">重构遗留系统</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -447,7 +435,7 @@
 </div>
   <div class="links-of-author motion-element">
       <span class="links-of-author-item">
-        <a href="https://github.com/Tony36051" title="GitHub → https://github.com/Tony36051" rel="noopener" target="_blank"><i class="github fa-fw"></i>GitHub</a>
+        <a href="https://github.com/Tony36051" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Tony36051" rel="noopener" target="_blank"><i class="github fa-fw"></i>GitHub</a>
       </span>
   </div>
 
@@ -477,18 +465,8 @@
     <i class="fa fa-heart"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">夏侯仪</span>
-    <span class="post-meta-divider">|</span>
-    <span class="post-meta-item-icon">
-      <i class="fa fa-chart-area"></i>
-    </span>
-    <span title="站点总字数">218k</span>
-    <span class="post-meta-divider">|</span>
-    <span class="post-meta-item-icon">
-      <i class="fa fa-coffee"></i>
-    </span>
-    <span title="站点阅读时长">3:18</span>
 </div>
-  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
   </div>
 
         
@@ -508,9 +486,17 @@
   <script src="/lib/anime.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/velocity-animate@1/velocity.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/velocity-animate@1/velocity.ui.min.js"></script>
-<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
 <script src="/js/schemes/pisces.js"></script>
+
+
 <script src="/js/next-boot.js"></script>
+
 
 
 
@@ -519,7 +505,9 @@
 
 
 
-  <script src="/js/local-search.js"></script>
+  
+<script src="/js/local-search.js"></script>
+
 
 
 

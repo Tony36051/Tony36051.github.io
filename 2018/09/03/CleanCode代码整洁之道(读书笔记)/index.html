@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 3.7.1">
+<meta name="generator" content="Hexo 5.2.0">
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
@@ -20,20 +20,20 @@
     var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="衡量代码的唯一有效标准：WTF/min陪女票复习, 带上Bob大叔的代码整洁之道, 一天看了120+页, 真是舒爽.">
-<meta name="keywords" content="Java">
+  <meta name="description" content="衡量代码的唯一有效标准：WTF&#x2F;min陪女票复习, 带上Bob大叔的代码整洁之道, 一天看了120+页, 真是舒爽.">
 <meta property="og:type" content="article">
 <meta property="og:title" content="CleanCode代码整洁之道(读书笔记)">
-<meta property="og:url" content="http://yoursite.com/2018/09/03/CleanCode代码整洁之道(读书笔记)/index.html">
+<meta property="og:url" content="http://yoursite.com/2018/09/03/CleanCode%E4%BB%A3%E7%A0%81%E6%95%B4%E6%B4%81%E4%B9%8B%E9%81%93(%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0)/index.html">
 <meta property="og:site_name" content="幻煞幽穹">
-<meta property="og:description" content="衡量代码的唯一有效标准：WTF/min陪女票复习, 带上Bob大叔的代码整洁之道, 一天看了120+页, 真是舒爽.">
-<meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2020-12-12T10:05:28.599Z">
+<meta property="og:description" content="衡量代码的唯一有效标准：WTF&#x2F;min陪女票复习, 带上Bob大叔的代码整洁之道, 一天看了120+页, 真是舒爽.">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2018-09-03T16:00:00.000Z">
+<meta property="article:modified_time" content="2020-12-12T14:45:14.864Z">
+<meta property="article:author" content="夏侯仪">
+<meta property="article:tag" content="Java">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="CleanCode代码整洁之道(读书笔记)">
-<meta name="twitter:description" content="衡量代码的唯一有效标准：WTF/min陪女票复习, 带上Bob大叔的代码整洁之道, 一天看了120+页, 真是舒爽.">
 
-<link rel="canonical" href="http://yoursite.com/2018/09/03/CleanCode代码整洁之道(读书笔记)/">
+<link rel="canonical" href="http://yoursite.com/2018/09/03/CleanCode%E4%BB%A3%E7%A0%81%E6%95%B4%E6%B4%81%E4%B9%8B%E9%81%93(%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0)/">
 
 
 <script id="page-configurations">
@@ -203,7 +203,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/09/03/CleanCode代码整洁之道(读书笔记)/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/09/03/CleanCode%E4%BB%A3%E7%A0%81%E6%95%B4%E6%B4%81%E4%B9%8B%E9%81%93(%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0)/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/uploads/avatar.jpg">
@@ -233,7 +233,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-12-12 18:05:28" itemprop="dateModified" datetime="2020-12-12T18:05:28+08:00">2020-12-12</time>
+                <time title="修改时间：2020-12-12 22:45:14" itemprop="dateModified" datetime="2020-12-12T22:45:14+08:00">2020-12-12</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -246,7 +246,7 @@
             </span>
 
           
-            <span id="/2018/09/03/CleanCode代码整洁之道(读书笔记)/" class="post-meta-item leancloud_visitors" data-flag-title="CleanCode代码整洁之道(读书笔记)" title="阅读次数">
+            <span id="/2018/09/03/CleanCode%E4%BB%A3%E7%A0%81%E6%95%B4%E6%B4%81%E4%B9%8B%E9%81%93(%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0)/" class="post-meta-item leancloud_visitors" data-flag-title="CleanCode代码整洁之道(读书笔记)" title="阅读次数">
               <span class="post-meta-item-icon">
                 <i class="fa fa-eye"></i>
               </span>
@@ -261,26 +261,12 @@
       </span>
       <span class="post-meta-item-text">Valine：</span>
     
-    <a title="valine" href="/2018/09/03/CleanCode代码整洁之道(读书笔记)/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2018/09/03/CleanCode代码整洁之道(读书笔记)/" itemprop="commentCount"></span>
+    <a title="valine" href="/2018/09/03/CleanCode%E4%BB%A3%E7%A0%81%E6%95%B4%E6%B4%81%E4%B9%8B%E9%81%93(%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0)/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2018/09/03/CleanCode%E4%BB%A3%E7%A0%81%E6%95%B4%E6%B4%81%E4%B9%8B%E9%81%93(%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0)/" itemprop="commentCount"></span>
     </a>
   </span>
   
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>0</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
-            </span>
+  
 
         </div>
       </header>
@@ -291,7 +277,9 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>衡量代码的唯一有效标准：WTF/min<br>陪女票复习, 带上Bob大叔的代码整洁之道, 一天看了120+页, 真是舒爽.<br><a id="more"></a></p>
+        <p>衡量代码的唯一有效标准：WTF/min<br>陪女票复习, 带上Bob大叔的代码整洁之道, 一天看了120+页, 真是舒爽. </p>
+<a id="more"></a>
+
 <h2 id="函数"><a href="#函数" class="headerlink" title="函数"></a>函数</h2><h3 id="抽象层次"><a href="#抽象层次" class="headerlink" title="抽象层次"></a>抽象层次</h3><ol>
 <li>函数内步骤在同一抽象层上.</li>
 <li>Top-Down写法: 如写文章先写大纲(高抽象层次), 下个函数再写细节(低抽象层次)</li>
@@ -323,7 +311,7 @@
       <i class="fa fa-chevron-left"></i> 亚马逊自动下单 Selenium 自动化
     </a></div>
       <div class="post-nav-item">
-    <a href="/2018/09/19/Python/python3与Anaconda环境管理/" rel="next" title="python3与Anaconda环境管理">
+    <a href="/2018/09/19/Python/python3%E4%B8%8EAnaconda%E7%8E%AF%E5%A2%83%E7%AE%A1%E7%90%86/" rel="next" title="python3与Anaconda环境管理">
       python3与Anaconda环境管理 <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
@@ -385,7 +373,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#函数"><span class="nav-number">1.</span> <span class="nav-text">函数</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#抽象层次"><span class="nav-number">1.1.</span> <span class="nav-text">抽象层次</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参数"><span class="nav-number">1.2.</span> <span class="nav-text">参数</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%87%BD%E6%95%B0"><span class="nav-number">1.</span> <span class="nav-text">函数</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8A%BD%E8%B1%A1%E5%B1%82%E6%AC%A1"><span class="nav-number">1.1.</span> <span class="nav-text">抽象层次</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%82%E6%95%B0"><span class="nav-number">1.2.</span> <span class="nav-text">参数</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -421,7 +409,7 @@
 </div>
   <div class="links-of-author motion-element">
       <span class="links-of-author-item">
-        <a href="https://github.com/Tony36051" title="GitHub → https://github.com/Tony36051" rel="noopener" target="_blank"><i class="github fa-fw"></i>GitHub</a>
+        <a href="https://github.com/Tony36051" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Tony36051" rel="noopener" target="_blank"><i class="github fa-fw"></i>GitHub</a>
       </span>
   </div>
 
@@ -451,18 +439,8 @@
     <i class="fa fa-heart"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">夏侯仪</span>
-    <span class="post-meta-divider">|</span>
-    <span class="post-meta-item-icon">
-      <i class="fa fa-chart-area"></i>
-    </span>
-    <span title="站点总字数">218k</span>
-    <span class="post-meta-divider">|</span>
-    <span class="post-meta-item-icon">
-      <i class="fa fa-coffee"></i>
-    </span>
-    <span title="站点阅读时长">3:18</span>
 </div>
-  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
   </div>
 
         
@@ -482,9 +460,17 @@
   <script src="/lib/anime.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/velocity-animate@1/velocity.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/velocity-animate@1/velocity.ui.min.js"></script>
-<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
 <script src="/js/schemes/pisces.js"></script>
+
+
 <script src="/js/next-boot.js"></script>
+
 
 
 
@@ -493,7 +479,9 @@
 
 
 
-  <script src="/js/local-search.js"></script>
+  
+<script src="/js/local-search.js"></script>
+
 
 
 

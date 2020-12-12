@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 3.7.1">
+<meta name="generator" content="Hexo 5.2.0">
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
@@ -21,19 +21,20 @@
   </script>
 
   <meta name="description" content="作为一个测试+运维人员，经常需要使用jenkins做持续集成，将jenkins作为守护进程有很多方法，其中一个就是用systemd。">
-<meta name="keywords" content="Linux,Systemd">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Systemd使用（Nginx和Jenkins为例）">
-<meta property="og:url" content="http://yoursite.com/2019/06/17/ops/Linux/Systemd使用（Nginx和Jenkins为例）/index.html">
+<meta property="og:url" content="http://yoursite.com/2019/06/17/ops/Linux/Systemd%E4%BD%BF%E7%94%A8%EF%BC%88Nginx%E5%92%8CJenkins%E4%B8%BA%E4%BE%8B%EF%BC%89/index.html">
 <meta property="og:site_name" content="幻煞幽穹">
 <meta property="og:description" content="作为一个测试+运维人员，经常需要使用jenkins做持续集成，将jenkins作为守护进程有很多方法，其中一个就是用systemd。">
-<meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2020-12-12T10:05:28.603Z">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2019-06-17T16:00:00.000Z">
+<meta property="article:modified_time" content="2020-12-12T14:45:14.868Z">
+<meta property="article:author" content="夏侯仪">
+<meta property="article:tag" content="Linux">
+<meta property="article:tag" content="Systemd">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Systemd使用（Nginx和Jenkins为例）">
-<meta name="twitter:description" content="作为一个测试+运维人员，经常需要使用jenkins做持续集成，将jenkins作为守护进程有很多方法，其中一个就是用systemd。">
 
-<link rel="canonical" href="http://yoursite.com/2019/06/17/ops/Linux/Systemd使用（Nginx和Jenkins为例）/">
+<link rel="canonical" href="http://yoursite.com/2019/06/17/ops/Linux/Systemd%E4%BD%BF%E7%94%A8%EF%BC%88Nginx%E5%92%8CJenkins%E4%B8%BA%E4%BE%8B%EF%BC%89/">
 
 
 <script id="page-configurations">
@@ -203,7 +204,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/06/17/ops/Linux/Systemd使用（Nginx和Jenkins为例）/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/06/17/ops/Linux/Systemd%E4%BD%BF%E7%94%A8%EF%BC%88Nginx%E5%92%8CJenkins%E4%B8%BA%E4%BE%8B%EF%BC%89/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/uploads/avatar.jpg">
@@ -233,7 +234,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-12-12 18:05:28" itemprop="dateModified" datetime="2020-12-12T18:05:28+08:00">2020-12-12</time>
+                <time title="修改时间：2020-12-12 22:45:14" itemprop="dateModified" datetime="2020-12-12T22:45:14+08:00">2020-12-12</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -246,7 +247,7 @@
             </span>
 
           
-            <span id="/2019/06/17/ops/Linux/Systemd使用（Nginx和Jenkins为例）/" class="post-meta-item leancloud_visitors" data-flag-title="Systemd使用（Nginx和Jenkins为例）" title="阅读次数">
+            <span id="/2019/06/17/ops/Linux/Systemd%E4%BD%BF%E7%94%A8%EF%BC%88Nginx%E5%92%8CJenkins%E4%B8%BA%E4%BE%8B%EF%BC%89/" class="post-meta-item leancloud_visitors" data-flag-title="Systemd使用（Nginx和Jenkins为例）" title="阅读次数">
               <span class="post-meta-item-icon">
                 <i class="fa fa-eye"></i>
               </span>
@@ -261,26 +262,12 @@
       </span>
       <span class="post-meta-item-text">Valine：</span>
     
-    <a title="valine" href="/2019/06/17/ops/Linux/Systemd使用（Nginx和Jenkins为例）/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2019/06/17/ops/Linux/Systemd使用（Nginx和Jenkins为例）/" itemprop="commentCount"></span>
+    <a title="valine" href="/2019/06/17/ops/Linux/Systemd%E4%BD%BF%E7%94%A8%EF%BC%88Nginx%E5%92%8CJenkins%E4%B8%BA%E4%BE%8B%EF%BC%89/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2019/06/17/ops/Linux/Systemd%E4%BD%BF%E7%94%A8%EF%BC%88Nginx%E5%92%8CJenkins%E4%B8%BA%E4%BE%8B%EF%BC%89/" itemprop="commentCount"></span>
     </a>
   </span>
   
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>0</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
-            </span>
+  
 
         </div>
       </header>
@@ -291,63 +278,77 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>作为一个测试+运维人员，经常需要使用jenkins做持续集成，将jenkins作为守护进程有很多方法，其中一个就是用systemd。<br><a id="more"></a></p>
+        <p>作为一个测试+运维人员，经常需要使用jenkins做持续集成，将jenkins作为守护进程有很多方法，其中一个就是用systemd。</p>
+<a id="more"></a>
+
 <h1 id="Systemd使用（Nginx和Jenkins为例）"><a href="#Systemd使用（Nginx和Jenkins为例）" class="headerlink" title="Systemd使用（Nginx和Jenkins为例）"></a>Systemd使用（Nginx和Jenkins为例）</h1><h2 id="systemd是什么"><a href="#systemd是什么" class="headerlink" title="systemd是什么"></a>systemd是什么</h2><p><strong>管理系统所有进程、服务以及启动项等</strong>的软件简称「系统管理器」</p>
 <h2 id="查看"><a href="#查看" class="headerlink" title="查看"></a>查看</h2><h3 id="2-1-查看系统所有安装的服务项"><a href="#2-1-查看系统所有安装的服务项" class="headerlink" title="2.1 查看系统所有安装的服务项"></a><strong>2.1 查看系统所有安装的服务项</strong></h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl list-unit-files --<span class="built_in">type</span>=service</span><br></pre></td></tr></table></figure>
 <p>使用  <code>PageUp</code>  或  <code>PageDown</code>  翻页，查看完毕后按  <code>q</code>  退出。</p>
-<h3 id="2-2-查看系统所有运行的服务项"><a href="#2-2-查看系统所有运行的服务项" class="headerlink" title="2.2 查看系统所有运行的服务项"></a><strong>2.2 查看系统所有运行的服务项</strong></h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl list-units --type=service</span><br></pre></td></tr></table></figure>
+<h3 id="2-2-查看系统所有运行的服务项"><a href="#2-2-查看系统所有运行的服务项" class="headerlink" title="2.2 查看系统所有运行的服务项"></a><strong>2.2 查看系统所有运行的服务项</strong></h3><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl list-units --type=service</span><br></pre></td></tr></table></figure>
+
 <p>如果看到某个服务项前面有一个红点，说明该服务存在问题，请进行排查。</p>
 <p>使用  <code>PageUp</code>  或  <code>PageDown</code>  翻页，查看完毕后按  <code>q</code>  退出。</p>
-<h3 id="2-3-查看系统所有开机自启动的服务项"><a href="#2-3-查看系统所有开机自启动的服务项" class="headerlink" title="2.3 查看系统所有开机自启动的服务项"></a><strong>2.3 查看系统所有开机自启动的服务项</strong></h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl list-unit-files --type=service | grep enabled</span><br></pre></td></tr></table></figure>
-<h3 id="2-4-查看指定服务项状态"><a href="#2-4-查看指定服务项状态" class="headerlink" title="2.4 查看指定服务项状态"></a><strong>2.4 查看指定服务项状态</strong></h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl status &lt;服务项名称&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="2-3-查看系统所有开机自启动的服务项"><a href="#2-3-查看系统所有开机自启动的服务项" class="headerlink" title="2.3 查看系统所有开机自启动的服务项"></a><strong>2.3 查看系统所有开机自启动的服务项</strong></h3><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl list-unit-files --type=service | grep enabled</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-4-查看指定服务项状态"><a href="#2-4-查看指定服务项状态" class="headerlink" title="2.4 查看指定服务项状态"></a><strong>2.4 查看指定服务项状态</strong></h3><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl status &lt;服务项名称&gt;</span><br></pre></td></tr></table></figure>
+
 <p>执行命令之后，系统会显示该服务项的状态、是否已激活、描述以及最后十条日志。</p>
 <p>如果服务项前面有一个红点，说明该服务存在问题，请根据日志进行排查。</p>
 <p><strong>例如</strong></p>
 <p>查看 Nginx 服务状态</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root: ~]# systemctl status nginx.service</span><br></pre></td></tr></table></figure>
-<h3 id="2-6-查看出错的服务"><a href="#2-6-查看出错的服务" class="headerlink" title="2.6 查看出错的服务"></a><strong>2.6 查看出错的服务</strong></h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl list-units --type=service --state=failed</span><br></pre></td></tr></table></figure>
-<h2 id="管理服务"><a href="#管理服务" class="headerlink" title="管理服务"></a>管理服务</h2><h3 id="3-1-启动服务"><a href="#3-1-启动服务" class="headerlink" title="3.1 启动服务"></a><strong>3.1 启动服务</strong></h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl start &lt;服务项名称&gt;</span><br></pre></td></tr></table></figure>
-<h3 id="3-2-停止服务"><a href="#3-2-停止服务" class="headerlink" title="3.2 停止服务"></a><strong>3.2 停止服务</strong></h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl stop &lt;服务项名称&gt;</span><br></pre></td></tr></table></figure>
-<h3 id="3-3-重启服务"><a href="#3-3-重启服务" class="headerlink" title="3.3 重启服务"></a><strong>3.3 重启服务</strong></h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl restart &lt;服务项名称&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root: ~]# systemctl status nginx.service</span><br></pre></td></tr></table></figure>
+<h3 id="2-6-查看出错的服务"><a href="#2-6-查看出错的服务" class="headerlink" title="2.6 查看出错的服务"></a><strong>2.6 查看出错的服务</strong></h3><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl list-units --type=service --state=failed</span><br></pre></td></tr></table></figure>
+<h2 id="管理服务"><a href="#管理服务" class="headerlink" title="管理服务"></a>管理服务</h2><h3 id="3-1-启动服务"><a href="#3-1-启动服务" class="headerlink" title="3.1 启动服务"></a><strong>3.1 启动服务</strong></h3><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl start &lt;服务项名称&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-2-停止服务"><a href="#3-2-停止服务" class="headerlink" title="3.2 停止服务"></a><strong>3.2 停止服务</strong></h3><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl stop &lt;服务项名称&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-3-重启服务"><a href="#3-3-重启服务" class="headerlink" title="3.3 重启服务"></a><strong>3.3 重启服务</strong></h3><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl restart &lt;服务项名称&gt;</span><br></pre></td></tr></table></figure>
+
 <h3 id="3-4-重新读取配置文件"><a href="#3-4-重新读取配置文件" class="headerlink" title="3.4 重新读取配置文件"></a><strong>3.4 重新读取配置文件</strong></h3><p>如果该服务不能重启，但又必须使用新的配置，这条命令会很有用。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl reload &lt;服务项名称&gt;</span><br></pre></td></tr></table></figure>
-<h3 id="3-5-使服务开机自启动"><a href="#3-5-使服务开机自启动" class="headerlink" title="3.5 使服务开机自启动"></a><strong>3.5 使服务开机自启动</strong></h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl enable &lt;服务项名称&gt;</span><br></pre></td></tr></table></figure>
-<h3 id="3-6-使服务不要开机自启动"><a href="#3-6-使服务不要开机自启动" class="headerlink" title="3.6 使服务不要开机自启动"></a><strong>3.6 使服务不要开机自启动</strong></h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl disable &lt;服务项名称&gt;</span><br></pre></td></tr></table></figure>
-<h2 id="创建服务"><a href="#创建服务" class="headerlink" title="创建服务"></a>创建服务</h2><h3 id="4-1-服务文件的位置"><a href="#4-1-服务文件的位置" class="headerlink" title="4.1 服务文件的位置"></a><strong>4.1 服务文件的位置</strong></h3><p>CentOS 7的服务systemctl脚本存放在：/usr/lib/systemd/，有系统 system 和用户 user 之分。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">/lib/systemd/system  </span><br><span class="line">/run/systemd/system  </span><br><span class="line">/etc/systemd/system</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl reload &lt;服务项名称&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-5-使服务开机自启动"><a href="#3-5-使服务开机自启动" class="headerlink" title="3.5 使服务开机自启动"></a><strong>3.5 使服务开机自启动</strong></h3><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl enable &lt;服务项名称&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-6-使服务不要开机自启动"><a href="#3-6-使服务不要开机自启动" class="headerlink" title="3.6 使服务不要开机自启动"></a><strong>3.6 使服务不要开机自启动</strong></h3><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl disable &lt;服务项名称&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="创建服务"><a href="#创建服务" class="headerlink" title="创建服务"></a>创建服务</h2><h3 id="4-1-服务文件的位置"><a href="#4-1-服务文件的位置" class="headerlink" title="4.1 服务文件的位置"></a><strong>4.1 服务文件的位置</strong></h3><p>CentOS 7的服务systemctl脚本存放在：/usr/lib/systemd/，有系统 system 和用户 user 之分。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;lib&#x2F;systemd&#x2F;system  </span><br><span class="line">&#x2F;run&#x2F;systemd&#x2F;system  </span><br><span class="line">&#x2F;etc&#x2F;systemd&#x2F;system</span><br></pre></td></tr></table></figure>
 <p>在<code>/etc/systemd/system</code>下面创建<code>nginx.service.d</code>目录，在这个目录里面新建任何以.conf结尾的文件，然后写入我们自己的配置。</p>
 <h3 id="4-2-服务文件的模版"><a href="#4-2-服务文件的模版" class="headerlink" title="4.2 服务文件的模版"></a><strong>4.2 服务文件的模版</strong></h3><p>每一个服务以.service结尾，一般会分为3部分：[Unit]、[Service]和[Install]，就以nginx为例吧，具体内容如下：</p>
 <figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">[Unit]</span></span><br><span class="line"><span class="attr">Description</span>=nginx - high performance web server</span><br><span class="line"><span class="attr">Documentation</span>=http://nginx.org/en/docs/</span><br><span class="line"><span class="attr">After</span>=network.target remote-fs.target nss-lookup.target</span><br><span class="line"></span><br><span class="line"><span class="section">[Service]</span></span><br><span class="line"><span class="attr">Type</span>=forking</span><br><span class="line"><span class="attr">PIDFile</span>=/usr/local/nginx/logs/nginx.pid</span><br><span class="line"><span class="attr">ExecStartPre</span>=/usr/local/nginx/sbin/nginx -t -c /usr/local/nginx/conf/nginx.conf</span><br><span class="line"><span class="attr">ExecStart</span>=/usr/local/nginx/sbin/nginx -c /usr/local/nginx/conf/nginx.conf</span><br><span class="line"><span class="attr">ExecReload</span>=/bin/kill -s HUP <span class="variable">$MAINPID</span></span><br><span class="line"><span class="attr">ExecStop</span>=/bin/kill -s QUIT <span class="variable">$MAINPID</span></span><br><span class="line"><span class="attr">PrivateTmp</span>=<span class="literal">true</span></span><br><span class="line"></span><br><span class="line"><span class="section">[Install]</span></span><br><span class="line"><span class="attr">WantedBy</span>=multi-user.target</span><br></pre></td></tr></table></figure>
+
 <h2 id="配置项说明"><a href="#配置项说明" class="headerlink" title="配置项说明"></a>配置项说明</h2><p>下面分别解释下着三部分的含义</p>
 <p><em>[Unit]</em></p>
 <ul>
-<li>Description : 服务的简单描述</li>
-<li>Documentation ： 服务文档</li>
-<li>After= : 依赖，仅当依赖的服务启动之后再启动自定义的服务单元</li>
+<li>  Description : 服务的简单描述</li>
+<li>  Documentation ： 服务文档</li>
+<li>  After= : 依赖，仅当依赖的服务启动之后再启动自定义的服务单元</li>
 </ul>
 <p><em>[Service]</em></p>
 <ul>
 <li>Type : 启动类型simple、forking、oneshot、notify、dbus<ul>
-<li>Type=simple（默认值）：systemd认为该服务将立即启动，服务进程不会fork。如果该服务要启动其他服务，不要使用此类型启动，除非该服务是socket激活型</li>
-<li>Type=forking：systemd认为当该服务进程fork，且父进程退出后服务启动成功。对于常规的守护进程（daemon），除非你确定此启动方式无法满足需求， 使用此类型启动即可。使用此启动类型应同时指定<code>PIDFile=</code>，以便systemd能够跟踪服务的主进程。</li>
-<li>Type=oneshot：这一选项适用于只执行一项任务、随后立即退出的服务。可能需要同时设置  <code>RemainAfterExit=yes</code>  使得  <code>systemd</code>  在服务进程退出之后仍然认为服务处于激活状态。</li>
-<li>Type=notify：与  <code>Type=simple</code>  相同，但约定服务会在就绪后向  <code>systemd</code>  发送一个信号，这一通知的实现由  <code>libsystemd-daemon.so</code>  提供</li>
-<li>Type=dbus：若以此方式启动，当指定的 BusName 出现在DBus系统总线上时，systemd认为服务就绪。</li>
+<li>  Type=simple（默认值）：systemd认为该服务将立即启动，服务进程不会fork。如果该服务要启动其他服务，不要使用此类型启动，除非该服务是socket激活型</li>
+<li>  Type=forking：systemd认为当该服务进程fork，且父进程退出后服务启动成功。对于常规的守护进程（daemon），除非你确定此启动方式无法满足需求， 使用此类型启动即可。使用此启动类型应同时指定<code>PIDFile=</code>，以便systemd能够跟踪服务的主进程。</li>
+<li>  Type=oneshot：这一选项适用于只执行一项任务、随后立即退出的服务。可能需要同时设置  <code>RemainAfterExit=yes</code>  使得  <code>systemd</code>  在服务进程退出之后仍然认为服务处于激活状态。</li>
+<li>  Type=notify：与  <code>Type=simple</code>  相同，但约定服务会在就绪后向  <code>systemd</code>  发送一个信号，这一通知的实现由  <code>libsystemd-daemon.so</code>  提供</li>
+<li>  Type=dbus：若以此方式启动，当指定的 BusName 出现在DBus系统总线上时，systemd认为服务就绪。</li>
 </ul>
 </li>
-<li>PIDFile ： pid文件路径</li>
-<li>ExecStartPre ：启动前要做什么，上文中是测试配置文件 －t</li>
-<li>ExecStart：启动</li>
-<li>ExecReload：重载</li>
-<li>ExecStop：停止</li>
-<li>PrivateTmp：True表示给服务分配独立的临时空间</li>
+<li>  PIDFile ： pid文件路径</li>
+<li>  ExecStartPre ：启动前要做什么，上文中是测试配置文件 －t</li>
+<li>  ExecStart：启动</li>
+<li>  ExecReload：重载</li>
+<li>  ExecStop：停止</li>
+<li>  PrivateTmp：True表示给服务分配独立的临时空间</li>
 </ul>
 <p><em>[Install]</em></p>
 <ul>
-<li>WantedBy：服务安装的用户模式，从字面上看，就是想要使用这个服务的有是谁？上文中使用的是：<code>multi-user.target</code>  ，就是指想要使用这个服务的目录是多用户。每一个.target实际上是链接到我们单位文件的集合,当我们执行 systemctl enable nginx.service  </li>
+<li>  WantedBy：服务安装的用户模式，从字面上看，就是想要使用这个服务的有是谁？上文中使用的是：<code>multi-user.target</code>  ，就是指想要使用这个服务的目录是多用户。每一个.target实际上是链接到我们单位文件的集合,当我们执行 systemctl enable nginx.service  </li>
 </ul>
 <p>就会在  <code>/etc/systemd/system/multi-user.target.wants/</code>  目录下新建一个  <code>/usr/lib/systemd/system/nginx.service</code>  文件的链接。</p>
 <h2 id="Jenkins实例"><a href="#Jenkins实例" class="headerlink" title="Jenkins实例"></a>Jenkins实例</h2><h3 id="创建service"><a href="#创建service" class="headerlink" title="创建service"></a>创建service</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo vim /etc/systemd/system/jenkins.service</span><br></pre></td></tr></table></figure>
-<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">[Unit]</span></span><br><span class="line"><span class="attr">Description</span>=Tony<span class="string">'s Jenkins</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">[Service]</span></span><br><span class="line"><span class="string">WorkingDirectory=/root/.jenkins</span></span><br><span class="line"><span class="string">Type=simple</span></span><br><span class="line"><span class="string">ExecStart=/bin/sh -c "/usr/bin/java -Dhudson.model.DirectoryBrowserSupport.CSP= -Duser.timezone=Asia/Shanghai -jar /home/jenkins/jenkins.war"</span></span><br><span class="line"><span class="string">KillSignal=SIGTERM</span></span><br><span class="line"><span class="string">KillMode=mixed</span></span><br><span class="line"><span class="string">Restart=on-failure</span></span><br><span class="line"><span class="string">RestartSec=5</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">[Install]</span></span><br><span class="line"><span class="string">WantedBy=multi-user.target</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">[Unit]</span></span><br><span class="line"><span class="attr">Description</span>=Tony<span class="string">&#x27;s Jenkins</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">[Service]</span></span><br><span class="line"><span class="string">WorkingDirectory=/root/.jenkins</span></span><br><span class="line"><span class="string">Type=simple</span></span><br><span class="line"><span class="string">ExecStart=/bin/sh -c &quot;/usr/bin/java -Dhudson.model.DirectoryBrowserSupport.CSP= -Duser.timezone=Asia/Shanghai -jar /home/jenkins/jenkins.war&quot;</span></span><br><span class="line"><span class="string">KillSignal=SIGTERM</span></span><br><span class="line"><span class="string">KillMode=mixed</span></span><br><span class="line"><span class="string">Restart=on-failure</span></span><br><span class="line"><span class="string">RestartSec=5</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">[Install]</span></span><br><span class="line"><span class="string">WantedBy=multi-user.target</span></span><br></pre></td></tr></table></figure>
+
 <h3 id="应用与生效"><a href="#应用与生效" class="headerlink" title="应用与生效"></a>应用与生效</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">sudo systemctl daemon-reload</span><br><span class="line">sudo systemctl <span class="built_in">enable</span> jenkins.service</span><br><span class="line">sudo systemctl start jenkins</span><br><span class="line">sudo systemctl status jenkins</span><br></pre></td></tr></table></figure>
     </div>
 
@@ -367,11 +368,11 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2019/06/14/Java/Java生成javacore和heapdump文件/" rel="prev" title="Java生成javacore和heapdump文件">
+    <a href="/2019/06/14/Java/Java%E7%94%9F%E6%88%90javacore%E5%92%8Cheapdump%E6%96%87%E4%BB%B6/" rel="prev" title="Java生成javacore和heapdump文件">
       <i class="fa fa-chevron-left"></i> Java生成javacore和heapdump文件
     </a></div>
       <div class="post-nav-item">
-    <a href="/2019/06/25/Golang笔记/" rel="next" title="Golang 笔记">
+    <a href="/2019/06/25/Golang%E7%AC%94%E8%AE%B0/" rel="next" title="Golang 笔记">
       Golang 笔记 <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
@@ -433,7 +434,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Systemd使用（Nginx和Jenkins为例）"><span class="nav-number">1.</span> <span class="nav-text">Systemd使用（Nginx和Jenkins为例）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#systemd是什么"><span class="nav-number">1.1.</span> <span class="nav-text">systemd是什么</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#查看"><span class="nav-number">1.2.</span> <span class="nav-text">查看</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-查看系统所有安装的服务项"><span class="nav-number">1.2.1.</span> <span class="nav-text">2.1 查看系统所有安装的服务项</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-查看系统所有运行的服务项"><span class="nav-number">1.2.2.</span> <span class="nav-text">2.2 查看系统所有运行的服务项</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-查看系统所有开机自启动的服务项"><span class="nav-number">1.2.3.</span> <span class="nav-text">2.3 查看系统所有开机自启动的服务项</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-4-查看指定服务项状态"><span class="nav-number">1.2.4.</span> <span class="nav-text">2.4 查看指定服务项状态</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-6-查看出错的服务"><span class="nav-number">1.2.5.</span> <span class="nav-text">2.6 查看出错的服务</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#管理服务"><span class="nav-number">1.3.</span> <span class="nav-text">管理服务</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-启动服务"><span class="nav-number">1.3.1.</span> <span class="nav-text">3.1 启动服务</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-停止服务"><span class="nav-number">1.3.2.</span> <span class="nav-text">3.2 停止服务</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3-重启服务"><span class="nav-number">1.3.3.</span> <span class="nav-text">3.3 重启服务</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-4-重新读取配置文件"><span class="nav-number">1.3.4.</span> <span class="nav-text">3.4 重新读取配置文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-5-使服务开机自启动"><span class="nav-number">1.3.5.</span> <span class="nav-text">3.5 使服务开机自启动</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-6-使服务不要开机自启动"><span class="nav-number">1.3.6.</span> <span class="nav-text">3.6 使服务不要开机自启动</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#创建服务"><span class="nav-number">1.4.</span> <span class="nav-text">创建服务</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-1-服务文件的位置"><span class="nav-number">1.4.1.</span> <span class="nav-text">4.1 服务文件的位置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-2-服务文件的模版"><span class="nav-number">1.4.2.</span> <span class="nav-text">4.2 服务文件的模版</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#配置项说明"><span class="nav-number">1.5.</span> <span class="nav-text">配置项说明</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Jenkins实例"><span class="nav-number">1.6.</span> <span class="nav-text">Jenkins实例</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#创建service"><span class="nav-number">1.6.1.</span> <span class="nav-text">创建service</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#应用与生效"><span class="nav-number">1.6.2.</span> <span class="nav-text">应用与生效</span></a></li></ol></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Systemd%E4%BD%BF%E7%94%A8%EF%BC%88Nginx%E5%92%8CJenkins%E4%B8%BA%E4%BE%8B%EF%BC%89"><span class="nav-number">1.</span> <span class="nav-text">Systemd使用（Nginx和Jenkins为例）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#systemd%E6%98%AF%E4%BB%80%E4%B9%88"><span class="nav-number">1.1.</span> <span class="nav-text">systemd是什么</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B"><span class="nav-number">1.2.</span> <span class="nav-text">查看</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-%E6%9F%A5%E7%9C%8B%E7%B3%BB%E7%BB%9F%E6%89%80%E6%9C%89%E5%AE%89%E8%A3%85%E7%9A%84%E6%9C%8D%E5%8A%A1%E9%A1%B9"><span class="nav-number">1.2.1.</span> <span class="nav-text">2.1 查看系统所有安装的服务项</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-%E6%9F%A5%E7%9C%8B%E7%B3%BB%E7%BB%9F%E6%89%80%E6%9C%89%E8%BF%90%E8%A1%8C%E7%9A%84%E6%9C%8D%E5%8A%A1%E9%A1%B9"><span class="nav-number">1.2.2.</span> <span class="nav-text">2.2 查看系统所有运行的服务项</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-%E6%9F%A5%E7%9C%8B%E7%B3%BB%E7%BB%9F%E6%89%80%E6%9C%89%E5%BC%80%E6%9C%BA%E8%87%AA%E5%90%AF%E5%8A%A8%E7%9A%84%E6%9C%8D%E5%8A%A1%E9%A1%B9"><span class="nav-number">1.2.3.</span> <span class="nav-text">2.3 查看系统所有开机自启动的服务项</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-4-%E6%9F%A5%E7%9C%8B%E6%8C%87%E5%AE%9A%E6%9C%8D%E5%8A%A1%E9%A1%B9%E7%8A%B6%E6%80%81"><span class="nav-number">1.2.4.</span> <span class="nav-text">2.4 查看指定服务项状态</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-6-%E6%9F%A5%E7%9C%8B%E5%87%BA%E9%94%99%E7%9A%84%E6%9C%8D%E5%8A%A1"><span class="nav-number">1.2.5.</span> <span class="nav-text">2.6 查看出错的服务</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AE%A1%E7%90%86%E6%9C%8D%E5%8A%A1"><span class="nav-number">1.3.</span> <span class="nav-text">管理服务</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-%E5%90%AF%E5%8A%A8%E6%9C%8D%E5%8A%A1"><span class="nav-number">1.3.1.</span> <span class="nav-text">3.1 启动服务</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-%E5%81%9C%E6%AD%A2%E6%9C%8D%E5%8A%A1"><span class="nav-number">1.3.2.</span> <span class="nav-text">3.2 停止服务</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3-%E9%87%8D%E5%90%AF%E6%9C%8D%E5%8A%A1"><span class="nav-number">1.3.3.</span> <span class="nav-text">3.3 重启服务</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-4-%E9%87%8D%E6%96%B0%E8%AF%BB%E5%8F%96%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="nav-number">1.3.4.</span> <span class="nav-text">3.4 重新读取配置文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-5-%E4%BD%BF%E6%9C%8D%E5%8A%A1%E5%BC%80%E6%9C%BA%E8%87%AA%E5%90%AF%E5%8A%A8"><span class="nav-number">1.3.5.</span> <span class="nav-text">3.5 使服务开机自启动</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-6-%E4%BD%BF%E6%9C%8D%E5%8A%A1%E4%B8%8D%E8%A6%81%E5%BC%80%E6%9C%BA%E8%87%AA%E5%90%AF%E5%8A%A8"><span class="nav-number">1.3.6.</span> <span class="nav-text">3.6 使服务不要开机自启动</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E6%9C%8D%E5%8A%A1"><span class="nav-number">1.4.</span> <span class="nav-text">创建服务</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-1-%E6%9C%8D%E5%8A%A1%E6%96%87%E4%BB%B6%E7%9A%84%E4%BD%8D%E7%BD%AE"><span class="nav-number">1.4.1.</span> <span class="nav-text">4.1 服务文件的位置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-2-%E6%9C%8D%E5%8A%A1%E6%96%87%E4%BB%B6%E7%9A%84%E6%A8%A1%E7%89%88"><span class="nav-number">1.4.2.</span> <span class="nav-text">4.2 服务文件的模版</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E9%A1%B9%E8%AF%B4%E6%98%8E"><span class="nav-number">1.5.</span> <span class="nav-text">配置项说明</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Jenkins%E5%AE%9E%E4%BE%8B"><span class="nav-number">1.6.</span> <span class="nav-text">Jenkins实例</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%9B%E5%BB%BAservice"><span class="nav-number">1.6.1.</span> <span class="nav-text">创建service</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BA%94%E7%94%A8%E4%B8%8E%E7%94%9F%E6%95%88"><span class="nav-number">1.6.2.</span> <span class="nav-text">应用与生效</span></a></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -469,7 +470,7 @@
 </div>
   <div class="links-of-author motion-element">
       <span class="links-of-author-item">
-        <a href="https://github.com/Tony36051" title="GitHub → https://github.com/Tony36051" rel="noopener" target="_blank"><i class="github fa-fw"></i>GitHub</a>
+        <a href="https://github.com/Tony36051" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Tony36051" rel="noopener" target="_blank"><i class="github fa-fw"></i>GitHub</a>
       </span>
   </div>
 
@@ -499,18 +500,8 @@
     <i class="fa fa-heart"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">夏侯仪</span>
-    <span class="post-meta-divider">|</span>
-    <span class="post-meta-item-icon">
-      <i class="fa fa-chart-area"></i>
-    </span>
-    <span title="站点总字数">218k</span>
-    <span class="post-meta-divider">|</span>
-    <span class="post-meta-item-icon">
-      <i class="fa fa-coffee"></i>
-    </span>
-    <span title="站点阅读时长">3:18</span>
 </div>
-  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
   </div>
 
         
@@ -530,9 +521,17 @@
   <script src="/lib/anime.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/velocity-animate@1/velocity.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/velocity-animate@1/velocity.ui.min.js"></script>
-<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
 <script src="/js/schemes/pisces.js"></script>
+
+
 <script src="/js/next-boot.js"></script>
+
 
 
 
@@ -541,7 +540,9 @@
 
 
 
-  <script src="/js/local-search.js"></script>
+  
+<script src="/js/local-search.js"></script>
+
 
 
 

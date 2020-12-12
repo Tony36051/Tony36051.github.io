@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 3.7.1">
+<meta name="generator" content="Hexo 5.2.0">
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
@@ -21,19 +21,20 @@
   </script>
 
   <meta name="description" content="hive on spark 安装配置简介网上的教程都说spark官网预编译的二进制文件含有hive部分，不能直接使用，需源码编译，包括hive的wiki也提及需要不含hive的jars。经过实践也可以通过剔除hive相关包，使用预编译的spark包完成hive-on-spark的部署。 环境hadoop: 2.7.3hive: 2.3.2spark: 2.2.06个节点，4个nodemanager">
-<meta name="keywords" content="Hadoop,Spark">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Hive on Spark 安装配置">
-<meta property="og:url" content="http://yoursite.com/2018/03/27/ops/Hadoop/Hive on Spark 安装配置/index.html">
+<meta property="og:url" content="http://yoursite.com/2018/03/27/ops/Hadoop/Hive%20on%20Spark%20%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE/index.html">
 <meta property="og:site_name" content="幻煞幽穹">
 <meta property="og:description" content="hive on spark 安装配置简介网上的教程都说spark官网预编译的二进制文件含有hive部分，不能直接使用，需源码编译，包括hive的wiki也提及需要不含hive的jars。经过实践也可以通过剔除hive相关包，使用预编译的spark包完成hive-on-spark的部署。 环境hadoop: 2.7.3hive: 2.3.2spark: 2.2.06个节点，4个nodemanager">
-<meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2020-12-12T10:05:28.603Z">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2018-03-27T13:27:00.000Z">
+<meta property="article:modified_time" content="2020-12-12T14:45:14.868Z">
+<meta property="article:author" content="夏侯仪">
+<meta property="article:tag" content="Hadoop">
+<meta property="article:tag" content="Spark">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hive on Spark 安装配置">
-<meta name="twitter:description" content="hive on spark 安装配置简介网上的教程都说spark官网预编译的二进制文件含有hive部分，不能直接使用，需源码编译，包括hive的wiki也提及需要不含hive的jars。经过实践也可以通过剔除hive相关包，使用预编译的spark包完成hive-on-spark的部署。 环境hadoop: 2.7.3hive: 2.3.2spark: 2.2.06个节点，4个nodemanager">
 
-<link rel="canonical" href="http://yoursite.com/2018/03/27/ops/Hadoop/Hive on Spark 安装配置/">
+<link rel="canonical" href="http://yoursite.com/2018/03/27/ops/Hadoop/Hive%20on%20Spark%20%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE/">
 
 
 <script id="page-configurations">
@@ -203,7 +204,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/27/ops/Hadoop/Hive on Spark 安装配置/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/27/ops/Hadoop/Hive%20on%20Spark%20%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/uploads/avatar.jpg">
@@ -233,7 +234,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-12-12 18:05:28" itemprop="dateModified" datetime="2020-12-12T18:05:28+08:00">2020-12-12</time>
+                <time title="修改时间：2020-12-12 22:45:14" itemprop="dateModified" datetime="2020-12-12T22:45:14+08:00">2020-12-12</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -246,7 +247,7 @@
             </span>
 
           
-            <span id="/2018/03/27/ops/Hadoop/Hive on Spark 安装配置/" class="post-meta-item leancloud_visitors" data-flag-title="Hive on Spark 安装配置" title="阅读次数">
+            <span id="/2018/03/27/ops/Hadoop/Hive%20on%20Spark%20%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE/" class="post-meta-item leancloud_visitors" data-flag-title="Hive on Spark 安装配置" title="阅读次数">
               <span class="post-meta-item-icon">
                 <i class="fa fa-eye"></i>
               </span>
@@ -261,26 +262,12 @@
       </span>
       <span class="post-meta-item-text">Valine：</span>
     
-    <a title="valine" href="/2018/03/27/ops/Hadoop/Hive on Spark 安装配置/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2018/03/27/ops/Hadoop/Hive on Spark 安装配置/" itemprop="commentCount"></span>
+    <a title="valine" href="/2018/03/27/ops/Hadoop/Hive%20on%20Spark%20%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2018/03/27/ops/Hadoop/Hive%20on%20Spark%20%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE/" itemprop="commentCount"></span>
     </a>
   </span>
   
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>0</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
-            </span>
+  
 
         </div>
       </header>
@@ -293,40 +280,46 @@
       
         <h1 id="hive-on-spark-安装配置"><a href="#hive-on-spark-安装配置" class="headerlink" title="hive on spark 安装配置"></a>hive on spark 安装配置</h1><h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>网上的教程都说spark官网预编译的二进制文件含有hive部分，不能直接使用，需源码编译，包括hive的wiki也提及需要不含hive的jars。经过实践也可以通过剔除hive相关包，使用预编译的spark包完成hive-on-spark的部署。</p>
 <h2 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h2><p>hadoop: 2.7.3<br>hive: 2.3.2<br>spark: 2.2.0<br>6个节点，4个nodemanager<br>hive 的wiki说只有对应的版本能保证兼容性，不是完全兼容也可以的。只是不知道有无隐患。</p>
-<h2 id="yarn配置"><a href="#yarn配置" class="headerlink" title="yarn配置"></a>yarn配置</h2><p>修改之后需要分发集群并重启<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">vim /home/hadoop/soft/hadoop/etc/hadoop/yarn-site.xml</span><br><span class="line">&lt;property&gt;</span><br><span class="line">  &lt;name&gt;yarn.resourcemanager.scheduler.class&lt;/name&gt;</span><br><span class="line">  &lt;value&gt;org.apache.hadoop.yarn.server.resourcemanager.scheduler.fair.FairScheduler&lt;/value&gt;</span><br><span class="line">&lt;/property&gt;</span><br></pre></td></tr></table></figure></p>
+<h2 id="yarn配置"><a href="#yarn配置" class="headerlink" title="yarn配置"></a>yarn配置</h2><p>修改之后需要分发集群并重启</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">vim /home/hadoop/soft/hadoop/etc/hadoop/yarn-site.xml</span><br><span class="line">&lt;property&gt;</span><br><span class="line">  &lt;name&gt;yarn.resourcemanager.scheduler.class&lt;/name&gt;</span><br><span class="line">  &lt;value&gt;org.apache.hadoop.yarn.server.resourcemanager.scheduler.fair.FairScheduler&lt;/value&gt;</span><br><span class="line">&lt;/property&gt;</span><br></pre></td></tr></table></figure>
 <h2 id="hdfs准备路径和jar包"><a href="#hdfs准备路径和jar包" class="headerlink" title="hdfs准备路径和jar包"></a>hdfs准备路径和jar包</h2><h3 id="新建spark-log目录"><a href="#新建spark-log目录" class="headerlink" title="新建spark-log目录"></a>新建spark-log目录</h3><blockquote>
 <p>hdfs dfs -mkdir -p hdfs://ns1/spark/spark-log</p>
 </blockquote>
 <h3 id="上传jar包"><a href="#上传jar包" class="headerlink" title="上传jar包"></a>上传jar包</h3><blockquote>
 <p>hdfs dfs -mkdir -p hdfs://ns1/spark/jars<br>hdfs dfs -put $SPARK_HOME/jars/*.jar hdfs://ns1/spark/jars/</p>
 </blockquote>
-<h2 id="spark配置"><a href="#spark配置" class="headerlink" title="spark配置"></a>spark配置</h2><p>配置<code>spark-env.sh</code>、<code>slaves</code>和<code>spark-defaults.conf</code>三个文件<br><code>spark-env.sh</code><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> SPARK_MASTER_WEBUI_PORT=8081</span><br><span class="line"><span class="built_in">export</span> SCALA_HOME=/home/hadoop/soft/scala</span><br><span class="line"><span class="built_in">export</span> JAVA_HOME=/home/hadoop/soft/jdk</span><br><span class="line"><span class="built_in">export</span> HADOOP_HOME=/home/hadoop/soft/hadoop</span><br><span class="line"><span class="built_in">export</span> HADOOP_CONF_DIR=<span class="variable">$HADOOP_HOME</span>/etc/hadoop</span><br><span class="line">SPARK_MASTER_IP=master1</span><br><span class="line">SPARK_LOCAL_DIRS=/home/hadoop/soft/spark</span><br><span class="line">SPARK_DRIVER_MEMORY=4G</span><br></pre></td></tr></table></figure></p>
-<p><code>slaves</code> 每行一个hostname或ip<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">hd2</span><br><span class="line">hd4</span><br><span class="line">hd5</span><br><span class="line">hd6</span><br><span class="line">hd7</span><br></pre></td></tr></table></figure></p>
-<p><code>spark-defaults.conf</code><br>以下配置按照NodeManager是12C12G计算<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">spark.master                        yarn</span><br><span class="line">spark.home                          /home/hadoop/soft/spark</span><br><span class="line">spark.eventLog.enabled              <span class="literal">true</span></span><br><span class="line">spark.eventLog.dir                  hdfs://ns1/spark/spark-log</span><br><span class="line">spark.serializer                    org.apache.spark.serializer.KryoSerializer</span><br><span class="line"><span class="comment"># hive on spark 建议5/6/7</span></span><br><span class="line">spark.executor.cores                6</span><br><span class="line"><span class="comment"># 按6*12G/12vcores计算</span></span><br><span class="line">spark.executor.memory               5222m</span><br><span class="line"><span class="comment"># 28个计算节点*每个节点2个executor</span></span><br><span class="line">spark.executor.instances            56</span><br><span class="line"><span class="comment"># 所有core的两三倍：56*6*3=1008</span></span><br><span class="line">spark.default.parallelism           1000</span><br><span class="line"><span class="comment"># 15% * spark.executor.memory</span></span><br><span class="line">spark.yarn.executor.memoryOverhead  921m</span><br><span class="line">spark.driver.memory                 4g</span><br><span class="line">spark.yarn.driver.memoryOverhead    400m</span><br><span class="line">spark.yarn.jars                     hdfs://ns1/spark/jars/*.jar</span><br></pre></td></tr></table></figure></p>
-<p>拷贝到hive的配置目录，使调用hive时能识别使用spark-defaults.conf<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ln -s ~/soft/spark/conf/spark-defaults.conf ~/soft/hive/conf/</span><br></pre></td></tr></table></figure></p>
+<h2 id="spark配置"><a href="#spark配置" class="headerlink" title="spark配置"></a>spark配置</h2><p>配置<code>spark-env.sh</code>、<code>slaves</code>和<code>spark-defaults.conf</code>三个文件<br><code>spark-env.sh</code></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> SPARK_MASTER_WEBUI_PORT=8081</span><br><span class="line"><span class="built_in">export</span> SCALA_HOME=/home/hadoop/soft/scala</span><br><span class="line"><span class="built_in">export</span> JAVA_HOME=/home/hadoop/soft/jdk</span><br><span class="line"><span class="built_in">export</span> HADOOP_HOME=/home/hadoop/soft/hadoop</span><br><span class="line"><span class="built_in">export</span> HADOOP_CONF_DIR=<span class="variable">$HADOOP_HOME</span>/etc/hadoop</span><br><span class="line">SPARK_MASTER_IP=master1</span><br><span class="line">SPARK_LOCAL_DIRS=/home/hadoop/soft/spark</span><br><span class="line">SPARK_DRIVER_MEMORY=4G</span><br></pre></td></tr></table></figure>
+<p><code>slaves</code> 每行一个hostname或ip</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">hd2</span><br><span class="line">hd4</span><br><span class="line">hd5</span><br><span class="line">hd6</span><br><span class="line">hd7</span><br></pre></td></tr></table></figure>
+<p><code>spark-defaults.conf</code><br>以下配置按照NodeManager是12C12G计算</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">spark.master                        yarn</span><br><span class="line">spark.home                          /home/hadoop/soft/spark</span><br><span class="line">spark.eventLog.enabled              <span class="literal">true</span></span><br><span class="line">spark.eventLog.dir                  hdfs://ns1/spark/spark-log</span><br><span class="line">spark.serializer                    org.apache.spark.serializer.KryoSerializer</span><br><span class="line"><span class="comment"># hive on spark 建议5/6/7</span></span><br><span class="line">spark.executor.cores                6</span><br><span class="line"><span class="comment"># 按6*12G/12vcores计算</span></span><br><span class="line">spark.executor.memory               5222m</span><br><span class="line"><span class="comment"># 28个计算节点*每个节点2个executor</span></span><br><span class="line">spark.executor.instances            56</span><br><span class="line"><span class="comment"># 所有core的两三倍：56*6*3=1008</span></span><br><span class="line">spark.default.parallelism           1000</span><br><span class="line"><span class="comment"># 15% * spark.executor.memory</span></span><br><span class="line">spark.yarn.executor.memoryOverhead  921m</span><br><span class="line">spark.driver.memory                 4g</span><br><span class="line">spark.yarn.driver.memoryOverhead    400m</span><br><span class="line">spark.yarn.jars                     hdfs://ns1/spark/jars/*.jar</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>拷贝到hive的配置目录，使调用hive时能识别使用spark-defaults.conf</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ln -s ~/soft/spark/conf/spark-defaults.conf ~/soft/hive/conf/</span><br></pre></td></tr></table></figure>
 <h3 id="验证spark"><a href="#验证spark" class="headerlink" title="验证spark"></a>验证spark</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./bin/spark-submit --class org.apache.spark.examples.SparkPi --master yarn --deploy-mode client ./examples/jars/spark-examples_2.11-2.2.0.jar 10</span><br></pre></td></tr></table></figure>
 <h2 id="hive"><a href="#hive" class="headerlink" title="hive"></a>hive</h2><h3 id="添加必要的依赖库"><a href="#添加必要的依赖库" class="headerlink" title="添加必要的依赖库"></a>添加必要的依赖库</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ln -s /home/hadoop/soft/spark/jars/scala-library-2.11.8.jar /home/hadoop/soft/hive/lib/</span><br><span class="line">ln -s /home/hadoop/soft/spark/jars/spark-network-common_2.11-2.2.0.jar /home/hadoop/soft/hive/lib/</span><br><span class="line">ln -s /home/hadoop/soft/spark/jars/spark-core_2.11-2.2.0hiv.jar /home/hadoop/soft/hive/lib/</span><br></pre></td></tr></table></figure>
-<h3 id="剔除spark中hive的库"><a href="#剔除spark中hive的库" class="headerlink" title="剔除spark中hive的库"></a>剔除spark中hive的库</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mkdir hive-jars</span><br><span class="line">mv /home/hadoop/soft/spark/jars/hive*.jar /home/hadoop/soft/spark/hive-jars</span><br></pre></td></tr></table></figure>
+<h3 id="剔除spark中hive的库"><a href="#剔除spark中hive的库" class="headerlink" title="剔除spark中hive的库"></a>剔除spark中hive的库</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mkdir hive-jars</span><br><span class="line">mv /home/hadoop/soft/spark/jars/hive*.jar /home/hadoop/soft/spark/hive-jars</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 <h3 id="启用spark引擎"><a href="#启用spark引擎" class="headerlink" title="启用spark引擎"></a>启用spark引擎</h3><p>1为临时方案，2为默认配置</p>
 <ol>
 <li>在命令行交互（进入hive之后）<code>set hive.execution.engine=spark;</code></li>
 <li>配置hive.site.xml文件，配置<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">name</span>&gt;</span>hive.execution.engine<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">value</span>&gt;</span>spark<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">description</span>&gt;</span></span><br><span class="line">      Expects one of [mr, tez, spark].</span><br><span class="line">      Chooses execution engine. Options are: mr (Map reduce, default), tez, spark. While MR</span><br><span class="line">      remains the default engine for historical reasons, it is itself a historical engine</span><br><span class="line">      and is deprecated in Hive 2 line. It may be removed without further warning.</span><br><span class="line">    <span class="tag">&lt;/<span class="name">description</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br></pre></td></tr></table></figure>
-</li>
+<h3 id="验证hive-on-spark"><a href="#验证hive-on-spark" class="headerlink" title="验证hive on spark"></a>验证hive on spark</h3></li>
 </ol>
-<h3 id="验证hive-on-spark"><a href="#验证hive-on-spark" class="headerlink" title="验证hive on spark"></a>验证hive on spark</h3><ul>
-<li>命令行输入 hive，进入hive CLI</li>
-<li>set hive.execution.engine=spark; (将执行引擎设为Spark，默认是mr，退出hive CLI后，回到默认设置。若想让引擎默认为Spark，需要在hive-site.xml里设置）</li>
-<li>create table test(ts BIGINT,line STRING); (创建表）</li>
-<li>select count(*) from test;</li>
-<li>若整个过程没有报错，并出现正确结果，则Hive on Spark配置成功。</li>
+<ul>
+<li>  命令行输入 hive，进入hive CLI</li>
+<li>  set hive.execution.engine=spark; (将执行引擎设为Spark，默认是mr，退出hive CLI后，回到默认设置。若想让引擎默认为Spark，需要在hive-site.xml里设置）</li>
+<li>  create table test(ts BIGINT,line STRING); (创建表）</li>
+<li>  select count(*) from test;</li>
+<li>  若整个过程没有报错，并出现正确结果，则Hive on Spark配置成功。</li>
 </ul>
-<h2 id="优化"><a href="#优化" class="headerlink" title="优化"></a>优化</h2><p>因为在yarn上执行，拷贝spark的jars到hdfs上能避免每次拷贝。<br>如果仅是在hive中使用spark，可以在hive-site.xml中配置。由于在<code>spark-defaults.conf</code>已经配置过，这里可以不配置<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">name</span>&gt;</span>spark.yarn.jars<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">value</span>&gt;</span>hdfs://ns1/spark/jars/*.jar<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<h2 id="优化"><a href="#优化" class="headerlink" title="优化"></a>优化</h2><p>因为在yarn上执行，拷贝spark的jars到hdfs上能避免每次拷贝。<br>如果仅是在hive中使用spark，可以在hive-site.xml中配置。由于在<code>spark-defaults.conf</code>已经配置过，这里可以不配置</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">name</span>&gt;</span>spark.yarn.jars<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">value</span>&gt;</span>hdfs://ns1/spark/jars/*.jar<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br></pre></td></tr></table></figure>
 <p><strong>其他</strong></p>
 <ol>
-<li><a href="https://cwiki.apache.org/confluence/display/Hive/Hive+on+Spark:+Getting+Started#HiveonSpark:GettingStarted-Configurationpropertydetails" target="_blank" rel="noopener">hive的wiki</a></li>
-<li><a href="http://cwiki.apachecn.org/pages/viewpage.action?pageId=2888665" target="_blank" rel="noopener">Cloudera的翻译</a></li>
-<li><a href="https://tech.meituan.com/spark-tuning-basic.html" target="_blank" rel="noopener">spark参数配置-美团</a></li>
-<li><a href="http://blog.cloudera.com/blog/2015/03/how-to-tune-your-apache-spark-jobs-part-2/" target="_blank" rel="noopener">spark参数配置-cloudera博客</a></li>
+<li><a target="_blank" rel="noopener" href="https://cwiki.apache.org/confluence/display/Hive/Hive+on+Spark:+Getting+Started#HiveonSpark:GettingStarted-Configurationpropertydetails">hive的wiki</a></li>
+<li><a target="_blank" rel="noopener" href="http://cwiki.apachecn.org/pages/viewpage.action?pageId=2888665">Cloudera的翻译</a></li>
+<li><a target="_blank" rel="noopener" href="https://tech.meituan.com/spark-tuning-basic.html">spark参数配置-美团</a></li>
+<li><a target="_blank" rel="noopener" href="http://blog.cloudera.com/blog/2015/03/how-to-tune-your-apache-spark-jobs-part-2/">spark参数配置-cloudera博客</a></li>
 </ol>
 
     </div>
@@ -347,11 +340,11 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2018/03/21/Python/pip离线安装/" rel="prev" title="内网使用pip">
+    <a href="/2018/03/21/Python/pip%E7%A6%BB%E7%BA%BF%E5%AE%89%E8%A3%85/" rel="prev" title="内网使用pip">
       <i class="fa fa-chevron-left"></i> 内网使用pip
     </a></div>
       <div class="post-nav-item">
-    <a href="/2018/03/29/projects/ai-log/日志大数据（读书笔记）/" rel="next" title="日志大数据笔记">
+    <a href="/2018/03/29/projects/ai-log/%E6%97%A5%E5%BF%97%E5%A4%A7%E6%95%B0%E6%8D%AE%EF%BC%88%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%EF%BC%89/" rel="next" title="日志大数据笔记">
       日志大数据笔记 <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
@@ -413,7 +406,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#hive-on-spark-安装配置"><span class="nav-number">1.</span> <span class="nav-text">hive on spark 安装配置</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#简介"><span class="nav-number">1.1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#环境"><span class="nav-number">1.2.</span> <span class="nav-text">环境</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#yarn配置"><span class="nav-number">1.3.</span> <span class="nav-text">yarn配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#hdfs准备路径和jar包"><span class="nav-number">1.4.</span> <span class="nav-text">hdfs准备路径和jar包</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#新建spark-log目录"><span class="nav-number">1.4.1.</span> <span class="nav-text">新建spark-log目录</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#上传jar包"><span class="nav-number">1.4.2.</span> <span class="nav-text">上传jar包</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#spark配置"><span class="nav-number">1.5.</span> <span class="nav-text">spark配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#验证spark"><span class="nav-number">1.5.1.</span> <span class="nav-text">验证spark</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#hive"><span class="nav-number">1.6.</span> <span class="nav-text">hive</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#添加必要的依赖库"><span class="nav-number">1.6.1.</span> <span class="nav-text">添加必要的依赖库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#剔除spark中hive的库"><span class="nav-number">1.6.2.</span> <span class="nav-text">剔除spark中hive的库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#启用spark引擎"><span class="nav-number">1.6.3.</span> <span class="nav-text">启用spark引擎</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#验证hive-on-spark"><span class="nav-number">1.6.4.</span> <span class="nav-text">验证hive on spark</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#优化"><span class="nav-number">1.7.</span> <span class="nav-text">优化</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#hive-on-spark-%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE"><span class="nav-number">1.</span> <span class="nav-text">hive on spark 安装配置</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AE%80%E4%BB%8B"><span class="nav-number">1.1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%8E%AF%E5%A2%83"><span class="nav-number">1.2.</span> <span class="nav-text">环境</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#yarn%E9%85%8D%E7%BD%AE"><span class="nav-number">1.3.</span> <span class="nav-text">yarn配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#hdfs%E5%87%86%E5%A4%87%E8%B7%AF%E5%BE%84%E5%92%8Cjar%E5%8C%85"><span class="nav-number">1.4.</span> <span class="nav-text">hdfs准备路径和jar包</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%B0%E5%BB%BAspark-log%E7%9B%AE%E5%BD%95"><span class="nav-number">1.4.1.</span> <span class="nav-text">新建spark-log目录</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%8A%E4%BC%A0jar%E5%8C%85"><span class="nav-number">1.4.2.</span> <span class="nav-text">上传jar包</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#spark%E9%85%8D%E7%BD%AE"><span class="nav-number">1.5.</span> <span class="nav-text">spark配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%AA%8C%E8%AF%81spark"><span class="nav-number">1.5.1.</span> <span class="nav-text">验证spark</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#hive"><span class="nav-number">1.6.</span> <span class="nav-text">hive</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B7%BB%E5%8A%A0%E5%BF%85%E8%A6%81%E7%9A%84%E4%BE%9D%E8%B5%96%E5%BA%93"><span class="nav-number">1.6.1.</span> <span class="nav-text">添加必要的依赖库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%89%94%E9%99%A4spark%E4%B8%ADhive%E7%9A%84%E5%BA%93"><span class="nav-number">1.6.2.</span> <span class="nav-text">剔除spark中hive的库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%90%AF%E7%94%A8spark%E5%BC%95%E6%93%8E"><span class="nav-number">1.6.3.</span> <span class="nav-text">启用spark引擎</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%AA%8C%E8%AF%81hive-on-spark"><span class="nav-number">1.6.4.</span> <span class="nav-text">验证hive on spark</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BC%98%E5%8C%96"><span class="nav-number">1.7.</span> <span class="nav-text">优化</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -449,7 +442,7 @@
 </div>
   <div class="links-of-author motion-element">
       <span class="links-of-author-item">
-        <a href="https://github.com/Tony36051" title="GitHub → https://github.com/Tony36051" rel="noopener" target="_blank"><i class="github fa-fw"></i>GitHub</a>
+        <a href="https://github.com/Tony36051" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Tony36051" rel="noopener" target="_blank"><i class="github fa-fw"></i>GitHub</a>
       </span>
   </div>
 
@@ -479,18 +472,8 @@
     <i class="fa fa-heart"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">夏侯仪</span>
-    <span class="post-meta-divider">|</span>
-    <span class="post-meta-item-icon">
-      <i class="fa fa-chart-area"></i>
-    </span>
-    <span title="站点总字数">218k</span>
-    <span class="post-meta-divider">|</span>
-    <span class="post-meta-item-icon">
-      <i class="fa fa-coffee"></i>
-    </span>
-    <span title="站点阅读时长">3:18</span>
 </div>
-  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
   </div>
 
         
@@ -510,9 +493,17 @@
   <script src="/lib/anime.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/velocity-animate@1/velocity.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/velocity-animate@1/velocity.ui.min.js"></script>
-<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
 <script src="/js/schemes/pisces.js"></script>
+
+
 <script src="/js/next-boot.js"></script>
+
 
 
 
@@ -521,7 +512,9 @@
 
 
 
-  <script src="/js/local-search.js"></script>
+  
+<script src="/js/local-search.js"></script>
+
 
 
 

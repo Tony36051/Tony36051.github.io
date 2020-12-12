@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 3.7.1">
+<meta name="generator" content="Hexo 5.2.0">
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
@@ -21,19 +21,19 @@
   </script>
 
   <meta name="description" content="团队下来一个任务，要求我研究hadoop的三个基本配置文件core-site.xml,hdfs-site.xml,mapred-site.xml。以下为研读笔记">
-<meta name="keywords" content="Hadoop">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Hadoop2.x 配置文件研读">
-<meta property="og:url" content="http://yoursite.com/2018/04/25/ops/Hadoop/Hadoop2.x 配置文件研读/index.html">
+<meta property="og:url" content="http://yoursite.com/2018/04/25/ops/Hadoop/Hadoop2.x%20%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E7%A0%94%E8%AF%BB/index.html">
 <meta property="og:site_name" content="幻煞幽穹">
 <meta property="og:description" content="团队下来一个任务，要求我研究hadoop的三个基本配置文件core-site.xml,hdfs-site.xml,mapred-site.xml。以下为研读笔记">
-<meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2020-12-12T10:05:28.603Z">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2018-04-25T16:00:00.000Z">
+<meta property="article:modified_time" content="2020-12-12T14:45:14.868Z">
+<meta property="article:author" content="夏侯仪">
+<meta property="article:tag" content="Hadoop">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hadoop2.x 配置文件研读">
-<meta name="twitter:description" content="团队下来一个任务，要求我研究hadoop的三个基本配置文件core-site.xml,hdfs-site.xml,mapred-site.xml。以下为研读笔记">
 
-<link rel="canonical" href="http://yoursite.com/2018/04/25/ops/Hadoop/Hadoop2.x 配置文件研读/">
+<link rel="canonical" href="http://yoursite.com/2018/04/25/ops/Hadoop/Hadoop2.x%20%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E7%A0%94%E8%AF%BB/">
 
 
 <script id="page-configurations">
@@ -203,7 +203,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/25/ops/Hadoop/Hadoop2.x 配置文件研读/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/25/ops/Hadoop/Hadoop2.x%20%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E7%A0%94%E8%AF%BB/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/uploads/avatar.jpg">
@@ -233,7 +233,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-12-12 18:05:28" itemprop="dateModified" datetime="2020-12-12T18:05:28+08:00">2020-12-12</time>
+                <time title="修改时间：2020-12-12 22:45:14" itemprop="dateModified" datetime="2020-12-12T22:45:14+08:00">2020-12-12</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -246,7 +246,7 @@
             </span>
 
           
-            <span id="/2018/04/25/ops/Hadoop/Hadoop2.x 配置文件研读/" class="post-meta-item leancloud_visitors" data-flag-title="Hadoop2.x 配置文件研读" title="阅读次数">
+            <span id="/2018/04/25/ops/Hadoop/Hadoop2.x%20%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E7%A0%94%E8%AF%BB/" class="post-meta-item leancloud_visitors" data-flag-title="Hadoop2.x 配置文件研读" title="阅读次数">
               <span class="post-meta-item-icon">
                 <i class="fa fa-eye"></i>
               </span>
@@ -261,26 +261,12 @@
       </span>
       <span class="post-meta-item-text">Valine：</span>
     
-    <a title="valine" href="/2018/04/25/ops/Hadoop/Hadoop2.x 配置文件研读/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2018/04/25/ops/Hadoop/Hadoop2.x 配置文件研读/" itemprop="commentCount"></span>
+    <a title="valine" href="/2018/04/25/ops/Hadoop/Hadoop2.x%20%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E7%A0%94%E8%AF%BB/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2018/04/25/ops/Hadoop/Hadoop2.x%20%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E7%A0%94%E8%AF%BB/" itemprop="commentCount"></span>
     </a>
   </span>
   
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>0</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
-            </span>
+  
 
         </div>
       </header>
@@ -291,8 +277,9 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>团队下来一个任务，要求我研究hadoop的三个基本配置文件core-site.xml,hdfs-site.xml,mapred-site.xml。以下为研读笔记<br><a id="more"></a></p>
-<h1 id="默认配置"><a href="#默认配置" class="headerlink" title="默认配置"></a>默认配置</h1><p>浏览apache官网，依葫芦画瓢可以找到其他版本，举例如下:<br><a href="https://hadoop.apache.org/docs/r2.7.2/hadoop-project-dist/hadoop-common/core-default.xml" target="_blank" rel="noopener">https://hadoop.apache.org/docs/r2.7.2/hadoop-project-dist/hadoop-common/core-default.xml</a><br><a href="https://hadoop.apache.org/docs/r2.7.2/hadoop-project-dist/hadoop-hdfs/hdfs-default.xml" target="_blank" rel="noopener">https://hadoop.apache.org/docs/r2.7.2/hadoop-project-dist/hadoop-hdfs/hdfs-default.xml</a><br><a href="https://hadoop.apache.org/docs/r2.7.2/hadoop-mapreduce-client/hadoop-mapreduce-client-core/mapred-default.xml" target="_blank" rel="noopener">https://hadoop.apache.org/docs/r2.7.2/hadoop-mapreduce-client/hadoop-mapreduce-client-core/mapred-default.xml</a></p>
+        <p>团队下来一个任务，要求我研究hadoop的三个基本配置文件core-site.xml,hdfs-site.xml,mapred-site.xml。以下为研读笔记</p>
+<a id="more"></a>
+<h1 id="默认配置"><a href="#默认配置" class="headerlink" title="默认配置"></a>默认配置</h1><p>浏览apache官网，依葫芦画瓢可以找到其他版本，举例如下:<br><a target="_blank" rel="noopener" href="https://hadoop.apache.org/docs/r2.7.2/hadoop-project-dist/hadoop-common/core-default.xml">https://hadoop.apache.org/docs/r2.7.2/hadoop-project-dist/hadoop-common/core-default.xml</a><br><a target="_blank" rel="noopener" href="https://hadoop.apache.org/docs/r2.7.2/hadoop-project-dist/hadoop-hdfs/hdfs-default.xml">https://hadoop.apache.org/docs/r2.7.2/hadoop-project-dist/hadoop-hdfs/hdfs-default.xml</a><br><a target="_blank" rel="noopener" href="https://hadoop.apache.org/docs/r2.7.2/hadoop-mapreduce-client/hadoop-mapreduce-client-core/mapred-default.xml">https://hadoop.apache.org/docs/r2.7.2/hadoop-mapreduce-client/hadoop-mapreduce-client-core/mapred-default.xml</a></p>
 <h2 id="core-site-xml"><a href="#core-site-xml" class="headerlink" title="core-site.xml"></a>core-site.xml</h2><p>hadoop.tmp.dir，临时目录，存放临时编译的jar包的解压后的class文件，临时文件。容量不足时，将导致无法传递jar包而至任务失败<br>hadoop.native.lib，本地库，压缩和解压时候用到<br>io.native.lib.available=true,本地库可以加快基本操作，例如IO，压缩等。<br>hadoop.http.filter.initializers，  <code>hadoop.security.*</code>安全类配置，不启用<br><code>hadoop.logfile.*</code>日志文件大小和数量，默认即可<br><strong>dfs.ha.fencing.methods</strong>，HDFS的HA功能的防脑裂方法。可以是内建的方法(例如shell和sshfence)或者用户定义的方法。<em>建议使用sshfence(hadoop:9922)，括号内的是用户名和端口，注意，这需要NN的2台机器之间能够免密码登陆</em><br><strong>fs.defaultFS</strong>，HA方式，这里设置服务名，例如：hdfs://ns1，hdfs的客户端访问hdfs需要此参数<br><strong>io.file.buffer.size</strong>，在读写文件时使用的缓存大小。这个大小应该是内存Page的倍数，比如1m，默认值4m<br>io.compression.codecs，压缩和解压缩方式，对于冷数据可以考虑压缩存储减少空间，压缩和解压都是全自动的，在挑选方式时会有可否划分等差异<br>fs.trash.interval，回收周期内，文件先移动到垃圾桶，不会真实删除，建议开启，建议4320（3天）<br>fs.file.impl，选择使用的文件系统。本地、hdfs、s3、hftp等等<code>fs.*.impl</code><br><code>fs.checkpoint.*</code>namenode的快照的时间间隔和目录等，默认即可<br>io.serializations，序列化，默认WritableSerialization即可<br><code>io.seqfile.*</code>和<code>io.mapfile.*</code>对于小文件的优化形式，小文件慢的话要开启优化这个<br>io.seqfile.compress.blocksize=1000000，SequenceFiles以块压缩方式压缩时，块大小大于此值时才启动压缩。<br><code>ipc.*</code>进程间通信，超时和队列的配置在此<br><code>hadoop.rpc.socket.*</code>rpc的socket配置，默认即可<br><strong>webinterface.private.actions</strong>，web交互行为，可以设置这个参数实际上就是为了方便测试用。允许在web 页面上对任务设置优先级以及kill 任务。需要注意的是，kill 任务是个缓慢的过程，它需要杀掉所有的任务task 然后才是任务结束。如果task数量多，可能有点慢，需要一些耐心等待。<br><code>topology.*</code>机架相关，我们全云化机器，没法配机架<br>fs.AbstractFileSystem.viewfs.impl=org.apache.hadoop.fs.viewfs.ViewFs，<br>在实现federation联邦特性时，客户端可以部署此系统，方便同时访问多个nameservice</p>
 <h2 id="hdfs-default-html"><a href="#hdfs-default-html" class="headerlink" title="hdfs-default.html"></a>hdfs-default.html</h2><table>
 <thead>
@@ -302,8 +289,7 @@
 <th>说明</th>
 </tr>
 </thead>
-<tbody>
-<tr>
+<tbody><tr>
 <td>dfs.http.address</td>
 <td>50070</td>
 <td>namenode情况</td>
@@ -381,11 +367,10 @@
 <tr>
 <td></td>
 <td></td>
+<td></td>
 </tr>
-</tbody>
-</table>
-<p>dfs.datanode.handler.count，datanode服务连接数，集群配置强悍则需要调高<br>dfs.namenode.handler.count=10，nn服务连接数，集群强悍可提高<br>dfs.https.enable，https，不开启。<code>dfs.https.*</code>相关配置<br><code>dfs.datanode.dns.*</code>datanode向namenode注册时候，可以用dns，我们不用<br>dfs.namenode.safemode.threshold-pct=0.999f，副本不足将导致安全模式<br><strong>dfs.datanode.balance.bandwidthPerSec</strong>数据平衡时，最大使用带宽，默认1M，建议改大到10M</p>
-<p><large><strong>dfs.namenode.support.allow.format=true</strong>，NN是否允许被格式化，生产环境务必要改为FALSE！！！<large><br>dfs.nameservices，federation,NN联邦时候需要配置多个，否则一个即可<br>dfs.namenode.audit.loggers，审查日志的实现类列表，能够接收audit事件。默认已开启，但<strong>未知怎么使用</strong><br>dfs.namenode.logging.level=info，DFS的NN的日志等级。值可以是：info，dir(跟踪命名空间变动)，”block” (跟踪块的创建删除，replication变动)，或者”all”.<br>dfs.namenode.replication.considerLoad=true，设定在选择存放目标时是否考虑负载。需要，保持默认即可<br>dfs.namenode.fs-limits.max-component-length=0，路径中每个部分的最大字节长度（目录名，文件名的长度）。0表示不检查长度。<em>长文件名影响性能</em><br>dfs.namenode.fs-limits.max-directory-items=0，目录下文件数上限<br>dfs.namenode.fs-limits.min-block-size=1048576，最小block，字节，严重影响性能<br>dfs.namenode.fs-limits.max-blocks-per-file=1048576，防止超大文件<br><code>dfs.image.transfer.*</code>HA模式使用不到，不关注<br>dfs.datanode.drop.cache.behind.reads/writes=FALSE，大且不可重复数据，如Hbase随机读写数据，扔掉缓存可提高性能，前提需要配置本地库<br>dfs.namenode.avoid.read.stale.datanode=FALSE，避免从脏dn上读取数据，脏dn指已经没有心跳信息的dn<br><strong>dfs.webhdfs.enabled=FALSE</strong>，在nn和dn上开启restAPI访问功能，HortonWorks开发捐给Apache，HttpFS由Clouera也捐给了Apache，HUE配置需要httpfs。如果HA模式下，hue必须使用HttpFS（只能用自家的，呵呵）<br>dfs.hosts，接受或排除的host文件</large></large></p>
+</tbody></table>
+<p>dfs.datanode.handler.count，datanode服务连接数，集群配置强悍则需要调高<br>dfs.namenode.handler.count=10，nn服务连接数，集群强悍可提高<br>dfs.https.enable，https，不开启。<code>dfs.https.*</code>相关配置<br><code>dfs.datanode.dns.*</code>datanode向namenode注册时候，可以用dns，我们不用<br>dfs.namenode.safemode.threshold-pct=0.999f，副本不足将导致安全模式<br><strong>dfs.datanode.balance.bandwidthPerSec</strong>数据平衡时，最大使用带宽，默认1M，建议改大到10M<br><large><strong>dfs.namenode.support.allow.format=true</strong>，NN是否允许被格式化，生产环境务必要改为FALSE！！！<large><br>dfs.nameservices，federation,NN联邦时候需要配置多个，否则一个即可<br>dfs.namenode.audit.loggers，审查日志的实现类列表，能够接收audit事件。默认已开启，但<strong>未知怎么使用</strong><br>dfs.namenode.logging.level=info，DFS的NN的日志等级。值可以是：info，dir(跟踪命名空间变动)，”block” (跟踪块的创建删除，replication变动)，或者”all”.<br>dfs.namenode.replication.considerLoad=true，设定在选择存放目标时是否考虑负载。需要，保持默认即可<br>dfs.namenode.fs-limits.max-component-length=0，路径中每个部分的最大字节长度（目录名，文件名的长度）。0表示不检查长度。<em>长文件名影响性能</em><br>dfs.namenode.fs-limits.max-directory-items=0，目录下文件数上限<br>dfs.namenode.fs-limits.min-block-size=1048576，最小block，字节，严重影响性能<br>dfs.namenode.fs-limits.max-blocks-per-file=1048576，防止超大文件<br><code>dfs.image.transfer.*</code>HA模式使用不到，不关注<br>dfs.datanode.drop.cache.behind.reads/writes=FALSE，大且不可重复数据，如Hbase随机读写数据，扔掉缓存可提高性能，前提需要配置本地库<br>dfs.namenode.avoid.read.stale.datanode=FALSE，避免从脏dn上读取数据，脏dn指已经没有心跳信息的dn<br><strong>dfs.webhdfs.enabled=FALSE</strong>，在nn和dn上开启restAPI访问功能，HortonWorks开发捐给Apache，HttpFS由Clouera也捐给了Apache，HUE配置需要httpfs。如果HA模式下，hue必须使用HttpFS（只能用自家的，呵呵）<br>dfs.hosts，接受或排除的host文件</p>
 <h2 id="mapred-site-xml"><a href="#mapred-site-xml" class="headerlink" title="mapred-site.xml"></a>mapred-site.xml</h2><p><strong>mapreduce.job.name</strong>，job名称，<br>hadoop.job.history.(user.)location，制定历史文件存放目录<br><code>io.sort.*</code> 排序相关参数，内存用量，占比多少开始写硬盘。大量排序时可优化<br>mapreduce.map.memory.mb，map使用内存，<code>RAM-per-container</code><br>mapreduce.reduce.memory.mb，reduce使用内存，<code>2 * RAM-per-container</code><br>mapreduce.map.java.opts，<code>0.8 * RAM-per-container</code><br>mapreduce.reduce.java.opts, <code>0.8 * 2 * RAM-per-container</code><br>mapred.child.java.opts，每个任务最大jvm heap大小为1000M， -Xmx1000M -Dfile.encoding=UTF8 -XX:-UseGCOverheadLimit<br>mapred.map/reduce.tasks，不知道yarn管理之后还有没有，默认值2/1应该偏小<br><code>mapred.output.compress.*</code>启用压缩相关<br>cdh推荐配置<br>|配置项 | 推荐参数 | 注释|<br>|–|–|–|<br>|yarn.app.mapreduce.am.resource.cpu-vcores | 1 | AM container vcore reservation |<br>|yarn.app.mapreduce.am.resource.mb | 1024 | AM container memory reservation |<br>|ApplicationMaster Java Maximum Heap Size (available in CM) | 1024 | AM Java heap size |<br>|mapreduce.map.cpu.vcores | 1 | Map task vcore reservation |<br>|mapreduce.map.memory.mb | 1024 | Map task memory reservation |<br>|mapreduce.map.java.opts.max.heap | 1024 | Map task Java heap size |<br>|mapreduce.reduce.cpu.vcores | 1 | Reduce task vcore reservation |<br>|mapreduce.reduce.memory.mb | 1024 | Reduce task memory reservation |<br>|mapreduce.reduce.java.opts | 1024 | Reduce Task Java heap size |<br>|mapreduce.task.io.sort.mb | 256 | Spill/Sort memory reservation |</p>
 <h2 id="yarn-site-xml"><a href="#yarn-site-xml" class="headerlink" title="yarn-site.xml"></a>yarn-site.xml</h2><h3 id="日志聚合功能"><a href="#日志聚合功能" class="headerlink" title="日志聚合功能"></a>日志聚合功能</h3><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span>    </span><br><span class="line">  <span class="tag">&lt;<span class="name">name</span>&gt;</span>yarn.log-aggregation-enable<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">value</span>&gt;</span>true<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span> </span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">name</span>&gt;</span>yarn.nodemanager.remote-app-log-dir<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">value</span>&gt;</span>/var/log/hadoop-yarn/apps<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">description</span>&gt;</span>[需要修改目录]Where to aggregate logs to.<span class="tag">&lt;/<span class="name">description</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span> </span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">name</span>&gt;</span>yarn.log-aggregation.retain-seconds<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">value</span>&gt;</span>86400<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br></pre></td></tr></table></figure>
 <p>yarn.nodemanager.resource.memory-mb，直接设为nn的物理内存<br>yarn.scheduler.minimum/maximum-allocation-mb，最小1G，最大8G</p>
@@ -407,11 +392,11 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2018/04/25/Robotframework/RobotFramework执行镜像/" rel="prev" title="RobotFramework执行镜像">
+    <a href="/2018/04/25/Robotframework/RobotFramework%E6%89%A7%E8%A1%8C%E9%95%9C%E5%83%8F/" rel="prev" title="RobotFramework执行镜像">
       <i class="fa fa-chevron-left"></i> RobotFramework执行镜像
     </a></div>
       <div class="post-nav-item">
-    <a href="/2018/04/29/数字货币笔记/" rel="next" title="数字货币">
+    <a href="/2018/04/29/%E6%95%B0%E5%AD%97%E8%B4%A7%E5%B8%81%E7%AC%94%E8%AE%B0/" rel="next" title="数字货币">
       数字货币 <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
@@ -473,7 +458,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#默认配置"><span class="nav-number">1.</span> <span class="nav-text">默认配置</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#core-site-xml"><span class="nav-number">1.1.</span> <span class="nav-text">core-site.xml</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#hdfs-default-html"><span class="nav-number">1.2.</span> <span class="nav-text">hdfs-default.html</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#mapred-site-xml"><span class="nav-number">1.3.</span> <span class="nav-text">mapred-site.xml</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#yarn-site-xml"><span class="nav-number">1.4.</span> <span class="nav-text">yarn-site.xml</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#日志聚合功能"><span class="nav-number">1.4.1.</span> <span class="nav-text">日志聚合功能</span></a></li></ol></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%BB%98%E8%AE%A4%E9%85%8D%E7%BD%AE"><span class="nav-number">1.</span> <span class="nav-text">默认配置</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#core-site-xml"><span class="nav-number">1.1.</span> <span class="nav-text">core-site.xml</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#hdfs-default-html"><span class="nav-number">1.2.</span> <span class="nav-text">hdfs-default.html</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#mapred-site-xml"><span class="nav-number">1.3.</span> <span class="nav-text">mapred-site.xml</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#yarn-site-xml"><span class="nav-number">1.4.</span> <span class="nav-text">yarn-site.xml</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%97%A5%E5%BF%97%E8%81%9A%E5%90%88%E5%8A%9F%E8%83%BD"><span class="nav-number">1.4.1.</span> <span class="nav-text">日志聚合功能</span></a></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -509,7 +494,7 @@
 </div>
   <div class="links-of-author motion-element">
       <span class="links-of-author-item">
-        <a href="https://github.com/Tony36051" title="GitHub → https://github.com/Tony36051" rel="noopener" target="_blank"><i class="github fa-fw"></i>GitHub</a>
+        <a href="https://github.com/Tony36051" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Tony36051" rel="noopener" target="_blank"><i class="github fa-fw"></i>GitHub</a>
       </span>
   </div>
 
@@ -539,18 +524,8 @@
     <i class="fa fa-heart"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">夏侯仪</span>
-    <span class="post-meta-divider">|</span>
-    <span class="post-meta-item-icon">
-      <i class="fa fa-chart-area"></i>
-    </span>
-    <span title="站点总字数">218k</span>
-    <span class="post-meta-divider">|</span>
-    <span class="post-meta-item-icon">
-      <i class="fa fa-coffee"></i>
-    </span>
-    <span title="站点阅读时长">3:18</span>
 </div>
-  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
   </div>
 
         
@@ -570,9 +545,17 @@
   <script src="/lib/anime.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/velocity-animate@1/velocity.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/velocity-animate@1/velocity.ui.min.js"></script>
-<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
 <script src="/js/schemes/pisces.js"></script>
+
+
 <script src="/js/next-boot.js"></script>
+
 
 
 
@@ -581,7 +564,9 @@
 
 
 
-  <script src="/js/local-search.js"></script>
+  
+<script src="/js/local-search.js"></script>
+
 
 
 

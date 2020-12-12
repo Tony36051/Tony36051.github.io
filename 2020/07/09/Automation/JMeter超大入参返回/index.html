@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 3.7.1">
+<meta name="generator" content="Hexo 5.2.0">
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
@@ -20,20 +20,20 @@
     var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="JMeter超大入参返回入参太大，StackOverFlow如果入参太大，比如几千行的json，http sample直接无法执行，查看日志显示StackOverFlow. 从hashcode方法开始抛出的，怀疑是放入本地变量了。windows解决方案，新增文件%JMETER_HOME%\bin\setenv.bat，可以容纳近10m的入参。1set HEAP=-Xss10m 返回太大，Heap">
-<meta name="keywords" content="JMeter">
+  <meta name="description" content="JMeter超大入参返回入参太大，StackOverFlow如果入参太大，比如几千行的json，http sample直接无法执行，查看日志显示StackOverFlow. 从hashcode方法开始抛出的，怀疑是放入本地变量了。windows解决方案，新增文件%JMETER_HOME%\bin\setenv.bat，可以容纳近10m的入参。 1set HEAP&#x3D;-Xss10m  返回太大，Hea">
 <meta property="og:type" content="article">
 <meta property="og:title" content="JMeter超大入参返回">
-<meta property="og:url" content="http://yoursite.com/2020/07/09/Automation/JMeter超大入参返回/index.html">
+<meta property="og:url" content="http://yoursite.com/2020/07/09/Automation/JMeter%E8%B6%85%E5%A4%A7%E5%85%A5%E5%8F%82%E8%BF%94%E5%9B%9E/index.html">
 <meta property="og:site_name" content="幻煞幽穹">
-<meta property="og:description" content="JMeter超大入参返回入参太大，StackOverFlow如果入参太大，比如几千行的json，http sample直接无法执行，查看日志显示StackOverFlow. 从hashcode方法开始抛出的，怀疑是放入本地变量了。windows解决方案，新增文件%JMETER_HOME%\bin\setenv.bat，可以容纳近10m的入参。1set HEAP=-Xss10m 返回太大，Heap">
-<meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2020-12-12T10:05:28.599Z">
+<meta property="og:description" content="JMeter超大入参返回入参太大，StackOverFlow如果入参太大，比如几千行的json，http sample直接无法执行，查看日志显示StackOverFlow. 从hashcode方法开始抛出的，怀疑是放入本地变量了。windows解决方案，新增文件%JMETER_HOME%\bin\setenv.bat，可以容纳近10m的入参。 1set HEAP&#x3D;-Xss10m  返回太大，Hea">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-07-09T07:13:00.000Z">
+<meta property="article:modified_time" content="2020-12-12T14:45:14.860Z">
+<meta property="article:author" content="夏侯仪">
+<meta property="article:tag" content="JMeter">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="JMeter超大入参返回">
-<meta name="twitter:description" content="JMeter超大入参返回入参太大，StackOverFlow如果入参太大，比如几千行的json，http sample直接无法执行，查看日志显示StackOverFlow. 从hashcode方法开始抛出的，怀疑是放入本地变量了。windows解决方案，新增文件%JMETER_HOME%\bin\setenv.bat，可以容纳近10m的入参。1set HEAP=-Xss10m 返回太大，Heap">
 
-<link rel="canonical" href="http://yoursite.com/2020/07/09/Automation/JMeter超大入参返回/">
+<link rel="canonical" href="http://yoursite.com/2020/07/09/Automation/JMeter%E8%B6%85%E5%A4%A7%E5%85%A5%E5%8F%82%E8%BF%94%E5%9B%9E/">
 
 
 <script id="page-configurations">
@@ -203,7 +203,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/07/09/Automation/JMeter超大入参返回/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/07/09/Automation/JMeter%E8%B6%85%E5%A4%A7%E5%85%A5%E5%8F%82%E8%BF%94%E5%9B%9E/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/uploads/avatar.jpg">
@@ -233,7 +233,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-12-12 18:05:28" itemprop="dateModified" datetime="2020-12-12T18:05:28+08:00">2020-12-12</time>
+                <time title="修改时间：2020-12-12 22:45:14" itemprop="dateModified" datetime="2020-12-12T22:45:14+08:00">2020-12-12</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -246,7 +246,7 @@
             </span>
 
           
-            <span id="/2020/07/09/Automation/JMeter超大入参返回/" class="post-meta-item leancloud_visitors" data-flag-title="JMeter超大入参返回" title="阅读次数">
+            <span id="/2020/07/09/Automation/JMeter%E8%B6%85%E5%A4%A7%E5%85%A5%E5%8F%82%E8%BF%94%E5%9B%9E/" class="post-meta-item leancloud_visitors" data-flag-title="JMeter超大入参返回" title="阅读次数">
               <span class="post-meta-item-icon">
                 <i class="fa fa-eye"></i>
               </span>
@@ -261,26 +261,12 @@
       </span>
       <span class="post-meta-item-text">Valine：</span>
     
-    <a title="valine" href="/2020/07/09/Automation/JMeter超大入参返回/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2020/07/09/Automation/JMeter超大入参返回/" itemprop="commentCount"></span>
+    <a title="valine" href="/2020/07/09/Automation/JMeter%E8%B6%85%E5%A4%A7%E5%85%A5%E5%8F%82%E8%BF%94%E5%9B%9E/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2020/07/09/Automation/JMeter%E8%B6%85%E5%A4%A7%E5%85%A5%E5%8F%82%E8%BF%94%E5%9B%9E/" itemprop="commentCount"></span>
     </a>
   </span>
   
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>0</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
-            </span>
+  
 
         </div>
       </header>
@@ -291,9 +277,11 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h1 id="JMeter超大入参返回"><a href="#JMeter超大入参返回" class="headerlink" title="JMeter超大入参返回"></a>JMeter超大入参返回</h1><h2 id="入参太大，StackOverFlow"><a href="#入参太大，StackOverFlow" class="headerlink" title="入参太大，StackOverFlow"></a>入参太大，StackOverFlow</h2><p>如果入参太大，比如几千行的json，http sample直接无法执行，查看日志显示StackOverFlow. 从hashcode方法开始抛出的，怀疑是放入本地变量了。<br>windows解决方案，新增文件%JMETER_HOME%\bin\setenv.bat，可以容纳近10m的入参。<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">set</span> HEAP=-Xss10m</span><br></pre></td></tr></table></figure></p>
-<h2 id="返回太大，Heap-OOM"><a href="#返回太大，Heap-OOM" class="headerlink" title="返回太大，Heap OOM"></a>返回太大，Heap OOM</h2><p>如果返回的内容太大，除了要禁用查看结果树、开启gzip压缩等，还可以调大堆区，这里同样给出windows解决方案。<br>windows解决方案，新增文件%JMETER_HOME%\bin\setenv.bat，亲测大约5m以下json返回，GUI不会崩。<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">set</span> HEAP=-Xms4g -Xmx5g -XX:MaxMetaspaceSize=512m</span><br></pre></td></tr></table></figure></p>
+        <h1 id="JMeter超大入参返回"><a href="#JMeter超大入参返回" class="headerlink" title="JMeter超大入参返回"></a>JMeter超大入参返回</h1><h2 id="入参太大，StackOverFlow"><a href="#入参太大，StackOverFlow" class="headerlink" title="入参太大，StackOverFlow"></a>入参太大，StackOverFlow</h2><p>如果入参太大，比如几千行的json，http sample直接无法执行，查看日志显示StackOverFlow. 从hashcode方法开始抛出的，怀疑是放入本地变量了。<br>windows解决方案，新增文件%JMETER_HOME%\bin\setenv.bat，可以容纳近10m的入参。</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">set</span> HEAP=-Xss10m</span><br></pre></td></tr></table></figure>
 
+<h2 id="返回太大，Heap-OOM"><a href="#返回太大，Heap-OOM" class="headerlink" title="返回太大，Heap OOM"></a>返回太大，Heap OOM</h2><p>如果返回的内容太大，除了要禁用查看结果树、开启gzip压缩等，还可以调大堆区，这里同样给出windows解决方案。<br>windows解决方案，新增文件%JMETER_HOME%\bin\setenv.bat，亲测大约5m以下json返回，GUI不会崩。</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">set</span> HEAP=-Xms4g -Xmx5g -XX:MaxMetaspaceSize=512m</span><br></pre></td></tr></table></figure>
     </div>
 
     
@@ -311,7 +299,7 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2020/06/19/Java/拦截器+信号量做接口429限流/" rel="prev" title="拦截器+信号量做接口429限流">
+    <a href="/2020/06/19/Java/%E6%8B%A6%E6%88%AA%E5%99%A8+%E4%BF%A1%E5%8F%B7%E9%87%8F%E5%81%9A%E6%8E%A5%E5%8F%A3429%E9%99%90%E6%B5%81/" rel="prev" title="拦截器+信号量做接口429限流">
       <i class="fa fa-chevron-left"></i> 拦截器+信号量做接口429限流
     </a></div>
       <div class="post-nav-item">
@@ -377,7 +365,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#JMeter超大入参返回"><span class="nav-number">1.</span> <span class="nav-text">JMeter超大入参返回</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#入参太大，StackOverFlow"><span class="nav-number">1.1.</span> <span class="nav-text">入参太大，StackOverFlow</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#返回太大，Heap-OOM"><span class="nav-number">1.2.</span> <span class="nav-text">返回太大，Heap OOM</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#JMeter%E8%B6%85%E5%A4%A7%E5%85%A5%E5%8F%82%E8%BF%94%E5%9B%9E"><span class="nav-number">1.</span> <span class="nav-text">JMeter超大入参返回</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%A5%E5%8F%82%E5%A4%AA%E5%A4%A7%EF%BC%8CStackOverFlow"><span class="nav-number">1.1.</span> <span class="nav-text">入参太大，StackOverFlow</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%94%E5%9B%9E%E5%A4%AA%E5%A4%A7%EF%BC%8CHeap-OOM"><span class="nav-number">1.2.</span> <span class="nav-text">返回太大，Heap OOM</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -413,7 +401,7 @@
 </div>
   <div class="links-of-author motion-element">
       <span class="links-of-author-item">
-        <a href="https://github.com/Tony36051" title="GitHub → https://github.com/Tony36051" rel="noopener" target="_blank"><i class="github fa-fw"></i>GitHub</a>
+        <a href="https://github.com/Tony36051" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Tony36051" rel="noopener" target="_blank"><i class="github fa-fw"></i>GitHub</a>
       </span>
   </div>
 
@@ -443,18 +431,8 @@
     <i class="fa fa-heart"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">夏侯仪</span>
-    <span class="post-meta-divider">|</span>
-    <span class="post-meta-item-icon">
-      <i class="fa fa-chart-area"></i>
-    </span>
-    <span title="站点总字数">218k</span>
-    <span class="post-meta-divider">|</span>
-    <span class="post-meta-item-icon">
-      <i class="fa fa-coffee"></i>
-    </span>
-    <span title="站点阅读时长">3:18</span>
 </div>
-  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
   </div>
 
         
@@ -474,9 +452,17 @@
   <script src="/lib/anime.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/velocity-animate@1/velocity.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/velocity-animate@1/velocity.ui.min.js"></script>
-<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
 <script src="/js/schemes/pisces.js"></script>
+
+
 <script src="/js/next-boot.js"></script>
+
 
 
 
@@ -485,7 +471,9 @@
 
 
 
-  <script src="/js/local-search.js"></script>
+  
+<script src="/js/local-search.js"></script>
+
 
 
 
