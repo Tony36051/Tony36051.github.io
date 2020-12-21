@@ -42,322 +42,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Golang 笔记</title>
-    <url>/2019/06/25/Golang%E7%AC%94%E8%AE%B0/</url>
-    <content><![CDATA[<p>学习的简单笔记</p>
-<a id="more"></a>
-
-]]></content>
-      <categories>
-        <category>Dev</category>
-      </categories>
-      <tags>
-        <tag>Golang</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>leetcode</title>
-    <url>/2020/12/12/leetcode/</url>
-    <content><![CDATA[<p>无聊时候刷刷题</p>
-<a id="more"></a>
-
-<h1 id="基本算法"><a href="#基本算法" class="headerlink" title="基本算法"></a>基本算法</h1><h2 id="二分查找"><a href="#二分查找" class="headerlink" title="二分查找"></a>二分查找</h2><h2 id="2sum"><a href="#2sum" class="headerlink" title="2sum"></a>2sum</h2><p>不排序，暴力。注意边界</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">int</span>[] twoSum(<span class="keyword">int</span>[] nums, <span class="keyword">int</span> target) &#123;</span><br><span class="line">        <span class="keyword">int</span> len = nums.length乱入的C++</span><br><span class="line">```cpp</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ListNode</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="keyword">int</span> val;</span><br><span class="line">    ListNode *next;</span><br><span class="line">;</span><br><span class="line">           <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;len-<span class="number">1</span>; i++)&#123;ListNode(<span class="keyword">int</span> val)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> j=i+<span class="number">1</span>; j&lt;len; j++)&#123;</span><br><span class="line">                <span class="keyword">if</span>(nums[i] + nums[j]==target)&#123;</span><br><span class="line">                    <span class="keyword">return</span> <span class="keyword">new</span> <span class="keyword">int</span>[]&#123;i, j&#125;;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> <span class="keyword">int</span>[]&#123;<span class="number">0</span>, <span class="number">1</span>&#125;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="3sum"><a href="#3sum" class="headerlink" title="3sum"></a>3sum</h2><p>twosum的转化思路, 二分查找</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> List&lt;List&lt;Integer&gt;&gt; threeSum(<span class="keyword">int</span>[] nums) &#123;</span><br><span class="line">    List&lt;List&lt;Integer&gt;&gt; result = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">    Arrays.sort(nums);</span><br><span class="line">    <span class="keyword">int</span> len = nums.length;</span><br><span class="line">    <span class="keyword">if</span> (len &lt; <span class="number">3</span>) <span class="keyword">return</span> result;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; len - <span class="number">2</span>; i++) &#123;</span><br><span class="line">        <span class="keyword">if</span> (i &gt; <span class="number">0</span> &amp;&amp; nums[i] == nums[i - <span class="number">1</span>]) <span class="keyword">continue</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> j = i + <span class="number">1</span>; j &lt; len - <span class="number">1</span>; j++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (j &gt; i+<span class="number">1</span> &amp;&amp; nums[j] == nums[j - <span class="number">1</span>]) <span class="keyword">continue</span>;</span><br><span class="line">            <span class="keyword">int</span> k = Arrays.binarySearch(nums, j + <span class="number">1</span>, len, -nums[i] - nums[j]);</span><br><span class="line">            <span class="keyword">if</span> (k &gt; <span class="number">0</span> &amp;&amp; nums[i] + nums[j] + nums[k] == <span class="number">0</span>) &#123;</span><br><span class="line">                ArrayList&lt;Integer&gt; tmp = <span class="keyword">new</span> ArrayList&lt;&gt;(<span class="number">3</span>);</span><br><span class="line">                tmp.add(nums[i]);</span><br><span class="line">                tmp.add(nums[j]);</span><br><span class="line">                tmp.add(nums[k]);</span><br><span class="line">                result.add(tmp);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;<span class="keyword">this</span>-&gt;val = val;</span><br><span class="line">        <span class="keyword">this</span>-&gt;next=NULL;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">ListNode* findInsertionPos(ListNode* dummy, ListNode* candidate);</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">insertNode</span><span class="params">(ListNode* pos, ListNode * node)</span></span>;</span><br><span class="line"><span class="function">bool <span class="title">isNextValBiggerThanCandidate</span><span class="params">(ListNode * node, ListNode * candidate)</span></span>;</span><br><span class="line">ListNode* insertionSortList(ListNode * head)</span><br><span class="line">&#123;</span><br><span class="line">    ListNode* dummy = <span class="keyword">new</span> ListNode(<span class="number">0</span>);</span><br><span class="line">    ListNode* unsortedPointer = head;</span><br><span class="line">    ListNode* unsortedNextPointer = NULL;</span><br><span class="line">    <span class="keyword">while</span>(unsortedPointer)</span><br><span class="line">    &#123;</span><br><span class="line">        unsortedNextPointer = unsortedPointer-&gt;next;</span><br><span class="line">        ListNode* rightPos = findInsertionPos(dummy, unsortedPointer);</span><br><span class="line">        insertNode(rightPos, unsortedPointer);</span><br><span class="line">        unsortedPointer = unsortedNextPointer;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> resuldummy-&gt;next;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h1 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h1><h2 id="Container-With-Most-Water"><a href="#Container-With-Most-Water" class="headerlink" title="Container With Most Water"></a>Container With Most Water</h2><p>最佳答案:<br>i++的表达式是计算当前ij组成的容器的容量, 然后双指针往中间靠.<br>证明:<br>一开始ij在最左(h[0]]和最右(h[n-1]), 假设最左比最右短(h[i]&lt;h[j]), 此时体积就是含有i的容器中最大的容积(max), 下一次肯定是i++而不是j–, 此时则考虑当前最大值max和h[i]和h[n-1]之前的情况即可.</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">maxArea</span><span class="params">(<span class="keyword">int</span>[] height)</span> </span>&#123;  </span><br><span class="line">    <span class="keyword">int</span> max = <span class="number">0</span>;  </span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>, j = height.length - <span class="number">1</span>; i &lt; j; ) &#123;  </span><br><span class="line">	    <span class="keyword">int</span> h = height[i] &lt; height[j] ? height[i++] : height[j--];  </span><br><span class="line">		<span class="keyword">int</span> b = j - i + <span class="number">1</span>;  </span><br><span class="line">		max = Math.max(h * b, max);  ListNode* findInsertionPos(ListNode* dummy, ListNode* candidate)</span><br><span class="line">&#123;</span><br><span class="line">    ListNode* rightPos = dummy;</span><br><span class="line">    <span class="keyword">while</span>(isNextValBiggerThanCandidate(rightPos, candidate))</span><br><span class="line">    &#123;</span><br><span class="line">        rightPos = rightPos-&gt;next;</span><br><span class="line">    &#125;  </span><br><span class="line">    <span class="keyword">return</span> max;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>我的答案.<br>我的想法是先算最宽的容器的s,  然后考虑子问题少掉左面一根或者少掉右面一根. 比较三者最大的. 两个子问题可以迅速判断大小, 去掉最左或最右, 中间都一样, 显然去掉短的能获得更大的s. </p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">maxArea</span><span class="params">(<span class="keyword">int</span>[] height)</span> </span>&#123;</span><br><span class="line">       <span class="keyword">return</span> s(height, <span class="number">0</span>, height.length - <span class="number">1</span>);</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   <span class="function"><span class="keyword">private</span> <span class="keyword">int</span> <span class="title">s</span><span class="params">(<span class="keyword">int</span>[] height, <span class="keyword">int</span> a, <span class="keyword">int</span> b)</span> </span>&#123;</span><br><span class="line">       <span class="keyword">if</span> (a==b) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">       <span class="keyword">int</span> max = (b-a) * Math.min(height[a], height[b]);</span><br><span class="line">       <span class="keyword">int</span> part_max = <span class="number">0</span>;</span><br><span class="line">       <span class="keyword">if</span> (height[a]&lt;height[b])&#123;</span><br><span class="line">           part_max = s(height, a + <span class="number">1</span>, b);</span><br><span class="line">       &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">           part_max = s(height, a, b - <span class="number">1</span>);</span><br><span class="line">       &#125;</span><br><span class="line">       <span class="keyword">return</span> Math.max(max, part_max);</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
-<h2 id=""><a href="#" class="headerlink" title=""></a></h2><p>傻叉版, 需要考虑边界条件太多, n<em>n</em>n*logn</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">int</span> threeSumClosestrightPos;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function">bool <span class="title">isNextValBiggerThanCandidate</span><span class="params">(ListNode * node, ListNode * candidate)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> node-&gt;next &amp;&amp; node-&gt;next-&gt;val &lt; candidate-&gt;val;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">insertNode</span><span class="params">(ListNode* pos, ListNode * node)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    node-&gt;next = pos-&gt;next;</span><br><span class="line">    pos-&gt;next = node;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h1 id="基本算法-1"><a href="#基本算法-1" class="headerlink" title="基本算法"></a>基本算法</h1><h2 id="二分查找-1"><a href="#二分查找-1" class="headerlink" title="二分查找"></a>二分查找</h2><h2 id="2sum-1"><a href="#2sum-1" class="headerlink" title="2sum"></a>2sum</h2><p>不排序，暴力。注意边界</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">int</span>[] twoSum(<span class="keyword">int</span>[] nums, <span class="keyword">int</span> target) &#123;</span><br><span class="line">        Arrays.sort(nums);</span><br><span class="line">        <span class="keyword">int</span> len = nums.length;</span><br><span class="line">        <span class="keyword">int</span> minDiff = Integer.MAX_VALUE;</span><br><span class="line">        <span class="keyword">int</span> nearestSum = nums[<span class="number">0</span>] + nums[<span class="number">1</span>] + nums[<span class="number">2</span>];</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = =<span class="number">0</span>; i &lt; len - <span class="number">2</span>&lt;len-<span class="number">1</span>; i++) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = i + <span class="number">1</span>; j &lt; len - <span class="number">1</span>=i+<span class="number">1</span>; j&lt;len; j++) &#123;</span><br><span class="line">                <span class="keyword">int</span> sum = calculateCurClosestSum(target, nums, i, j);</span><br><span class="line">                <span class="keyword">int</span> diff = Math.abs(sum - target);</span><br><span class="line">                <span class="keyword">if</span> (diff &lt; minDiff) &#123;</span><br><span class="line">                    minDiff = diff;</span><br><span class="line">                    nearestSum = sum;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> nearestSum;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">calculateCurClosestSum</span><span class="params">(<span class="keyword">int</span> target, <span class="keyword">int</span>[] nums, <span class="keyword">int</span> i, <span class="keyword">int</span> j)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> k = Arrays.binarySearch(nums, j + <span class="number">1</span>, nums.length, target - nums[i] - nums[j]);</span><br><span class="line">  f(nums[i] + nums[j]==target)&#123;</span><br><span class="line">                    <span class="keyword">return</span> <span class="keyword">new</span> <span class="keyword">int</span>[]&#123;i, j&#125;;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> <span class="keyword">int</span>[]&#123;<span class="number">0</span>, <span class="number">1</span>&#125;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="3sum-1"><a href="#3sum-1" class="headerlink" title="3sum"></a>3sum</h2><p>twosum的转化思路, 二分查找</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> List&lt;List&lt;Integer&gt;&gt; threeSum(<span class="keyword">int</span>[] nums) &#123;</span><br><span class="line">    List&lt;List&lt;Integer&gt;&gt; result = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">    Arrays.sort(nums);</span><br><span class="line">    <span class="keyword">int</span> len = nums.length;</span><br><span class="line">      <span class="keyword">if</span> (k &gt;= <span class="number">0</span>) &#123;</span><br><span class="line">           len &lt; <span class="number">3</span>) <span class="keyword">return</span> targeresult;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">int</span> sum = nums[i] + nums[j];</span><br><span class="line">        k = -<span class="number">1</span> - k;</span><br><span class="line">        <span class="keyword">if</span> (k == nums.length) &#123;</span><br><span class="line">            sum += nums[k - <span class="number">1</span>];</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (k == j+<span class="number">1</span>) &#123;</span><br><span class="line">            sum += nums[k];</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">int</span> sum1 = sum +<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; len - <span class="number">2</span>; i++) &#123;</span><br><span class="line">        <span class="keyword">if</span> (i &gt; <span class="number">0</span> &amp;&amp; nums[i] == nums[ki - <span class="number">1</span>];</span><br><span class="line">            <span class="keyword">int</span> sum2 = sum + nums[k];</span><br><span class="line">            <span class="keyword">int</span> diff1 = Math.abs(target - sum1);</span><br><span class="line">            <span class="keyword">int</span> diff2 = Math.abs(target - sum2);</span><br><span class="line">            <span class="keyword">if</span> (diff1 &lt; diff2) &#123;</span><br><span class="line">                sum = sum1;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                sum = sum2;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> sum;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-<p>最佳答案, 先排序，然后左右夹逼，复杂度 O(n^2)O(n​2​​)。</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">threeSumClosest</span><span class="params">(<span class="keyword">int</span>[] nums, <span class="keyword">int</span> target)</span> </span>&#123;</span><br><span class="line">        Arrays.sort(nums);</span><br><span class="line">        <span class="keyword">final</span> <span class="keyword">int</span> len = nums.length;</span><br><span class="line">        <span class="keyword">int</span> minDiff = Integer.MAX_VALUE;</span><br><span class="line">        <span class="keyword">int</span> nearestSum =) <span class="keyword">continue</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> j = i + <span class="number">1</span>; j &lt; len - <span class="number">1</span>; j++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (j &gt; i+<span class="number">1</span> &amp;&amp; nums[j] == nums[j - <span class="number">1</span>]) <span class="keyword">continue</span>;</span><br><span class="line">            <span class="keyword">int</span> k = Arrays.binarySearch(nums, j + <span class="number">1</span>, len, -nums[i] - nums[j]);</span><br><span class="line">            <span class="keyword">if</span> (k &gt; <span class="number">0</span> &amp;&amp; nums[0i nums[<span class="number">0</span>] + nums[1j] + nums[<span class="number">2</span>];</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; len - <span class="number">1</span>; i++) &#123;</span><br><span class="line">            <span class="keyword">int</span> j = i+<span class="number">1</span>;</span><br><span class="line">            <span class="keyword">int</span> k = len-<span class="number">1</span>;</span><br><span class="line">            <span class="keyword">while</span> (j &lt; k) &#123;</span><br><span class="line">                <span class="keyword">final</span> <span class="keyword">int</span> sum = nums[i] + nums[j] + nums[k];</span><br><span class="line">                <span class="keyword">final</span> <span class="keyword">int</span> diff = Math.abs(sum - target);</span><br><span class="line">                <span class="keyword">if</span> (diff &lt; minDiff) &#123;</span><br><span class="line">                    minDiff = diff;</span><br><span class="line">                    nearestSum = sum;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">if</span> (sum &gt; target) &#123;</span><br><span class="line">                    k--;</span><br><span class="line">                &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                    j++;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">    k] == <span class="number">0</span>) &#123;</span><br><span class="line">                ArrayList&lt;Integer&gt; tmp = <span class="keyword">new</span> ArrayList&lt;&gt;(<span class="number">3</span>);</span><br><span class="line">                tmp.add(nums[i]);</span><br><span class="line">                tmp.add(nums[j]);</span><br><span class="line">                tmp.add(nums[k]);</span><br><span class="line">                result.add(tmp);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">        <span class="keyword">return</span> nearestSum;</span><br><span class="line">    result;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<!--stackedit_data:
-eyJoaXN0b3J5IjpbLTEwMzM2OTI4NDEsMzEyODM0MjEwXX0=
--->]]></content>
-      <categories>
-        <category>算法</category>
-      </categories>
-      <tags>
-        <tag>leetcode</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>springboot多profiles环境配置</title>
-    <url>/2018/07/13/springboot%E5%A4%9Aprofiles%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/</url>
-    <content><![CDATA[<p>spring boot开发通常由多个环境, 不同环境用的数据库密码等都不一样, 怎么可以灵活切换呢? 最简单方法可以用spring boot的profiles切换方法.</p>
-<a id="more"></a>
-<h1 id="实例"><a href="#实例" class="headerlink" title="实例"></a>实例</h1><figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">spring:</span>  </span><br><span class="line"> <span class="attr">profiles:.active:</span> <span class="string">dev</span>  </span><br><span class="line">  <span class="attr">datasource:</span>  </span><br><span class="line"> <span class="attr">username:</span> <span class="string">root</span>  </span><br><span class="line">      <span class="attr">password:</span> <span class="string">huawei123</span>  </span><br><span class="line">      <span class="attr">driver-class-name:</span> <span class="string">com.mysql.jdbc.Driver</span>  </span><br><span class="line">  <span class="attr">jpa:</span>  </span><br><span class="line"> <span class="attr">open-in-view:</span> <span class="literal">true</span>  </span><br><span class="line">    <span class="attr">show-sql:</span> <span class="literal">true</span>  </span><br><span class="line">    <span class="attr">hibernate:</span>  </span><br><span class="line"> <span class="attr">ddl-auto:</span> <span class="string">create</span> <span class="comment">#validate  </span></span><br><span class="line">  <span class="attr">properties:</span>  </span><br><span class="line"> <span class="attr">hibernate: dialect:</span> <span class="string">com.huawei.unistar.ailog.MySQL5DialectUTF8</span> <span class="comment"># MySQL5DialectUTF8  </span></span><br><span class="line">  <span class="attr">aop:</span>  </span><br><span class="line"> <span class="attr">auto:</span> <span class="literal">true</span> <span class="comment"># Add @EnableAspectJAutoProxy.  default: true  </span></span><br><span class="line">  <span class="attr">proxy-target-class:</span> <span class="literal">false</span> <span class="comment"># Whether subclass-based (CGLIB) proxies are to be created (true) as opposed to standard Java interface-based proxies (false).  </span></span><br><span class="line">  <span class="attr">logging:.level:.org:.hibernate:.type:</span> <span class="string">debug</span>  </span><br><span class="line"><span class="meta">---  </span></span><br><span class="line"><span class="attr">spring.profiles:</span> <span class="string">dev</span>  </span><br><span class="line"><span class="attr">spring:.datasource:.url:</span> <span class="string">jdbc:mysql://mysql:3306/ailog?characterEncoding=utf-8&amp;useSSL=false</span>  </span><br><span class="line"><span class="meta">---  </span></span><br><span class="line"><span class="attr">spring.profiles:</span> <span class="string">prod</span>  </span><br><span class="line"><span class="attr">spring:.datasource:.url:</span> <span class="string">jdbc:mysql://localhost:3306/ailog?characterEncoding=utf-8&amp;useSSL=false</span></span><br></pre></td></tr></table></figure>
-<ol>
-<li>用<code>---</code>分隔多块配置</li>
-<li>spring.profiles: {name} 是profile的名字</li>
-<li>最上面没有特殊标记, 或有active标记的一节是默认的, 会被默认加载. 可以将公共的配置放那.</li>
-<li><code>spring:.datasource:.url</code> 中<code>.datasource</code>应该是yml语法的一种缩写语法</li>
-</ol>
-<h1 id="怎么应用"><a href="#怎么应用" class="headerlink" title="怎么应用"></a>怎么应用</h1><h2 id="命令行"><a href="#命令行" class="headerlink" title="命令行"></a>命令行</h2><p>ref :<a href="https://docs.spring.io/spring-boot/docs/current-SNAPSHOT/reference/htmlsingle/#howto-set-active-spring-profiles">https://docs.spring.io/spring-boot/docs/current-SNAPSHOT/reference/htmlsingle/#howto-set-active-spring-profiles</a><br>用系统变量<code>spring.profiles.active</code>穿进去</p>
-<blockquote>
-<p>java -jar -Dspring.profiles.active=prod /tmp/ailog.jar</p>
-</blockquote>
-<p>或用环境变量<code>SPRING_PROFILES_ACTIVE</code></p>
-<blockquote>
-<p>export SPRING_PROFILES_ACTIVE=prod &amp;&amp; java -jar /tmp/ailog.jar</p>
-</blockquote>
-<p> 网络上说可以<code>java -jar /tmp/ailog.jar --spring.profiles.active=prod</code>的方式启用prod的profile, 我实测<strong>不行</strong>! springboot 2.0.3</p>
-<!--stackedit_data:
-eyJoaXN0b3J5IjpbMTA3MzQ5NTYwNF19
--->]]></content>
-      <categories>
-        <category>开发springboot</category>
-      </categories>
-      <tags>
-        <tag>Java</tag>
-        <tag>springboot</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>vscode配置for VUE</title>
-    <url>/2018/07/14/vscode%E9%85%8D%E7%BD%AEfor%20VUE/</url>
-    <content><![CDATA[<p>测试开发要做点什么东东,几乎就是全栈的节奏了, 记录一下vscode的一些配置</p>
-<a id="more"></a>
-<figure class="highlight json"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">&quot;editor.formatOnSave&quot;</span>: <span class="literal">true</span>,</span><br><span class="line">    <span class="attr">&quot;editor.tabSize&quot;</span>: <span class="number">2</span>,</span><br><span class="line">    <span class="attr">&quot;javascript.format.insertSpaceAfterFunctionKeywordForAnonymousFunctions&quot;</span>: <span class="literal">false</span>,</span><br><span class="line">    <span class="attr">&quot;javascript.implicitProjectConfig.checkJs&quot;</span>: <span class="literal">true</span>,</span><br><span class="line">    <span class="attr">&quot;javascript.validate.enable&quot;</span>: <span class="literal">false</span>,</span><br><span class="line">    <span class="attr">&quot;prettier.singleQuote&quot;</span>: <span class="literal">true</span>,</span><br><span class="line">    <span class="attr">&quot;prettier.semi&quot;</span>: <span class="literal">false</span>,</span><br><span class="line">    <span class="attr">&quot;vetur.format.defaultFormatter.html&quot;</span>: <span class="string">&quot;js-beautify-html&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;eslint.autoFixOnSave&quot;</span>: <span class="literal">true</span>,</span><br><span class="line">    <span class="attr">&quot;eslint.validate&quot;</span>: [</span><br><span class="line">        <span class="string">&quot;javascript&quot;</span>,</span><br><span class="line">        <span class="string">&quot;javascriptreact&quot;</span>,</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="attr">&quot;language&quot;</span>: <span class="string">&quot;vue&quot;</span>,</span><br><span class="line">            <span class="attr">&quot;autoFix&quot;</span>: <span class="literal">true</span></span><br><span class="line">        &#125;</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-]]></content>
-      <categories>
-        <category>开发VUE</category>
-      </categories>
-      <tags>
-        <tag>VUE</tag>
-        <tag>前端</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>数字货币</title>
-    <url>/2018/04/29/%E6%95%B0%E5%AD%97%E8%B4%A7%E5%B8%81%E7%AC%94%E8%AE%B0/</url>
-    <content><![CDATA[<p>因为不经常看盘，怕忘了自己的钱分别都放在哪了，特此笔记。</p>
-<a id="more"></a>
-<h1 id="2000元，300刀开玩"><a href="#2000元，300刀开玩" class="headerlink" title="2000元，300刀开玩"></a>2000元，300刀开玩</h1><p>100刀eth，100刀eos，100刀nas<br>eth，785，先入1/5仓。750加，720加，700满；<br>eos，计划17建仓<br>nas，</p>
-<table>
-<thead>
-<tr>
-<th>时间</th>
-<th>币</th>
-<th>价</th>
-<th>量</th>
-<th>仓</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>5-7</td>
-<td>ETH</td>
-<td>789</td>
-<td>$20</td>
-<td>20%</td>
-</tr>
-<tr>
-<td>5-7</td>
-<td>NAS</td>
-<td>10.1</td>
-<td>$20</td>
-<td>20%</td>
-</tr>
-</tbody></table>
-<h1 id="存盘"><a href="#存盘" class="headerlink" title="存盘"></a>存盘</h1><table>
-<thead>
-<tr>
-<th>币种</th>
-<th>数量</th>
-<th>存放地方</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>BTC</td>
-<td>0.059</td>
-<td>huobi</td>
-</tr>
-<tr>
-<td>HT</td>
-<td>50</td>
-<td>huobi</td>
-</tr>
-<tr>
-<td>ETH</td>
-<td>0.41</td>
-<td>huobi</td>
-</tr>
-<tr>
-<td>XRP</td>
-<td>500</td>
-<td>huobi</td>
-</tr>
-<tr>
-<td>EOS</td>
-<td>161</td>
-<td>huobi</td>
-</tr>
-<tr>
-<td>DASH</td>
-<td>0.05</td>
-<td>huobi</td>
-</tr>
-<tr>
-<td>QTUM</td>
-<td>10</td>
-<td>huobi</td>
-</tr>
-<tr>
-<td>HSR</td>
-<td>6.48</td>
-<td>huobi</td>
-</tr>
-<tr>
-<td>RDN</td>
-<td>20</td>
-<td>huobi</td>
-</tr>
-<tr>
-<td>storj</td>
-<td>100</td>
-<td>huobi</td>
-</tr>
-<tr>
-<td>ETH</td>
-<td>0.09</td>
-<td>imtoken</td>
-</tr>
-<tr>
-<td>NAS</td>
-<td>366</td>
-<td>imtoken</td>
-</tr>
-<tr>
-<td>TCT</td>
-<td>40800</td>
-<td>imtoken</td>
-</tr>
-<tr>
-<td>RCT</td>
-<td>5290</td>
-<td>imtoken</td>
-</tr>
-<tr>
-<td>CHAT</td>
-<td></td>
-<td>EXX</td>
-</tr>
-<tr>
-<td>AWR</td>
-<td>38000</td>
-<td>big.one</td>
-</tr>
-<tr>
-<td>CND</td>
-<td>1200</td>
-<td>binance</td>
-</tr>
-<tr>
-<td>BTS</td>
-<td>629</td>
-<td>binance</td>
-</tr>
-<tr>
-<td>SNT</td>
-<td>500</td>
-<td>binance</td>
-</tr>
-<tr>
-<td>ADA</td>
-<td>291</td>
-<td>binance</td>
-</tr>
-<tr>
-<td>GXS</td>
-<td>187</td>
-<td>binance</td>
-</tr>
-<tr>
-<td>IOTA</td>
-<td>111</td>
-<td>binance</td>
-</tr>
-<tr>
-<td>BNB</td>
-<td>99</td>
-<td>binance</td>
-</tr>
-<tr>
-<td>EOS</td>
-<td>21.5</td>
-<td>binance</td>
-</tr>
-<tr>
-<td>ETH</td>
-<td>0.15</td>
-<td>binance</td>
-</tr>
-<tr>
-<td>USDT</td>
-<td>45</td>
-<td>binance</td>
-</tr>
-</tbody></table>
-<h1 id="法币界限"><a href="#法币界限" class="headerlink" title="法币界限"></a>法币界限</h1><table>
-<thead>
-<tr>
-<th>时间</th>
-<th>CNY</th>
-<th>接入点</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>2017-11-25</td>
-<td>10000</td>
-<td>huobi</td>
-</tr>
-<tr>
-<td>2017-11-27</td>
-<td>20000</td>
-<td>huobi</td>
-</tr>
-<tr>
-<td>2017-12-12</td>
-<td>5683.3</td>
-<td>huobi</td>
-</tr>
-<tr>
-<td>2017-12-14</td>
-<td>5000</td>
-<td>huobi</td>
-</tr>
-<tr>
-<td>2017-12-14</td>
-<td>10000</td>
-<td>huobi</td>
-</tr>
-<tr>
-<td>2017-12-14</td>
-<td>5000</td>
-<td>huobi</td>
-</tr>
-<tr>
-<td>2017-12-15</td>
-<td>10000</td>
-<td>huobi</td>
-</tr>
-<tr>
-<td>2018-01-28</td>
-<td>668</td>
-<td>huobi</td>
-</tr>
-</tbody></table>
-]]></content>
-  </entry>
-  <entry>
     <title>JMeter 跨线程组共享变量（单点登录Cookie无法保存）</title>
     <url>/2019/05/05/Automation/JMeter%20%E8%B7%A8%E7%BA%BF%E7%A8%8B%E7%BB%84%E5%85%B1%E4%BA%AB%E5%8F%98%E9%87%8F%EF%BC%88%E5%8D%95%E7%82%B9%E7%99%BB%E5%BD%95Cookie%E6%97%A0%E6%B3%95%E4%BF%9D%E5%AD%98%EF%BC%89/</url>
     <content><![CDATA[<p>我司采用单点登录用Cookie做身份认证，在进行JMeter性能测试时，仅使用HTTP Cookie Manager仍提示未登录。原因在于单点登录服务器的域名与待测试的服务器域名不一致，Cookie Manager不支持跨域Cookie。本文介绍两种方法来处理。</p>
@@ -689,6 +373,23 @@ eyJoaXN0b3J5IjpbLTg4MDg3NTU0Myw4NjkzNDY1MTVdfQ==
       </categories>
       <tags>
         <tag>重构</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>vscode配置for VUE</title>
+    <url>/2018/07/14/Dev/vscode%E9%85%8D%E7%BD%AEfor%20VUE/</url>
+    <content><![CDATA[<p>测试开发要做点什么东东,几乎就是全栈的节奏了, 记录一下vscode的一些配置</p>
+<a id="more"></a>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">&quot;editor.formatOnSave&quot;</span>: <span class="literal">true</span>,</span><br><span class="line">    <span class="attr">&quot;editor.tabSize&quot;</span>: <span class="number">2</span>,</span><br><span class="line">    <span class="attr">&quot;javascript.format.insertSpaceAfterFunctionKeywordForAnonymousFunctions&quot;</span>: <span class="literal">false</span>,</span><br><span class="line">    <span class="attr">&quot;javascript.implicitProjectConfig.checkJs&quot;</span>: <span class="literal">true</span>,</span><br><span class="line">    <span class="attr">&quot;javascript.validate.enable&quot;</span>: <span class="literal">false</span>,</span><br><span class="line">    <span class="attr">&quot;prettier.singleQuote&quot;</span>: <span class="literal">true</span>,</span><br><span class="line">    <span class="attr">&quot;prettier.semi&quot;</span>: <span class="literal">false</span>,</span><br><span class="line">    <span class="attr">&quot;vetur.format.defaultFormatter.html&quot;</span>: <span class="string">&quot;js-beautify-html&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;eslint.autoFixOnSave&quot;</span>: <span class="literal">true</span>,</span><br><span class="line">    <span class="attr">&quot;eslint.validate&quot;</span>: [</span><br><span class="line">        <span class="string">&quot;javascript&quot;</span>,</span><br><span class="line">        <span class="string">&quot;javascriptreact&quot;</span>,</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="attr">&quot;language&quot;</span>: <span class="string">&quot;vue&quot;</span>,</span><br><span class="line">            <span class="attr">&quot;autoFix&quot;</span>: <span class="literal">true</span></span><br><span class="line">        &#125;</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+]]></content>
+      <categories>
+        <category>开发VUE</category>
+      </categories>
+      <tags>
+        <tag>VUE</tag>
+        <tag>前端</tag>
       </tags>
   </entry>
   <entry>
@@ -1044,343 +745,6 @@ eyJoaXN0b3J5IjpbOTkwMjQ2MzU1LDcwNDkxNTEwOF19
       </tags>
   </entry>
   <entry>
-    <title>RobotFramework 前端内存泄漏测试</title>
-    <url>/2019/04/25/Robotframework/RobotFramework%20%E5%89%8D%E7%AB%AF%E5%86%85%E5%AD%98%E6%B3%84%E6%BC%8F%E6%B5%8B%E8%AF%95/</url>
-    <content><![CDATA[<h1 id="前端内存泄漏-威力加强版"><a href="#前端内存泄漏-威力加强版" class="headerlink" title="前端内存泄漏 - 威力加强版"></a>前端内存泄漏 - 威力加强版</h1><h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>前端应用越来越复杂，反复操作可能导致dom或js对象没有被正确回收，导致内存占用持续高位。</p>
-<h2 id="测试原理"><a href="#测试原理" class="headerlink" title="测试原理"></a>测试原理</h2><ul>
-<li>Selenium 控制浏览器反复操作</li>
-<li>psutil 获取操作系统层面的内存占用</li>
-<li>window.performance.memory 获取浏览器V8引擎级别js堆内存使用情况（chrome only）</li>
-<li>openpyxl 记录到excel</li>
-<li>robotframework 包装降低学习成本</li>
-</ul>
-<pre class="mermaid">graph LR
-    A[Robot framework/Selenium] --pid--> B[pstutil]
-    A --获取pid--> C[chromedriver]
-    A --执行js获取内存占用-->C
-    B --获取所有子进程chrome的pid--> A
-    B --chrome进程的内存占用--> A</pre>
-
-
-<pre class="mermaid">graph TD
-    A[Selenium: 获取chromedriver进程号] --> B[psutil: 获取多个子进程chrome的进程号]
-    B --> C[psutil: 获取子进程的内存占用]
-    C --> D[chrome: 执行js获取js使用情况]</pre>
-
-<h2 id="工程目录介绍"><a href="#工程目录介绍" class="headerlink" title="工程目录介绍"></a>工程目录介绍</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">├─1-TestCase</span><br><span class="line">│      切换.txt</span><br><span class="line">│</span><br><span class="line">├─2-DOMElement</span><br><span class="line">│      commonVariable.txt</span><br><span class="line">│      HomePage.txt</span><br><span class="line">│</span><br><span class="line">├─3-Keywords</span><br><span class="line">│      CanvasAW.txt</span><br><span class="line">│      Common.txt</span><br><span class="line">│      CommonAction.txt</span><br><span class="line">│      CommonAssert.txt</span><br><span class="line">│      CommonDriver.txt</span><br><span class="line">│      CommonResolve.txt</span><br><span class="line">│      CommonWait.txt</span><br><span class="line">│      HomePage.txt</span><br><span class="line">│      MemLeak.txt</span><br><span class="line">│      UplSolo.txt</span><br><span class="line">│</span><br><span class="line">├─5-Extendlibrary</span><br><span class="line">│  │</span><br><span class="line">│  └─MemoryLeak</span><br><span class="line">│          MemoryUtils.py</span><br><span class="line">│          MemUsageExcel.py</span><br></pre></td></tr></table></figure>
-
-<pre class="mermaid">graph LR
-    切换.txt --> MemLeak.txt
-    切换.txt --> UplSolo.txt
-    MemLeak.txt --> MemUsageExcel.py
-    MemUsageExcel.py --> MemoryUtils.py</pre>
-
-
-
-<ul>
-<li>UplSolo.txt：封装页面上的业务操作</li>
-<li>MemLeak.txt：封装跟内存泄漏有关的动作，MemUsageExcel.py 所有的方法在此划分</li>
-<li>MemUsageExcel.py：记录excel，调用MemoryUtils.py</li>
-</ul>
-<h2 id="曲折经历"><a href="#曲折经历" class="headerlink" title="曲折经历"></a>曲折经历</h2><h3 id="进程号变化导致写excel数据不对齐"><a href="#进程号变化导致写excel数据不对齐" class="headerlink" title="进程号变化导致写excel数据不对齐"></a>进程号变化导致写excel数据不对齐</h3><p>记录一开始的chrome进程，后续新增的进程不管，死掉的进程默认为0</p>
-<h3 id="精确内存需要在打开chrome时候新增参数"><a href="#精确内存需要在打开chrome时候新增参数" class="headerlink" title="精确内存需要在打开chrome时候新增参数"></a>精确内存需要在打开chrome时候新增参数</h3><h2 id="探讨"><a href="#探讨" class="headerlink" title="探讨"></a>探讨</h2><p>该方法是否真的能识别出内存泄漏？</p>
-<ol>
-<li>系统进程级别比js占用多很多</li>
-<li>系统进程级别的内存可能随应用当前页面展示的内容不同而（自动地）有所回落</li>
-<li>更进一步的分析就需要对数据进行分析了，后话了</li>
-</ol>
-<h2 id="项目地址"><a href="#项目地址" class="headerlink" title="项目地址"></a>项目地址</h2><p><a href="https://github.com/Tony36051/js-mem-leak-test/">https://github.com/Tony36051/js-mem-leak-test/</a></p>
-]]></content>
-      <categories>
-        <category>Test</category>
-      </categories>
-      <tags>
-        <tag>RobotFramework</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>RobotFramework入门级概览</title>
-    <url>/2018/09/22/Robotframework/RobotFramework%E5%85%A5%E9%97%A8%E7%BA%A7%E6%A6%82%E8%A7%88/</url>
-    <content><![CDATA[<p>基于RobotFramework官方的Quick Start简化而成, 包括了安装, 编写, 执行, 查看等基本流程.</p>
-<a id="more"></a>
-
-<h1 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h1><blockquote>
-<p>pip install robotframework</p>
-<p>pip install docutils  # 可选</p>
-</blockquote>
-<h1 id="编写"><a href="#编写" class="headerlink" title="编写"></a>编写</h1><p>测试目标是一个登陆模块, 涵盖了注册/登陆/修改密码的命令行工具, 编写一个测试脚本对其功能进行验证.</p>
-<p>测试脚本的官方术语叫测试数据(Test Data), 测试数据分为四个部分, Settings/Test Cases/Keywords/Variables. 每个部分以*号开始, 可以加任意空行提高可读性.</p>
-<p>关键字和参数直接用两个或以上的空格分隔, 建议使用4个, 是否需要上下行对齐看个人洁癖情况.</p>
-<p>Settings部分主要是引入库/资源文件/变量文件; 测试套的元数据如Setup/Teardown/timeout等; </p>
-<p>Testcase就是用例, 用例内每行一个步骤, 每个步骤以关键字为核心, 关键字右侧是关键字的参数, 左侧是关键字的返回.</p>
-<p>Keywords是用户自定义的由其他关键字组成的更高抽象层次的关键字, 可以设定参数和返回值.</p>
-<p>Variables是该常量定义区, 里面也可以使用系统内建的变量.</p>
-<p>以下用例针登录模块的部分测试用例的实现, 本文并不会详细展开实现细节, 将在后续文章逐渐涉及.</p>
-<p><code>overview.robot</code></p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">*** Settings ***</span><br><span class="line">Library    OperatingSystem</span><br><span class="line">Suite Setup    Clear database</span><br><span class="line"></span><br><span class="line">*** Test Cases ***</span><br><span class="line">Login with nobody</span><br><span class="line">    $&#123;resp&#125;    Login    nobody    P4ssw0rd</span><br><span class="line">    should be equal as strings    $&#123;resp&#125;    Access Denied</span><br><span class="line"></span><br><span class="line">Create and log in</span><br><span class="line">    $&#123;resp&#125;    Create user  Tony    P4ssw0rd</span><br><span class="line">    should be equal  $&#123;resp&#125;    SUCCESS</span><br><span class="line">    $&#123;resp&#125;    Login          Tony  P4ssw0rd</span><br><span class="line">    should be equal as strings  $&#123;resp&#125;     Logged In</span><br><span class="line"></span><br><span class="line">*** Keywords ***</span><br><span class="line">Clear database</span><br><span class="line">    remove file     $&#123;database_path&#125;</span><br><span class="line"></span><br><span class="line">Run target</span><br><span class="line">    [Arguments]     $&#123;option&#125;   $&#123;username&#125;     $&#123;password&#125;     $&#123;new_password&#125;&#x3D;$&#123;None&#125;</span><br><span class="line">    $&#123;full_path&#125;    set variable     $&#123;targets_dir&#125;$&#123;&#x2F;&#125;login.py</span><br><span class="line">    $&#123;resp&#125;   run  python $&#123;full_path&#125; $&#123;option&#125; $&#123;username&#125; $&#123;password&#125;</span><br><span class="line">    [Return]  $&#123;resp&#125;</span><br><span class="line"></span><br><span class="line">Create user</span><br><span class="line">    [Arguments]  $&#123;username&#125;    $&#123;password&#125;</span><br><span class="line">    $&#123;resp&#125;  Run target  create  $&#123;username&#125;    $&#123;password&#125;</span><br><span class="line">    [Return]  $&#123;resp&#125;</span><br><span class="line"></span><br><span class="line">Login</span><br><span class="line">    [Arguments]  $&#123;username&#125;    $&#123;password&#125;</span><br><span class="line">    $&#123;resp&#125;  Run target  login    $&#123;username&#125;     $&#123;password&#125;</span><br><span class="line">    [Return]  $&#123;resp&#125;</span><br><span class="line"></span><br><span class="line">*** Variables ***</span><br><span class="line">$&#123;targets_dir&#125;      $&#123;CURDIR&#125;$&#123;&#x2F;&#125;..$&#123;&#x2F;&#125;targets</span><br><span class="line">$&#123;database_path&#125;    $&#123;temp_dir&#125;$&#123;&#x2F;&#125;robotframework-quickstart-db.txt</span><br></pre></td></tr></table></figure>
-
-<h1 id="执行"><a href="#执行" class="headerlink" title="执行"></a>执行</h1><p>RobotFramework3使用robot作为主要命令, 旧版2.9及以前使用pybot作为主要执行命令, 功能一致. 最基本的命令行格式robot &lt;脚本路径&gt;</p>
-<p>假设使用本文提供的样例脚本, git clone <strong>XXXX</strong></p>
-<p><img src="%E6%89%A7%E8%A1%8C.png" alt="执行截图"></p>
-<h1 id="结果"><a href="#结果" class="headerlink" title="结果"></a>结果</h1><p>测试用例执行后, 首先生成的是xUnit兼容的xml文件, 里面记录了测试执行的输出, 然后从output.xml文件中解析生成用于调试查看的<code>log.html</code>和查看整体结果的<code>report.html</code>报告文件.</p>
-<h1 id="被测对象-login-py"><a href="#被测对象-login-py" class="headerlink" title="被测对象 login.py"></a>被测对象 login.py</h1><p>程序来源: <a href="https://github.com/robotframework/QuickStartGuide">https://github.com/robotframework/QuickStartGuide</a></p>
-<p>该程序是RobotFramework官方Quick Start教程的被测程序, 以下简单说明其功能.</p>
-<p>该程序是一个简单的用户登录例子, 这是个命令行实现的验证程序, 允许调用者进行以下三个操作:</p>
-<ul>
-<li>用合规的密码创建用户</li>
-<li>用有效的账号和密码登录</li>
-<li>修改现有账号的密码</li>
-</ul>
-<p>以下是一些调用的实例:</p>
-<p>不存在的用户使用合规的密码登录, 将得到一样的错误提示</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">&gt; python sut/login.py login nobody P4ssw0rd</span><br><span class="line">Access Denied</span><br></pre></td></tr></table></figure>
-
-<p>创建用户之后, 可以成功登录</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">&gt; python sut/login.py create fred P4ssw0rd</span><br><span class="line">SUCCESS</span><br><span class="line"></span><br><span class="line">&gt; python sut/login.py login fred P4ssw0rd</span><br><span class="line">Logged In</span><br></pre></td></tr></table></figure>
-
-<p>密码合规的验证规则: 7-12位, 必须包含大小写字母和数字, 但不允许包含特殊字符.</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">&gt; python sut/login.py create fred short</span><br><span class="line">Creating user failed: Password must be 7-12 characters long</span><br><span class="line"></span><br><span class="line">&gt; python sut/login.py create fred invalid</span><br><span class="line">Creating user failed: Password must be a combination of lowercase and</span><br><span class="line">uppercase letters and numbers</span><br></pre></td></tr></table></figure>
-
-<p>修改密码的用例:</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">&gt; python sut/login.py change-password fred wrong NewP4ss</span><br><span class="line">Changing password failed: Access Denied</span><br><span class="line"></span><br><span class="line">&gt; python sut/login.py change-password fred P4ssw0rd short</span><br><span class="line">Changing password failed: Password must be 7-12 characters long</span><br><span class="line"></span><br><span class="line">&gt; python sut/login.py change-password fred P4ssw0rd NewP4ss</span><br><span class="line">SUCCESS</span><br></pre></td></tr></table></figure>
-
-<p>该应用程序使用简单的”数据库”去保存用户的信息, 其实是保存在操作系统的临时文件所在的目录, 文件名默认为<code>robotframework-quickstart-db.txt</code></p>
-]]></content>
-      <categories>
-        <category>Test</category>
-      </categories>
-      <tags>
-        <tag>RobotFramework</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>RobotFramework变量</title>
-    <url>/2018/09/26/Robotframework/RobotFramework%E5%8F%98%E9%87%8F/</url>
-    <content><![CDATA[<p>自动化用例跟其他编程语言的源文件基本类似, 关键字类比方法或函数, 关键字的参数就是函数的参数, 关键字的返回也就是函数的返回. 类似编程学习, 第一步是学习定义和使用各种变量.</p>
-<a id="more"></a>
-
-<h1 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h1><p>变量可以应用于脚本的绝大多数地方, 不过应用最多的还是在关键字的入参. 跟大多数编程语言一样, 变量不允许跟关键字重名.</p>
-<p>常见用途:</p>
-<ul>
-<li>减少修改遗漏: 如果在大片用例都是硬编码的<code>user001</code>, 建议抽成变量${username}, 好处是修改时只需要改一处, 而不用担心漏改/改错.</li>
-<li>定义系统无关的变量, 如将<code>127.0.0.1</code>修改为${HOST}, 然后通过命令行传入, 即可令测试脚本能无修改地跨系统执行, 免除因执行环境的变化而无谓的手工修改.</li>
-<li>当脚本复杂到入参是一个对象, 而不是字符串时, 必须使用变量. 因为写在脚本中的参数, 都被认为是字符串(参考字符串连接).</li>
-<li>参数传递, 上一个关键字的返回值作为下一个关键字的入参, 此时你需要变量</li>
-<li>超长的值, 当某个参数是一个很大的json, 写起来非常长, 使用变量来代表是一个好方法.</li>
-</ul>
-<h1 id="变量类型"><a href="#变量类型" class="headerlink" title="变量类型"></a>变量类型</h1><p>变量跟关键字一样, 是<code>大小写无关</code>的, 同时忽略空格和下划线(${CURDIR}除外), 前者被认为不存在. 建议使用全大写代表全局变量(如: ${PATH}), 小写的驼峰或者蛇形作为局部变量(如: ${my_name}, ${contractNo}).</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">变量名忽略大小写&#x2F;下划线&#x2F;空格</span><br><span class="line">    $&#123;a_boy&#125;    set variable  tony</span><br><span class="line">    should be equal as strings  tony  $&#123;a_boy&#125;</span><br><span class="line">    should be equal as strings  tony  $&#123;A_boy&#125;</span><br><span class="line">    should be equal as strings  tony  $&#123;aboy&#125;</span><br><span class="line">    should be equal as strings  tony  $&#123;ABOY&#125;</span><br><span class="line">    LOG     $&#123;CURDIR&#125;  # 特殊例子</span><br></pre></td></tr></table></figure>
-
-
-
-<p>一个变量由<code>类型标识符</code>($/@/&amp;/&amp;), 花括号({, }), 变量名组成, 变量名通常建议使用英文字母和数字下划线和空格组成. </p>
-<h2 id="scalar标量"><a href="#scalar标量" class="headerlink" title="scalar标量"></a>scalar标量</h2><p>标量的类型标识符是$, 是最常用的一种, 经常代表一个字符串, 但其可以表示任一一个对象, 包括链表, 字典等. 以下为常量和变量的一个用法, 两个用例的Log结果是一致的.  <code>set variable</code>关键字可以认为跟python语言的<code>赋值=</code>一样作用, 这是创建变量的一个常用方法, 创建的是局部变量.</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Scalar标量</span><br><span class="line">    $&#123;GREET&#125;    set variable  Hello</span><br><span class="line">    $&#123;NAME&#125;     set variable  world</span><br><span class="line">    Log    Hello, world!!           # 常量</span><br><span class="line">    Log    $&#123;GREET&#125;, $&#123;NAME&#125;!!      # 变量</span><br></pre></td></tr></table></figure>
-
-<p>值得注意的一点是, 如果一个测试数据单元格内, 只有变量本身, 他可以代表一个对象. 一旦单元格内还有别的变量或常量, 则只会进行字符串拼接成一个字符串. 隐式地调用python对象的<code>__unicode__</code>或java对象的<code>toString()</code>方法将对象转为字符串, 然后跟单元格内其余部分拼接. 如果python的<code>__unicode__</code>方法失败, 将调用<code>__str__</code>方法.</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">*** Settings ***</span><br><span class="line">Library  ..&#x2F;ExtLibrarys&#x2F;VarLibrary.py</span><br><span class="line"></span><br><span class="line">*** Test Cases ***</span><br><span class="line">字符串连接</span><br><span class="line">    [Documentation]  传参给关键字和函数需要注意, 连接后入参为字符串</span><br><span class="line">    $&#123;STR&#125;      set variable  Hello world!!</span><br><span class="line">    $&#123;str_type&#125;  get type    $&#123;STR&#125;                 # str类型</span><br><span class="line">    $&#123;list_type&#125;  get type    $&#123;LIST&#125;               # list类型, 使用@会展开为n个参数</span><br><span class="line">    $&#123;user1_type&#125;  get type  $&#123;user1&#125;                # dict类型,使用&amp;会展开为命名参数</span><br><span class="line">    $&#123;concat_str_type&#125;  get type  str: $&#123;STR&#125;       # str类型</span><br><span class="line">    $&#123;concat_list_type&#125;  get type  list: @&#123;LIST&#125;    # str类型</span><br><span class="line">    $&#123;concat_dict_type&#125;  get type  dict: &amp;&#123;user1&#125;   # str类型</span><br><span class="line">    should contain  $&#123;str_type&#125;  str</span><br><span class="line">    should contain  $&#123;list_type&#125;  list</span><br><span class="line">    should contain  $&#123;user1_type&#125;  dict</span><br><span class="line">    should contain  $&#123;concat_str_type&#125;  str</span><br><span class="line">    should contain  $&#123;concat_list_type&#125;  str</span><br><span class="line">    should contain  $&#123;concat_dict_type&#125;  str</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># ../ExtLibrarys/VarLibrary.py</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_type</span>(<span class="params">obj</span>):</span></span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">str</span>(<span class="built_in">type</span>(obj))</span><br></pre></td></tr></table></figure>
-
-
-
-<h2 id="List列表"><a href="#List列表" class="headerlink" title="List列表"></a>List列表</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">List列表变量</span><br><span class="line">    @&#123;user&#125;    create list  robot  secret</span><br><span class="line">    Login    robot    secret</span><br><span class="line">    Login   @&#123;user&#125;  # 等同上一个</span><br><span class="line"></span><br><span class="line">List变量关键字传参, 列表可扩展性</span><br><span class="line">    Show list    @&#123;LIST&#125;    more    args</span><br><span class="line">    Show list    $&#123;SCALAR&#125;    @&#123;LIST&#125;    constant</span><br><span class="line">    Show list    @&#123;LIST&#125;    @&#123;ANOTHER&#125;    @&#123;ONE MORE&#125;</span><br><span class="line"></span><br><span class="line">List变量访问, 变量索引</span><br><span class="line">    $&#123;index&#125;    set variable  1</span><br><span class="line">    Show list  @&#123;LIST&#125;[0]  @&#123;LIST&#125;[1]  @&#123;LIST&#125;[-1]</span><br><span class="line">    should be equal as strings  @&#123;LIST&#125;[$&#123;INDEX&#125;]  $&#123;LIST[$&#123;INDEX&#125;]&#125;  # 两种不同写法</span><br><span class="line">    </span><br><span class="line">*** Keywords ***</span><br><span class="line">Login</span><br><span class="line">    [Arguments]    $&#123;name&#125;  $&#123;password&#125;</span><br><span class="line">    should be equal as strings  $&#123;name&#125;  robot</span><br><span class="line">    should be equal as strings  $&#123;password&#125;  secret</span><br><span class="line"></span><br><span class="line">Show list</span><br><span class="line">    [Arguments]  @&#123;obj&#125;</span><br><span class="line">    Log  list: @&#123;obj&#125;</span><br><span class="line">    </span><br><span class="line">*** Variables ***</span><br><span class="line">$&#123;SCALAR&#125;    3.1415926</span><br><span class="line">@&#123;LIST&#125;     1st  2nd  3rd</span><br><span class="line">@&#123;ANOTHER&#125;  4th  5th</span><br><span class="line">@&#123;ONE MORE&#125;  6th</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p>从例子可以看出, 可以将不定个数的参数封装为一个列表, 用于for循环或传参给关键字. </p>
-<p>List变量的访问跟python语言中并无二致. 值得注意的是索引访问时, 如果认为LIST是标量, 则应该在索引写着花括号内; 如果认为LIST是列表, 则应该将索引卸载花括号外.</p>
-<p>列表变量的创建可以从<code>create list</code>关键字, 变量定义部分, 方法返回, 甚至是环境变量, 命令行参数中获得.</p>
-<h2 id="dict字典变量"><a href="#dict字典变量" class="headerlink" title="dict字典变量"></a>dict字典变量</h2><p>字典变量与列表变量非常类似, 甚至也是能迭代遍历.  在关键字参数传递时候, 如python函数传递一样, 参数按照顺序: <code>位置参数-列表参数-命名参数</code></p>
-<p>字典的访问方式较为多样:</p>
-<ul>
-<li>&amp;{user1}[password]: 键值为常量</li>
-<li>&amp;{user1}[${key}]: 键值为变量</li>
-<li>${user1.key}: 属性访问</li>
-<li>${user1[‘name’]}: robotframework2.9以前也可以用此方法, json也可以按此法</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Dict字典变量</span><br><span class="line">    $&#123;key&#125;  set variable  name</span><br><span class="line">    Login   password&#x3D;secret  name&#x3D;robot  # 命名参数, 顺序无关</span><br><span class="line">    Login   &amp;&#123;user1&#125;</span><br><span class="line">    Login   &amp;&#123;user1&#125;[$&#123;key&#125;]  &amp;&#123;user1&#125;[password]  # 还可以$&#123;user1.key&#125;</span><br><span class="line"></span><br><span class="line">Dict变量关键字传参, 可扩展性</span><br><span class="line">    Login  robot  &amp;&#123;password_part&#125;  # 如python, 位置参数-列表参数-命名参数</span><br><span class="line">    Login  &amp;&#123;name_part&#125;  password&#x3D;secret   #合并</span><br><span class="line">    Login  &amp;&#123;name_part&#125;  &amp;&#123;password_part&#125;  #合并</span><br><span class="line"></span><br><span class="line">*** Variables ***</span><br><span class="line">&amp;&#123;user1&#125;     name&#x3D;robot  password&#x3D;secret</span><br><span class="line">&amp;&#123;name_part&#125;     name&#x3D;robot</span><br><span class="line">&amp;&#123;password_part&#125;     password&#x3D;secret</span><br></pre></td></tr></table></figure>
-
-<p>如果是用pycharm/IDEA的插件IntelliBot, 目前版本还不能识别&amp;{}定义的变量被${}引用, 所以请忽略pycharm的错误提示.</p>
-<h1 id="内建变量"><a href="#内建变量" class="headerlink" title="内建变量"></a>内建变量</h1><h2 id="系统变量"><a href="#系统变量" class="headerlink" title="系统变量"></a>系统变量</h2><table>
-<thead>
-<tr>
-<th>Variable</th>
-<th>解释</th>
-<th>Explanation</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>${CURDIR}</td>
-<td>当前文件所在的目录的绝对路径</td>
-<td>An absolute path to the directory where the test data file is located. This variable is case-sensitive.</td>
-</tr>
-<tr>
-<td>${TEMPDIR}</td>
-<td>系统临时文件的路径</td>
-<td>An absolute path to the system temporary directory. In UNIX-like systems this is typically /tmp, and in Windows c:\Documents and Settings&lt;user&gt;\Local Settings\Temp.</td>
-</tr>
-<tr>
-<td>${EXECDIR}</td>
-<td>robot/pybot调用时所在目录</td>
-<td>An absolute path to the directory where test execution was started from.</td>
-</tr>
-<tr>
-<td>${/}</td>
-<td>通用目录分割符</td>
-<td>The system directory path separator. <code>/</code> in UNIX-like systems and \ in Windows.</td>
-</tr>
-<tr>
-<td>${:}</td>
-<td>通用环境路径分隔符</td>
-<td>The system path element separator. <code>:</code> in UNIX-like systems and <code>;</code> in Windows.</td>
-</tr>
-<tr>
-<td>${\n}</td>
-<td>通用的换行符</td>
-<td>The system line separator. \n in UNIX-like systems and \r\n in Windows. New in version 2.7.5.</td>
-</tr>
-</tbody></table>
-<h2 id="布尔Boolean"><a href="#布尔Boolean" class="headerlink" title="布尔Boolean"></a>布尔Boolean</h2><p>默认情况下, 测试数据的每个格子都是字符串, 有些时候需传递布尔变量, 使用${true}和${false}, <code>大小写无关</code></p>
-<h2 id="None和null"><a href="#None和null" class="headerlink" title="None和null"></a>None和null</h2><p>默认情况下, 测试数据的每个格子都是字符串, 有些时候需传递空值, 使用${None}和${null}, <code>大小写无关</code>, 互为别名, 可以交换使用. 因为使用python或Jython时会自动转换为正确的形式.</p>
-<h2 id="空格和空字符串"><a href="#空格和空字符串" class="headerlink" title="空格和空字符串"></a>空格和空字符串</h2><p>Robotframework在解析测试数据时, 以两个或以上的空格为分隔符, 所以在真正的测试数据中使用多于一个空格需要转义. 而多次转义使得测试代码的可读性进一步下降, 所以可以使用${space * 4}表示4个空格.</p>
-<p>如果需要表示空字符串, 需使用${EMPTY}.  这是错误的: <code>should be equal  $&#123;empty&#125;  &#39;&#39;</code></p>
-<p>${SPACE}和${EMPTY}都是 <code>大小写无关</code>.</p>
-<h2 id="数字变量"><a href="#数字变量" class="headerlink" title="数字变量"></a>数字变量</h2><p>默认情况下, 测试数据的每个格子都是字符串, 有些时候需传递数字变量, 使用${数字}等形式</p>
-<ul>
-<li><p>${80}</p>
-</li>
-<li><p>${3.14}</p>
-</li>
-<li><p>${-1e-4}: 也即 -0.0001</p>
-</li>
-<li><p>各种进制</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Example</span><br><span class="line">    Should Be Equal    $&#123;0b1011&#125;    $&#123;11&#125;   # 二进制</span><br><span class="line">    Should Be Equal    $&#123;0o10&#125;      $&#123;8&#125;    # 八进制</span><br><span class="line">    Should Be Equal    $&#123;0xff&#125;      $&#123;255&#125;  # 16进制</span><br><span class="line">    Should Be Equal    $&#123;0B1010&#125;    $&#123;0XA&#125;  # 二进制和16进制可以直接比较</span><br></pre></td></tr></table></figure>
-
-</li>
-</ul>
-<h2 id="元数据变量"><a href="#元数据变量" class="headerlink" title="元数据变量"></a>元数据变量</h2><p>如果需要获取一些跟测试数据或执行时变量, 可以考虑使用以下变量, 此处仅挑选较为常用的:</p>
-<ul>
-<li>${TEST NAME}</li>
-<li>${SUITE NAME}</li>
-<li>@{TEST TAGS}</li>
-<li>${OUTPUT DIR}</li>
-</ul>
-<h1 id="优先级和作用域"><a href="#优先级和作用域" class="headerlink" title="优先级和作用域"></a>优先级和作用域</h1><h2 id="优先级"><a href="#优先级" class="headerlink" title="优先级"></a>优先级</h2><p>内建 &gt; 执行中赋值的 &gt;命令行 &gt; 测试用例文件 &gt; resource和variable文件</p>
-<p>内建变量不允许覆盖, 但每次执行都会被重置, 类似Java的final变量, 一次定义不能修改. ${CURDIR}变量在执行过程中会不断变化, 其值为当前执行动作所在文件的目录的绝对路径.</p>
-<p>资源文件如果引用别的资源文件, 多个文件中有同名变量, 本文件中的变量优先级较高.</p>
-<p>命令行如果声明多个同名变量, 最后一个优先级高; <code>相反地</code>变量文件中, 最先声明/导入的变量拥有最高的优先级.</p>
-<h2 id="作用域"><a href="#作用域" class="headerlink" title="作用域"></a>作用域</h2><ul>
-<li>Global: 全局变量, 通常由命令行赋值, 建议首字母大写, 可以通过Set Global Variable修改.</li>
-<li>Suite: 测试套级, 不可递归, 建议首字母大写, 可以通过Set Suite Variable修改</li>
-<li>Test: 用例级, 建议首字母大写, 用例内所有步骤(keywords)可见, 可以通过Set Test Variable修改</li>
-<li>Local: 本地变量, 建议全小写, 用于keyword的参数和返回值, 关键字外不可见,</li>
-</ul>
-<p>用例文件设置的变量文件可以在本文件内任何位置使用, 包括settings.</p>
-<p>因为变量表(Variables)先被处理, 解析Settings/Variables路径时还没导入别的变量, 所以导入的变量不能在Settings/Variables中应用.</p>
-<h1 id="高级特性"><a href="#高级特性" class="headerlink" title="高级特性"></a>高级特性</h1><h2 id="扩展语法"><a href="#扩展语法" class="headerlink" title="扩展语法"></a>扩展语法</h2><p>变量名的花括号内可以访问对象的属性和方法, 但不建议过度访问对象的方法. 如果访问的方法还需要入参, 更加不建议, 这会增加测试数据的复杂性, 减低可读性, 增加维护成本. 如果非要这样做, 建议挪到自定义keyword或自定义库中.</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">*** Settings ***</span><br><span class="line">Variables  ..&#x2F;Variables&#x2F;vars.py  # 变量文件名不要跟类名一样</span><br><span class="line"></span><br><span class="line">*** Test Cases ***</span><br><span class="line">扩展语法:MyObject</span><br><span class="line">    Log    $&#123;OBJECT.name&#125;</span><br><span class="line">    Log    $&#123;OBJECT.eat(&#39;Cucumber&#39;)&#125;</span><br><span class="line">    Log    $&#123;DICTIONARY[2]&#125;</span><br><span class="line">    </span><br></pre></td></tr></table></figure>
-
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># ../Variables/vars.py  # 变量文件名不要跟类名一样</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyObject</span>:</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self, name</span>):</span></span><br><span class="line">        self.name = name</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">eat</span>(<span class="params">self, what</span>):</span></span><br><span class="line">        <span class="keyword">return</span> <span class="string">&#x27;%s eats %s&#x27;</span> % (self.name, what)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__str__</span>(<span class="params">self</span>):</span></span><br><span class="line">        <span class="keyword">return</span> self.name</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">OBJECT = MyObject(<span class="string">&#x27;Robot&#x27;</span>)</span><br><span class="line">DICTIONARY = &#123;<span class="number">1</span>: <span class="string">&#x27;one&#x27;</span>, <span class="number">2</span>: <span class="string">&#x27;two&#x27;</span>, <span class="number">3</span>: <span class="string">&#x27;three&#x27;</span>&#125;</span><br></pre></td></tr></table></figure>
-
-<p>与此类似的还可以对标准的python对象进行操作, 要想知道对应python对象可以有哪些方法和成员, <code>dir(obj)</code></p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">扩展语法:String</span><br><span class="line">    $&#123;string&#125; &#x3D;    Set Variable    abc</span><br><span class="line">    Log    $&#123;string.upper()&#125;      # Logs &#39;ABC&#39;</span><br><span class="line">    Log    $&#123;string * 2&#125;          # Logs &#39;abcabc&#39;</span><br><span class="line"></span><br><span class="line">扩展语法:Number</span><br><span class="line">    $&#123;number&#125; &#x3D;    Set Variable    $&#123;-2&#125;</span><br><span class="line">    Log    $&#123;number * 10&#125;         # Logs -20</span><br><span class="line">    Log    $&#123;number.__abs__()&#125;    # Logs 2  # 会报错: $&#123;abs(number)&#125;, 变量名需紧跟&#123;</span><br></pre></td></tr></table></figure>
-
-<h2 id="赋值"><a href="#赋值" class="headerlink" title="赋值"></a>赋值</h2><p>除了可以用<code>.</code>访问对象的属性和方法, 还可以给对象内的属性赋值.</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">扩展语法:赋值</span><br><span class="line">    $&#123;OBJECT.name&#125; &#x3D;    Set Variable    New name</span><br><span class="line">    $&#123;OBJECT.new_attr&#125; &#x3D;    Set Variable    New attribute</span><br><span class="line">    should be equal as strings  $&#123;OBJECT&#125;  New name</span><br><span class="line">    should be equal as strings  $&#123;OBJECT.new_attr&#125;  New attribute</span><br></pre></td></tr></table></figure>
-
-<h2 id="变量嵌套"><a href="#变量嵌套" class="headerlink" title="变量嵌套"></a>变量嵌套</h2><p>变量嵌套会从最内层开始替换为真实的值</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">扩展语法:嵌套</span><br><span class="line">    $&#123;OBJECT.name&#125; &#x3D;    Set Variable    T-800</span><br><span class="line">    $&#123;key&#125; &#x3D;    Set Variable    name</span><br><span class="line">    $&#123;T-800 HOME&#125;  set variable  &#x2F;home&#x2F;T-800</span><br><span class="line">    should be equal as strings  $&#123;OBJECT.$&#123;key&#125;&#125;  T-800</span><br><span class="line">    should be equal as strings  $&#123;$&#123;OBJECT.name&#125; HOME&#125;  &#x2F;home&#x2F;T-800</span><br></pre></td></tr></table></figure>
-
-]]></content>
-      <categories>
-        <category>Test</category>
-      </categories>
-      <tags>
-        <tag>RobotFramework</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>RobotFramework实现Page Object设计模式的应用——GUI测试进阶</title>
-    <url>/2018/04/17/Robotframework/RobotFramework%E5%AE%9E%E7%8E%B0Page%20Object%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E7%9A%84%E5%BA%94%E7%94%A8%E2%80%94%E2%80%94GUI%E6%B5%8B%E8%AF%95%E8%BF%9B%E9%98%B6/</url>
-    <content><![CDATA[<p>第一次用RobotFramework-SeleniumLibrary写网页的GUI测试，封装关键字，按功能模块划分关键字。后来一次系统层面的UI重构，所有用例要重新写，成本很大，遂找到2013年提出，2015成熟的Page Object设计模式。基于页面或重用组件封装，仅将人类能交互的操作封装为方法。抽象后，可读性、可维护性大增。</p>
-<a id="more"></a>
-<h1 id="选型"><a href="#选型" class="headerlink" title="选型"></a>选型</h1><p>一开始选择的<a href="https://github.com/ncbi/robotframework-pageobjects">NCBI</a>的，文档详尽，功能较多，缺点是实现较复杂，坑是要指定对应的Selenium2Library的版本，对新的版本要改import，觉得不方便，什么还有别的问题。<br>后来选择使用较新的<a href="https://github.com/boakley/robotframework-pageobjectlibrary">boakley的实现</a>，实现上比较简单，功能与PageObject的意思都到了。缺点是没有完全按照PageObject的设计理念，方法返回值不一定是某页面或具体值，如果学院派地看，甚至可以说没有实现PageObject也是成立的。</p>
-<h1 id="实战后总结"><a href="#实战后总结" class="headerlink" title="实战后总结"></a>实战后总结</h1><p><strong>2020-01-14 Updated</strong>：<br>PageObject定义页面和元素xpath关系即可，页面动作如果非必要，不用为某个页面定义动作。因为大部分的操作还是点击和输入，这个在更底层应该封装好。无论在RobotFramework还是纯代码实现上，都可遵从此原则</p>
-<h1 id="实际项目举例"><a href="#实际项目举例" class="headerlink" title="实际项目举例"></a>实际项目举例</h1><h2 id="草稿"><a href="#草稿" class="headerlink" title="草稿"></a>草稿</h2><h3 id="commodityIndex-商品首页"><a href="#commodityIndex-商品首页" class="headerlink" title="commodityIndex 商品首页"></a>commodityIndex 商品首页</h3><ol>
-<li>click_n_frame_contract(index) 点击第n个框架</li>
-<li>search(key) 搜索</li>
-<li>clear_search() 清除搜索</li>
-<li>switch_row_display() 切换紧凑行显示</li>
-<li>switch_col_display() 切换宽松列显示</li>
-<li>click_n_pic(commodity_type) 该方法点击某类的第n个商品图片</li>
-<li>test66 意大利TIM 配置按钮（按名字定位）</li>
-<li>click_commodity_by_name(name) 点击商品名</li>
-<li>click_n_more(commodity_type) 点击某个类型下的more、收起动作<h3 id="commodityIndexAll-商品首页（无左边栏）空的页面"><a href="#commodityIndexAll-商品首页（无左边栏）空的页面" class="headerlink" title="commodityIndexAll 商品首页（无左边栏）空的页面"></a>commodityIndexAll 商品首页（无左边栏）空的页面</h3></li>
-</ol>
-<h3 id="commodityDetails-商品详情页"><a href="#commodityDetails-商品详情页" class="headerlink" title="commodityDetails 商品详情页"></a>commodityDetails 商品详情页</h3><ol>
-<li>get_product_id() 获取商品id</li>
-<li>click_configuration_tab() 点击配置页</li>
-<li>click_product_specification_tab() 点击规格页</li>
-<li>add_n(n) 添加n个商品到购物车【输入框 限制】</li>
-<li>click_customize() 点击客制化按钮</li>
-<li>维保选择</li>
-<li>test66能源店：多选基础服务，其他数量、描述超过4行<h3 id="commodityCustomize-商品定制化页"><a href="#commodityCustomize-商品定制化页" class="headerlink" title="commodityCustomize 商品定制化页"></a>commodityCustomize 商品定制化页</h3>该页定制化情况太多，不太好封装</li>
-<li>input_name(name) </li>
-<li>click_text(text) 根据文本内容点击配件，要搭配滚屏</li>
-<li>input_num(text, n) 根据文本定位对应的输入框，输入数字</li>
-<li>select_num(text, choice) 根据文本定位对应的输入框，下拉选择</li>
-<li>view_result() 切换到定制结果</li>
-<li>view_config()切回来</li>
-<li>get_product_price() 获取定制结果的产品价格</li>
-<li>get_Service_price() 获取定制结果的服务价格</li>
-<li>add_n(n) 添加n个商品到购物车</li>
-<li>参数正确性-协议</li>
-<li>展开收缩<h3 id="commodityQuery"><a href="#commodityQuery" class="headerlink" title="commodityQuery"></a>commodityQuery</h3>暂不处理</li>
-</ol>
-<h2 id="common"><a href="#common" class="headerlink" title="common"></a>common</h2><p>可以按text来点击<br>太长或太宽，要先滚动<br>自定义商品参数正确性，建议使用协议</p>
-<p>命名规范：<br>input_xxx<br>click_xxx<br>select_xxx<br>组合动作按实际业务命名<br>click_n_xxx：xxx取列头的名字，或类型</p>
-]]></content>
-      <categories>
-        <category>Test</category>
-      </categories>
-      <tags>
-        <tag>RobotFramework</tag>
-        <tag>PageObject</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>RobotFramework执行镜像</title>
-    <url>/2018/04/25/Robotframework/RobotFramework%E6%89%A7%E8%A1%8C%E9%95%9C%E5%83%8F/</url>
-    <content><![CDATA[<p>团队使用RobotFramework作为主要自动化工具，将执行环境容器化，方便部署和扩展，以下为构建的Dockerfile</p>
-<a id="more"></a>
-<p>准备修改基础镜像，使其尺寸更小。同时考虑修改为python3<br>以下为疑似问题<br>1、尺寸大<br>2、python2字符问题<br>3、sqlite3有unicode问题<br>4、Jenkins（in docker）执行docker命令时，如果传参中文会报错,docker run rfwjs python <path contain chinese>/jobsubmit.py para1 para2</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!</span><br><span class="line"># This container is made to execute RobotFramework test.</span><br><span class="line"># !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!</span><br><span class="line"></span><br><span class="line">FROM devilrancy&#x2F;robot-cx-python:2.7-slim</span><br><span class="line"></span><br><span class="line">MAINTAINER Wu Jiansong &lt;360517703@163.com&gt;</span><br><span class="line"></span><br><span class="line">ENV http_proxy&#x3D;http:&#x2F;&#x2F;username:password@proxy.example.com:8080 \</span><br><span class="line">    https_proxy&#x3D;http:&#x2F;&#x2F;username:password@proxy.example.com:8080 \</span><br><span class="line">    REMOTE_URL&#x3D;http:&#x2F;&#x2F;100.100.154.250:4444&#x2F;wd&#x2F;hub</span><br><span class="line"></span><br><span class="line">RUN pip install -U pip \</span><br><span class="line">    requests \</span><br><span class="line">    selenium \</span><br><span class="line">    xlrd \</span><br><span class="line">    cx-Oracle \</span><br><span class="line">    pyhive \</span><br><span class="line">    pymysql \</span><br><span class="line">    robotframework \</span><br><span class="line">    dbbot \</span><br><span class="line">    robotframework-selenium2library \</span><br><span class="line">    robotframework-databaselibrary \</span><br><span class="line">    robotframework-requests \</span><br><span class="line">    robotframework-sshlibrary \</span><br><span class="line">    robotframework-excelLibrary &amp;&amp; \</span><br><span class="line">    sed -i &quot;s#formatting_info&#x3D;True,##g&quot; &#x2F;usr&#x2F;local&#x2F;lib&#x2F;python2.7&#x2F;site-packages&#x2F;ExcelLibrary&#x2F;ExcelLibrary.py &amp;&amp; \</span><br><span class="line">    sed -i &quot;s#remote_url&#x3D;False#remote_url&#x3D;&#39;$REMOTE_URL&#39;#g&quot; &#x2F;usr&#x2F;local&#x2F;lib&#x2F;python2.7&#x2F;site-packages&#x2F;SeleniumLibrary&#x2F;keywords&#x2F;browsermanagement.py &amp;&amp; \</span><br><span class="line">    echo &quot;\</span><br><span class="line">    def switch_base_url(self, alias, url):\n\</span><br><span class="line">        &#39;&#39;&#39;\n\</span><br><span class="line">        change base_url of current session. add by w00406273\n\</span><br><span class="line">        &#39;&#39;&#39;\n\</span><br><span class="line">        session &#x3D; self._cache.switch(alias)\n\</span><br><span class="line">        session.url &#x3D; url\n&quot;\</span><br><span class="line">    &gt;&gt; &#x2F;usr&#x2F;local&#x2F;lib&#x2F;python2.7&#x2F;site-packages&#x2F;RequestsLibrary&#x2F;RequestsKeywords.py &amp;&amp; \</span><br><span class="line">    echo Asia&#x2F;Shanghai &gt; &#x2F;etc&#x2F;timezone &amp;&amp; \</span><br><span class="line">    mv &#x2F;etc&#x2F;localtime &#x2F;etc&#x2F;localtime.bak &amp;&amp; cp &#x2F;usr&#x2F;share&#x2F;zoneinfo&#x2F;Asia&#x2F;Shanghai &#x2F;etc&#x2F;localtime</span><br><span class="line"></span><br><span class="line">ENV http_proxy&#x3D; \</span><br><span class="line">    https_proxy&#x3D;</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight dockerfile"><table><tr><td class="code"><pre><span class="line"><span class="comment"># !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!</span></span><br><span class="line"><span class="comment"># This container is made to execute RobotFramework test.</span></span><br><span class="line"><span class="comment"># !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">FROM</span> python:<span class="number">2.7</span>-slim</span><br><span class="line"></span><br><span class="line"><span class="keyword">MAINTAINER</span> Wu Jiansong &lt;<span class="number">360517703</span>@<span class="number">163</span>.com&gt;</span><br><span class="line"></span><br><span class="line"><span class="keyword">ENV</span> REMOTE_URL=http://localhost:<span class="number">4444</span>/wd/hub</span><br><span class="line"></span><br><span class="line"><span class="comment"># Install Ubuntu packages</span></span><br><span class="line"><span class="keyword">RUN</span><span class="bash"> apt-get update &amp;&amp; apt-get install -y --no-install-recommends \</span></span><br><span class="line"><span class="bash">                alien \</span></span><br><span class="line"><span class="bash">                dpkg-dev \</span></span><br><span class="line"><span class="bash">                debhelper \</span></span><br><span class="line"><span class="bash">                build-essential \</span></span><br><span class="line"><span class="bash">                libaio1 \</span></span><br><span class="line"><span class="bash">                wget \</span></span><br><span class="line"><span class="bash">            &amp;&amp; rm -rf /var/lib/apt/lists/* </span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Install oracle</span></span><br><span class="line"><span class="comment"># Reference: https://help.ubuntu.com/community/Oracle%20Instant%20Client</span></span><br><span class="line"><span class="comment"># Download RPM files from http://www.oracle.com/technetwork/topics/linuxx86-64soft-092277.html</span></span><br><span class="line"><span class="comment"># Get Oracle Client (this isn&#x27;t the offical download location, but at least it works without logging in!)</span></span><br><span class="line"><span class="keyword">RUN</span><span class="bash"> wget --no-check-certificate https://raw.githubusercontent.com/bumpx/oracle-instantclient/master/oracle-instantclient12.2-basiclite-12.2.0.1.0-1.x86_64.rpm \</span></span><br><span class="line"></span><br><span class="line"><span class="bash"><span class="comment"># Alien RPM package installer</span></span></span><br><span class="line"> &amp;&amp; alien -i *.rpm \</span><br><span class="line"></span><br><span class="line"><span class="comment"># Cleaning up the packages downloaded</span></span><br><span class="line"> &amp;&amp; rm *.rpm \</span><br><span class="line"> &amp;&amp; apt-get purge -y --auto-remove wget alien</span><br><span class="line"></span><br><span class="line"><span class="keyword">RUN</span><span class="bash"> <span class="built_in">echo</span> <span class="string">&quot;/usr/lib/oracle/12.2/client64/lib/&quot;</span> &gt;&gt; /etc/ld.so.conf.d/oracle.conf \</span></span><br><span class="line"><span class="bash">&amp;&amp; <span class="built_in">echo</span> <span class="string">&#x27;#!/bin/bash\n\</span></span></span><br><span class="line"><span class="bash"><span class="built_in">export</span> ORACLE_HOME=/usr/lib/oracle/12.2/client64\n\</span></span><br><span class="line"><span class="bash"><span class="built_in">export</span> PATH=<span class="variable">$PATH</span>:<span class="variable">$ORACLE_HOME</span>/bin<span class="string">&#x27; &gt;&gt; /etc/profile.d/oracle.sh \</span></span></span><br><span class="line"><span class="bash">&amp;&amp; chmod +x /etc/profile.d/oracle.sh \</span></span><br><span class="line"><span class="bash">&amp;&amp; /etc/profile.d/oracle.sh \</span></span><br><span class="line"><span class="bash">&amp;&amp; ldconfig</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">RUN</span><span class="bash"> pip install -U pip \</span></span><br><span class="line"><span class="bash">    requests \</span></span><br><span class="line"><span class="bash">    selenium \</span></span><br><span class="line"><span class="bash">    xlrd \</span></span><br><span class="line"><span class="bash">    cx-Oracle \</span></span><br><span class="line"><span class="bash">    pyhive \</span></span><br><span class="line"><span class="bash">    pymysql \</span></span><br><span class="line"><span class="bash">    robotframework \</span></span><br><span class="line"><span class="bash">    dbbot \</span></span><br><span class="line"><span class="bash">    robotframework-selenium2library \</span></span><br><span class="line"><span class="bash">    robotframework-databaselibrary \</span></span><br><span class="line"><span class="bash">    robotframework-requests \</span></span><br><span class="line"><span class="bash">    robotframework-sshlibrary \</span></span><br><span class="line"><span class="bash">    robotframework-excelLibrary &amp;&amp; \</span></span><br><span class="line"><span class="bash">    sed -i <span class="string">&quot;s#formatting_info=True,##g&quot;</span> /usr/<span class="built_in">local</span>/lib/python2.7/site-packages/ExcelLibrary/ExcelLibrary.py &amp;&amp; \</span></span><br><span class="line"><span class="bash">    sed -i <span class="string">&quot;s#remote_url=False#remote_url=&#x27;<span class="variable">$REMOTE_URL</span>&#x27;#g&quot;</span> /usr/<span class="built_in">local</span>/lib/python2.7/site-packages/SeleniumLibrary/keywords/browsermanagement.py &amp;&amp; \</span></span><br><span class="line"><span class="bash">    <span class="built_in">echo</span> <span class="string">&quot;\</span></span></span><br><span class="line"><span class="bash">    def switch_base_url(self, <span class="built_in">alias</span>, url):\n\</span></span><br><span class="line"><span class="bash">        <span class="string">&#x27;&#x27;</span><span class="string">&#x27;\n\</span></span></span><br><span class="line"><span class="bash">        change base_url of current session. add by w00406273\n\</span></span><br><span class="line"><span class="bash">        <span class="string">&#x27;&#x27;</span><span class="string">&#x27;\n\</span></span></span><br><span class="line"><span class="bash">        session = self._cache.switch(<span class="built_in">alias</span>)\n\</span></span><br><span class="line"><span class="bash">        session.url = url\n<span class="string">&quot;\</span></span></span><br><span class="line"><span class="bash">    &gt;&gt; /usr/<span class="built_in">local</span>/lib/python2.7/site-packages/RequestsLibrary/RequestsKeywords.py &amp;&amp; \</span></span><br><span class="line"><span class="bash">    <span class="built_in">echo</span> Asia/Shanghai &gt; /etc/timezone &amp;&amp; \</span></span><br><span class="line"><span class="bash">    mv /etc/localtime /etc/localtime.bak &amp;&amp; cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-]]></content>
-      <categories>
-        <category>Test</category>
-      </categories>
-      <tags>
-        <tag>Jenkins</tag>
-        <tag>Docker</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>RobotFramework问题集锦</title>
-    <url>/2019/04/24/Robotframework/RobotFramework%E9%97%AE%E9%A2%98%E9%9B%86%E9%94%A6/</url>
-    <content><![CDATA[<h3 id="关键字默认参数是变量，也需要定义"><a href="#关键字默认参数是变量，也需要定义" class="headerlink" title="关键字默认参数是变量，也需要定义"></a>关键字默认参数是变量，也需要定义</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">登录</span><br><span class="line">    [Arguments]    $&#123;url&#125;&#x3D;$&#123;Url_A3&#125;    $&#123;userName&#125;&#x3D;$&#123;User_A3&#125;    $&#123;passWord&#125;&#x3D;$&#123;Password_A3&#125;</span><br></pre></td></tr></table></figure>
-<p>如果这里的<code>$&#123;Url_A3&#125;</code>没有定义，会报错<code>Non-existing variable &#39;$&#123;Url_A3&#125;&#39;.</code></p>
-<h3 id="打开chromedriver时候，增加（命令行）参数"><a href="#打开chromedriver时候，增加（命令行）参数" class="headerlink" title="打开chromedriver时候，增加（命令行）参数"></a>打开chromedriver时候，增加（命令行）参数</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$&#123;args_list&#125;	Create List	user-data-dir&#x3D;$&#123;OUTPUT DIR&#125;$&#123;&#x2F;&#125;chrome_data	enable-precise-memory-info</span><br><span class="line">$&#123;chromeOptions&#125;	Create Dictionary	args	$&#123;args_list&#125;</span><br><span class="line">$&#123;cap_dict&#125;	Create Dictionary	chromeOptions	$&#123;chromeOptions&#125;</span><br><span class="line">Open Browser	$&#123;url&#125;	chrome	desired_capabilities&#x3D;$&#123;cap_dict&#125;</span><br></pre></td></tr></table></figure>
-
-]]></content>
-      <categories>
-        <category>Test</category>
-      </categories>
-      <tags>
-        <tag>RobotFramework</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>工单分类-keras笔记</title>
     <url>/2018/12/04/ai/%E5%B7%A5%E5%8D%95%E5%88%86%E7%B1%BB-keras%E7%AC%94%E8%AE%B0/</url>
     <content><![CDATA[<p>之前参加公司内的文本分类（工单分类）比赛，记录中间过程。</p>
@@ -1602,6 +966,343 @@ eyJoaXN0b3J5IjpbOTkwMjQ2MzU1LDcwNDkxNTEwOF19
       <tags>
         <tag>python</tag>
         <tag>Selenium</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>RobotFramework 前端内存泄漏测试</title>
+    <url>/2019/04/25/Automation/Robotframework/RobotFramework%20%E5%89%8D%E7%AB%AF%E5%86%85%E5%AD%98%E6%B3%84%E6%BC%8F%E6%B5%8B%E8%AF%95/</url>
+    <content><![CDATA[<h1 id="前端内存泄漏-威力加强版"><a href="#前端内存泄漏-威力加强版" class="headerlink" title="前端内存泄漏 - 威力加强版"></a>前端内存泄漏 - 威力加强版</h1><h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>前端应用越来越复杂，反复操作可能导致dom或js对象没有被正确回收，导致内存占用持续高位。</p>
+<h2 id="测试原理"><a href="#测试原理" class="headerlink" title="测试原理"></a>测试原理</h2><ul>
+<li>Selenium 控制浏览器反复操作</li>
+<li>psutil 获取操作系统层面的内存占用</li>
+<li>window.performance.memory 获取浏览器V8引擎级别js堆内存使用情况（chrome only）</li>
+<li>openpyxl 记录到excel</li>
+<li>robotframework 包装降低学习成本</li>
+</ul>
+<pre class="mermaid">graph LR
+    A[Robot framework/Selenium] --pid--> B[pstutil]
+    A --获取pid--> C[chromedriver]
+    A --执行js获取内存占用-->C
+    B --获取所有子进程chrome的pid--> A
+    B --chrome进程的内存占用--> A</pre>
+
+
+<pre class="mermaid">graph TD
+    A[Selenium: 获取chromedriver进程号] --> B[psutil: 获取多个子进程chrome的进程号]
+    B --> C[psutil: 获取子进程的内存占用]
+    C --> D[chrome: 执行js获取js使用情况]</pre>
+
+<h2 id="工程目录介绍"><a href="#工程目录介绍" class="headerlink" title="工程目录介绍"></a>工程目录介绍</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">├─1-TestCase</span><br><span class="line">│      切换.txt</span><br><span class="line">│</span><br><span class="line">├─2-DOMElement</span><br><span class="line">│      commonVariable.txt</span><br><span class="line">│      HomePage.txt</span><br><span class="line">│</span><br><span class="line">├─3-Keywords</span><br><span class="line">│      CanvasAW.txt</span><br><span class="line">│      Common.txt</span><br><span class="line">│      CommonAction.txt</span><br><span class="line">│      CommonAssert.txt</span><br><span class="line">│      CommonDriver.txt</span><br><span class="line">│      CommonResolve.txt</span><br><span class="line">│      CommonWait.txt</span><br><span class="line">│      HomePage.txt</span><br><span class="line">│      MemLeak.txt</span><br><span class="line">│      UplSolo.txt</span><br><span class="line">│</span><br><span class="line">├─5-Extendlibrary</span><br><span class="line">│  │</span><br><span class="line">│  └─MemoryLeak</span><br><span class="line">│          MemoryUtils.py</span><br><span class="line">│          MemUsageExcel.py</span><br></pre></td></tr></table></figure>
+
+<pre class="mermaid">graph LR
+    切换.txt --> MemLeak.txt
+    切换.txt --> UplSolo.txt
+    MemLeak.txt --> MemUsageExcel.py
+    MemUsageExcel.py --> MemoryUtils.py</pre>
+
+
+
+<ul>
+<li>UplSolo.txt：封装页面上的业务操作</li>
+<li>MemLeak.txt：封装跟内存泄漏有关的动作，MemUsageExcel.py 所有的方法在此划分</li>
+<li>MemUsageExcel.py：记录excel，调用MemoryUtils.py</li>
+</ul>
+<h2 id="曲折经历"><a href="#曲折经历" class="headerlink" title="曲折经历"></a>曲折经历</h2><h3 id="进程号变化导致写excel数据不对齐"><a href="#进程号变化导致写excel数据不对齐" class="headerlink" title="进程号变化导致写excel数据不对齐"></a>进程号变化导致写excel数据不对齐</h3><p>记录一开始的chrome进程，后续新增的进程不管，死掉的进程默认为0</p>
+<h3 id="精确内存需要在打开chrome时候新增参数"><a href="#精确内存需要在打开chrome时候新增参数" class="headerlink" title="精确内存需要在打开chrome时候新增参数"></a>精确内存需要在打开chrome时候新增参数</h3><h2 id="探讨"><a href="#探讨" class="headerlink" title="探讨"></a>探讨</h2><p>该方法是否真的能识别出内存泄漏？</p>
+<ol>
+<li>系统进程级别比js占用多很多</li>
+<li>系统进程级别的内存可能随应用当前页面展示的内容不同而（自动地）有所回落</li>
+<li>更进一步的分析就需要对数据进行分析了，后话了</li>
+</ol>
+<h2 id="项目地址"><a href="#项目地址" class="headerlink" title="项目地址"></a>项目地址</h2><p><a href="https://github.com/Tony36051/js-mem-leak-test/">https://github.com/Tony36051/js-mem-leak-test/</a></p>
+]]></content>
+      <categories>
+        <category>Test</category>
+      </categories>
+      <tags>
+        <tag>RobotFramework</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>RobotFramework入门级概览</title>
+    <url>/2018/09/22/Automation/Robotframework/RobotFramework%E5%85%A5%E9%97%A8%E7%BA%A7%E6%A6%82%E8%A7%88/</url>
+    <content><![CDATA[<p>基于RobotFramework官方的Quick Start简化而成, 包括了安装, 编写, 执行, 查看等基本流程.</p>
+<a id="more"></a>
+
+<h1 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h1><blockquote>
+<p>pip install robotframework</p>
+<p>pip install docutils  # 可选</p>
+</blockquote>
+<h1 id="编写"><a href="#编写" class="headerlink" title="编写"></a>编写</h1><p>测试目标是一个登陆模块, 涵盖了注册/登陆/修改密码的命令行工具, 编写一个测试脚本对其功能进行验证.</p>
+<p>测试脚本的官方术语叫测试数据(Test Data), 测试数据分为四个部分, Settings/Test Cases/Keywords/Variables. 每个部分以*号开始, 可以加任意空行提高可读性.</p>
+<p>关键字和参数直接用两个或以上的空格分隔, 建议使用4个, 是否需要上下行对齐看个人洁癖情况.</p>
+<p>Settings部分主要是引入库/资源文件/变量文件; 测试套的元数据如Setup/Teardown/timeout等; </p>
+<p>Testcase就是用例, 用例内每行一个步骤, 每个步骤以关键字为核心, 关键字右侧是关键字的参数, 左侧是关键字的返回.</p>
+<p>Keywords是用户自定义的由其他关键字组成的更高抽象层次的关键字, 可以设定参数和返回值.</p>
+<p>Variables是该常量定义区, 里面也可以使用系统内建的变量.</p>
+<p>以下用例针登录模块的部分测试用例的实现, 本文并不会详细展开实现细节, 将在后续文章逐渐涉及.</p>
+<p><code>overview.robot</code></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">*** Settings ***</span><br><span class="line">Library    OperatingSystem</span><br><span class="line">Suite Setup    Clear database</span><br><span class="line"></span><br><span class="line">*** Test Cases ***</span><br><span class="line">Login with nobody</span><br><span class="line">    $&#123;resp&#125;    Login    nobody    P4ssw0rd</span><br><span class="line">    should be equal as strings    $&#123;resp&#125;    Access Denied</span><br><span class="line"></span><br><span class="line">Create and log in</span><br><span class="line">    $&#123;resp&#125;    Create user  Tony    P4ssw0rd</span><br><span class="line">    should be equal  $&#123;resp&#125;    SUCCESS</span><br><span class="line">    $&#123;resp&#125;    Login          Tony  P4ssw0rd</span><br><span class="line">    should be equal as strings  $&#123;resp&#125;     Logged In</span><br><span class="line"></span><br><span class="line">*** Keywords ***</span><br><span class="line">Clear database</span><br><span class="line">    remove file     $&#123;database_path&#125;</span><br><span class="line"></span><br><span class="line">Run target</span><br><span class="line">    [Arguments]     $&#123;option&#125;   $&#123;username&#125;     $&#123;password&#125;     $&#123;new_password&#125;&#x3D;$&#123;None&#125;</span><br><span class="line">    $&#123;full_path&#125;    set variable     $&#123;targets_dir&#125;$&#123;&#x2F;&#125;login.py</span><br><span class="line">    $&#123;resp&#125;   run  python $&#123;full_path&#125; $&#123;option&#125; $&#123;username&#125; $&#123;password&#125;</span><br><span class="line">    [Return]  $&#123;resp&#125;</span><br><span class="line"></span><br><span class="line">Create user</span><br><span class="line">    [Arguments]  $&#123;username&#125;    $&#123;password&#125;</span><br><span class="line">    $&#123;resp&#125;  Run target  create  $&#123;username&#125;    $&#123;password&#125;</span><br><span class="line">    [Return]  $&#123;resp&#125;</span><br><span class="line"></span><br><span class="line">Login</span><br><span class="line">    [Arguments]  $&#123;username&#125;    $&#123;password&#125;</span><br><span class="line">    $&#123;resp&#125;  Run target  login    $&#123;username&#125;     $&#123;password&#125;</span><br><span class="line">    [Return]  $&#123;resp&#125;</span><br><span class="line"></span><br><span class="line">*** Variables ***</span><br><span class="line">$&#123;targets_dir&#125;      $&#123;CURDIR&#125;$&#123;&#x2F;&#125;..$&#123;&#x2F;&#125;targets</span><br><span class="line">$&#123;database_path&#125;    $&#123;temp_dir&#125;$&#123;&#x2F;&#125;robotframework-quickstart-db.txt</span><br></pre></td></tr></table></figure>
+
+<h1 id="执行"><a href="#执行" class="headerlink" title="执行"></a>执行</h1><p>RobotFramework3使用robot作为主要命令, 旧版2.9及以前使用pybot作为主要执行命令, 功能一致. 最基本的命令行格式robot &lt;脚本路径&gt;</p>
+<p>假设使用本文提供的样例脚本, git clone <strong>XXXX</strong></p>
+<p><img src="%E6%89%A7%E8%A1%8C.png" alt="执行截图"></p>
+<h1 id="结果"><a href="#结果" class="headerlink" title="结果"></a>结果</h1><p>测试用例执行后, 首先生成的是xUnit兼容的xml文件, 里面记录了测试执行的输出, 然后从output.xml文件中解析生成用于调试查看的<code>log.html</code>和查看整体结果的<code>report.html</code>报告文件.</p>
+<h1 id="被测对象-login-py"><a href="#被测对象-login-py" class="headerlink" title="被测对象 login.py"></a>被测对象 login.py</h1><p>程序来源: <a href="https://github.com/robotframework/QuickStartGuide">https://github.com/robotframework/QuickStartGuide</a></p>
+<p>该程序是RobotFramework官方Quick Start教程的被测程序, 以下简单说明其功能.</p>
+<p>该程序是一个简单的用户登录例子, 这是个命令行实现的验证程序, 允许调用者进行以下三个操作:</p>
+<ul>
+<li>用合规的密码创建用户</li>
+<li>用有效的账号和密码登录</li>
+<li>修改现有账号的密码</li>
+</ul>
+<p>以下是一些调用的实例:</p>
+<p>不存在的用户使用合规的密码登录, 将得到一样的错误提示</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">&gt; python sut/login.py login nobody P4ssw0rd</span><br><span class="line">Access Denied</span><br></pre></td></tr></table></figure>
+
+<p>创建用户之后, 可以成功登录</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">&gt; python sut/login.py create fred P4ssw0rd</span><br><span class="line">SUCCESS</span><br><span class="line"></span><br><span class="line">&gt; python sut/login.py login fred P4ssw0rd</span><br><span class="line">Logged In</span><br></pre></td></tr></table></figure>
+
+<p>密码合规的验证规则: 7-12位, 必须包含大小写字母和数字, 但不允许包含特殊字符.</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">&gt; python sut/login.py create fred short</span><br><span class="line">Creating user failed: Password must be 7-12 characters long</span><br><span class="line"></span><br><span class="line">&gt; python sut/login.py create fred invalid</span><br><span class="line">Creating user failed: Password must be a combination of lowercase and</span><br><span class="line">uppercase letters and numbers</span><br></pre></td></tr></table></figure>
+
+<p>修改密码的用例:</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">&gt; python sut/login.py change-password fred wrong NewP4ss</span><br><span class="line">Changing password failed: Access Denied</span><br><span class="line"></span><br><span class="line">&gt; python sut/login.py change-password fred P4ssw0rd short</span><br><span class="line">Changing password failed: Password must be 7-12 characters long</span><br><span class="line"></span><br><span class="line">&gt; python sut/login.py change-password fred P4ssw0rd NewP4ss</span><br><span class="line">SUCCESS</span><br></pre></td></tr></table></figure>
+
+<p>该应用程序使用简单的”数据库”去保存用户的信息, 其实是保存在操作系统的临时文件所在的目录, 文件名默认为<code>robotframework-quickstart-db.txt</code></p>
+]]></content>
+      <categories>
+        <category>Test</category>
+      </categories>
+      <tags>
+        <tag>RobotFramework</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>RobotFramework变量</title>
+    <url>/2018/09/26/Automation/Robotframework/RobotFramework%E5%8F%98%E9%87%8F/</url>
+    <content><![CDATA[<p>自动化用例跟其他编程语言的源文件基本类似, 关键字类比方法或函数, 关键字的参数就是函数的参数, 关键字的返回也就是函数的返回. 类似编程学习, 第一步是学习定义和使用各种变量.</p>
+<a id="more"></a>
+
+<h1 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h1><p>变量可以应用于脚本的绝大多数地方, 不过应用最多的还是在关键字的入参. 跟大多数编程语言一样, 变量不允许跟关键字重名.</p>
+<p>常见用途:</p>
+<ul>
+<li>减少修改遗漏: 如果在大片用例都是硬编码的<code>user001</code>, 建议抽成变量${username}, 好处是修改时只需要改一处, 而不用担心漏改/改错.</li>
+<li>定义系统无关的变量, 如将<code>127.0.0.1</code>修改为${HOST}, 然后通过命令行传入, 即可令测试脚本能无修改地跨系统执行, 免除因执行环境的变化而无谓的手工修改.</li>
+<li>当脚本复杂到入参是一个对象, 而不是字符串时, 必须使用变量. 因为写在脚本中的参数, 都被认为是字符串(参考字符串连接).</li>
+<li>参数传递, 上一个关键字的返回值作为下一个关键字的入参, 此时你需要变量</li>
+<li>超长的值, 当某个参数是一个很大的json, 写起来非常长, 使用变量来代表是一个好方法.</li>
+</ul>
+<h1 id="变量类型"><a href="#变量类型" class="headerlink" title="变量类型"></a>变量类型</h1><p>变量跟关键字一样, 是<code>大小写无关</code>的, 同时忽略空格和下划线(${CURDIR}除外), 前者被认为不存在. 建议使用全大写代表全局变量(如: ${PATH}), 小写的驼峰或者蛇形作为局部变量(如: ${my_name}, ${contractNo}).</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">变量名忽略大小写&#x2F;下划线&#x2F;空格</span><br><span class="line">    $&#123;a_boy&#125;    set variable  tony</span><br><span class="line">    should be equal as strings  tony  $&#123;a_boy&#125;</span><br><span class="line">    should be equal as strings  tony  $&#123;A_boy&#125;</span><br><span class="line">    should be equal as strings  tony  $&#123;aboy&#125;</span><br><span class="line">    should be equal as strings  tony  $&#123;ABOY&#125;</span><br><span class="line">    LOG     $&#123;CURDIR&#125;  # 特殊例子</span><br></pre></td></tr></table></figure>
+
+
+
+<p>一个变量由<code>类型标识符</code>($/@/&amp;/&amp;), 花括号({, }), 变量名组成, 变量名通常建议使用英文字母和数字下划线和空格组成. </p>
+<h2 id="scalar标量"><a href="#scalar标量" class="headerlink" title="scalar标量"></a>scalar标量</h2><p>标量的类型标识符是$, 是最常用的一种, 经常代表一个字符串, 但其可以表示任一一个对象, 包括链表, 字典等. 以下为常量和变量的一个用法, 两个用例的Log结果是一致的.  <code>set variable</code>关键字可以认为跟python语言的<code>赋值=</code>一样作用, 这是创建变量的一个常用方法, 创建的是局部变量.</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Scalar标量</span><br><span class="line">    $&#123;GREET&#125;    set variable  Hello</span><br><span class="line">    $&#123;NAME&#125;     set variable  world</span><br><span class="line">    Log    Hello, world!!           # 常量</span><br><span class="line">    Log    $&#123;GREET&#125;, $&#123;NAME&#125;!!      # 变量</span><br></pre></td></tr></table></figure>
+
+<p>值得注意的一点是, 如果一个测试数据单元格内, 只有变量本身, 他可以代表一个对象. 一旦单元格内还有别的变量或常量, 则只会进行字符串拼接成一个字符串. 隐式地调用python对象的<code>__unicode__</code>或java对象的<code>toString()</code>方法将对象转为字符串, 然后跟单元格内其余部分拼接. 如果python的<code>__unicode__</code>方法失败, 将调用<code>__str__</code>方法.</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">*** Settings ***</span><br><span class="line">Library  ..&#x2F;ExtLibrarys&#x2F;VarLibrary.py</span><br><span class="line"></span><br><span class="line">*** Test Cases ***</span><br><span class="line">字符串连接</span><br><span class="line">    [Documentation]  传参给关键字和函数需要注意, 连接后入参为字符串</span><br><span class="line">    $&#123;STR&#125;      set variable  Hello world!!</span><br><span class="line">    $&#123;str_type&#125;  get type    $&#123;STR&#125;                 # str类型</span><br><span class="line">    $&#123;list_type&#125;  get type    $&#123;LIST&#125;               # list类型, 使用@会展开为n个参数</span><br><span class="line">    $&#123;user1_type&#125;  get type  $&#123;user1&#125;                # dict类型,使用&amp;会展开为命名参数</span><br><span class="line">    $&#123;concat_str_type&#125;  get type  str: $&#123;STR&#125;       # str类型</span><br><span class="line">    $&#123;concat_list_type&#125;  get type  list: @&#123;LIST&#125;    # str类型</span><br><span class="line">    $&#123;concat_dict_type&#125;  get type  dict: &amp;&#123;user1&#125;   # str类型</span><br><span class="line">    should contain  $&#123;str_type&#125;  str</span><br><span class="line">    should contain  $&#123;list_type&#125;  list</span><br><span class="line">    should contain  $&#123;user1_type&#125;  dict</span><br><span class="line">    should contain  $&#123;concat_str_type&#125;  str</span><br><span class="line">    should contain  $&#123;concat_list_type&#125;  str</span><br><span class="line">    should contain  $&#123;concat_dict_type&#125;  str</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># ../ExtLibrarys/VarLibrary.py</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_type</span>(<span class="params">obj</span>):</span></span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">str</span>(<span class="built_in">type</span>(obj))</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="List列表"><a href="#List列表" class="headerlink" title="List列表"></a>List列表</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">List列表变量</span><br><span class="line">    @&#123;user&#125;    create list  robot  secret</span><br><span class="line">    Login    robot    secret</span><br><span class="line">    Login   @&#123;user&#125;  # 等同上一个</span><br><span class="line"></span><br><span class="line">List变量关键字传参, 列表可扩展性</span><br><span class="line">    Show list    @&#123;LIST&#125;    more    args</span><br><span class="line">    Show list    $&#123;SCALAR&#125;    @&#123;LIST&#125;    constant</span><br><span class="line">    Show list    @&#123;LIST&#125;    @&#123;ANOTHER&#125;    @&#123;ONE MORE&#125;</span><br><span class="line"></span><br><span class="line">List变量访问, 变量索引</span><br><span class="line">    $&#123;index&#125;    set variable  1</span><br><span class="line">    Show list  @&#123;LIST&#125;[0]  @&#123;LIST&#125;[1]  @&#123;LIST&#125;[-1]</span><br><span class="line">    should be equal as strings  @&#123;LIST&#125;[$&#123;INDEX&#125;]  $&#123;LIST[$&#123;INDEX&#125;]&#125;  # 两种不同写法</span><br><span class="line">    </span><br><span class="line">*** Keywords ***</span><br><span class="line">Login</span><br><span class="line">    [Arguments]    $&#123;name&#125;  $&#123;password&#125;</span><br><span class="line">    should be equal as strings  $&#123;name&#125;  robot</span><br><span class="line">    should be equal as strings  $&#123;password&#125;  secret</span><br><span class="line"></span><br><span class="line">Show list</span><br><span class="line">    [Arguments]  @&#123;obj&#125;</span><br><span class="line">    Log  list: @&#123;obj&#125;</span><br><span class="line">    </span><br><span class="line">*** Variables ***</span><br><span class="line">$&#123;SCALAR&#125;    3.1415926</span><br><span class="line">@&#123;LIST&#125;     1st  2nd  3rd</span><br><span class="line">@&#123;ANOTHER&#125;  4th  5th</span><br><span class="line">@&#123;ONE MORE&#125;  6th</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>从例子可以看出, 可以将不定个数的参数封装为一个列表, 用于for循环或传参给关键字. </p>
+<p>List变量的访问跟python语言中并无二致. 值得注意的是索引访问时, 如果认为LIST是标量, 则应该在索引写着花括号内; 如果认为LIST是列表, 则应该将索引卸载花括号外.</p>
+<p>列表变量的创建可以从<code>create list</code>关键字, 变量定义部分, 方法返回, 甚至是环境变量, 命令行参数中获得.</p>
+<h2 id="dict字典变量"><a href="#dict字典变量" class="headerlink" title="dict字典变量"></a>dict字典变量</h2><p>字典变量与列表变量非常类似, 甚至也是能迭代遍历.  在关键字参数传递时候, 如python函数传递一样, 参数按照顺序: <code>位置参数-列表参数-命名参数</code></p>
+<p>字典的访问方式较为多样:</p>
+<ul>
+<li>&amp;{user1}[password]: 键值为常量</li>
+<li>&amp;{user1}[${key}]: 键值为变量</li>
+<li>${user1.key}: 属性访问</li>
+<li>${user1[‘name’]}: robotframework2.9以前也可以用此方法, json也可以按此法</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Dict字典变量</span><br><span class="line">    $&#123;key&#125;  set variable  name</span><br><span class="line">    Login   password&#x3D;secret  name&#x3D;robot  # 命名参数, 顺序无关</span><br><span class="line">    Login   &amp;&#123;user1&#125;</span><br><span class="line">    Login   &amp;&#123;user1&#125;[$&#123;key&#125;]  &amp;&#123;user1&#125;[password]  # 还可以$&#123;user1.key&#125;</span><br><span class="line"></span><br><span class="line">Dict变量关键字传参, 可扩展性</span><br><span class="line">    Login  robot  &amp;&#123;password_part&#125;  # 如python, 位置参数-列表参数-命名参数</span><br><span class="line">    Login  &amp;&#123;name_part&#125;  password&#x3D;secret   #合并</span><br><span class="line">    Login  &amp;&#123;name_part&#125;  &amp;&#123;password_part&#125;  #合并</span><br><span class="line"></span><br><span class="line">*** Variables ***</span><br><span class="line">&amp;&#123;user1&#125;     name&#x3D;robot  password&#x3D;secret</span><br><span class="line">&amp;&#123;name_part&#125;     name&#x3D;robot</span><br><span class="line">&amp;&#123;password_part&#125;     password&#x3D;secret</span><br></pre></td></tr></table></figure>
+
+<p>如果是用pycharm/IDEA的插件IntelliBot, 目前版本还不能识别&amp;{}定义的变量被${}引用, 所以请忽略pycharm的错误提示.</p>
+<h1 id="内建变量"><a href="#内建变量" class="headerlink" title="内建变量"></a>内建变量</h1><h2 id="系统变量"><a href="#系统变量" class="headerlink" title="系统变量"></a>系统变量</h2><table>
+<thead>
+<tr>
+<th>Variable</th>
+<th>解释</th>
+<th>Explanation</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>${CURDIR}</td>
+<td>当前文件所在的目录的绝对路径</td>
+<td>An absolute path to the directory where the test data file is located. This variable is case-sensitive.</td>
+</tr>
+<tr>
+<td>${TEMPDIR}</td>
+<td>系统临时文件的路径</td>
+<td>An absolute path to the system temporary directory. In UNIX-like systems this is typically /tmp, and in Windows c:\Documents and Settings&lt;user&gt;\Local Settings\Temp.</td>
+</tr>
+<tr>
+<td>${EXECDIR}</td>
+<td>robot/pybot调用时所在目录</td>
+<td>An absolute path to the directory where test execution was started from.</td>
+</tr>
+<tr>
+<td>${/}</td>
+<td>通用目录分割符</td>
+<td>The system directory path separator. <code>/</code> in UNIX-like systems and \ in Windows.</td>
+</tr>
+<tr>
+<td>${:}</td>
+<td>通用环境路径分隔符</td>
+<td>The system path element separator. <code>:</code> in UNIX-like systems and <code>;</code> in Windows.</td>
+</tr>
+<tr>
+<td>${\n}</td>
+<td>通用的换行符</td>
+<td>The system line separator. \n in UNIX-like systems and \r\n in Windows. New in version 2.7.5.</td>
+</tr>
+</tbody></table>
+<h2 id="布尔Boolean"><a href="#布尔Boolean" class="headerlink" title="布尔Boolean"></a>布尔Boolean</h2><p>默认情况下, 测试数据的每个格子都是字符串, 有些时候需传递布尔变量, 使用${true}和${false}, <code>大小写无关</code></p>
+<h2 id="None和null"><a href="#None和null" class="headerlink" title="None和null"></a>None和null</h2><p>默认情况下, 测试数据的每个格子都是字符串, 有些时候需传递空值, 使用${None}和${null}, <code>大小写无关</code>, 互为别名, 可以交换使用. 因为使用python或Jython时会自动转换为正确的形式.</p>
+<h2 id="空格和空字符串"><a href="#空格和空字符串" class="headerlink" title="空格和空字符串"></a>空格和空字符串</h2><p>Robotframework在解析测试数据时, 以两个或以上的空格为分隔符, 所以在真正的测试数据中使用多于一个空格需要转义. 而多次转义使得测试代码的可读性进一步下降, 所以可以使用${space * 4}表示4个空格.</p>
+<p>如果需要表示空字符串, 需使用${EMPTY}.  这是错误的: <code>should be equal  $&#123;empty&#125;  &#39;&#39;</code></p>
+<p>${SPACE}和${EMPTY}都是 <code>大小写无关</code>.</p>
+<h2 id="数字变量"><a href="#数字变量" class="headerlink" title="数字变量"></a>数字变量</h2><p>默认情况下, 测试数据的每个格子都是字符串, 有些时候需传递数字变量, 使用${数字}等形式</p>
+<ul>
+<li><p>${80}</p>
+</li>
+<li><p>${3.14}</p>
+</li>
+<li><p>${-1e-4}: 也即 -0.0001</p>
+</li>
+<li><p>各种进制</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Example</span><br><span class="line">    Should Be Equal    $&#123;0b1011&#125;    $&#123;11&#125;   # 二进制</span><br><span class="line">    Should Be Equal    $&#123;0o10&#125;      $&#123;8&#125;    # 八进制</span><br><span class="line">    Should Be Equal    $&#123;0xff&#125;      $&#123;255&#125;  # 16进制</span><br><span class="line">    Should Be Equal    $&#123;0B1010&#125;    $&#123;0XA&#125;  # 二进制和16进制可以直接比较</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h2 id="元数据变量"><a href="#元数据变量" class="headerlink" title="元数据变量"></a>元数据变量</h2><p>如果需要获取一些跟测试数据或执行时变量, 可以考虑使用以下变量, 此处仅挑选较为常用的:</p>
+<ul>
+<li>${TEST NAME}</li>
+<li>${SUITE NAME}</li>
+<li>@{TEST TAGS}</li>
+<li>${OUTPUT DIR}</li>
+</ul>
+<h1 id="优先级和作用域"><a href="#优先级和作用域" class="headerlink" title="优先级和作用域"></a>优先级和作用域</h1><h2 id="优先级"><a href="#优先级" class="headerlink" title="优先级"></a>优先级</h2><p>内建 &gt; 执行中赋值的 &gt;命令行 &gt; 测试用例文件 &gt; resource和variable文件</p>
+<p>内建变量不允许覆盖, 但每次执行都会被重置, 类似Java的final变量, 一次定义不能修改. ${CURDIR}变量在执行过程中会不断变化, 其值为当前执行动作所在文件的目录的绝对路径.</p>
+<p>资源文件如果引用别的资源文件, 多个文件中有同名变量, 本文件中的变量优先级较高.</p>
+<p>命令行如果声明多个同名变量, 最后一个优先级高; <code>相反地</code>变量文件中, 最先声明/导入的变量拥有最高的优先级.</p>
+<h2 id="作用域"><a href="#作用域" class="headerlink" title="作用域"></a>作用域</h2><ul>
+<li>Global: 全局变量, 通常由命令行赋值, 建议首字母大写, 可以通过Set Global Variable修改.</li>
+<li>Suite: 测试套级, 不可递归, 建议首字母大写, 可以通过Set Suite Variable修改</li>
+<li>Test: 用例级, 建议首字母大写, 用例内所有步骤(keywords)可见, 可以通过Set Test Variable修改</li>
+<li>Local: 本地变量, 建议全小写, 用于keyword的参数和返回值, 关键字外不可见,</li>
+</ul>
+<p>用例文件设置的变量文件可以在本文件内任何位置使用, 包括settings.</p>
+<p>因为变量表(Variables)先被处理, 解析Settings/Variables路径时还没导入别的变量, 所以导入的变量不能在Settings/Variables中应用.</p>
+<h1 id="高级特性"><a href="#高级特性" class="headerlink" title="高级特性"></a>高级特性</h1><h2 id="扩展语法"><a href="#扩展语法" class="headerlink" title="扩展语法"></a>扩展语法</h2><p>变量名的花括号内可以访问对象的属性和方法, 但不建议过度访问对象的方法. 如果访问的方法还需要入参, 更加不建议, 这会增加测试数据的复杂性, 减低可读性, 增加维护成本. 如果非要这样做, 建议挪到自定义keyword或自定义库中.</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">*** Settings ***</span><br><span class="line">Variables  ..&#x2F;Variables&#x2F;vars.py  # 变量文件名不要跟类名一样</span><br><span class="line"></span><br><span class="line">*** Test Cases ***</span><br><span class="line">扩展语法:MyObject</span><br><span class="line">    Log    $&#123;OBJECT.name&#125;</span><br><span class="line">    Log    $&#123;OBJECT.eat(&#39;Cucumber&#39;)&#125;</span><br><span class="line">    Log    $&#123;DICTIONARY[2]&#125;</span><br><span class="line">    </span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># ../Variables/vars.py  # 变量文件名不要跟类名一样</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyObject</span>:</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self, name</span>):</span></span><br><span class="line">        self.name = name</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">eat</span>(<span class="params">self, what</span>):</span></span><br><span class="line">        <span class="keyword">return</span> <span class="string">&#x27;%s eats %s&#x27;</span> % (self.name, what)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__str__</span>(<span class="params">self</span>):</span></span><br><span class="line">        <span class="keyword">return</span> self.name</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">OBJECT = MyObject(<span class="string">&#x27;Robot&#x27;</span>)</span><br><span class="line">DICTIONARY = &#123;<span class="number">1</span>: <span class="string">&#x27;one&#x27;</span>, <span class="number">2</span>: <span class="string">&#x27;two&#x27;</span>, <span class="number">3</span>: <span class="string">&#x27;three&#x27;</span>&#125;</span><br></pre></td></tr></table></figure>
+
+<p>与此类似的还可以对标准的python对象进行操作, 要想知道对应python对象可以有哪些方法和成员, <code>dir(obj)</code></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">扩展语法:String</span><br><span class="line">    $&#123;string&#125; &#x3D;    Set Variable    abc</span><br><span class="line">    Log    $&#123;string.upper()&#125;      # Logs &#39;ABC&#39;</span><br><span class="line">    Log    $&#123;string * 2&#125;          # Logs &#39;abcabc&#39;</span><br><span class="line"></span><br><span class="line">扩展语法:Number</span><br><span class="line">    $&#123;number&#125; &#x3D;    Set Variable    $&#123;-2&#125;</span><br><span class="line">    Log    $&#123;number * 10&#125;         # Logs -20</span><br><span class="line">    Log    $&#123;number.__abs__()&#125;    # Logs 2  # 会报错: $&#123;abs(number)&#125;, 变量名需紧跟&#123;</span><br></pre></td></tr></table></figure>
+
+<h2 id="赋值"><a href="#赋值" class="headerlink" title="赋值"></a>赋值</h2><p>除了可以用<code>.</code>访问对象的属性和方法, 还可以给对象内的属性赋值.</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">扩展语法:赋值</span><br><span class="line">    $&#123;OBJECT.name&#125; &#x3D;    Set Variable    New name</span><br><span class="line">    $&#123;OBJECT.new_attr&#125; &#x3D;    Set Variable    New attribute</span><br><span class="line">    should be equal as strings  $&#123;OBJECT&#125;  New name</span><br><span class="line">    should be equal as strings  $&#123;OBJECT.new_attr&#125;  New attribute</span><br></pre></td></tr></table></figure>
+
+<h2 id="变量嵌套"><a href="#变量嵌套" class="headerlink" title="变量嵌套"></a>变量嵌套</h2><p>变量嵌套会从最内层开始替换为真实的值</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">扩展语法:嵌套</span><br><span class="line">    $&#123;OBJECT.name&#125; &#x3D;    Set Variable    T-800</span><br><span class="line">    $&#123;key&#125; &#x3D;    Set Variable    name</span><br><span class="line">    $&#123;T-800 HOME&#125;  set variable  &#x2F;home&#x2F;T-800</span><br><span class="line">    should be equal as strings  $&#123;OBJECT.$&#123;key&#125;&#125;  T-800</span><br><span class="line">    should be equal as strings  $&#123;$&#123;OBJECT.name&#125; HOME&#125;  &#x2F;home&#x2F;T-800</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>Test</category>
+      </categories>
+      <tags>
+        <tag>RobotFramework</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>RobotFramework实现Page Object设计模式的应用——GUI测试进阶</title>
+    <url>/2018/04/17/Automation/Robotframework/RobotFramework%E5%AE%9E%E7%8E%B0Page%20Object%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E7%9A%84%E5%BA%94%E7%94%A8%E2%80%94%E2%80%94GUI%E6%B5%8B%E8%AF%95%E8%BF%9B%E9%98%B6/</url>
+    <content><![CDATA[<p>第一次用RobotFramework-SeleniumLibrary写网页的GUI测试，封装关键字，按功能模块划分关键字。后来一次系统层面的UI重构，所有用例要重新写，成本很大，遂找到2013年提出，2015成熟的Page Object设计模式。基于页面或重用组件封装，仅将人类能交互的操作封装为方法。抽象后，可读性、可维护性大增。</p>
+<a id="more"></a>
+<h1 id="选型"><a href="#选型" class="headerlink" title="选型"></a>选型</h1><p>一开始选择的<a href="https://github.com/ncbi/robotframework-pageobjects">NCBI</a>的，文档详尽，功能较多，缺点是实现较复杂，坑是要指定对应的Selenium2Library的版本，对新的版本要改import，觉得不方便，什么还有别的问题。<br>后来选择使用较新的<a href="https://github.com/boakley/robotframework-pageobjectlibrary">boakley的实现</a>，实现上比较简单，功能与PageObject的意思都到了。缺点是没有完全按照PageObject的设计理念，方法返回值不一定是某页面或具体值，如果学院派地看，甚至可以说没有实现PageObject也是成立的。</p>
+<h1 id="实战后总结"><a href="#实战后总结" class="headerlink" title="实战后总结"></a>实战后总结</h1><p><strong>2020-01-14 Updated</strong>：<br>PageObject定义页面和元素xpath关系即可，页面动作如果非必要，不用为某个页面定义动作。因为大部分的操作还是点击和输入，这个在更底层应该封装好。无论在RobotFramework还是纯代码实现上，都可遵从此原则</p>
+<h1 id="实际项目举例"><a href="#实际项目举例" class="headerlink" title="实际项目举例"></a>实际项目举例</h1><h2 id="草稿"><a href="#草稿" class="headerlink" title="草稿"></a>草稿</h2><h3 id="commodityIndex-商品首页"><a href="#commodityIndex-商品首页" class="headerlink" title="commodityIndex 商品首页"></a>commodityIndex 商品首页</h3><ol>
+<li>click_n_frame_contract(index) 点击第n个框架</li>
+<li>search(key) 搜索</li>
+<li>clear_search() 清除搜索</li>
+<li>switch_row_display() 切换紧凑行显示</li>
+<li>switch_col_display() 切换宽松列显示</li>
+<li>click_n_pic(commodity_type) 该方法点击某类的第n个商品图片</li>
+<li>test66 意大利TIM 配置按钮（按名字定位）</li>
+<li>click_commodity_by_name(name) 点击商品名</li>
+<li>click_n_more(commodity_type) 点击某个类型下的more、收起动作<h3 id="commodityIndexAll-商品首页（无左边栏）空的页面"><a href="#commodityIndexAll-商品首页（无左边栏）空的页面" class="headerlink" title="commodityIndexAll 商品首页（无左边栏）空的页面"></a>commodityIndexAll 商品首页（无左边栏）空的页面</h3></li>
+</ol>
+<h3 id="commodityDetails-商品详情页"><a href="#commodityDetails-商品详情页" class="headerlink" title="commodityDetails 商品详情页"></a>commodityDetails 商品详情页</h3><ol>
+<li>get_product_id() 获取商品id</li>
+<li>click_configuration_tab() 点击配置页</li>
+<li>click_product_specification_tab() 点击规格页</li>
+<li>add_n(n) 添加n个商品到购物车【输入框 限制】</li>
+<li>click_customize() 点击客制化按钮</li>
+<li>维保选择</li>
+<li>test66能源店：多选基础服务，其他数量、描述超过4行<h3 id="commodityCustomize-商品定制化页"><a href="#commodityCustomize-商品定制化页" class="headerlink" title="commodityCustomize 商品定制化页"></a>commodityCustomize 商品定制化页</h3>该页定制化情况太多，不太好封装</li>
+<li>input_name(name) </li>
+<li>click_text(text) 根据文本内容点击配件，要搭配滚屏</li>
+<li>input_num(text, n) 根据文本定位对应的输入框，输入数字</li>
+<li>select_num(text, choice) 根据文本定位对应的输入框，下拉选择</li>
+<li>view_result() 切换到定制结果</li>
+<li>view_config()切回来</li>
+<li>get_product_price() 获取定制结果的产品价格</li>
+<li>get_Service_price() 获取定制结果的服务价格</li>
+<li>add_n(n) 添加n个商品到购物车</li>
+<li>参数正确性-协议</li>
+<li>展开收缩<h3 id="commodityQuery"><a href="#commodityQuery" class="headerlink" title="commodityQuery"></a>commodityQuery</h3>暂不处理</li>
+</ol>
+<h2 id="common"><a href="#common" class="headerlink" title="common"></a>common</h2><p>可以按text来点击<br>太长或太宽，要先滚动<br>自定义商品参数正确性，建议使用协议</p>
+<p>命名规范：<br>input_xxx<br>click_xxx<br>select_xxx<br>组合动作按实际业务命名<br>click_n_xxx：xxx取列头的名字，或类型</p>
+]]></content>
+      <categories>
+        <category>Test</category>
+      </categories>
+      <tags>
+        <tag>RobotFramework</tag>
+        <tag>PageObject</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>RobotFramework执行镜像</title>
+    <url>/2018/04/25/Automation/Robotframework/RobotFramework%E6%89%A7%E8%A1%8C%E9%95%9C%E5%83%8F/</url>
+    <content><![CDATA[<p>团队使用RobotFramework作为主要自动化工具，将执行环境容器化，方便部署和扩展，以下为构建的Dockerfile</p>
+<a id="more"></a>
+<p>准备修改基础镜像，使其尺寸更小。同时考虑修改为python3<br>以下为疑似问题<br>1、尺寸大<br>2、python2字符问题<br>3、sqlite3有unicode问题<br>4、Jenkins（in docker）执行docker命令时，如果传参中文会报错,docker run rfwjs python <path contain chinese>/jobsubmit.py para1 para2</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!</span><br><span class="line"># This container is made to execute RobotFramework test.</span><br><span class="line"># !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!</span><br><span class="line"></span><br><span class="line">FROM devilrancy&#x2F;robot-cx-python:2.7-slim</span><br><span class="line"></span><br><span class="line">MAINTAINER Wu Jiansong &lt;360517703@163.com&gt;</span><br><span class="line"></span><br><span class="line">ENV http_proxy&#x3D;http:&#x2F;&#x2F;username:password@proxy.example.com:8080 \</span><br><span class="line">    https_proxy&#x3D;http:&#x2F;&#x2F;username:password@proxy.example.com:8080 \</span><br><span class="line">    REMOTE_URL&#x3D;http:&#x2F;&#x2F;100.100.154.250:4444&#x2F;wd&#x2F;hub</span><br><span class="line"></span><br><span class="line">RUN pip install -U pip \</span><br><span class="line">    requests \</span><br><span class="line">    selenium \</span><br><span class="line">    xlrd \</span><br><span class="line">    cx-Oracle \</span><br><span class="line">    pyhive \</span><br><span class="line">    pymysql \</span><br><span class="line">    robotframework \</span><br><span class="line">    dbbot \</span><br><span class="line">    robotframework-selenium2library \</span><br><span class="line">    robotframework-databaselibrary \</span><br><span class="line">    robotframework-requests \</span><br><span class="line">    robotframework-sshlibrary \</span><br><span class="line">    robotframework-excelLibrary &amp;&amp; \</span><br><span class="line">    sed -i &quot;s#formatting_info&#x3D;True,##g&quot; &#x2F;usr&#x2F;local&#x2F;lib&#x2F;python2.7&#x2F;site-packages&#x2F;ExcelLibrary&#x2F;ExcelLibrary.py &amp;&amp; \</span><br><span class="line">    sed -i &quot;s#remote_url&#x3D;False#remote_url&#x3D;&#39;$REMOTE_URL&#39;#g&quot; &#x2F;usr&#x2F;local&#x2F;lib&#x2F;python2.7&#x2F;site-packages&#x2F;SeleniumLibrary&#x2F;keywords&#x2F;browsermanagement.py &amp;&amp; \</span><br><span class="line">    echo &quot;\</span><br><span class="line">    def switch_base_url(self, alias, url):\n\</span><br><span class="line">        &#39;&#39;&#39;\n\</span><br><span class="line">        change base_url of current session. add by w00406273\n\</span><br><span class="line">        &#39;&#39;&#39;\n\</span><br><span class="line">        session &#x3D; self._cache.switch(alias)\n\</span><br><span class="line">        session.url &#x3D; url\n&quot;\</span><br><span class="line">    &gt;&gt; &#x2F;usr&#x2F;local&#x2F;lib&#x2F;python2.7&#x2F;site-packages&#x2F;RequestsLibrary&#x2F;RequestsKeywords.py &amp;&amp; \</span><br><span class="line">    echo Asia&#x2F;Shanghai &gt; &#x2F;etc&#x2F;timezone &amp;&amp; \</span><br><span class="line">    mv &#x2F;etc&#x2F;localtime &#x2F;etc&#x2F;localtime.bak &amp;&amp; cp &#x2F;usr&#x2F;share&#x2F;zoneinfo&#x2F;Asia&#x2F;Shanghai &#x2F;etc&#x2F;localtime</span><br><span class="line"></span><br><span class="line">ENV http_proxy&#x3D; \</span><br><span class="line">    https_proxy&#x3D;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight dockerfile"><table><tr><td class="code"><pre><span class="line"><span class="comment"># !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!</span></span><br><span class="line"><span class="comment"># This container is made to execute RobotFramework test.</span></span><br><span class="line"><span class="comment"># !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">FROM</span> python:<span class="number">2.7</span>-slim</span><br><span class="line"></span><br><span class="line"><span class="keyword">MAINTAINER</span> Wu Jiansong &lt;<span class="number">360517703</span>@<span class="number">163</span>.com&gt;</span><br><span class="line"></span><br><span class="line"><span class="keyword">ENV</span> REMOTE_URL=http://localhost:<span class="number">4444</span>/wd/hub</span><br><span class="line"></span><br><span class="line"><span class="comment"># Install Ubuntu packages</span></span><br><span class="line"><span class="keyword">RUN</span><span class="bash"> apt-get update &amp;&amp; apt-get install -y --no-install-recommends \</span></span><br><span class="line"><span class="bash">                alien \</span></span><br><span class="line"><span class="bash">                dpkg-dev \</span></span><br><span class="line"><span class="bash">                debhelper \</span></span><br><span class="line"><span class="bash">                build-essential \</span></span><br><span class="line"><span class="bash">                libaio1 \</span></span><br><span class="line"><span class="bash">                wget \</span></span><br><span class="line"><span class="bash">            &amp;&amp; rm -rf /var/lib/apt/lists/* </span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Install oracle</span></span><br><span class="line"><span class="comment"># Reference: https://help.ubuntu.com/community/Oracle%20Instant%20Client</span></span><br><span class="line"><span class="comment"># Download RPM files from http://www.oracle.com/technetwork/topics/linuxx86-64soft-092277.html</span></span><br><span class="line"><span class="comment"># Get Oracle Client (this isn&#x27;t the offical download location, but at least it works without logging in!)</span></span><br><span class="line"><span class="keyword">RUN</span><span class="bash"> wget --no-check-certificate https://raw.githubusercontent.com/bumpx/oracle-instantclient/master/oracle-instantclient12.2-basiclite-12.2.0.1.0-1.x86_64.rpm \</span></span><br><span class="line"></span><br><span class="line"><span class="bash"><span class="comment"># Alien RPM package installer</span></span></span><br><span class="line"> &amp;&amp; alien -i *.rpm \</span><br><span class="line"></span><br><span class="line"><span class="comment"># Cleaning up the packages downloaded</span></span><br><span class="line"> &amp;&amp; rm *.rpm \</span><br><span class="line"> &amp;&amp; apt-get purge -y --auto-remove wget alien</span><br><span class="line"></span><br><span class="line"><span class="keyword">RUN</span><span class="bash"> <span class="built_in">echo</span> <span class="string">&quot;/usr/lib/oracle/12.2/client64/lib/&quot;</span> &gt;&gt; /etc/ld.so.conf.d/oracle.conf \</span></span><br><span class="line"><span class="bash">&amp;&amp; <span class="built_in">echo</span> <span class="string">&#x27;#!/bin/bash\n\</span></span></span><br><span class="line"><span class="bash"><span class="built_in">export</span> ORACLE_HOME=/usr/lib/oracle/12.2/client64\n\</span></span><br><span class="line"><span class="bash"><span class="built_in">export</span> PATH=<span class="variable">$PATH</span>:<span class="variable">$ORACLE_HOME</span>/bin<span class="string">&#x27; &gt;&gt; /etc/profile.d/oracle.sh \</span></span></span><br><span class="line"><span class="bash">&amp;&amp; chmod +x /etc/profile.d/oracle.sh \</span></span><br><span class="line"><span class="bash">&amp;&amp; /etc/profile.d/oracle.sh \</span></span><br><span class="line"><span class="bash">&amp;&amp; ldconfig</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">RUN</span><span class="bash"> pip install -U pip \</span></span><br><span class="line"><span class="bash">    requests \</span></span><br><span class="line"><span class="bash">    selenium \</span></span><br><span class="line"><span class="bash">    xlrd \</span></span><br><span class="line"><span class="bash">    cx-Oracle \</span></span><br><span class="line"><span class="bash">    pyhive \</span></span><br><span class="line"><span class="bash">    pymysql \</span></span><br><span class="line"><span class="bash">    robotframework \</span></span><br><span class="line"><span class="bash">    dbbot \</span></span><br><span class="line"><span class="bash">    robotframework-selenium2library \</span></span><br><span class="line"><span class="bash">    robotframework-databaselibrary \</span></span><br><span class="line"><span class="bash">    robotframework-requests \</span></span><br><span class="line"><span class="bash">    robotframework-sshlibrary \</span></span><br><span class="line"><span class="bash">    robotframework-excelLibrary &amp;&amp; \</span></span><br><span class="line"><span class="bash">    sed -i <span class="string">&quot;s#formatting_info=True,##g&quot;</span> /usr/<span class="built_in">local</span>/lib/python2.7/site-packages/ExcelLibrary/ExcelLibrary.py &amp;&amp; \</span></span><br><span class="line"><span class="bash">    sed -i <span class="string">&quot;s#remote_url=False#remote_url=&#x27;<span class="variable">$REMOTE_URL</span>&#x27;#g&quot;</span> /usr/<span class="built_in">local</span>/lib/python2.7/site-packages/SeleniumLibrary/keywords/browsermanagement.py &amp;&amp; \</span></span><br><span class="line"><span class="bash">    <span class="built_in">echo</span> <span class="string">&quot;\</span></span></span><br><span class="line"><span class="bash">    def switch_base_url(self, <span class="built_in">alias</span>, url):\n\</span></span><br><span class="line"><span class="bash">        <span class="string">&#x27;&#x27;</span><span class="string">&#x27;\n\</span></span></span><br><span class="line"><span class="bash">        change base_url of current session. add by w00406273\n\</span></span><br><span class="line"><span class="bash">        <span class="string">&#x27;&#x27;</span><span class="string">&#x27;\n\</span></span></span><br><span class="line"><span class="bash">        session = self._cache.switch(<span class="built_in">alias</span>)\n\</span></span><br><span class="line"><span class="bash">        session.url = url\n<span class="string">&quot;\</span></span></span><br><span class="line"><span class="bash">    &gt;&gt; /usr/<span class="built_in">local</span>/lib/python2.7/site-packages/RequestsLibrary/RequestsKeywords.py &amp;&amp; \</span></span><br><span class="line"><span class="bash">    <span class="built_in">echo</span> Asia/Shanghai &gt; /etc/timezone &amp;&amp; \</span></span><br><span class="line"><span class="bash">    mv /etc/localtime /etc/localtime.bak &amp;&amp; cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>Test</category>
+      </categories>
+      <tags>
+        <tag>Jenkins</tag>
+        <tag>Docker</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>RobotFramework问题集锦</title>
+    <url>/2019/04/24/Automation/Robotframework/RobotFramework%E9%97%AE%E9%A2%98%E9%9B%86%E9%94%A6/</url>
+    <content><![CDATA[<h3 id="关键字默认参数是变量，也需要定义"><a href="#关键字默认参数是变量，也需要定义" class="headerlink" title="关键字默认参数是变量，也需要定义"></a>关键字默认参数是变量，也需要定义</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">登录</span><br><span class="line">    [Arguments]    $&#123;url&#125;&#x3D;$&#123;Url_A3&#125;    $&#123;userName&#125;&#x3D;$&#123;User_A3&#125;    $&#123;passWord&#125;&#x3D;$&#123;Password_A3&#125;</span><br></pre></td></tr></table></figure>
+<p>如果这里的<code>$&#123;Url_A3&#125;</code>没有定义，会报错<code>Non-existing variable &#39;$&#123;Url_A3&#125;&#39;.</code></p>
+<h3 id="打开chromedriver时候，增加（命令行）参数"><a href="#打开chromedriver时候，增加（命令行）参数" class="headerlink" title="打开chromedriver时候，增加（命令行）参数"></a>打开chromedriver时候，增加（命令行）参数</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$&#123;args_list&#125;	Create List	user-data-dir&#x3D;$&#123;OUTPUT DIR&#125;$&#123;&#x2F;&#125;chrome_data	enable-precise-memory-info</span><br><span class="line">$&#123;chromeOptions&#125;	Create Dictionary	args	$&#123;args_list&#125;</span><br><span class="line">$&#123;cap_dict&#125;	Create Dictionary	chromeOptions	$&#123;chromeOptions&#125;</span><br><span class="line">Open Browser	$&#123;url&#125;	chrome	desired_capabilities&#x3D;$&#123;cap_dict&#125;</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>Test</category>
+      </categories>
+      <tags>
+        <tag>RobotFramework</tag>
       </tags>
   </entry>
   <entry>

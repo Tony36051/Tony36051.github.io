@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/pace-js@1/themes/blue/pace-theme-minimal.css">
+  <script src="//cdn.jsdelivr.net/npm/pace-js@1/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="第一次用RobotFramework-SeleniumLibrary写网页的GUI测试，封装关键字，按功能模块划分关键字。后来一次系统层面的UI重构，所有用例要重新写，成本很大，遂找到2013年提出，2015成熟的Page Object设计模式。基于页面或重用组件封装，仅将人类能交互的操作封装为方法。抽象后，可读性、可维护性大增。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="RobotFramework实现Page Object设计模式的应用——GUI测试进阶">
+<meta property="og:url" content="http://yoursite.com/2018/04/17/Automation/Robotframework/RobotFramework%E5%AE%9E%E7%8E%B0Page%20Object%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E7%9A%84%E5%BA%94%E7%94%A8%E2%80%94%E2%80%94GUI%E6%B5%8B%E8%AF%95%E8%BF%9B%E9%98%B6/index.html">
+<meta property="og:site_name" content="幻煞幽穹">
+<meta property="og:description" content="第一次用RobotFramework-SeleniumLibrary写网页的GUI测试，封装关键字，按功能模块划分关键字。后来一次系统层面的UI重构，所有用例要重新写，成本很大，遂找到2013年提出，2015成熟的Page Object设计模式。基于页面或重用组件封装，仅将人类能交互的操作封装为方法。抽象后，可读性、可维护性大增。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2018-04-17T02:20:00.000Z">
+<meta property="article:modified_time" content="2020-12-21T09:18:22.760Z">
+<meta property="article:author" content="夏侯仪">
+<meta property="article:tag" content="RobotFramework">
+<meta property="article:tag" content="PageObject">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://yoursite.com/2018/04/17/Automation/Robotframework/RobotFramework%E5%AE%9E%E7%8E%B0Page%20Object%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E7%9A%84%E5%BA%94%E7%94%A8%E2%80%94%E2%80%94GUI%E6%B5%8B%E8%AF%95%E8%BF%9B%E9%98%B6/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>RobotFramework实现Page Object设计模式的应用——GUI测试进阶 | 幻煞幽穹</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">幻煞幽穹</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="user fa-fw"></i>关于</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/17/Automation/Robotframework/RobotFramework%E5%AE%9E%E7%8E%B0Page%20Object%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E7%9A%84%E5%BA%94%E7%94%A8%E2%80%94%E2%80%94GUI%E6%B5%8B%E8%AF%95%E8%BF%9B%E9%98%B6/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+      <meta itemprop="name" content="夏侯仪">
+      <meta itemprop="description" content="幽寰证此约 七魄俱为凭</br>魂袅还无明 诸厉化纷英</br>吾心共天契 请凭神御临">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="幻煞幽穹">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          RobotFramework实现Page Object设计模式的应用——GUI测试进阶
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2018-04-17 10:20:00" itemprop="dateCreated datePublished" datetime="2018-04-17T10:20:00+08:00">2018-04-17</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-12-21 17:18:22" itemprop="dateModified" datetime="2020-12-21T17:18:22+08:00">2020-12-21</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Test/" itemprop="url" rel="index"><span itemprop="name">Test</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>第一次用RobotFramework-SeleniumLibrary写网页的GUI测试，封装关键字，按功能模块划分关键字。后来一次系统层面的UI重构，所有用例要重新写，成本很大，遂找到2013年提出，2015成熟的Page Object设计模式。基于页面或重用组件封装，仅将人类能交互的操作封装为方法。抽象后，可读性、可维护性大增。</p>
+<a id="more"></a>
+<h1 id="选型"><a href="#选型" class="headerlink" title="选型"></a>选型</h1><p>一开始选择的<a target="_blank" rel="noopener" href="https://github.com/ncbi/robotframework-pageobjects">NCBI</a>的，文档详尽，功能较多，缺点是实现较复杂，坑是要指定对应的Selenium2Library的版本，对新的版本要改import，觉得不方便，什么还有别的问题。<br>后来选择使用较新的<a target="_blank" rel="noopener" href="https://github.com/boakley/robotframework-pageobjectlibrary">boakley的实现</a>，实现上比较简单，功能与PageObject的意思都到了。缺点是没有完全按照PageObject的设计理念，方法返回值不一定是某页面或具体值，如果学院派地看，甚至可以说没有实现PageObject也是成立的。</p>
+<h1 id="实战后总结"><a href="#实战后总结" class="headerlink" title="实战后总结"></a>实战后总结</h1><p><strong>2020-01-14 Updated</strong>：<br>PageObject定义页面和元素xpath关系即可，页面动作如果非必要，不用为某个页面定义动作。因为大部分的操作还是点击和输入，这个在更底层应该封装好。无论在RobotFramework还是纯代码实现上，都可遵从此原则</p>
+<h1 id="实际项目举例"><a href="#实际项目举例" class="headerlink" title="实际项目举例"></a>实际项目举例</h1><h2 id="草稿"><a href="#草稿" class="headerlink" title="草稿"></a>草稿</h2><h3 id="commodityIndex-商品首页"><a href="#commodityIndex-商品首页" class="headerlink" title="commodityIndex 商品首页"></a>commodityIndex 商品首页</h3><ol>
+<li>click_n_frame_contract(index) 点击第n个框架</li>
+<li>search(key) 搜索</li>
+<li>clear_search() 清除搜索</li>
+<li>switch_row_display() 切换紧凑行显示</li>
+<li>switch_col_display() 切换宽松列显示</li>
+<li>click_n_pic(commodity_type) 该方法点击某类的第n个商品图片</li>
+<li>test66 意大利TIM 配置按钮（按名字定位）</li>
+<li>click_commodity_by_name(name) 点击商品名</li>
+<li>click_n_more(commodity_type) 点击某个类型下的more、收起动作<h3 id="commodityIndexAll-商品首页（无左边栏）空的页面"><a href="#commodityIndexAll-商品首页（无左边栏）空的页面" class="headerlink" title="commodityIndexAll 商品首页（无左边栏）空的页面"></a>commodityIndexAll 商品首页（无左边栏）空的页面</h3></li>
+</ol>
+<h3 id="commodityDetails-商品详情页"><a href="#commodityDetails-商品详情页" class="headerlink" title="commodityDetails 商品详情页"></a>commodityDetails 商品详情页</h3><ol>
+<li>get_product_id() 获取商品id</li>
+<li>click_configuration_tab() 点击配置页</li>
+<li>click_product_specification_tab() 点击规格页</li>
+<li>add_n(n) 添加n个商品到购物车【输入框 限制】</li>
+<li>click_customize() 点击客制化按钮</li>
+<li>维保选择</li>
+<li>test66能源店：多选基础服务，其他数量、描述超过4行<h3 id="commodityCustomize-商品定制化页"><a href="#commodityCustomize-商品定制化页" class="headerlink" title="commodityCustomize 商品定制化页"></a>commodityCustomize 商品定制化页</h3>该页定制化情况太多，不太好封装</li>
+<li>input_name(name) </li>
+<li>click_text(text) 根据文本内容点击配件，要搭配滚屏</li>
+<li>input_num(text, n) 根据文本定位对应的输入框，输入数字</li>
+<li>select_num(text, choice) 根据文本定位对应的输入框，下拉选择</li>
+<li>view_result() 切换到定制结果</li>
+<li>view_config()切回来</li>
+<li>get_product_price() 获取定制结果的产品价格</li>
+<li>get_Service_price() 获取定制结果的服务价格</li>
+<li>add_n(n) 添加n个商品到购物车</li>
+<li>参数正确性-协议</li>
+<li>展开收缩<h3 id="commodityQuery"><a href="#commodityQuery" class="headerlink" title="commodityQuery"></a>commodityQuery</h3>暂不处理</li>
+</ol>
+<h2 id="common"><a href="#common" class="headerlink" title="common"></a>common</h2><p>可以按text来点击<br>太长或太宽，要先滚动<br>自定义商品参数正确性，建议使用协议</p>
+<p>命名规范：<br>input_xxx<br>click_xxx<br>select_xxx<br>组合动作按实际业务命名<br>click_n_xxx：xxx取列头的名字，或类型</p>
+
+    </div>
+
+    
+    
+    
+      
+  <div class="popular-posts-header">相关文章</div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/2019/04/25/Automation/Robotframework/RobotFramework 前端内存泄漏测试/" rel="bookmark">RobotFramework 前端内存泄漏测试</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/2018/09/22/Automation/Robotframework/RobotFramework入门级概览/" rel="bookmark">RobotFramework入门级概览</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/2018/09/26/Automation/Robotframework/RobotFramework变量/" rel="bookmark">RobotFramework变量</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/2019/04/24/Automation/Robotframework/RobotFramework问题集锦/" rel="bookmark">RobotFramework问题集锦</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/2018/04/08/ops/Docker/Docker 运行 Jenkins 无法显示报告/" rel="bookmark">Docker 运行 Jenkins 无法显示报告</a></div>
+    </li>
+  </ul>
+
+        <div class="reward-container">
+  <div></div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/uploads/wechat-reward-image.jpg" alt="夏侯仪 微信支付">
+        <p>微信支付</p>
+      </div>
+      
+      <div style="display: inline-block;">
+        <img src="/uploads/alipay-reward-image.jpg" alt="夏侯仪 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/RobotFramework/" rel="tag"># RobotFramework</a>
+              <a href="/tags/PageObject/" rel="tag"># PageObject</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2018/04/08/ops/Docker/Docker%20%E8%BF%90%E8%A1%8C%20Jenkins%20%E6%97%A0%E6%B3%95%E6%98%BE%E7%A4%BA%E6%8A%A5%E5%91%8A/" rel="prev" title="Docker 运行 Jenkins 无法显示报告">
+      <i class="fa fa-chevron-left"></i> Docker 运行 Jenkins 无法显示报告
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2018/04/20/ai/%E4%BA%BA%E8%84%B8%E5%B9%B4%E9%BE%84%E9%A2%84%E6%B5%8B/" rel="next" title="人脸年龄预测">
+      人脸年龄预测 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%80%89%E5%9E%8B"><span class="nav-number">1.</span> <span class="nav-text">选型</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AE%9E%E6%88%98%E5%90%8E%E6%80%BB%E7%BB%93"><span class="nav-number">2.</span> <span class="nav-text">实战后总结</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AE%9E%E9%99%85%E9%A1%B9%E7%9B%AE%E4%B8%BE%E4%BE%8B"><span class="nav-number">3.</span> <span class="nav-text">实际项目举例</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%8D%89%E7%A8%BF"><span class="nav-number">3.1.</span> <span class="nav-text">草稿</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#commodityIndex-%E5%95%86%E5%93%81%E9%A6%96%E9%A1%B5"><span class="nav-number">3.1.1.</span> <span class="nav-text">commodityIndex 商品首页</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#commodityIndexAll-%E5%95%86%E5%93%81%E9%A6%96%E9%A1%B5%EF%BC%88%E6%97%A0%E5%B7%A6%E8%BE%B9%E6%A0%8F%EF%BC%89%E7%A9%BA%E7%9A%84%E9%A1%B5%E9%9D%A2"><span class="nav-number">3.1.2.</span> <span class="nav-text">commodityIndexAll 商品首页（无左边栏）空的页面</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#commodityDetails-%E5%95%86%E5%93%81%E8%AF%A6%E6%83%85%E9%A1%B5"><span class="nav-number">3.1.3.</span> <span class="nav-text">commodityDetails 商品详情页</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#commodityCustomize-%E5%95%86%E5%93%81%E5%AE%9A%E5%88%B6%E5%8C%96%E9%A1%B5"><span class="nav-number">3.1.4.</span> <span class="nav-text">commodityCustomize 商品定制化页</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#commodityQuery"><span class="nav-number">3.1.5.</span> <span class="nav-text">commodityQuery</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#common"><span class="nav-number">3.2.</span> <span class="nav-text">common</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="夏侯仪"
+      src="/uploads/avatar.jpg">
+  <p class="site-author-name" itemprop="name">夏侯仪</p>
+  <div class="site-description" itemprop="description">幽寰证此约 七魄俱为凭</br>魂袅还无明 诸厉化纷英</br>吾心共天契 请凭神御临</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">60</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">46</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Tony36051" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Tony36051" rel="noopener" target="_blank"><i class="github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">夏侯仪</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/pangu@4/dist/browser/pangu.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+if (document.querySelectorAll('pre.mermaid').length) {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mermaid@8/dist/mermaid.min.js', () => {
+    mermaid.initialize({
+      theme    : 'forest',
+      logLevel : 3,
+      flowchart: { curve     : 'linear' },
+      gantt    : { axisFormat: '%m/%d/%Y' },
+      sequence : { actorMargin: 50 }
+    });
+  }, window.mermaid);
+}
+</script>
+
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/pace-js@1/themes/blue/pace-theme-minimal.css">
+  <script src="//cdn.jsdelivr.net/npm/pace-js@1/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="自动化用例跟其他编程语言的源文件基本类似, 关键字类比方法或函数, 关键字的参数就是函数的参数, 关键字的返回也就是函数的返回. 类似编程学习, 第一步是学习定义和使用各种变量.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="RobotFramework变量">
+<meta property="og:url" content="http://yoursite.com/2018/09/26/Automation/Robotframework/RobotFramework%E5%8F%98%E9%87%8F/index.html">
+<meta property="og:site_name" content="幻煞幽穹">
+<meta property="og:description" content="自动化用例跟其他编程语言的源文件基本类似, 关键字类比方法或函数, 关键字的参数就是函数的参数, 关键字的返回也就是函数的返回. 类似编程学习, 第一步是学习定义和使用各种变量.">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2018-09-26T17:00:26.000Z">
+<meta property="article:modified_time" content="2020-12-21T09:18:22.760Z">
+<meta property="article:author" content="夏侯仪">
+<meta property="article:tag" content="RobotFramework">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://yoursite.com/2018/09/26/Automation/Robotframework/RobotFramework%E5%8F%98%E9%87%8F/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>RobotFramework变量 | 幻煞幽穹</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">幻煞幽穹</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="user fa-fw"></i>关于</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/09/26/Automation/Robotframework/RobotFramework%E5%8F%98%E9%87%8F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+      <meta itemprop="name" content="夏侯仪">
+      <meta itemprop="description" content="幽寰证此约 七魄俱为凭</br>魂袅还无明 诸厉化纷英</br>吾心共天契 请凭神御临">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="幻煞幽穹">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          RobotFramework变量
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2018-09-27 01:00:26" itemprop="dateCreated datePublished" datetime="2018-09-27T01:00:26+08:00">2018-09-27</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-12-21 17:18:22" itemprop="dateModified" datetime="2020-12-21T17:18:22+08:00">2020-12-21</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Test/" itemprop="url" rel="index"><span itemprop="name">Test</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>自动化用例跟其他编程语言的源文件基本类似, 关键字类比方法或函数, 关键字的参数就是函数的参数, 关键字的返回也就是函数的返回. 类似编程学习, 第一步是学习定义和使用各种变量.</p>
+<a id="more"></a>
+
+<h1 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h1><p>变量可以应用于脚本的绝大多数地方, 不过应用最多的还是在关键字的入参. 跟大多数编程语言一样, 变量不允许跟关键字重名.</p>
+<p>常见用途:</p>
+<ul>
+<li>减少修改遗漏: 如果在大片用例都是硬编码的<code>user001</code>, 建议抽成变量${username}, 好处是修改时只需要改一处, 而不用担心漏改/改错.</li>
+<li>定义系统无关的变量, 如将<code>127.0.0.1</code>修改为${HOST}, 然后通过命令行传入, 即可令测试脚本能无修改地跨系统执行, 免除因执行环境的变化而无谓的手工修改.</li>
+<li>当脚本复杂到入参是一个对象, 而不是字符串时, 必须使用变量. 因为写在脚本中的参数, 都被认为是字符串(参考字符串连接).</li>
+<li>参数传递, 上一个关键字的返回值作为下一个关键字的入参, 此时你需要变量</li>
+<li>超长的值, 当某个参数是一个很大的json, 写起来非常长, 使用变量来代表是一个好方法.</li>
+</ul>
+<h1 id="变量类型"><a href="#变量类型" class="headerlink" title="变量类型"></a>变量类型</h1><p>变量跟关键字一样, 是<code>大小写无关</code>的, 同时忽略空格和下划线(${CURDIR}除外), 前者被认为不存在. 建议使用全大写代表全局变量(如: ${PATH}), 小写的驼峰或者蛇形作为局部变量(如: ${my_name}, ${contractNo}).</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">变量名忽略大小写&#x2F;下划线&#x2F;空格</span><br><span class="line">    $&#123;a_boy&#125;    set variable  tony</span><br><span class="line">    should be equal as strings  tony  $&#123;a_boy&#125;</span><br><span class="line">    should be equal as strings  tony  $&#123;A_boy&#125;</span><br><span class="line">    should be equal as strings  tony  $&#123;aboy&#125;</span><br><span class="line">    should be equal as strings  tony  $&#123;ABOY&#125;</span><br><span class="line">    LOG     $&#123;CURDIR&#125;  # 特殊例子</span><br></pre></td></tr></table></figure>
+
+
+
+<p>一个变量由<code>类型标识符</code>($/@/&amp;/&amp;), 花括号({, }), 变量名组成, 变量名通常建议使用英文字母和数字下划线和空格组成. </p>
+<h2 id="scalar标量"><a href="#scalar标量" class="headerlink" title="scalar标量"></a>scalar标量</h2><p>标量的类型标识符是$, 是最常用的一种, 经常代表一个字符串, 但其可以表示任一一个对象, 包括链表, 字典等. 以下为常量和变量的一个用法, 两个用例的Log结果是一致的.  <code>set variable</code>关键字可以认为跟python语言的<code>赋值=</code>一样作用, 这是创建变量的一个常用方法, 创建的是局部变量.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Scalar标量</span><br><span class="line">    $&#123;GREET&#125;    set variable  Hello</span><br><span class="line">    $&#123;NAME&#125;     set variable  world</span><br><span class="line">    Log    Hello, world!!           # 常量</span><br><span class="line">    Log    $&#123;GREET&#125;, $&#123;NAME&#125;!!      # 变量</span><br></pre></td></tr></table></figure>
+
+<p>值得注意的一点是, 如果一个测试数据单元格内, 只有变量本身, 他可以代表一个对象. 一旦单元格内还有别的变量或常量, 则只会进行字符串拼接成一个字符串. 隐式地调用python对象的<code>__unicode__</code>或java对象的<code>toString()</code>方法将对象转为字符串, 然后跟单元格内其余部分拼接. 如果python的<code>__unicode__</code>方法失败, 将调用<code>__str__</code>方法.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">*** Settings ***</span><br><span class="line">Library  ..&#x2F;ExtLibrarys&#x2F;VarLibrary.py</span><br><span class="line"></span><br><span class="line">*** Test Cases ***</span><br><span class="line">字符串连接</span><br><span class="line">    [Documentation]  传参给关键字和函数需要注意, 连接后入参为字符串</span><br><span class="line">    $&#123;STR&#125;      set variable  Hello world!!</span><br><span class="line">    $&#123;str_type&#125;  get type    $&#123;STR&#125;                 # str类型</span><br><span class="line">    $&#123;list_type&#125;  get type    $&#123;LIST&#125;               # list类型, 使用@会展开为n个参数</span><br><span class="line">    $&#123;user1_type&#125;  get type  $&#123;user1&#125;                # dict类型,使用&amp;会展开为命名参数</span><br><span class="line">    $&#123;concat_str_type&#125;  get type  str: $&#123;STR&#125;       # str类型</span><br><span class="line">    $&#123;concat_list_type&#125;  get type  list: @&#123;LIST&#125;    # str类型</span><br><span class="line">    $&#123;concat_dict_type&#125;  get type  dict: &amp;&#123;user1&#125;   # str类型</span><br><span class="line">    should contain  $&#123;str_type&#125;  str</span><br><span class="line">    should contain  $&#123;list_type&#125;  list</span><br><span class="line">    should contain  $&#123;user1_type&#125;  dict</span><br><span class="line">    should contain  $&#123;concat_str_type&#125;  str</span><br><span class="line">    should contain  $&#123;concat_list_type&#125;  str</span><br><span class="line">    should contain  $&#123;concat_dict_type&#125;  str</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ../ExtLibrarys/VarLibrary.py</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_type</span>(<span class="params">obj</span>):</span></span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">str</span>(<span class="built_in">type</span>(obj))</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="List列表"><a href="#List列表" class="headerlink" title="List列表"></a>List列表</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">List列表变量</span><br><span class="line">    @&#123;user&#125;    create list  robot  secret</span><br><span class="line">    Login    robot    secret</span><br><span class="line">    Login   @&#123;user&#125;  # 等同上一个</span><br><span class="line"></span><br><span class="line">List变量关键字传参, 列表可扩展性</span><br><span class="line">    Show list    @&#123;LIST&#125;    more    args</span><br><span class="line">    Show list    $&#123;SCALAR&#125;    @&#123;LIST&#125;    constant</span><br><span class="line">    Show list    @&#123;LIST&#125;    @&#123;ANOTHER&#125;    @&#123;ONE MORE&#125;</span><br><span class="line"></span><br><span class="line">List变量访问, 变量索引</span><br><span class="line">    $&#123;index&#125;    set variable  1</span><br><span class="line">    Show list  @&#123;LIST&#125;[0]  @&#123;LIST&#125;[1]  @&#123;LIST&#125;[-1]</span><br><span class="line">    should be equal as strings  @&#123;LIST&#125;[$&#123;INDEX&#125;]  $&#123;LIST[$&#123;INDEX&#125;]&#125;  # 两种不同写法</span><br><span class="line">    </span><br><span class="line">*** Keywords ***</span><br><span class="line">Login</span><br><span class="line">    [Arguments]    $&#123;name&#125;  $&#123;password&#125;</span><br><span class="line">    should be equal as strings  $&#123;name&#125;  robot</span><br><span class="line">    should be equal as strings  $&#123;password&#125;  secret</span><br><span class="line"></span><br><span class="line">Show list</span><br><span class="line">    [Arguments]  @&#123;obj&#125;</span><br><span class="line">    Log  list: @&#123;obj&#125;</span><br><span class="line">    </span><br><span class="line">*** Variables ***</span><br><span class="line">$&#123;SCALAR&#125;    3.1415926</span><br><span class="line">@&#123;LIST&#125;     1st  2nd  3rd</span><br><span class="line">@&#123;ANOTHER&#125;  4th  5th</span><br><span class="line">@&#123;ONE MORE&#125;  6th</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>从例子可以看出, 可以将不定个数的参数封装为一个列表, 用于for循环或传参给关键字. </p>
+<p>List变量的访问跟python语言中并无二致. 值得注意的是索引访问时, 如果认为LIST是标量, 则应该在索引写着花括号内; 如果认为LIST是列表, 则应该将索引卸载花括号外.</p>
+<p>列表变量的创建可以从<code>create list</code>关键字, 变量定义部分, 方法返回, 甚至是环境变量, 命令行参数中获得.</p>
+<h2 id="dict字典变量"><a href="#dict字典变量" class="headerlink" title="dict字典变量"></a>dict字典变量</h2><p>字典变量与列表变量非常类似, 甚至也是能迭代遍历.  在关键字参数传递时候, 如python函数传递一样, 参数按照顺序: <code>位置参数-列表参数-命名参数</code></p>
+<p>字典的访问方式较为多样:</p>
+<ul>
+<li>&amp;{user1}[password]: 键值为常量</li>
+<li>&amp;{user1}[${key}]: 键值为变量</li>
+<li>${user1.key}: 属性访问</li>
+<li>${user1[‘name’]}: robotframework2.9以前也可以用此方法, json也可以按此法</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">Dict字典变量</span><br><span class="line">    $&#123;key&#125;  set variable  name</span><br><span class="line">    Login   password&#x3D;secret  name&#x3D;robot  # 命名参数, 顺序无关</span><br><span class="line">    Login   &amp;&#123;user1&#125;</span><br><span class="line">    Login   &amp;&#123;user1&#125;[$&#123;key&#125;]  &amp;&#123;user1&#125;[password]  # 还可以$&#123;user1.key&#125;</span><br><span class="line"></span><br><span class="line">Dict变量关键字传参, 可扩展性</span><br><span class="line">    Login  robot  &amp;&#123;password_part&#125;  # 如python, 位置参数-列表参数-命名参数</span><br><span class="line">    Login  &amp;&#123;name_part&#125;  password&#x3D;secret   #合并</span><br><span class="line">    Login  &amp;&#123;name_part&#125;  &amp;&#123;password_part&#125;  #合并</span><br><span class="line"></span><br><span class="line">*** Variables ***</span><br><span class="line">&amp;&#123;user1&#125;     name&#x3D;robot  password&#x3D;secret</span><br><span class="line">&amp;&#123;name_part&#125;     name&#x3D;robot</span><br><span class="line">&amp;&#123;password_part&#125;     password&#x3D;secret</span><br></pre></td></tr></table></figure>
+
+<p>如果是用pycharm/IDEA的插件IntelliBot, 目前版本还不能识别&amp;{}定义的变量被${}引用, 所以请忽略pycharm的错误提示.</p>
+<h1 id="内建变量"><a href="#内建变量" class="headerlink" title="内建变量"></a>内建变量</h1><h2 id="系统变量"><a href="#系统变量" class="headerlink" title="系统变量"></a>系统变量</h2><table>
+<thead>
+<tr>
+<th>Variable</th>
+<th>解释</th>
+<th>Explanation</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>${CURDIR}</td>
+<td>当前文件所在的目录的绝对路径</td>
+<td>An absolute path to the directory where the test data file is located. This variable is case-sensitive.</td>
+</tr>
+<tr>
+<td>${TEMPDIR}</td>
+<td>系统临时文件的路径</td>
+<td>An absolute path to the system temporary directory. In UNIX-like systems this is typically /tmp, and in Windows c:\Documents and Settings&lt;user&gt;\Local Settings\Temp.</td>
+</tr>
+<tr>
+<td>${EXECDIR}</td>
+<td>robot/pybot调用时所在目录</td>
+<td>An absolute path to the directory where test execution was started from.</td>
+</tr>
+<tr>
+<td>${/}</td>
+<td>通用目录分割符</td>
+<td>The system directory path separator. <code>/</code> in UNIX-like systems and \ in Windows.</td>
+</tr>
+<tr>
+<td>${:}</td>
+<td>通用环境路径分隔符</td>
+<td>The system path element separator. <code>:</code> in UNIX-like systems and <code>;</code> in Windows.</td>
+</tr>
+<tr>
+<td>${\n}</td>
+<td>通用的换行符</td>
+<td>The system line separator. \n in UNIX-like systems and \r\n in Windows. New in version 2.7.5.</td>
+</tr>
+</tbody></table>
+<h2 id="布尔Boolean"><a href="#布尔Boolean" class="headerlink" title="布尔Boolean"></a>布尔Boolean</h2><p>默认情况下, 测试数据的每个格子都是字符串, 有些时候需传递布尔变量, 使用${true}和${false}, <code>大小写无关</code></p>
+<h2 id="None和null"><a href="#None和null" class="headerlink" title="None和null"></a>None和null</h2><p>默认情况下, 测试数据的每个格子都是字符串, 有些时候需传递空值, 使用${None}和${null}, <code>大小写无关</code>, 互为别名, 可以交换使用. 因为使用python或Jython时会自动转换为正确的形式.</p>
+<h2 id="空格和空字符串"><a href="#空格和空字符串" class="headerlink" title="空格和空字符串"></a>空格和空字符串</h2><p>Robotframework在解析测试数据时, 以两个或以上的空格为分隔符, 所以在真正的测试数据中使用多于一个空格需要转义. 而多次转义使得测试代码的可读性进一步下降, 所以可以使用${space * 4}表示4个空格.</p>
+<p>如果需要表示空字符串, 需使用${EMPTY}.  这是错误的: <code>should be equal  $&#123;empty&#125;  &#39;&#39;</code></p>
+<p>${SPACE}和${EMPTY}都是 <code>大小写无关</code>.</p>
+<h2 id="数字变量"><a href="#数字变量" class="headerlink" title="数字变量"></a>数字变量</h2><p>默认情况下, 测试数据的每个格子都是字符串, 有些时候需传递数字变量, 使用${数字}等形式</p>
+<ul>
+<li><p>${80}</p>
+</li>
+<li><p>${3.14}</p>
+</li>
+<li><p>${-1e-4}: 也即 -0.0001</p>
+</li>
+<li><p>各种进制</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Example</span><br><span class="line">    Should Be Equal    $&#123;0b1011&#125;    $&#123;11&#125;   # 二进制</span><br><span class="line">    Should Be Equal    $&#123;0o10&#125;      $&#123;8&#125;    # 八进制</span><br><span class="line">    Should Be Equal    $&#123;0xff&#125;      $&#123;255&#125;  # 16进制</span><br><span class="line">    Should Be Equal    $&#123;0B1010&#125;    $&#123;0XA&#125;  # 二进制和16进制可以直接比较</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h2 id="元数据变量"><a href="#元数据变量" class="headerlink" title="元数据变量"></a>元数据变量</h2><p>如果需要获取一些跟测试数据或执行时变量, 可以考虑使用以下变量, 此处仅挑选较为常用的:</p>
+<ul>
+<li>${TEST NAME}</li>
+<li>${SUITE NAME}</li>
+<li>@{TEST TAGS}</li>
+<li>${OUTPUT DIR}</li>
+</ul>
+<h1 id="优先级和作用域"><a href="#优先级和作用域" class="headerlink" title="优先级和作用域"></a>优先级和作用域</h1><h2 id="优先级"><a href="#优先级" class="headerlink" title="优先级"></a>优先级</h2><p>内建 &gt; 执行中赋值的 &gt;命令行 &gt; 测试用例文件 &gt; resource和variable文件</p>
+<p>内建变量不允许覆盖, 但每次执行都会被重置, 类似Java的final变量, 一次定义不能修改. ${CURDIR}变量在执行过程中会不断变化, 其值为当前执行动作所在文件的目录的绝对路径.</p>
+<p>资源文件如果引用别的资源文件, 多个文件中有同名变量, 本文件中的变量优先级较高.</p>
+<p>命令行如果声明多个同名变量, 最后一个优先级高; <code>相反地</code>变量文件中, 最先声明/导入的变量拥有最高的优先级.</p>
+<h2 id="作用域"><a href="#作用域" class="headerlink" title="作用域"></a>作用域</h2><ul>
+<li>Global: 全局变量, 通常由命令行赋值, 建议首字母大写, 可以通过Set Global Variable修改.</li>
+<li>Suite: 测试套级, 不可递归, 建议首字母大写, 可以通过Set Suite Variable修改</li>
+<li>Test: 用例级, 建议首字母大写, 用例内所有步骤(keywords)可见, 可以通过Set Test Variable修改</li>
+<li>Local: 本地变量, 建议全小写, 用于keyword的参数和返回值, 关键字外不可见,</li>
+</ul>
+<p>用例文件设置的变量文件可以在本文件内任何位置使用, 包括settings.</p>
+<p>因为变量表(Variables)先被处理, 解析Settings/Variables路径时还没导入别的变量, 所以导入的变量不能在Settings/Variables中应用.</p>
+<h1 id="高级特性"><a href="#高级特性" class="headerlink" title="高级特性"></a>高级特性</h1><h2 id="扩展语法"><a href="#扩展语法" class="headerlink" title="扩展语法"></a>扩展语法</h2><p>变量名的花括号内可以访问对象的属性和方法, 但不建议过度访问对象的方法. 如果访问的方法还需要入参, 更加不建议, 这会增加测试数据的复杂性, 减低可读性, 增加维护成本. 如果非要这样做, 建议挪到自定义keyword或自定义库中.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">*** Settings ***</span><br><span class="line">Variables  ..&#x2F;Variables&#x2F;vars.py  # 变量文件名不要跟类名一样</span><br><span class="line"></span><br><span class="line">*** Test Cases ***</span><br><span class="line">扩展语法:MyObject</span><br><span class="line">    Log    $&#123;OBJECT.name&#125;</span><br><span class="line">    Log    $&#123;OBJECT.eat(&#39;Cucumber&#39;)&#125;</span><br><span class="line">    Log    $&#123;DICTIONARY[2]&#125;</span><br><span class="line">    </span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ../Variables/vars.py  # 变量文件名不要跟类名一样</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyObject</span>:</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self, name</span>):</span></span><br><span class="line">        self.name = name</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">eat</span>(<span class="params">self, what</span>):</span></span><br><span class="line">        <span class="keyword">return</span> <span class="string">&#x27;%s eats %s&#x27;</span> % (self.name, what)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__str__</span>(<span class="params">self</span>):</span></span><br><span class="line">        <span class="keyword">return</span> self.name</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">OBJECT = MyObject(<span class="string">&#x27;Robot&#x27;</span>)</span><br><span class="line">DICTIONARY = &#123;<span class="number">1</span>: <span class="string">&#x27;one&#x27;</span>, <span class="number">2</span>: <span class="string">&#x27;two&#x27;</span>, <span class="number">3</span>: <span class="string">&#x27;three&#x27;</span>&#125;</span><br></pre></td></tr></table></figure>
+
+<p>与此类似的还可以对标准的python对象进行操作, 要想知道对应python对象可以有哪些方法和成员, <code>dir(obj)</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">扩展语法:String</span><br><span class="line">    $&#123;string&#125; &#x3D;    Set Variable    abc</span><br><span class="line">    Log    $&#123;string.upper()&#125;      # Logs &#39;ABC&#39;</span><br><span class="line">    Log    $&#123;string * 2&#125;          # Logs &#39;abcabc&#39;</span><br><span class="line"></span><br><span class="line">扩展语法:Number</span><br><span class="line">    $&#123;number&#125; &#x3D;    Set Variable    $&#123;-2&#125;</span><br><span class="line">    Log    $&#123;number * 10&#125;         # Logs -20</span><br><span class="line">    Log    $&#123;number.__abs__()&#125;    # Logs 2  # 会报错: $&#123;abs(number)&#125;, 变量名需紧跟&#123;</span><br></pre></td></tr></table></figure>
+
+<h2 id="赋值"><a href="#赋值" class="headerlink" title="赋值"></a>赋值</h2><p>除了可以用<code>.</code>访问对象的属性和方法, 还可以给对象内的属性赋值.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">扩展语法:赋值</span><br><span class="line">    $&#123;OBJECT.name&#125; &#x3D;    Set Variable    New name</span><br><span class="line">    $&#123;OBJECT.new_attr&#125; &#x3D;    Set Variable    New attribute</span><br><span class="line">    should be equal as strings  $&#123;OBJECT&#125;  New name</span><br><span class="line">    should be equal as strings  $&#123;OBJECT.new_attr&#125;  New attribute</span><br></pre></td></tr></table></figure>
+
+<h2 id="变量嵌套"><a href="#变量嵌套" class="headerlink" title="变量嵌套"></a>变量嵌套</h2><p>变量嵌套会从最内层开始替换为真实的值</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">扩展语法:嵌套</span><br><span class="line">    $&#123;OBJECT.name&#125; &#x3D;    Set Variable    T-800</span><br><span class="line">    $&#123;key&#125; &#x3D;    Set Variable    name</span><br><span class="line">    $&#123;T-800 HOME&#125;  set variable  &#x2F;home&#x2F;T-800</span><br><span class="line">    should be equal as strings  $&#123;OBJECT.$&#123;key&#125;&#125;  T-800</span><br><span class="line">    should be equal as strings  $&#123;$&#123;OBJECT.name&#125; HOME&#125;  &#x2F;home&#x2F;T-800</span><br></pre></td></tr></table></figure>
+
+
+    </div>
+
+    
+    
+    
+      
+  <div class="popular-posts-header">相关文章</div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/2019/04/25/Automation/Robotframework/RobotFramework 前端内存泄漏测试/" rel="bookmark">RobotFramework 前端内存泄漏测试</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/2018/09/22/Automation/Robotframework/RobotFramework入门级概览/" rel="bookmark">RobotFramework入门级概览</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/2018/04/17/Automation/Robotframework/RobotFramework实现Page Object设计模式的应用——GUI测试进阶/" rel="bookmark">RobotFramework实现Page Object设计模式的应用——GUI测试进阶</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/2019/04/24/Automation/Robotframework/RobotFramework问题集锦/" rel="bookmark">RobotFramework问题集锦</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/2018/04/08/ops/Docker/Docker 运行 Jenkins 无法显示报告/" rel="bookmark">Docker 运行 Jenkins 无法显示报告</a></div>
+    </li>
+  </ul>
+
+        <div class="reward-container">
+  <div></div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/uploads/wechat-reward-image.jpg" alt="夏侯仪 微信支付">
+        <p>微信支付</p>
+      </div>
+      
+      <div style="display: inline-block;">
+        <img src="/uploads/alipay-reward-image.jpg" alt="夏侯仪 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/RobotFramework/" rel="tag"># RobotFramework</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2018/09/22/Automation/Robotframework/RobotFramework%E5%85%A5%E9%97%A8%E7%BA%A7%E6%A6%82%E8%A7%88/" rel="prev" title="RobotFramework入门级概览">
+      <i class="fa fa-chevron-left"></i> RobotFramework入门级概览
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2018/10/24/projects/ReportPortal-Customization/ReportPortal-%E4%BA%8C%E6%AC%A1%E5%BC%80%E5%8F%91%E7%AC%94%E8%AE%B0/" rel="next" title="ReportPortal 二次开发笔记">
+      ReportPortal 二次开发笔记 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AE%80%E4%BB%8B"><span class="nav-number">1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%98%E9%87%8F%E7%B1%BB%E5%9E%8B"><span class="nav-number">2.</span> <span class="nav-text">变量类型</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#scalar%E6%A0%87%E9%87%8F"><span class="nav-number">2.1.</span> <span class="nav-text">scalar标量</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#List%E5%88%97%E8%A1%A8"><span class="nav-number">2.2.</span> <span class="nav-text">List列表</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#dict%E5%AD%97%E5%85%B8%E5%8F%98%E9%87%8F"><span class="nav-number">2.3.</span> <span class="nav-text">dict字典变量</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%86%85%E5%BB%BA%E5%8F%98%E9%87%8F"><span class="nav-number">3.</span> <span class="nav-text">内建变量</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%B3%BB%E7%BB%9F%E5%8F%98%E9%87%8F"><span class="nav-number">3.1.</span> <span class="nav-text">系统变量</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B8%83%E5%B0%94Boolean"><span class="nav-number">3.2.</span> <span class="nav-text">布尔Boolean</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#None%E5%92%8Cnull"><span class="nav-number">3.3.</span> <span class="nav-text">None和null</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%A9%BA%E6%A0%BC%E5%92%8C%E7%A9%BA%E5%AD%97%E7%AC%A6%E4%B8%B2"><span class="nav-number">3.4.</span> <span class="nav-text">空格和空字符串</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B0%E5%AD%97%E5%8F%98%E9%87%8F"><span class="nav-number">3.5.</span> <span class="nav-text">数字变量</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%83%E6%95%B0%E6%8D%AE%E5%8F%98%E9%87%8F"><span class="nav-number">3.6.</span> <span class="nav-text">元数据变量</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BC%98%E5%85%88%E7%BA%A7%E5%92%8C%E4%BD%9C%E7%94%A8%E5%9F%9F"><span class="nav-number">4.</span> <span class="nav-text">优先级和作用域</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BC%98%E5%85%88%E7%BA%A7"><span class="nav-number">4.1.</span> <span class="nav-text">优先级</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%9C%E7%94%A8%E5%9F%9F"><span class="nav-number">4.2.</span> <span class="nav-text">作用域</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%AB%98%E7%BA%A7%E7%89%B9%E6%80%A7"><span class="nav-number">5.</span> <span class="nav-text">高级特性</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%89%A9%E5%B1%95%E8%AF%AD%E6%B3%95"><span class="nav-number">5.1.</span> <span class="nav-text">扩展语法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B5%8B%E5%80%BC"><span class="nav-number">5.2.</span> <span class="nav-text">赋值</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%98%E9%87%8F%E5%B5%8C%E5%A5%97"><span class="nav-number">5.3.</span> <span class="nav-text">变量嵌套</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="夏侯仪"
+      src="/uploads/avatar.jpg">
+  <p class="site-author-name" itemprop="name">夏侯仪</p>
+  <div class="site-description" itemprop="description">幽寰证此约 七魄俱为凭</br>魂袅还无明 诸厉化纷英</br>吾心共天契 请凭神御临</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">60</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">46</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Tony36051" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Tony36051" rel="noopener" target="_blank"><i class="github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">夏侯仪</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/pangu@4/dist/browser/pangu.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+if (document.querySelectorAll('pre.mermaid').length) {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mermaid@8/dist/mermaid.min.js', () => {
+    mermaid.initialize({
+      theme    : 'forest',
+      logLevel : 3,
+      flowchart: { curve     : 'linear' },
+      gantt    : { axisFormat: '%m/%d/%Y' },
+      sequence : { actorMargin: 50 }
+    });
+  }, window.mermaid);
+}
+</script>
+
+
+  
+
+  
+
+</body>
+</html>
