@@ -2133,7 +2133,7 @@ eyJoaXN0b3J5IjpbLTI2NTUyNjY3MSw2NDQwMDk3MzJdfQ==
     <content><![CDATA[<p>备份MySQL数据，简单的shell笔记。</p>
 <a id="more"></a>
 
-<h1 id="备份MySQL数据"><a href="#备份MySQL数据" class="headerlink" title="备份MySQL数据"></a>备份MySQL数据</h1><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">work_path=$(dirname $(readlink -f &quot;$0&quot;))</span><br><span class="line">cd $work_path</span><br><span class="line">DATE=$(date +%Y%m%d)</span><br><span class="line">/usr/bin/mysqldump -h example.com -uroot -proot --databases d_common &gt; $DATE.sql</span><br><span class="line">tar -cjf $DATE.sql.tar.bz2 $DATE.sql</span><br><span class="line">rm -f $DATE.sql</span><br></pre></td></tr></table></figure>]]></content>
+<h1 id="备份MySQL数据"><a href="#备份MySQL数据" class="headerlink" title="备份MySQL数据"></a>备份MySQL数据</h1><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">work_path=$(dirname $(readlink -f <span class="string">&quot;<span class="variable">$0</span>&quot;</span>))</span><br><span class="line"><span class="built_in">cd</span> <span class="variable">$work_path</span></span><br><span class="line">DATE=$(date +%Y%m%d)</span><br><span class="line">/usr/bin/mysqldump -h example.com -uroot -proot --databases d_common &gt; <span class="variable">$DATE</span>.sql</span><br><span class="line">tar -cjf <span class="variable">$DATE</span>.sql.tar.bz2 <span class="variable">$DATE</span>.sql</span><br><span class="line">rm -f <span class="variable">$DATE</span>.sql</span><br></pre></td></tr></table></figure>]]></content>
       <categories>
         <category>Ops</category>
       </categories>
