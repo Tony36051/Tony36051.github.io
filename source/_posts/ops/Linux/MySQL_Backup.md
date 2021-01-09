@@ -12,7 +12,7 @@ categories:
 
 # 备份MySQL数据
 
-```shell
+```bash
 work_path=$(dirname $(readlink -f "$0"))
 cd $work_path
 DATE=$(date +%Y%m%d)
