@@ -2128,6 +2128,21 @@ eyJoaXN0b3J5IjpbLTI2NTUyNjY3MSw2NDQwMDk3MzJdfQ==
       </tags>
   </entry>
   <entry>
+    <title>备份MySQL数据</title>
+    <url>/2021/01/08/ops/Linux/MySQL_Backup/</url>
+    <content><![CDATA[<p>备份MySQL数据，简单的shell笔记。</p>
+<a id="more"></a>
+
+<h1 id="备份MySQL数据"><a href="#备份MySQL数据" class="headerlink" title="备份MySQL数据"></a>备份MySQL数据</h1><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">work_path=$(dirname $(readlink -f &quot;$0&quot;))</span><br><span class="line">cd $work_path</span><br><span class="line">DATE=$(date +%Y%m%d)</span><br><span class="line">/usr/bin/mysqldump -h example.com -uroot -proot --databases d_common &gt; $DATE.sql</span><br><span class="line">tar -cjf $DATE.sql.tar.bz2 $DATE.sql</span><br><span class="line">rm -f $DATE.sql</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>Ops</category>
+      </categories>
+      <tags>
+        <tag>MySQL</tag>
+        <tag>Linux</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Systemd使用（Nginx和Jenkins为例）</title>
     <url>/2019/06/17/ops/Linux/Systemd%E4%BD%BF%E7%94%A8%EF%BC%88Nginx%E5%92%8CJenkins%E4%B8%BA%E4%BE%8B%EF%BC%89/</url>
     <content><![CDATA[<p>作为一个测试+运维人员，经常需要使用jenkins做持续集成，将jenkins作为守护进程有很多方法，其中一个就是用systemd。</p>
