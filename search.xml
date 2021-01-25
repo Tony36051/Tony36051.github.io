@@ -518,6 +518,23 @@ cxMTYzXX0=
       </tags>
   </entry>
   <entry>
+    <title>画瓢-Springboot骨架</title>
+    <url>/2020/05/11/Java/MyBatisPlus%E4%BB%A3%E7%A0%81%E7%94%9F%E6%88%90%E5%99%A8generator%E5%9C%A8Postgres%E6%95%B0%E6%8D%AE%E5%BA%93%E6%97%A0%E6%B3%95%E7%94%9F%E6%88%90/</url>
+    <content><![CDATA[<p>在菊厂中做着卑微的螺丝钉，日常经常使用很多很多IT的系统、框架、公共能力，接触的微服务架构。每天都只是简单地使用，了解特性，总是对其中的实现和原理抱有很大的好奇。画瓢系列第一章就是Java web常用Springboot骨架的尝试。直接抄袭公司的东西是不对的，直接用开源的组件模拟一下大概的意思应该是可以的。</p>
+<a id="more"></a>
+
+<h1 id="葫芦：spring-boot-api-project-seed"><a href="#葫芦：spring-boot-api-project-seed" class="headerlink" title="葫芦：spring-boot-api-project-seed"></a>葫芦：spring-boot-api-project-seed</h1><h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>一个基于Spring Boot &amp; MyBatis的种子项目，用于快速构建中小型API、RESTful API项目。<br><a href="https://github.com/lihengming/spring-boot-api-project-seed">https://github.com/lihengming/spring-boot-api-project-seed</a></p>
+<p>直接clone不是画瓢，而是买葫芦了，所以我打算按照他的思路，组装属于我的瓢。<br>先去掉代码生成，直到我也写了十几个工程项目之后，再考虑加上。<br>不太喜欢Fastjson，要换掉。</p>
+<h1 id="目录结构"><a href="#目录结构" class="headerlink" title="目录结构"></a>目录结构</h1>]]></content>
+      <categories>
+        <category>开发</category>
+      </categories>
+      <tags>
+        <tag>画瓢</tag>
+        <tag>java</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>springboot多profiles环境配置</title>
     <url>/2018/07/13/Java/springboot%E5%A4%9Aprofiles%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/</url>
     <content><![CDATA[<p>spring boot开发通常由多个环境, 不同环境用的数据库密码等都不一样, 怎么可以灵活切换呢? 最简单方法可以用spring boot的profiles切换方法.</p>

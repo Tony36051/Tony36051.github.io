@@ -164,6 +164,90 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/02/14/ops/%E8%BF%9E%E6%8E%A5%E6%B1%A0%E7%9B%91%E6%8E%A7/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+      <meta itemprop="name" content="夏侯仪">
+      <meta itemprop="description" content="幽寰证此约 七魄俱为凭</br>魂袅还无明 诸厉化纷英</br>吾心共天契 请凭神御临">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="幻煞幽穹">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/02/14/ops/%E8%BF%9E%E6%8E%A5%E6%B1%A0%E7%9B%91%E6%8E%A7/" class="post-title-link" itemprop="url">连接池监控</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-02-14 16:36:00" itemprop="dateCreated datePublished" datetime="2020-02-14T16:36:00+08:00">2020-02-14</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-01-25 11:42:15" itemprop="dateModified" datetime="2021-01-25T11:42:15+08:00">2021-01-25</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Ops/" itemprop="url" rel="index"><span itemprop="name">Ops</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="连接池"><a href="#连接池" class="headerlink" title="连接池"></a>连接池</h1><p>数据源是各种数据库，甚至你可以认为excel都是一个数据源。连接池是为了复用连接数据源的链接的管理池。<br>连接池的监控可以反应一部分的业务高峰，形成告警。持续的监控指标也能作为应用崩溃的复盘数据。</p>
+<h2 id="监控原理"><a href="#监控原理" class="headerlink" title="监控原理"></a>监控原理</h2><p>公司平台使用普罗米修斯采集Java暴露的JMX数据，作为产品研发团队，只需要在程序启动后，将每个数据源包装一个Listener，多个数据源打包成map，交给<code>MBeanExporter</code></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">MBeanExporter exporter = <span class="keyword">new</span> MBeanExporter();</span><br><span class="line"><span class="comment">// 探测模式 0不自动 1当前IOC容器查找组件 2 根据的策略进行探测</span></span><br><span class="line">exporter.setAutodetectMode(<span class="number">0</span>);</span><br><span class="line">Map&lt;String, AtomikosDataSourceBean&gt; dataSources = <span class="keyword">null</span>; <span class="comment">// 自行获取</span></span><br><span class="line">Map&lt;String, Object&gt; map = <span class="keyword">new</span> HashMap&lt;String, Object&gt;();</span><br><span class="line"><span class="keyword">for</span> (String key : dataSources.keySet()) &#123;</span><br><span class="line">    AtomikosDataSourceBean dataSrouce = dataSources.get(key);</span><br><span class="line">    DataSourceListener listener = <span class="keyword">new</span> DataSourceListener(dataSrouce);</span><br><span class="line">    map.put(<span class="string">&quot;Catalina:type=DatasourceConnectionPool,name=&quot;</span> + dataSrouce.getUniqueResourceName(), listener);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">exporter.setBeans(map);</span><br><span class="line">exporter.afterPropertiesSet();</span><br><span class="line">exporter.afterSingletonsInstantiated();</span><br></pre></td></tr></table></figure>
+
+<h2 id="指标设置"><a href="#指标设置" class="headerlink" title="指标设置"></a>指标设置</h2><p>样例代码中，指标的计算是这样的：<br>最大上限： maxSize<br>当前创建： poolSize（池中总连接）<br>空闲数： available（池中可用连接）<br>已使用： poolSize - available<br>利用率： (poolSize - available) / poolSize</p>
+<p>一开始我是觉得不太合理，监控的时候，不太好监控。仔细思考一下，也可以组合一下用当前暴露的指标做监控：</p>
+<ol>
+<li>当前创建&gt;90 (硬指标，不方便)</li>
+<li>利用率在多个采集周期都&gt;90% （持续高涨，当前创建数应该会增加）</li>
+</ol>
+<p>其实如果不是非常学院派，常人理解的指标应该是这样计算：<br>最大上限： maxSize<br>当前创建： poolSize<br>空闲数： maxSize - poolSize<br>已使用： poolSize - available<br>利用率： poolSize / maxSize</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/06/17/ops/Linux/Systemd%E4%BD%BF%E7%94%A8%EF%BC%88Nginx%E5%92%8CJenkins%E4%B8%BA%E4%BE%8B%EF%BC%89/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -195,7 +279,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-01-09 14:41:48" itemprop="dateModified" datetime="2021-01-09T14:41:48+08:00">2021-01-09</time>
+                <time title="修改时间：2021-01-25 11:42:15" itemprop="dateModified" datetime="2021-01-25T11:42:15+08:00">2021-01-25</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -276,7 +360,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-01-09 14:41:48" itemprop="dateModified" datetime="2021-01-09T14:41:48+08:00">2021-01-09</time>
+                <time title="修改时间：2021-01-25 11:42:15" itemprop="dateModified" datetime="2021-01-25T11:42:15+08:00">2021-01-25</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -357,7 +441,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-01-09 14:41:48" itemprop="dateModified" datetime="2021-01-09T14:41:48+08:00">2021-01-09</time>
+                <time title="修改时间：2021-01-25 11:42:15" itemprop="dateModified" datetime="2021-01-25T11:42:15+08:00">2021-01-25</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -438,7 +522,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-01-09 14:41:48" itemprop="dateModified" datetime="2021-01-09T14:41:48+08:00">2021-01-09</time>
+                <time title="修改时间：2021-01-25 11:42:15" itemprop="dateModified" datetime="2021-01-25T11:42:15+08:00">2021-01-25</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -526,7 +610,7 @@ eyJoaXN0b3J5IjpbLTg4MDg3NTU0Myw4NjkzNDY1MTVdfQ==
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-01-09 14:41:48" itemprop="dateModified" datetime="2021-01-09T14:41:48+08:00">2021-01-09</time>
+                <time title="修改时间：2021-01-25 11:42:15" itemprop="dateModified" datetime="2021-01-25T11:42:15+08:00">2021-01-25</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -607,7 +691,7 @@ eyJoaXN0b3J5IjpbLTg4MDg3NTU0Myw4NjkzNDY1MTVdfQ==
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-01-09 14:41:48" itemprop="dateModified" datetime="2021-01-09T14:41:48+08:00">2021-01-09</time>
+                <time title="修改时间：2021-01-25 11:42:15" itemprop="dateModified" datetime="2021-01-25T11:42:15+08:00">2021-01-25</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -724,7 +808,7 @@ eyJoaXN0b3J5IjpbLTg4MDg3NTU0Myw4NjkzNDY1MTVdfQ==
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-01-09 14:41:48" itemprop="dateModified" datetime="2021-01-09T14:41:48+08:00">2021-01-09</time>
+                <time title="修改时间：2021-01-25 11:42:15" itemprop="dateModified" datetime="2021-01-25T11:42:15+08:00">2021-01-25</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -801,7 +885,7 @@ eyJoaXN0b3J5IjpbLTg4MDg3NTU0Myw4NjkzNDY1MTVdfQ==
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-01-09 14:41:48" itemprop="dateModified" datetime="2021-01-09T14:41:48+08:00">2021-01-09</time>
+                <time title="修改时间：2021-01-25 11:42:15" itemprop="dateModified" datetime="2021-01-25T11:42:15+08:00">2021-01-25</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -882,7 +966,7 @@ eyJoaXN0b3J5IjpbLTg4MDg3NTU0Myw4NjkzNDY1MTVdfQ==
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-01-09 14:41:48" itemprop="dateModified" datetime="2021-01-09T14:41:48+08:00">2021-01-09</time>
+                <time title="修改时间：2021-01-25 11:42:15" itemprop="dateModified" datetime="2021-01-25T11:42:15+08:00">2021-01-25</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -909,87 +993,6 @@ eyJoaXN0b3J5IjpbLTg4MDg3NTU0Myw4NjkzNDY1MTVdfQ==
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2018/12/04/ai/%E5%B7%A5%E5%8D%95%E5%88%86%E7%B1%BB-keras%E7%AC%94%E8%AE%B0/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/10/24/projects/ReportPortal-Customization/ReportPortal-%E4%BA%8C%E6%AC%A1%E5%BC%80%E5%8F%91%E7%AC%94%E8%AE%B0/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-      <meta itemprop="name" content="夏侯仪">
-      <meta itemprop="description" content="幽寰证此约 七魄俱为凭</br>魂袅还无明 诸厉化纷英</br>吾心共天契 请凭神御临">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="幻煞幽穹">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2018/10/24/projects/ReportPortal-Customization/ReportPortal-%E4%BA%8C%E6%AC%A1%E5%BC%80%E5%8F%91%E7%AC%94%E8%AE%B0/" class="post-title-link" itemprop="url">ReportPortal 二次开发笔记</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2018-10-25 00:00:00" itemprop="dateCreated datePublished" datetime="2018-10-25T00:00:00+08:00">2018-10-25</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-01-09 14:41:48" itemprop="dateModified" datetime="2021-01-09T14:41:48+08:00">2021-01-09</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Dev/" itemprop="url" rel="index"><span itemprop="name">Dev</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>ReportPortal二次开发中, 记录一些考量、感想</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2018/10/24/projects/ReportPortal-Customization/ReportPortal-%E4%BA%8C%E6%AC%A1%E5%BC%80%E5%8F%91%E7%AC%94%E8%AE%B0/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -1080,7 +1083,7 @@ eyJoaXN0b3J5IjpbLTg4MDg3NTU0Myw4NjkzNDY1MTVdfQ==
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">61</span>
+          <span class="site-state-item-count">62</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
