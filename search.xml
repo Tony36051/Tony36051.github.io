@@ -535,6 +535,20 @@ cxMTYzXX0=
       </tags>
   </entry>
   <entry>
+    <title>MyBatisPlus 代码生成器generator在Postgres数据库无法生成</title>
+    <url>/2021/01/21/Java/mybatisplus-generator-on-postgres/</url>
+    <content><![CDATA[<p>MyBatis-Plus的代码生成器generator用示例代码无法在postgres数据库表上生成代码，原因是没设置schemaName。</p>
+<a id="more"></a>
+
+<h1 id="关键点"><a href="#关键点" class="headerlink" title="关键点"></a>关键点</h1><figure class="highlight java"><table><tr><td class="code"><pre><span class="line">DataSourceConfig dataSourceConfig = <span class="keyword">new</span> DataSourceConfig();</span><br><span class="line">dataSourceConfig.setDbType(DbType.POSTGRE_SQL);  </span><br><span class="line">dataSourceConfig.setSchemaName(<span class="string">&quot;mybatisplus&quot;</span>);  <span class="comment">// 少了这行</span></span><br></pre></td></tr></table></figure>
+
+
+]]></content>
+      <tags>
+        <tag>java</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>springboot多profiles环境配置</title>
     <url>/2018/07/13/Java/springboot%E5%A4%9Aprofiles%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/</url>
     <content><![CDATA[<p>spring boot开发通常由多个环境, 不同环境用的数据库密码等都不一样, 怎么可以灵活切换呢? 最简单方法可以用spring boot的profiles切换方法.</p>
