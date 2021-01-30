@@ -22,22 +22,19 @@
     var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="Docker运行Jenkins有诸多不便，尽量不要使用。较新版本Jenkins限制了js和css的运行，然而RobotFramework的日志log.html和报告report.html都严重依赖js和css。docker平台上最简单解决方法就是用JAVA_OPTS-Dhudson.model.DirectoryBrowserSupport.CSP&#x3D;，放松Jenkins的安全策略。缺失字体库会造成">
+  <meta name="description" content="家庭的路由器是刷的是openwrt，电视盒子刷的armbian，有时候想知道断网了没，内网的网络状态怎么样。这时候需要内网穿透，frp和zerotier都是使用目标，写个小东西做frpc的更新，上报一下在线状态。因为同时管理父母家里、老丈人家里、家乡等多个网络。因为之前做过一个命令推送的小项目，复用一下，用Golang先实现客户端，服务器端用Java的Netty框架，用protobuf协议。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Docker 运行 Jenkins 无法显示报告">
-<meta property="og:url" content="http://yoursite.com/2018/04/08/ops/Docker/Docker%20%E8%BF%90%E8%A1%8C%20Jenkins%20%E6%97%A0%E6%B3%95%E6%98%BE%E7%A4%BA%E6%8A%A5%E5%91%8A/index.html">
+<meta property="og:title" content="远程控制内网设备">
+<meta property="og:url" content="http://yoursite.com/2021/01/29/projects/Remote-Controll-in-NAT/index.html">
 <meta property="og:site_name" content="幻煞幽穹">
-<meta property="og:description" content="Docker运行Jenkins有诸多不便，尽量不要使用。较新版本Jenkins限制了js和css的运行，然而RobotFramework的日志log.html和报告report.html都严重依赖js和css。docker平台上最简单解决方法就是用JAVA_OPTS-Dhudson.model.DirectoryBrowserSupport.CSP&#x3D;，放松Jenkins的安全策略。缺失字体库会造成">
+<meta property="og:description" content="家庭的路由器是刷的是openwrt，电视盒子刷的armbian，有时候想知道断网了没，内网的网络状态怎么样。这时候需要内网穿透，frp和zerotier都是使用目标，写个小东西做frpc的更新，上报一下在线状态。因为同时管理父母家里、老丈人家里、家乡等多个网络。因为之前做过一个命令推送的小项目，复用一下，用Golang先实现客户端，服务器端用Java的Netty框架，用protobuf协议。">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2018-04-08T03:36:00.000Z">
-<meta property="article:modified_time" content="2021-01-30T09:08:44.179Z">
+<meta property="article:published_time" content="2021-01-29T16:00:00.000Z">
+<meta property="article:modified_time" content="2021-01-30T09:08:44.183Z">
 <meta property="article:author" content="夏侯仪">
-<meta property="article:tag" content="Jenkins">
-<meta property="article:tag" content="RobotFramework">
-<meta property="article:tag" content="Docker">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="http://yoursite.com/2018/04/08/ops/Docker/Docker%20%E8%BF%90%E8%A1%8C%20Jenkins%20%E6%97%A0%E6%B3%95%E6%98%BE%E7%A4%BA%E6%8A%A5%E5%91%8A/">
+<link rel="canonical" href="http://yoursite.com/2021/01/29/projects/Remote-Controll-in-NAT/">
 
 
 <script id="page-configurations">
@@ -50,7 +47,7 @@
   };
 </script>
 
-  <title>Docker 运行 Jenkins 无法显示报告 | 幻煞幽穹</title>
+  <title>远程控制内网设备 | 幻煞幽穹</title>
   
 
 
@@ -170,7 +167,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/08/ops/Docker/Docker%20%E8%BF%90%E8%A1%8C%20Jenkins%20%E6%97%A0%E6%B3%95%E6%98%BE%E7%A4%BA%E6%8A%A5%E5%91%8A/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2021/01/29/projects/Remote-Controll-in-NAT/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/uploads/avatar.jpg">
@@ -183,7 +180,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          Docker 运行 Jenkins 无法显示报告
+          远程控制内网设备
         </h1>
 
         <div class="post-meta">
@@ -192,24 +189,9 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
+              
 
-              <time title="创建时间：2018-04-08 11:36:00" itemprop="dateCreated datePublished" datetime="2018-04-08T11:36:00+08:00">2018-04-08</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-01-30 17:08:44" itemprop="dateModified" datetime="2021-01-30T17:08:44+08:00">2021-01-30</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Ops/" itemprop="url" rel="index"><span itemprop="name">Ops</span></a>
-                </span>
+              <time title="创建时间：2021-01-30 00:00:00 / 修改时间：17:08:44" itemprop="dateCreated datePublished" datetime="2021-01-30T00:00:00+08:00">2021-01-30</time>
             </span>
 
           
@@ -223,14 +205,45 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>Docker运行Jenkins有诸多不便，尽量不要使用。<br>较新版本Jenkins限制了js和css的运行，然而RobotFramework的日志log.html和报告report.html都严重依赖js和css。docker平台上最简单解决方法就是用JAVA_OPTS-Dhudson.model.DirectoryBrowserSupport.CSP=，放松Jenkins的安全策略。缺失字体库会造成显示成方块的问题</p>
+        <p>家庭的路由器是刷的是openwrt，电视盒子刷的armbian，有时候想知道断网了没，内网的网络状态怎么样。这时候需要内网穿透，frp和zerotier都是使用目标，写个小东西做frpc的更新，上报一下在线状态。因为同时管理父母家里、老丈人家里、家乡等多个网络。因为之前做过一个命令推送的小项目，复用一下，用Golang先实现客户端，服务器端用Java的Netty框架，用protobuf协议。</p>
 <a id="more"></a>
-<h1 id="Docker-运行-Jenkins-无法显示报告、字体乱码问题"><a href="#Docker-运行-Jenkins-无法显示报告、字体乱码问题" class="headerlink" title="Docker 运行 Jenkins 无法显示报告、字体乱码问题"></a>Docker 运行 Jenkins 无法显示报告、字体乱码问题</h1><h2 id="运行命令"><a href="#运行命令" class="headerlink" title="运行命令"></a>运行命令</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">docker run -u root --name jenkins --restart always -d \</span><br><span class="line">-p 8083:8080 -p 50000:50000 \</span><br><span class="line">--link hwcntlm:hwcntlm \</span><br><span class="line">-v /usr/share/zoneinfo/Asia/Shanghai:/etc/localtime \</span><br><span class="line">-v /home/tony/jenkins-blueocean-data:/var/jenkins_home \</span><br><span class="line">-v /var/run/docker.sock:/var/run/docker.sock \</span><br><span class="line">-e http_proxy=hwcntlm:3128 \</span><br><span class="line">-e https_proxy=hwcntlm:3128 \</span><br><span class="line">-e JAVA_OPTS=<span class="string">&quot;-DproxyHost=hwcntlm -DproxyPort=3128 -Dhudson.model.DirectoryBrowserSupport.CSP= -Duser.timezone=Asia/Shanghai&quot;</span> \</span><br><span class="line">jenkinsci/blueocean</span><br></pre></td></tr></table></figure>
-<ol>
-<li>多个JAVA_OPTS：如果处在多个JAVA_OPTS，需要空格隔开，双引号包住。等号后面不加内容为空。</li>
-<li>时区问题：通过JAVA_OPTS和映射时区文件都可以解决，按理说只取其一即可</li>
-<li>代理：公司环境很可能需要代理才能访问，按理说也是环境变量<code>http_proxy</code>和JAVA_OPTS=-DproxyHost=hwcntlm -DproxyPort=3128任一即可</li>
+
+<h1 id="功能描述"><a href="#功能描述" class="headerlink" title="功能描述"></a>功能描述</h1><ol>
+<li>启动时获取静态配置</li>
+<li>上报存活状态</li>
+<li>接收命令执行</li>
+<li>动态升级</li>
 </ol>
+<h1 id="概要设计"><a href="#概要设计" class="headerlink" title="概要设计"></a>概要设计</h1><h2 id="配置获取"><a href="#配置获取" class="headerlink" title="配置获取"></a>配置获取</h2><p>时间：每分钟更新一次<br>配置格式：json<br>数据站点：<a target="_blank" rel="noopener" href="https://gitee.com/Tony36051/nat-controll/raw/master/conf.json">https://gitee.com/Tony36051/nat-controll/raw/master/conf.json</a><br>动态reload到内存</p>
+<h2 id="上报存活状态"><a href="#上报存活状态" class="headerlink" title="上报存活状态"></a>上报存活状态</h2><p>时间：一分钟上报一次<br>上报内容：</p>
+<ol>
+<li>主机名，hostname</li>
+<li>内网ip，intranetIp</li>
+<li>公网ip，publicIp</li>
+<li>自定义名称，nickname</li>
+<li>上报时间，reportTime</li>
+<li>执行用户，runUser。判断命令可执行范围</li>
+<li>二进制版本，version<br>服务器端回复：</li>
+<li>机器id：nickname_hostname</li>
+</ol>
+<h2 id="命令推送"><a href="#命令推送" class="headerlink" title="命令推送"></a>命令推送</h2><p>时机：服务端推送<br>客户端收到后，返回ack。<br>下发内容：</p>
+<ol>
+<li>命令id，Long型</li>
+<li>命令内容</li>
+<li>机器id</li>
+</ol>
+<h2 id="命令执行"><a href="#命令执行" class="headerlink" title="命令执行"></a>命令执行</h2><p>时机：客户端收到命令后，立刻执行<br>客户端将命令原样进行系统调用，同步获取输出流和错误流，上报给服务器。<br>超时：无超时机制，如果一直在执行，则无返回。<br>阻塞：不阻塞，来一个命令开一个routine执行。必要时候接受reboot命令</p>
+<h2 id="命令回执"><a href="#命令回执" class="headerlink" title="命令回执"></a>命令回执</h2><p>时机：命令执行完成后<br>上报内容：</p>
+<ol>
+<li>命令id</li>
+<li>机器id</li>
+<li>输出流</li>
+<li>错误流</li>
+</ol>
+<h2 id="OTA"><a href="#OTA" class="headerlink" title="OTA"></a>OTA</h2><p>时机：命令推送或静态配置文件发现版本可更新<br>升级：启动升级程序，下载新版程序，停止&amp;删掉老程序，覆盖老程序，启动<br>上报：升级结果、自检结果</p>
+<h1 id="接口设计"><a href="#接口设计" class="headerlink" title="接口设计"></a>接口设计</h1><h2 id="上报接口"><a href="#上报接口" class="headerlink" title="上报接口"></a>上报接口</h2><p>POST /mc/online<br>{<br>    “hostname”: “armbian”,<br>    “intranetIp”: “192.168.1.254”,<br>    “publicIp”: “100.100.123.123”,<br>    “nickname”: “hometown”,<br>    “reportTime”: “2021-01-30 16:35:02”,<br>    “runUser”: “root”,<br>    “version”: “v20210130.1”<br>}<br>{<br>    “machineId”: “hometown_armbian”<br>}</p>
+<h2 id="命令下发"><a href="#命令下发" class="headerlink" title="命令下发"></a>命令下发</h2><p>POST /mc/cmd<br>{<br>    “cmd”: “date”,<br>    “machineId”: “hometown_armbian”<br>}<br>{<br>    “recvTime”: “2021-01-30 16:35:02”,<br>    “machineId”: “hometown_armbian”,<br>    “cmdId”: 123456789<br>}</p>
+<h2 id="命令结果收集"><a href="#命令结果收集" class="headerlink" title="命令结果收集"></a>命令结果收集</h2><p>PUT /mc/cmd<br>{<br>    “cmdId”: 123456789,<br>    “output”: “xxxxxxxxxxxxxxxxxx”,<br>    “error”: “yyyyyyyyyyyyyyyyy”,<br>    “durationInSec”: “10”<br>}</p>
 
     </div>
 
@@ -238,24 +251,6 @@
     
     
       
-  <div class="popular-posts-header">相关文章</div>
-  <ul class="popular-posts">
-    <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/2018/04/25/Automation/Robotframework/RobotFramework执行镜像/" rel="bookmark">RobotFramework执行镜像</a></div>
-    </li>
-    <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/2018/07/13/Git 笔记/" rel="bookmark">Git 笔记</a></div>
-    </li>
-    <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/2019/04/25/Automation/Robotframework/RobotFramework 前端内存泄漏测试/" rel="bookmark">RobotFramework 前端内存泄漏测试</a></div>
-    </li>
-    <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/2018/09/22/Automation/Robotframework/RobotFramework入门级概览/" rel="bookmark">RobotFramework入门级概览</a></div>
-    </li>
-    <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/2018/09/26/Automation/Robotframework/RobotFramework变量/" rel="bookmark">RobotFramework变量</a></div>
-    </li>
-  </ul>
 
         <div class="reward-container">
   <div></div>
@@ -279,11 +274,6 @@
 
 
       <footer class="post-footer">
-          <div class="post-tags">
-              <a href="/tags/Jenkins/" rel="tag"># Jenkins</a>
-              <a href="/tags/RobotFramework/" rel="tag"># RobotFramework</a>
-              <a href="/tags/Docker/" rel="tag"># Docker</a>
-          </div>
 
         
 
@@ -291,13 +281,10 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2018/04/05/ops/Hadoop/Hadoop2.x%20%E7%BB%84%E4%BB%B6%E8%BF%90%E7%BB%B4%E5%91%BD%E4%BB%A4/" rel="prev" title="Hadoop2.x 组件运维命令">
-      <i class="fa fa-chevron-left"></i> Hadoop2.x 组件运维命令
+    <a href="/2021/01/21/Java/mybatisplus-generator-on-postgres/" rel="prev" title="MyBatisPlus 代码生成器generator在Postgres数据库无法生成">
+      <i class="fa fa-chevron-left"></i> MyBatisPlus 代码生成器generator在Postgres数据库无法生成
     </a></div>
-      <div class="post-nav-item">
-    <a href="/2018/04/17/Automation/Robotframework/RobotFramework%E5%AE%9E%E7%8E%B0Page%20Object%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E7%9A%84%E5%BA%94%E7%94%A8%E2%80%94%E2%80%94GUI%E6%B5%8B%E8%AF%95%E8%BF%9B%E9%98%B6/" rel="next" title="RobotFramework实现Page Object设计模式的应用——GUI测试进阶">
-      RobotFramework实现Page Object设计模式的应用——GUI测试进阶 <i class="fa fa-chevron-right"></i>
-    </a></div>
+      <div class="post-nav-item"></div>
     </div>
       </footer>
     
@@ -356,7 +343,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Docker-%E8%BF%90%E8%A1%8C-Jenkins-%E6%97%A0%E6%B3%95%E6%98%BE%E7%A4%BA%E6%8A%A5%E5%91%8A%E3%80%81%E5%AD%97%E4%BD%93%E4%B9%B1%E7%A0%81%E9%97%AE%E9%A2%98"><span class="nav-number">1.</span> <span class="nav-text">Docker 运行 Jenkins 无法显示报告、字体乱码问题</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%90%E8%A1%8C%E5%91%BD%E4%BB%A4"><span class="nav-number">1.1.</span> <span class="nav-text">运行命令</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8A%9F%E8%83%BD%E6%8F%8F%E8%BF%B0"><span class="nav-number">1.</span> <span class="nav-text">功能描述</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%A6%82%E8%A6%81%E8%AE%BE%E8%AE%A1"><span class="nav-number">2.</span> <span class="nav-text">概要设计</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E8%8E%B7%E5%8F%96"><span class="nav-number">2.1.</span> <span class="nav-text">配置获取</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%8A%E6%8A%A5%E5%AD%98%E6%B4%BB%E7%8A%B6%E6%80%81"><span class="nav-number">2.2.</span> <span class="nav-text">上报存活状态</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%91%BD%E4%BB%A4%E6%8E%A8%E9%80%81"><span class="nav-number">2.3.</span> <span class="nav-text">命令推送</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C"><span class="nav-number">2.4.</span> <span class="nav-text">命令执行</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%91%BD%E4%BB%A4%E5%9B%9E%E6%89%A7"><span class="nav-number">2.5.</span> <span class="nav-text">命令回执</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#OTA"><span class="nav-number">2.6.</span> <span class="nav-text">OTA</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%8E%A5%E5%8F%A3%E8%AE%BE%E8%AE%A1"><span class="nav-number">3.</span> <span class="nav-text">接口设计</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%8A%E6%8A%A5%E6%8E%A5%E5%8F%A3"><span class="nav-number">3.1.</span> <span class="nav-text">上报接口</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%91%BD%E4%BB%A4%E4%B8%8B%E5%8F%91"><span class="nav-number">3.2.</span> <span class="nav-text">命令下发</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%91%BD%E4%BB%A4%E7%BB%93%E6%9E%9C%E6%94%B6%E9%9B%86"><span class="nav-number">3.3.</span> <span class="nav-text">命令结果收集</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 

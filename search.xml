@@ -1000,6 +1000,50 @@ eyJoaXN0b3J5IjpbOTkwMjQ2MzU1LDcwNDkxNTEwOF19
       </tags>
   </entry>
   <entry>
+    <title>远程控制内网设备</title>
+    <url>/2021/01/29/projects/Remote-Controll-in-NAT/</url>
+    <content><![CDATA[<p>家庭的路由器是刷的是openwrt，电视盒子刷的armbian，有时候想知道断网了没，内网的网络状态怎么样。这时候需要内网穿透，frp和zerotier都是使用目标，写个小东西做frpc的更新，上报一下在线状态。因为同时管理父母家里、老丈人家里、家乡等多个网络。因为之前做过一个命令推送的小项目，复用一下，用Golang先实现客户端，服务器端用Java的Netty框架，用protobuf协议。</p>
+<a id="more"></a>
+
+<h1 id="功能描述"><a href="#功能描述" class="headerlink" title="功能描述"></a>功能描述</h1><ol>
+<li>启动时获取静态配置</li>
+<li>上报存活状态</li>
+<li>接收命令执行</li>
+<li>动态升级</li>
+</ol>
+<h1 id="概要设计"><a href="#概要设计" class="headerlink" title="概要设计"></a>概要设计</h1><h2 id="配置获取"><a href="#配置获取" class="headerlink" title="配置获取"></a>配置获取</h2><p>时间：每分钟更新一次<br>配置格式：json<br>数据站点：<a href="https://gitee.com/Tony36051/nat-controll/raw/master/conf.json">https://gitee.com/Tony36051/nat-controll/raw/master/conf.json</a><br>动态reload到内存</p>
+<h2 id="上报存活状态"><a href="#上报存活状态" class="headerlink" title="上报存活状态"></a>上报存活状态</h2><p>时间：一分钟上报一次<br>上报内容：</p>
+<ol>
+<li>主机名，hostname</li>
+<li>内网ip，intranetIp</li>
+<li>公网ip，publicIp</li>
+<li>自定义名称，nickname</li>
+<li>上报时间，reportTime</li>
+<li>执行用户，runUser。判断命令可执行范围</li>
+<li>二进制版本，version<br>服务器端回复：</li>
+<li>机器id：nickname_hostname</li>
+</ol>
+<h2 id="命令推送"><a href="#命令推送" class="headerlink" title="命令推送"></a>命令推送</h2><p>时机：服务端推送<br>客户端收到后，返回ack。<br>下发内容：</p>
+<ol>
+<li>命令id，Long型</li>
+<li>命令内容</li>
+<li>机器id</li>
+</ol>
+<h2 id="命令执行"><a href="#命令执行" class="headerlink" title="命令执行"></a>命令执行</h2><p>时机：客户端收到命令后，立刻执行<br>客户端将命令原样进行系统调用，同步获取输出流和错误流，上报给服务器。<br>超时：无超时机制，如果一直在执行，则无返回。<br>阻塞：不阻塞，来一个命令开一个routine执行。必要时候接受reboot命令</p>
+<h2 id="命令回执"><a href="#命令回执" class="headerlink" title="命令回执"></a>命令回执</h2><p>时机：命令执行完成后<br>上报内容：</p>
+<ol>
+<li>命令id</li>
+<li>机器id</li>
+<li>输出流</li>
+<li>错误流</li>
+</ol>
+<h2 id="OTA"><a href="#OTA" class="headerlink" title="OTA"></a>OTA</h2><p>时机：命令推送或静态配置文件发现版本可更新<br>升级：启动升级程序，下载新版程序，停止&amp;删掉老程序，覆盖老程序，启动<br>上报：升级结果、自检结果</p>
+<h1 id="接口设计"><a href="#接口设计" class="headerlink" title="接口设计"></a>接口设计</h1><h2 id="上报接口"><a href="#上报接口" class="headerlink" title="上报接口"></a>上报接口</h2><p>POST /mc/online<br>{<br>    “hostname”: “armbian”,<br>    “intranetIp”: “192.168.1.254”,<br>    “publicIp”: “100.100.123.123”,<br>    “nickname”: “hometown”,<br>    “reportTime”: “2021-01-30 16:35:02”,<br>    “runUser”: “root”,<br>    “version”: “v20210130.1”<br>}<br>{<br>    “machineId”: “hometown_armbian”<br>}</p>
+<h2 id="命令下发"><a href="#命令下发" class="headerlink" title="命令下发"></a>命令下发</h2><p>POST /mc/cmd<br>{<br>    “cmd”: “date”,<br>    “machineId”: “hometown_armbian”<br>}<br>{<br>    “recvTime”: “2021-01-30 16:35:02”,<br>    “machineId”: “hometown_armbian”,<br>    “cmdId”: 123456789<br>}</p>
+<h2 id="命令结果收集"><a href="#命令结果收集" class="headerlink" title="命令结果收集"></a>命令结果收集</h2><p>PUT /mc/cmd<br>{<br>    “cmdId”: 123456789,<br>    “output”: “xxxxxxxxxxxxxxxxxx”,<br>    “error”: “yyyyyyyyyyyyyyyyy”,<br>    “durationInSec”: “10”<br>}</p>
+]]></content>
+  </entry>
+  <entry>
     <title>RobotFramework 前端内存泄漏测试</title>
     <url>/2019/04/25/Automation/Robotframework/RobotFramework%20%E5%89%8D%E7%AB%AF%E5%86%85%E5%AD%98%E6%B3%84%E6%BC%8F%E6%B5%8B%E8%AF%95/</url>
     <content><![CDATA[<h1 id="前端内存泄漏-威力加强版"><a href="#前端内存泄漏-威力加强版" class="headerlink" title="前端内存泄漏 - 威力加强版"></a>前端内存泄漏 - 威力加强版</h1><h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>前端应用越来越复杂，反复操作可能导致dom或js对象没有被正确回收，导致内存占用持续高位。</p>
