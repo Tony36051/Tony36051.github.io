@@ -42,6 +42,73 @@
       </tags>
   </entry>
   <entry>
+    <title>diffy_mock_重构测试</title>
+    <url>/2021/02/22/diffy_mock_%E9%87%8D%E6%9E%84%E6%B5%8B%E8%AF%95/</url>
+    <content><![CDATA[<h1 id="使用场景"><a href="#使用场景" class="headerlink" title="使用场景"></a>使用场景</h1><p>企业内部软件重构，接口的功能完全不变的情况下，切换数据库，或者使用元数据、多租户等技术。此时要求测试能快速全面的进行功能测试。</p>
+<p>已有的接口自动化测试可以作为请求的发起端，接口的返回使用diffy进行断言。如果接口返回简单，需要检查数据库，将数据库查询使用接口实现，返回的数据行也作为接口的返回体，放入diffy做断言。</p>
+<h2 id="原理图"><a href="#原理图" class="headerlink" title="原理图"></a>原理图</h2><p>diffy原版使用</p>
+<pre class="mermaid">graph LR
+a[proxy]-->c[candidate]
+a-->b[primary]
+a-->d[secondly]
+c-->e[raw differences]
+b-->e
+b-->f[non-deterministic noise]
+d-->f
+e-->g[filtered differences]
+f-->g</pre>
+<p>录制primary、candidate的返回体，存储起来。wiremock-standalone存文件</p>
+<pre class="mermaid">graph LR
+a[proxy]-->h[wiremock-c]
+h-->d[mock-c-data]
+h-->c[candidate]
+a-->i[wiremock-p]
+i-->e[mock-p-data]
+i-->b[primary]</pre>
+<p>回放primary、candidate的返回体</p>
+<pre class="mermaid">graph LR
+a[proxy]-->c[wiremock-c]
+a-->b[wiremock-p]
+a-->d[secondly]
+c-->e[raw differences]
+b-->e
+b-->f[non-deterministic noise]
+d-->f
+e-->g[filtered differences]
+f-->g</pre>
+
+<h1 id="试验命令cheatsheet"><a href="#试验命令cheatsheet" class="headerlink" title="试验命令cheatsheet"></a>试验命令cheatsheet</h1><p>启动primary服务</p>
+<blockquote>
+<p>java -jar diffy-mock-0.0.1-SNAPSHOT.jar –server.port=9990</p>
+</blockquote>
+<p>启动secondly服务</p>
+<blockquote>
+<p>java -jar diffy-mock-0.0.1-SNAPSHOT.jar –server.port=9991</p>
+</blockquote>
+<p>启动candidate服务</p>
+<blockquote>
+<p>java -jar diffy-mock-0.0.1-SNAPSHOT.jar –server.port=9992</p>
+</blockquote>
+<p>启动wiremock</p>
+<blockquote>
+<p>jave -jar .\wiremock-standalone-2.27.2.jar</p>
+</blockquote>
+<p>浏览器打开 <a href="http://localhost:8080/__admin/recorder/">http://localhost:8080/__admin/recorder/</a></p>
+<p>配置record <a href="http://localhost:9990/">http://localhost:9990</a></p>
+<p>自动化脚本配置http_proxy=<a href="http://localhost:8080,或者将服务器hostip改成localhost:8080也行，是的请求的流量能到wiremock，并录制">http://localhost:8080,或者将服务器hostip改成localhost:8080也行，是的请求的流量能到wiremock，并录制</a></p>
+<p>请求完成后，点击stop，此时已经切换成回放模式。查看wiremock-standalone-2.27.2.jar目录能发现mapping目录，里面就是记录请求和返回的json。</p>
+<p>启动diffy</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">java -jar diffy-server.jar^</span><br><span class="line"> -candidate&#x3D;localhost:9992^</span><br><span class="line"> -master.primary&#x3D;localhost:8080^</span><br><span class="line"> -master.secondary&#x3D;localhost:9991^</span><br><span class="line"> -service.protocol&#x3D;http^</span><br><span class="line"> -serviceName&#x3D;Mock-Service^</span><br><span class="line"> -proxy.port&#x3D;:8880^</span><br><span class="line"> -admin.port&#x3D;:8881^</span><br><span class="line"> -http.port&#x3D;:8888^</span><br><span class="line"> -rootUrl&#x3D;localhost:8888^</span><br><span class="line"> -excludeHttpHeadersComparison&#x3D;true^</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>Test</category>
+      </categories>
+      <tags>
+        <tag>Diffy</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>移动光猫I-240EM和路由padavan配置方法</title>
     <url>/2021/02/14/%E7%A7%BB%E5%8A%A8%E5%85%89%E7%8C%ABI-240EM%E5%92%8C%E8%B7%AF%E7%94%B1padavan%E9%85%8D%E7%BD%AE%E6%96%B9%E6%B3%95/</url>
     <content><![CDATA[<p>移动几乎没有公网ip，开启ipv6当作公网ip</p>
