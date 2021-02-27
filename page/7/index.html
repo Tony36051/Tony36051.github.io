@@ -192,6 +192,139 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/29/projects/ai-log/%E6%97%A5%E5%BF%97%E5%A4%A7%E6%95%B0%E6%8D%AE%EF%BC%88%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%EF%BC%89/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+      <meta itemprop="name" content="夏侯仪">
+      <meta itemprop="description" content="幽寰证此约 七魄俱为凭</br>魂袅还无明 诸厉化纷英</br>吾心共天契 请凭神御临">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="幻煞幽穹">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2018/03/29/projects/ai-log/%E6%97%A5%E5%BF%97%E5%A4%A7%E6%95%B0%E6%8D%AE%EF%BC%88%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%EF%BC%89/" class="post-title-link" itemprop="url">日志大数据笔记</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2018-03-30 00:00:00" itemprop="dateCreated datePublished" datetime="2018-03-30T00:00:00+08:00">2018-03-30</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-02-27 16:01:09" itemprop="dateModified" datetime="2021-02-27T16:01:09+08:00">2021-02-27</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>测试岗位却不甘止步于业务测试，遂尝试智能化测试，当前的思路是通过日志大数据分析，协助自动化用例的诊断和建议。</p>
+<h1 id="他山之石"><a href="#他山之石" class="headerlink" title="他山之石"></a>他山之石</h1><h2 id="《从日志统计到大数据分析》"><a href="#《从日志统计到大数据分析》" class="headerlink" title="《从日志统计到大数据分析》"></a>《从日志统计到大数据分析》</h2><p>知乎专栏作家桑文锋[<a href="http://SensorsData.cn]">http://SensorsData.cn]</a>(<a target="_blank" rel="noopener" href="https://link.zhihu.com/">https://link.zhihu.com/</a>?<br>target=http%3A//SensorsData.cn)  神策数据创始人&amp;CEO</p>
+<p>数据处理流程图<br><img src="https://pic1.zhimg.com/80/8c2c54621e4ef9777afd5a4f2abfc959_hd.jpg" alt="enter image description here"></p>
+<h3 id="数据采集"><a href="#数据采集" class="headerlink" title="数据采集"></a>数据采集</h3><ol>
+<li>全<br>多个来源、C/S（B/S）</li>
+<li>细<br>多个维度，ip、url、时间、userid等等尽可能多</li>
+<li>数据格式</li>
+</ol>
+<ul>
+<li>Protocol Buffer：Google使用，较为重型</li>
+<li>JSON：学习成本低</li>
+<li>  <a href="https://link.zhihu.com/?target=http://thrift.apache.org/">Thrift</a>——由Facebook开源的一套开发框架和数据格式，相比PB，在解析效率上低点，但周边组件比较完善。</li>
+<li>  <a href="https://link.zhihu.com/?target=http://avro.apache.org/">Avro</a>——由Hadoop创始人Doug Cutting主导开发的，使用接口上和Thrift类似，有客户公司在使用。<br>在简单看看文档后，估计会使用json。</li>
+</ul>
+<ol start="4">
+<li>数据类型<br>被测应用自身日志、环境日志（cpu、容器内env）、测试脚本日志；<br>应用代码、测试脚本（代码本身）<br>数据库数据？</li>
+</ol>
+<h3 id="数据传输"><a href="#数据传输" class="headerlink" title="数据传输"></a>数据传输</h3><p>【这段完全照抄】<br>1，FTP：数据量小且时效性要求不高，用FTP是最省事的。<br>2，<a href="https://link.zhihu.com/?target=http://sqoop.apache.org/">Sqoop</a>：用于传统数据库和Hadoop之间的数据传输。<br><del>3，<a href="https://link.zhihu.com/?target=https://github.com/facebookarchive/scribe/wiki">Scribe</a>：Facebook开源的一套日志传输系统，github上已经不维护了。</del><br>4，<a href="https://link.zhihu.com/?target=https://flume.apache.org/">Flume</a>：Cloudera开源的一套日志传输系统，和Scribe类似。我们在百度做的Minos，可以说是和Flume、Scribe类似，那为啥要重复造轮子？主要百度的数据源和服务器太多了，需要做许多功能来满足运维管理的问题。<br>5，<a href="https://link.zhihu.com/?target=http://kafka.apache.org/">Kafka</a>：Linkedin开源的一套消息传输系统，和百度Bigpipe类似。我们Bigpipe开发了一半的时候，Kafka的论文发表了。Bigpipe会做去重，Kafka目前还没有这样的机制，需要自己去实现。两者都通过副本的机制，保证数据不丢。<br>Flume/Logstash/Beat 是同一类软件，如果抽象功能的话可以认为是一个插件执行器，有一些常用的插件（例如日志采集，Binlog解析，执行脚本等），也可以根据需求将自己的代码作为插件发布。</p>
+<h4 id="知乎靠谱答案"><a href="#知乎靠谱答案" class="headerlink" title="知乎靠谱答案"></a>知乎靠谱答案</h4><p>Kafka 一般作为Pub-Sub管道，没有抓取功能。一开始设计的时候主要是Jay Krep觉得Linkedin里面数据源，消费者之间关系太复杂，如果是N个数据源，M个消费者，需要拉N*M个线，并且接口和协议不同，所以使用了一种消息中间件来解耦数据源和消费者。但Kafka本身也不算消息中间件，中间件一般会有Queue和Topic两种模型，Kafka主要是Topic类的模型。</p>
+<p>对搭建日志系统而言，也没什么新花样，以下这些依样画葫芦就可以了：</p>
+<ol>
+<li>日志采集（Logstash/Flume，SDK wrapper）</li>
+<li>实时消费 (Storm, Flink, Spark Streaming)</li>
+<li>离线存储 （HDFS or Object Storage or NoSQL) + 离线分析（Presto，Hive，Hadoop）</li>
+<li>有一些场景可能需要搜索，可以加上ES或ELK<h4 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h4></li>
+<li>大概率采用Flume/kafka/hdfs(spark-ml)</li>
+<li>重点关注<strong>部署与运维成本</strong></li>
+</ol>
+<h3 id="数据建模-存储"><a href="#数据建模-存储" class="headerlink" title="数据建模/存储"></a>数据建模/存储</h3><h4 id="多维数据模型"><a href="#多维数据模型" class="headerlink" title="多维数据模型"></a>多维数据模型</h4><p><img src="https://pic1.zhimg.com/80/f0c4386cb9f49243d12c05def4b3564f_hd.jpg"><br>在互联网产品中，最重要的有两类数据——业务数据和<code>用户行为数据</code>。对于用户行为数据，我们可以讲用户的每一次操作理解为一个事件（Event），事件有个类型如提交订单、提出问题等，事件发生时有响应的上下文，如使用的操作系统、浏览器版本等系统属性，也有事件特有的如运费、订单价格等属性，这些属性就是一系列的维度，还有一部分是事件发生的用户ID。即：  </p>
+<blockquote>
+<p>Event Type + Properties + UserID</p>
+</blockquote>
+<p>这里就形成了一系列的维度，描述的最细粒度的事件现场。通过UserID，我们还会关联到UserID这一维度的详情（User Profile），包括姓名、出生日期、身高、是否有小孩等。</p>
+<h4 id="ETL存储"><a href="#ETL存储" class="headerlink" title="ETL存储"></a>ETL存储</h4><p>做好数据源，减少ETL。</p>
+<h4 id="思考"><a href="#思考" class="headerlink" title="思考"></a>思考</h4><p>对于智能化测试来说，一个用例的执行应该就是一个事件，事件的属性可以是通过与否、报错信息、执行时间等，UserID可以是模块或者用例id吧。建模还是需要仔细考虑的。<br>不过数据源和ETL应该都只有测试自己搞了。</p>
+<h3 id="数据统计、分析、挖掘"><a href="#数据统计、分析、挖掘" class="headerlink" title="数据统计、分析、挖掘"></a>数据统计、分析、挖掘</h3><h4 id="数据驱动"><a href="#数据驱动" class="headerlink" title="数据驱动"></a>数据驱动</h4><p>能不能做好数据，开放自助查询的功能？</p>
+<h4 id="查询模式："><a href="#查询模式：" class="headerlink" title="查询模式："></a>查询模式：</h4><ul>
+<li>  K-V（Key-Value）查询就是我们给出一个key，然后返回这个key相关的value内容。比如我们通过一个UserID，返回用户的一些画像信息，比如有没有房。再比如，通过UserID返回最近一段时间的详细访问行为序列。这里推荐使用HBase。  </li>
+<li>  OLAP（Online Analytical Processing）查询就是前面讲的多维数据分析，这里不赘述。可以使用的工具有InfoBright、Vertica、Impala、Redshift等。</li>
+<li>  Ad Hoc查询就是有各种各样的不确定的需求，需要响应。这块可以用Hive，或者Spark SQL来满足，再不行就写程序自己实现吧。</li>
+<li>ES，支持一些模糊的查询<h4 id="统计"><a href="#统计" class="headerlink" title="统计"></a>统计</h4></li>
+</ul>
+<ol>
+<li>哪个模块失败数最多</li>
+<li>什么时间段执行最多问题</li>
+<li>什么类型的报错最多<h4 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h4></li>
+<li>用例失败原因<h4 id="挖掘"><a href="#挖掘" class="headerlink" title="挖掘"></a>挖掘</h4></li>
+<li>协助写用例 (推荐步骤、类似用例）</li>
+<li>推断模块稳定性</li>
+</ol>
+<h3 id="可视化与反馈"><a href="#可视化与反馈" class="headerlink" title="可视化与反馈"></a>可视化与反馈</h3><h4 id="可视化"><a href="#可视化" class="headerlink" title="可视化"></a>可视化</h4><ol>
+<li>对接看板，提供数据或时序交互，有点像数据底座的功能</li>
+<li>Echarts或D3提供web版基本的可视化功能</li>
+<li><a target="_blank" rel="noopener" href="http://www.tableau.com">Tableau</a> ？</li>
+</ol>
+<h3 id="整体数据流与架构图"><a href="#整体数据流与架构图" class="headerlink" title="整体数据流与架构图"></a>整体数据流与架构图</h3><p><img src="https://pic1.zhimg.com/80/dab490303b0bc3fe47dd0bffa16d20b9_hd.jpg"><br>元数据和调度器分别是数据平台的心脏和大脑。</p>
+<h3 id="调度器"><a href="#调度器" class="headerlink" title="调度器"></a>调度器</h3><p>如果有很多请求的时候，需要优先级调度；（现在可能用不上）<br>如果请求有依赖的时候，使用DAG调度；（Azkaban可以完成）</p>
+<h3 id="元数据"><a href="#元数据" class="headerlink" title="元数据"></a>元数据</h3><p>开源实现可以参考Hcatalog，封装了hive meta。</p>
+<p><strong>元数据提供的服务</strong>  主要有三点：  </p>
+<ol>
+<li> 数据的Schema：表、字段定义等。</li>
+<li>数据的就绪状态：数据就绪时间、存放位置等动态信息。</li>
+<li>元数据的访问API。</li>
+</ol>
+<p><strong>扩展的服务</strong>还包括：  </p>
+<ul>
+<li>  权限控制（ACL）：严格来说ACL不算元数据的一部分，但这两者关系太紧密，一般放在一起考虑。</li>
+<li>  元数据的变更记录：谁做了什么操作好做审计，另外可以有元数据的版本信息，这样对历史数据的存取更方便一些。</li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/27/ops/Hadoop/Hive%20on%20Spark%20%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -223,7 +356,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-02-22 22:08:58" itemprop="dateModified" datetime="2021-02-22T22:08:58+08:00">2021-02-22</time>
+                <time title="修改时间：2021-02-27 16:01:09" itemprop="dateModified" datetime="2021-02-27T16:01:09+08:00">2021-02-27</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -339,7 +472,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-02-22 22:08:58" itemprop="dateModified" datetime="2021-02-22T22:08:58+08:00">2021-02-22</time>
+                <time title="修改时间：2021-02-27 16:01:09" itemprop="dateModified" datetime="2021-02-27T16:01:09+08:00">2021-02-27</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -425,7 +558,7 @@ eyJoaXN0b3J5IjpbNTgzMjM4NjQ3XX0=
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-02-22 22:08:58" itemprop="dateModified" datetime="2021-02-22T22:08:58+08:00">2021-02-22</time>
+                <time title="修改时间：2021-02-27 16:01:09" itemprop="dateModified" datetime="2021-02-27T16:01:09+08:00">2021-02-27</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -512,7 +645,7 @@ eyJoaXN0b3J5IjpbNTgzMjM4NjQ3XX0=
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-02-22 22:08:58" itemprop="dateModified" datetime="2021-02-22T22:08:58+08:00">2021-02-22</time>
+                <time title="修改时间：2021-02-27 16:01:09" itemprop="dateModified" datetime="2021-02-27T16:01:09+08:00">2021-02-27</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -616,7 +749,7 @@ eyJoaXN0b3J5IjpbNTgzMjM4NjQ3XX0=
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-02-22 22:08:58" itemprop="dateModified" datetime="2021-02-22T22:08:58+08:00">2021-02-22</time>
+                <time title="修改时间：2021-02-27 16:01:09" itemprop="dateModified" datetime="2021-02-27T16:01:09+08:00">2021-02-27</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -698,7 +831,7 @@ eyJoaXN0b3J5IjpbODExNDU2NDI2XX0=
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-02-22 22:08:58" itemprop="dateModified" datetime="2021-02-22T22:08:58+08:00">2021-02-22</time>
+                <time title="修改时间：2021-02-27 16:01:09" itemprop="dateModified" datetime="2021-02-27T16:01:09+08:00">2021-02-27</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -815,7 +948,7 @@ eyJoaXN0b3J5IjpbODExNDU2NDI2XX0=
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">66</span>
+          <span class="site-state-item-count">67</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>

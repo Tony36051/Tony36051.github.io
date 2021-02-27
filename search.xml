@@ -1128,6 +1128,36 @@ eyJoaXN0b3J5IjpbOTkwMjQ2MzU1LDcwNDkxNTEwOF19
 ]]></content>
   </entry>
   <entry>
+    <title>返现业务逻辑</title>
+    <url>/2021/02/26/projects/cashback/</url>
+    <content><![CDATA[<p>返现逻辑。</p>
+<a id="more"></a>
+
+<h1 id="大致流程"><a href="#大致流程" class="headerlink" title="大致流程"></a>大致流程</h1><h2 id="管理员"><a href="#管理员" class="headerlink" title="管理员"></a>管理员</h2><p>流程： 管理页面入口-配置商品的返现规则-用密码保存</p>
+<ol>
+<li>从给定的URL进入，url部分包括账号和密码，正确才能进入</li>
+<li>展示已有的返现规则，表格形式，可以新增、删除、编辑</li>
+<li>保存按钮需要重新输入密码</li>
+</ol>
+<h2 id="用户"><a href="#用户" class="headerlink" title="用户"></a>用户</h2><p>流程：用户页面入口-输入订单-确定-返回成功返现或错误信息</p>
+<ol>
+<li>用户入口进入后，只有一个订单输入框，一个确定按钮</li>
+<li>确定后返回成功，或失败的原因。</li>
+</ol>
+<h1 id="业务规则"><a href="#业务规则" class="headerlink" title="业务规则"></a>业务规则</h1><ol>
+<li>一个商品只能有一个规则</li>
+<li>无规则不返现</li>
+<li>订单不匹配不返现</li>
+<li>订单只能返现一次</li>
+<li>规则种类：固定、比例</li>
+<li><code>固定</code>的参数：安卓固定金额(aFix)、苹果固定金额(iFix)</li>
+<li><code>比例</code>的参数：安卓比例(aRate)、苹果比例(iRate)</li>
+<li>固定金额(fixCashback)=安卓或苹果的固定金额</li>
+<li>比例金额(rateCashback)=aRate*订单金额 或 iRate*订单金额</li>
+</ol>
+]]></content>
+  </entry>
+  <entry>
     <title>RobotFramework 前端内存泄漏测试</title>
     <url>/2019/04/25/Automation/Robotframework/RobotFramework%20%E5%89%8D%E7%AB%AF%E5%86%85%E5%AD%98%E6%B3%84%E6%BC%8F%E6%B5%8B%E8%AF%95/</url>
     <content><![CDATA[<h1 id="前端内存泄漏-威力加强版"><a href="#前端内存泄漏-威力加强版" class="headerlink" title="前端内存泄漏 - 威力加强版"></a>前端内存泄漏 - 威力加强版</h1><h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>前端应用越来越复杂，反复操作可能导致dom或js对象没有被正确回收，导致内存占用持续高位。</p>
