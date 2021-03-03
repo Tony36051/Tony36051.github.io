@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/pace-js@1/themes/blue/pace-theme-minimal.css">
+  <script src="//cdn.jsdelivr.net/npm/pace-js@1/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="T1同时保留安卓和Armbian两个系统。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="T1刷机Armbian经验">
+<meta property="og:url" content="http://yoursite.com/2021/03/02/T1%E5%88%B7%E6%9C%BAArmbian%E7%BB%8F%E9%AA%8C/index.html">
+<meta property="og:site_name" content="幻煞幽穹">
+<meta property="og:description" content="T1同时保留安卓和Armbian两个系统。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-03-02T16:00:00.000Z">
+<meta property="article:modified_time" content="2021-03-03T16:08:38.536Z">
+<meta property="article:author" content="夏侯仪">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://yoursite.com/2021/03/02/T1%E5%88%B7%E6%9C%BAArmbian%E7%BB%8F%E9%AA%8C/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>T1刷机Armbian经验 | 幻煞幽穹</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">幻煞幽穹</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="user fa-fw"></i>关于</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2021/03/02/T1%E5%88%B7%E6%9C%BAArmbian%E7%BB%8F%E9%AA%8C/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+      <meta itemprop="name" content="夏侯仪">
+      <meta itemprop="description" content="幽寰证此约 七魄俱为凭</br>魂袅还无明 诸厉化纷英</br>吾心共天契 请凭神御临">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="幻煞幽穹">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          T1刷机Armbian经验
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-03-03 00:00:00" itemprop="dateCreated datePublished" datetime="2021-03-03T00:00:00+08:00">2021-03-03</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-03-04 00:08:38" itemprop="dateModified" datetime="2021-03-04T00:08:38+08:00">2021-03-04</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>T1同时保留安卓和Armbian两个系统。</p>
+<a id="more"></a>
+
+<h1 id="刷机"><a href="#刷机" class="headerlink" title="刷机"></a>刷机</h1><h2 id="刷安卓"><a href="#刷安卓" class="headerlink" title="刷安卓"></a>刷安卓</h2><p>开晨星的刷机工具（USB_Burning_Tool），加载固件，USB双公头，root后在安卓的<code>终端模拟器</code>中用reboot update命令重启。<br>检测到机器后，开刷，等待完成就可以拔线进入安卓系统。</p>
+<h2 id="刷Armbian"><a href="#刷Armbian" class="headerlink" title="刷Armbian"></a>刷Armbian</h2><p>使用老的内核镜像3.14，配套<code>gxm_q201_2g.dtb</code>，用<code>usb_image_tool</code>刷到的U盘后，修改BOOT盘，将<code>gxm_q201_2g.dtb</code>移动到BOOT的根目录改名为<code>dtb.img</code>。<br>我用的镜像名是<code>Armbian_5.44_S9xxx_Ubuntu_xenial_3.14.29_server</code><br>插入U盘，重启盒子，进入Armbian。默认账号root，默认密码是1234.<br>修改密码后，Ctrl+C跳过创建用户。<br>同时保留两个系统的关键是进入Armbian后，修改/root/install.sh文件为以下内容，内容转自恩山论坛大佬achaoge。<br>这里文件适用于首次安装Armbian，非首次安装请查看恩山上他的原贴。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/sh</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;Start copy system for DATA partition.&quot;</span></span><br><span class="line"></span><br><span class="line">mkdir -p /ddbr</span><br><span class="line">chmod 777 /ddbr</span><br><span class="line"></span><br><span class="line">VER=`uname -r`</span><br><span class="line"></span><br><span class="line">IMAGE_KERNEL=<span class="string">&quot;/boot/zImage&quot;</span></span><br><span class="line">IMAGE_INITRD=<span class="string">&quot;/boot/initrd.img-<span class="variable">$VER</span>&quot;</span></span><br><span class="line">PART_ROOT=<span class="string">&quot;/dev/data&quot;</span></span><br><span class="line">DIR_INSTALL=<span class="string">&quot;/ddbr/install&quot;</span></span><br><span class="line">IMAGE_DTB=<span class="string">&quot;/boot/dtb.img&quot;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> [ ! -f <span class="variable">$IMAGE_KERNEL</span> ] ; <span class="keyword">then</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">&quot;Not KERNEL.  STOP install !!!&quot;</span></span><br><span class="line">    <span class="built_in">return</span></span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> [ ! -f <span class="variable">$IMAGE_INITRD</span> ] ; <span class="keyword">then</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">&quot;Not INITRD.  STOP install !!!&quot;</span></span><br><span class="line">    <span class="built_in">return</span></span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#edit by achaoge,</span></span><br><span class="line"><span class="comment">#disable 64bit and metadata_csum features for uboot compatibility</span></span><br><span class="line"><span class="comment">#ref: https://kshadeslayer.wordpress.com/2016/04/11/my-filesystem-has-too-many-bits/</span></span><br><span class="line">/sbin/resize2fs -s <span class="variable">$PART_ROOT</span></span><br><span class="line">/sbin/tune2fs -O ^metadata_csum <span class="variable">$PART_ROOT</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#echo &quot;Formatting DATA partition...&quot;</span></span><br><span class="line"><span class="comment">#umount -f $PART_ROOT</span></span><br><span class="line"><span class="comment">#mke2fs -F -q -t ext4 -m 0 $PART_ROOT</span></span><br><span class="line">e2fsck -f <span class="variable">$PART_ROOT</span></span><br><span class="line"><span class="comment">#echo &quot;done.&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;Copying ROOTFS.&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> [ -d <span class="variable">$DIR_INSTALL</span> ] ; <span class="keyword">then</span></span><br><span class="line">    rm -rf <span class="variable">$DIR_INSTALL</span></span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line"></span><br><span class="line">mkdir -p <span class="variable">$DIR_INSTALL</span></span><br><span class="line">mount -o rw <span class="variable">$PART_ROOT</span> <span class="variable">$DIR_INSTALL</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">cd</span> /</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;Copy BIN&quot;</span></span><br><span class="line">tar -cf - bin | (<span class="built_in">cd</span> <span class="variable">$DIR_INSTALL</span>; tar -xpf -)</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;Copy BOOT&quot;</span></span><br><span class="line"><span class="comment">#mkdir -p $DIR_INSTALL/boot</span></span><br><span class="line">tar -cf - boot | (<span class="built_in">cd</span> <span class="variable">$DIR_INSTALL</span>; tar -xpf -)</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;Create DEV&quot;</span></span><br><span class="line">mkdir -p <span class="variable">$DIR_INSTALL</span>/dev</span><br><span class="line"><span class="comment">#tar -cf - dev | (cd $DIR_INSTALL; tar -xpf -)</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;Copy ETC&quot;</span></span><br><span class="line">tar -cf - etc | (<span class="built_in">cd</span> <span class="variable">$DIR_INSTALL</span>; tar -xpf -)</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;Copy HOME&quot;</span></span><br><span class="line">tar -cf - home | (<span class="built_in">cd</span> <span class="variable">$DIR_INSTALL</span>; tar -xpf -)</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;Copy LIB&quot;</span></span><br><span class="line">tar -cf - lib | (<span class="built_in">cd</span> <span class="variable">$DIR_INSTALL</span>; tar -xpf -)</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;Create MEDIA&quot;</span></span><br><span class="line">mkdir -p <span class="variable">$DIR_INSTALL</span>/media</span><br><span class="line"><span class="comment">#tar -cf - media | (cd $DIR_INSTALL; tar -xpf -)</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;Create MNT&quot;</span></span><br><span class="line">mkdir -p <span class="variable">$DIR_INSTALL</span>/mnt</span><br><span class="line"><span class="comment">#tar -cf - mnt | (cd $DIR_INSTALL; tar -xpf -)</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;Copy OPT&quot;</span></span><br><span class="line">tar -cf - opt | (<span class="built_in">cd</span> <span class="variable">$DIR_INSTALL</span>; tar -xpf -)</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;Create PROC&quot;</span></span><br><span class="line">mkdir -p <span class="variable">$DIR_INSTALL</span>/proc</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;Copy ROOT&quot;</span></span><br><span class="line">tar -cf - root | (<span class="built_in">cd</span> <span class="variable">$DIR_INSTALL</span>; tar -xpf -)</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;Create RUN&quot;</span></span><br><span class="line">mkdir -p <span class="variable">$DIR_INSTALL</span>/run</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;Copy SBIN&quot;</span></span><br><span class="line">tar -cf - sbin | (<span class="built_in">cd</span> <span class="variable">$DIR_INSTALL</span>; tar -xpf -)</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;Copy SELINUX&quot;</span></span><br><span class="line">tar -cf - selinux | (<span class="built_in">cd</span> <span class="variable">$DIR_INSTALL</span>; tar -xpf -)</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;Copy SRV&quot;</span></span><br><span class="line">tar -cf - srv | (<span class="built_in">cd</span> <span class="variable">$DIR_INSTALL</span>; tar -xpf -)</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;Create SYS&quot;</span></span><br><span class="line">mkdir -p <span class="variable">$DIR_INSTALL</span>/sys</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;Create TMP&quot;</span></span><br><span class="line">mkdir -p <span class="variable">$DIR_INSTALL</span>/tmp</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;Copy USR&quot;</span></span><br><span class="line">tar -cf - usr | (<span class="built_in">cd</span> <span class="variable">$DIR_INSTALL</span>; tar -xpf -)</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;Copy VAR&quot;</span></span><br><span class="line">tar -cf - var | (<span class="built_in">cd</span> <span class="variable">$DIR_INSTALL</span>; tar -xpf -)</span><br><span class="line"></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;Copy fstab&quot;</span></span><br><span class="line"></span><br><span class="line">rm <span class="variable">$DIR_INSTALL</span>/etc/fstab</span><br><span class="line">cp -a /root/fstab <span class="variable">$DIR_INSTALL</span>/etc</span><br><span class="line"><span class="comment">#cp -a /boot/hdmi.sh $DIR_INSTALL/boot</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#add by achaoge 2018-06-22</span></span><br><span class="line"><span class="built_in">export</span> $(/usr/sbin/fw_printenv mac)</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;Modify files for N1 emmc boot&quot;</span></span><br><span class="line">/bin/sed -e <span class="string">&quot;/usb [23]/d&quot;</span> -e <span class="string">&#x27;s/fatload mmc 0 \([^ ]*\) \([^;]*\)/ext4load mmc 1:c \1 \/boot\/\2/g&#x27;</span> -i <span class="variable">$DIR_INSTALL</span>/boot/s905_autoscript.cmd</span><br><span class="line">/bin/sed -e <span class="string">&#x27;s/LABEL=ROOTFS/\/dev\/data/&#x27;</span> -e <span class="string">&quot;s/mac=.*/mac=<span class="variable">$&#123;mac&#125;</span>/&quot;</span> -i <span class="variable">$DIR_INSTALL</span>/boot/uEnv.ini</span><br><span class="line">/usr/bin/mkimage -C none -A arm -T script -d <span class="variable">$DIR_INSTALL</span>/boot/s905_autoscript.cmd <span class="variable">$DIR_INSTALL</span>/boot/s905_autoscript</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;Emmc boot fixed end&quot;</span></span><br><span class="line"></span><br><span class="line">rm <span class="variable">$DIR_INSTALL</span>/root/install.sh</span><br><span class="line">rm <span class="variable">$DIR_INSTALL</span>/root/fstab</span><br><span class="line">rm <span class="variable">$DIR_INSTALL</span>/usr/bin/ddbr</span><br><span class="line">rm <span class="variable">$DIR_INSTALL</span>/usr/bin/ddbr_backup_nand</span><br><span class="line">rm <span class="variable">$DIR_INSTALL</span>/usr/bin/ddbr_restore_nand</span><br><span class="line"></span><br><span class="line"><span class="built_in">cd</span> /</span><br><span class="line">sync</span><br><span class="line"></span><br><span class="line">umount <span class="variable">$DIR_INSTALL</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;*******************************************&quot;</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;Done copy ROOTFS&quot;</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;*******************************************&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#echo &quot;Writing new kernel image...&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#mkdir -p $DIR_INSTALL/aboot</span></span><br><span class="line"><span class="comment">#cd $DIR_INSTALL/aboot</span></span><br><span class="line"><span class="comment">#dd if=/dev/boot of=boot.backup.img</span></span><br><span class="line"><span class="comment">#abootimg -i /dev/boot &gt; aboot.txt</span></span><br><span class="line"><span class="comment">#abootimg -x /dev/boot</span></span><br><span class="line"><span class="comment">#abootimg -u /dev/boot -k $IMAGE_KERNEL</span></span><br><span class="line"><span class="comment">#abootimg -u /dev/boot -r $IMAGE_INITRD</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment">#echo &quot;done.&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#if [ -f $IMAGE_DTB ] ; then</span></span><br><span class="line"><span class="comment">#    abootimg -u /dev/boot -s $IMAGE_DTB</span></span><br><span class="line"><span class="comment">#    echo &quot;Writing new dtb ...&quot;</span></span><br><span class="line"><span class="comment">#    dd if=&quot;$IMAGE_DTB&quot; of=&quot;/dev/dtb&quot; bs=262144 status=none &amp;&amp; sync</span></span><br><span class="line"><span class="comment">#    echo &quot;done.&quot;</span></span><br><span class="line"><span class="comment">#fi</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;Write env bootargs&quot;</span></span><br><span class="line"><span class="comment">#/usr/sbin/fw_setenv initargs &quot;root=/dev/data rootflags=data=writeback rw console=ttyS0,115200n8 console=tty0 no_console_suspend consoleblank=0 fsck.repair=yes net.ifnames=0 mac=\$&#123;mac&#125;&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#Edit by achaoge 2018-06-22, for Phicomm N1 boot from emmc</span></span><br><span class="line">/usr/sbin/fw_setenv start_autoscript <span class="string">&quot;if usb start ; then run start_usb_autoscript; fi; if ext4load mmc 1:c 1020000 /boot/s905_autoscript; then autoscr 1020000; fi;&quot;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;*******************************************&quot;</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;Complete copy OS to eMMC parted DATA&quot;</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;*******************************************&quot;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h1 id="两边切换"><a href="#两边切换" class="headerlink" title="两边切换"></a>两边切换</h1><h2 id="Armbian切换安卓"><a href="#Armbian切换安卓" class="headerlink" title="Armbian切换安卓"></a>Armbian切换安卓</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mv /boot/s905_autoscript /boot/s905_autoscript.bak</span><br></pre></td></tr></table></figure>
+
+<h2 id="安卓切换Armbian"><a href="#安卓切换Armbian" class="headerlink" title="安卓切换Armbian"></a>安卓切换Armbian</h2><p>启动安卓的<code>终端模拟器</code>中，先su切换root用户，然后执行命令</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">su</span><br><span class="line">mv /data/boot/s905_autoscript.bak /data/boot/s905_autoscript </span><br></pre></td></tr></table></figure>
+    </div>
+
+    
+    
+    
+      
+
+        <div class="reward-container">
+  <div></div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/uploads/wechat-reward-image.jpg" alt="夏侯仪 微信支付">
+        <p>微信支付</p>
+      </div>
+      
+      <div style="display: inline-block;">
+        <img src="/uploads/alipay-reward-image.jpg" alt="夏侯仪 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/02/26/projects/cashback/" rel="prev" title="返现业务逻辑">
+      <i class="fa fa-chevron-left"></i> 返现业务逻辑
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%88%B7%E6%9C%BA"><span class="nav-number">1.</span> <span class="nav-text">刷机</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%B7%E5%AE%89%E5%8D%93"><span class="nav-number">1.1.</span> <span class="nav-text">刷安卓</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%B7Armbian"><span class="nav-number">1.2.</span> <span class="nav-text">刷Armbian</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%A4%E8%BE%B9%E5%88%87%E6%8D%A2"><span class="nav-number">2.</span> <span class="nav-text">两边切换</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Armbian%E5%88%87%E6%8D%A2%E5%AE%89%E5%8D%93"><span class="nav-number">2.1.</span> <span class="nav-text">Armbian切换安卓</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E5%8D%93%E5%88%87%E6%8D%A2Armbian"><span class="nav-number">2.2.</span> <span class="nav-text">安卓切换Armbian</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="夏侯仪"
+      src="/uploads/avatar.jpg">
+  <p class="site-author-name" itemprop="name">夏侯仪</p>
+  <div class="site-description" itemprop="description">幽寰证此约 七魄俱为凭</br>魂袅还无明 诸厉化纷英</br>吾心共天契 请凭神御临</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">68</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">47</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Tony36051" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Tony36051" rel="noopener" target="_blank"><i class="github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">夏侯仪</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/pangu@4/dist/browser/pangu.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+<script>
+if (document.querySelectorAll('pre.mermaid').length) {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mermaid@8/dist/mermaid.min.js', () => {
+    mermaid.initialize({
+      theme    : 'forest',
+      logLevel : 3,
+      flowchart: { curve     : 'linear' },
+      gantt    : { axisFormat: '%m/%d/%Y' },
+      sequence : { actorMargin: 50 }
+    });
+  }, window.mermaid);
+}
+</script>
+
+
+  
+
+  
+
+</body>
+</html>

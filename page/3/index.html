@@ -192,6 +192,94 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/05/13/Automation/JMeter%E8%B8%A9%E8%BF%87%E7%9A%84%E5%B0%8F%E5%9D%91/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+      <meta itemprop="name" content="夏侯仪">
+      <meta itemprop="description" content="幽寰证此约 七魄俱为凭</br>魂袅还无明 诸厉化纷英</br>吾心共天契 请凭神御临">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="幻煞幽穹">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/05/13/Automation/JMeter%E8%B8%A9%E8%BF%87%E7%9A%84%E5%B0%8F%E5%9D%91/" class="post-title-link" itemprop="url">JMeter踩过的小坑，Cookie的domain和path</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-05-13 10:46:00" itemprop="dateCreated datePublished" datetime="2019-05-13T10:46:00+08:00">2019-05-13</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-03-04 00:08:38" itemprop="dateModified" datetime="2021-03-04T00:08:38+08:00">2021-03-04</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Test/" itemprop="url" rel="index"><span itemprop="name">Test</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="Cookie的domain和path"><a href="#Cookie的domain和path" class="headerlink" title="Cookie的domain和path"></a>Cookie的domain和path</h1><h2 id="domain"><a href="#domain" class="headerlink" title="domain"></a>domain</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Set-Cookie: login_sip&#x3D;1D-8B-35; Path&#x3D;&#x2F;; Domain&#x3D;.example.com</span><br></pre></td></tr></table></figure>
+<p>SSO单点登录后，返回的头信息中应该包括若干条<code>Set-Cookie</code>，上述的Cookie说明此key-value的Cookie能用于*.example.com所有二级域名，<code>Path=/</code>表示后续所有路径都可以使用。<br>下面说的所有二级域名当然包括一级域名。</p>
+<ul>
+<li>Path=/; Domain=.example.com 所有二级域名，所有uri</li>
+<li>Path=/; Domain=account.example.com 仅account.example.com这个二级域名可用，所有uri</li>
+<li>Path=/openapi; Domain=.example.com 所有二级域名，仅匹配/openapi的uri</li>
+</ul>
+<h2 id="坑重现"><a href="#坑重现" class="headerlink" title="坑重现"></a>坑重现</h2><p>JMeter的<code>Server Name or IP</code>中，域名或ip后不应该添加任何东西，<code>perf.example.com</code>或<code>192.168.1.1</code>都是对的，以下都是错误的例子。</p>
+<ul>
+<li>perf.example.com/</li>
+<li>perf.example.com/zoo</li>
+<li>192.168.1.1:8080<br>如果填写的是<code>perf.example.com/</code>，就会出现错误信息：Not storing invalid cookie: &lt;aasso_login=””; Path=/; Domain=.example.com&gt; for URL <a target="_blank" rel="noopener" href="http://perf.example.com//zoo/services/N">http://perf.example.com//zoo/services/N</a> (Illegal ‘domain’ attribute “example.com”. Domain of origin: “perf.example.com/“)</li>
+</ul>
+<!--stackedit_data:
+eyJoaXN0b3J5IjpbLTg4MDg3NTU0Myw4NjkzNDY1MTVdfQ==
+-->
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/05/05/Automation/JMeter%20%E8%B7%A8%E7%BA%BF%E7%A8%8B%E7%BB%84%E5%85%B1%E4%BA%AB%E5%8F%98%E9%87%8F%EF%BC%88%E5%8D%95%E7%82%B9%E7%99%BB%E5%BD%95Cookie%E6%97%A0%E6%B3%95%E4%BF%9D%E5%AD%98%EF%BC%89/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -223,7 +311,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-03-02 05:31:24" itemprop="dateModified" datetime="2021-03-02T05:31:24+08:00">2021-03-02</time>
+                <time title="修改时间：2021-03-04 00:08:38" itemprop="dateModified" datetime="2021-03-04T00:08:38+08:00">2021-03-04</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -304,7 +392,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-03-02 05:31:24" itemprop="dateModified" datetime="2021-03-02T05:31:24+08:00">2021-03-02</time>
+                <time title="修改时间：2021-03-04 00:08:38" itemprop="dateModified" datetime="2021-03-04T00:08:38+08:00">2021-03-04</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -421,7 +509,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-03-02 05:31:24" itemprop="dateModified" datetime="2021-03-02T05:31:24+08:00">2021-03-02</time>
+                <time title="修改时间：2021-03-04 00:08:38" itemprop="dateModified" datetime="2021-03-04T00:08:38+08:00">2021-03-04</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -498,7 +586,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-03-02 05:31:24" itemprop="dateModified" datetime="2021-03-02T05:31:24+08:00">2021-03-02</time>
+                <time title="修改时间：2021-03-04 00:08:38" itemprop="dateModified" datetime="2021-03-04T00:08:38+08:00">2021-03-04</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -579,7 +667,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-03-02 05:31:24" itemprop="dateModified" datetime="2021-03-02T05:31:24+08:00">2021-03-02</time>
+                <time title="修改时间：2021-03-04 00:08:38" itemprop="dateModified" datetime="2021-03-04T00:08:38+08:00">2021-03-04</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -660,7 +748,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-03-02 05:31:24" itemprop="dateModified" datetime="2021-03-02T05:31:24+08:00">2021-03-02</time>
+                <time title="修改时间：2021-03-04 00:08:38" itemprop="dateModified" datetime="2021-03-04T00:08:38+08:00">2021-03-04</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -741,7 +829,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-03-02 05:31:24" itemprop="dateModified" datetime="2021-03-02T05:31:24+08:00">2021-03-02</time>
+                <time title="修改时间：2021-03-04 00:08:38" itemprop="dateModified" datetime="2021-03-04T00:08:38+08:00">2021-03-04</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -822,7 +910,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-03-02 05:31:24" itemprop="dateModified" datetime="2021-03-02T05:31:24+08:00">2021-03-02</time>
+                <time title="修改时间：2021-03-04 00:08:38" itemprop="dateModified" datetime="2021-03-04T00:08:38+08:00">2021-03-04</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -903,7 +991,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-03-02 05:31:24" itemprop="dateModified" datetime="2021-03-02T05:31:24+08:00">2021-03-02</time>
+                <time title="修改时间：2021-03-04 00:08:38" itemprop="dateModified" datetime="2021-03-04T00:08:38+08:00">2021-03-04</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -930,87 +1018,6 @@
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2018/09/20/Python/pycharm%E7%AE%80%E5%8D%95%E4%BD%BF%E7%94%A8/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/09/19/Python/python3%E4%B8%8EAnaconda%E7%8E%AF%E5%A2%83%E7%AE%A1%E7%90%86/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-      <meta itemprop="name" content="夏侯仪">
-      <meta itemprop="description" content="幽寰证此约 七魄俱为凭</br>魂袅还无明 诸厉化纷英</br>吾心共天契 请凭神御临">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="幻煞幽穹">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2018/09/19/Python/python3%E4%B8%8EAnaconda%E7%8E%AF%E5%A2%83%E7%AE%A1%E7%90%86/" class="post-title-link" itemprop="url">python3与Anaconda环境管理</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2018-09-19 22:27:36" itemprop="dateCreated datePublished" datetime="2018-09-19T22:27:36+08:00">2018-09-19</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-03-02 05:31:24" itemprop="dateModified" datetime="2021-03-02T05:31:24+08:00">2021-03-02</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%B5%8B%E8%AF%95/" itemprop="url" rel="index"><span itemprop="name">测试</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>python安装和环境管理 on windows</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2018/09/19/Python/python3%E4%B8%8EAnaconda%E7%8E%AF%E5%A2%83%E7%AE%A1%E7%90%86/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -1101,7 +1108,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">67</span>
+          <span class="site-state-item-count">68</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
