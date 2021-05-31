@@ -45,11 +45,19 @@ Environment="HTTPS_PROXY=http://username:password@proxy.example.com:port"
 如果在公司代理之后，https使用ssl链接经常会出现证书问题(如`x509: certificate signed by unknown authority`)，可以选择其他镜像，或忽略安全证书。
 参考：https://docs.docker.com/registry/insecure/#use-self-signed-certificates
 ```bash
-sudo vim /etc/docker/daemon.json
+sudo mkdir -p /etc/docker
+sudo tee /etc/docker/daemon.json <<-'EOF'
 {
-  "registry-mirrors": ["https://registry.docker-cn.com"],
-  "insecure-registries" : ["registry.docker-cn.com:5000"]
+    "registry-mirrors": [
+        "https://1nj0zren.mirror.aliyuncs.com",
+        "https://docker.mirrors.ustc.edu.cn",
+        "http://f1361db2.m.daocloud.io",
+        "https://dockerhub.azk8s.cn"
+    ]
 }
+EOF
+sudo systemctl daemon-reload
+sudo systemctl restart docker
 ```
 ## 安全证书
 如果在公司代理之后，https使用ssl链接经常会出现证书问题(如`x509: certificate signed by unknown authority`)，也可以选择添加证书到系统。
