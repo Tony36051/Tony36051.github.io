@@ -2430,6 +2430,22 @@ eyJoaXN0b3J5IjpbLTI2NTUyNjY3MSw2NDQwMDk3MzJdfQ==
       </tags>
   </entry>
   <entry>
+    <title>Spark单节点大数据Linux</title>
+    <url>/2021/06/16/ops/Spark/Spark%E5%8D%95%E8%8A%82%E7%82%B9%E5%A4%A7%E6%95%B0%E6%8D%AELinux/</url>
+    <content><![CDATA[<p>记录Linux上单节点搭建spark，以及做大数据分析的过程</p>
+<a id="more"></a>
+
+<h1 id="Spark单节点大数据Linux"><a href="#Spark单节点大数据Linux" class="headerlink" title="Spark单节点大数据Linux"></a>Spark单节点大数据Linux</h1><h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><p>版本：<br>下载地址： <a href="https://spark.apache.org/downloads.html">https://spark.apache.org/downloads.html</a><br>spark: 3.1.2<br>hadoop: 3.2 or later<br>Spark 3.0+ is pre-built with Scala 2.12.</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">wget https://downloads.apache.org/spark/spark-3.1.2/spark-3.1.2-bin-hadoop3.2.tgz</span><br><span class="line">tar -zxvf spark-3.1.2-bin-hadoop3.2.tgz</span><br><span class="line">sudo apt update</span><br><span class="line">sudo apt install openjdk-11-jdk-headless</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>Ops</category>
+      </categories>
+      <tags>
+        <tag>Spark</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Gradle 转 Maven 小记(ReportPortal为例)</title>
     <url>/2018/08/20/projects/ReportPortal-Customization/Gradle-%E8%BD%AC-Maven-%E5%B0%8F%E8%AE%B0(ReportPortal%E4%B8%BA%E4%BE%8B)/</url>
     <content><![CDATA[<p>公司访问外网要代理, 证书也替换了, gradle不能忽略证书验证, 替换证书未果, 遂起了转化maven工程的念头</p>
