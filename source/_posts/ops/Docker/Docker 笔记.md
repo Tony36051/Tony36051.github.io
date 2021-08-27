@@ -29,17 +29,17 @@ base=https://github.com/docker/machine/releases/download/v0.14.0 &&
 
 ## 配置代理
 ```bash
-sudo mkdir /etc/systemd/system/docker.service.d
-#添加http代理内容
-sudo vim /etc/systemd/system/docker.service.d/http-proxy.conf
+cat > /etc/systemd/system/docker.service.d/http-proxy.conf <<EOF
 [Service]
-Environment="HTTP_PROXY=http://username:password@proxy.example.com:port"
-```
-```bash
-sudo vim /etc/systemd/system/docker.service.d/https-proxy.conf
-#添加http代理内容
+Environment="HTTP_PROXY=http://100.100.154.250:3128"
+EOF
+
+cat > /etc/systemd/system/docker.service.d/https-proxy.conf <<EOF
 [Service]
-Environment="HTTPS_PROXY=http://username:password@proxy.example.com:port"
+Environment="HTTP_PROXY=http://100.100.154.250:3128"
+EOF
+sudo systemctl daemon-reload
+sudo systemctl restart docker
 ```
 ## 仓库改源 信任源
 如果在公司代理之后，https使用ssl链接经常会出现证书问题(如`x509: certificate signed by unknown authority`)，可以选择其他镜像，或忽略安全证书。
