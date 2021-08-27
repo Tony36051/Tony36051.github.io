@@ -1576,6 +1576,141 @@ eyJoaXN0b3J5IjpbODExNDU2NDI2XX0=
       </tags>
   </entry>
   <entry>
+    <title>Docker 替代命令笔记podman、nerdctl、crictl</title>
+    <url>/2021/07/10/ops/Docker/Docker%20%E6%9B%BF%E4%BB%A3%E5%91%BD%E4%BB%A4%E7%AC%94%E8%AE%B0podman%E3%80%81nerdctl%E3%80%81crictl/</url>
+    <content><![CDATA[<p>容器镜像相关操作命令，案例以k3s为切入点</p>
+<a id="more"></a>
+
+<h1 id="安装-amp-配置"><a href="#安装-amp-配置" class="headerlink" title="安装&amp;配置"></a>安装&amp;配置</h1><h2 id="准备镜像文件"><a href="#准备镜像文件" class="headerlink" title="准备镜像文件"></a>准备镜像文件</h2><p>下载k3s-airgap-images-amd64.tar.gz，k3s, install.sh(<a href="http://get.k3s.io/">http://get.k3s.io</a>)</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo mkdir -p /var/lib/rancher/k3s/agent/images/</span><br><span class="line">gzip -<span class="built_in">cd</span> k3s-airgap-images-amd64.tar.gz &gt; k3s-airgap-images-amd64.tar</span><br><span class="line">sudo cp ./k3s-airgap-images-amd64.tar /var/lib/rancher/k3s/agent/images/</span><br><span class="line">cp ./k3s /usr/<span class="built_in">local</span>/bin/k3s</span><br><span class="line">chmod +x ./install.sh</span><br><span class="line">chmod +x /usr/<span class="built_in">local</span>/bin/k3s</span><br></pre></td></tr></table></figure>
+
+<h2 id="单节点安装"><a href="#单节点安装" class="headerlink" title="单节点安装"></a>单节点安装</h2><h3 id="server节点"><a href="#server节点" class="headerlink" title="server节点"></a>server节点</h3><blockquote>
+<p>INSTALL_K3S_SKIP_DOWNLOAD=true ./install.sh</p>
+</blockquote>
+<h3 id="agent节点"><a href="#agent节点" class="headerlink" title="agent节点"></a>agent节点</h3><p>请在每个 agent 节点上执行以下操作。注意将 myserver 替换为 server 的 IP 或有效的 DNS，并将 mynodetoken 替换 server 节点的 token，通常在/var/lib/rancher/k3s/server/node-token</p>
+<blockquote>
+<p>INSTALL_K3S_SKIP_DOWNLOAD=true K3S_URL=<a href="https://myserver:6443/">https://myserver:6443</a> K3S_TOKEN=mynodetoken ./install.sh</p>
+</blockquote>
+<h3 id="检查安装"><a href="#检查安装" class="headerlink" title="检查安装"></a>检查安装</h3><blockquote>
+<p>crictl images</p>
+</blockquote>
+<h2 id="代理"><a href="#代理" class="headerlink" title="代理"></a>代理</h2><p>因为<br>root:/etc/rancher/k3s# ll /usr/local/bin/crictl<br>lrwxrwxrwx 1 root root 3 Jun  7 10:42 /usr/local/bin/crictl -&gt; k3s*</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment">#sudo vim /etc/systemd/system/k3s.service.env</span></span><br><span class="line">cat &gt; /etc/systemd/system/k3s.service.env &lt;&lt; <span class="string">EOF</span></span><br><span class="line"><span class="string">HTTP_PROXY=&quot;http://100.100.154.250:3128&quot;</span></span><br><span class="line"><span class="string">HTTPS_PROXY=&quot;http://100.100.154.250:3128&quot;</span></span><br><span class="line"><span class="string">NO_PROXY=&quot;localhost,127.0.0.0/8,0.0.0.0,10.0.0.0/8,192.168.0.0/16,172.16.0.0/12,internal.example.com&quot;</span></span><br><span class="line"><span class="string">EOF</span></span><br><span class="line"></span><br><span class="line">systemctl daemon-reload</span><br><span class="line">systemctl restart k3s</span><br></pre></td></tr></table></figure>
+
+<h1 id="常见问题"><a href="#常见问题" class="headerlink" title="常见问题"></a>常见问题</h1><p>待补充</p>
+<h1 id="常用命令对比"><a href="#常用命令对比" class="headerlink" title="常用命令对比"></a>常用命令对比</h1><table>
+<thead>
+<tr>
+<th align="left">命令</th>
+<th align="left">Docker</th>
+<th align="left">Containerd crictl（推荐）</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">查看容器列表</td>
+<td align="left"><code>docker ps</code></td>
+<td align="left"><code>crictl ps</code></td>
+</tr>
+<tr>
+<td align="left">查看容器详情</td>
+<td align="left"><code>docker inspect</code></td>
+<td align="left"><code>crictl inspect</code></td>
+</tr>
+<tr>
+<td align="left">查看容器日志</td>
+<td align="left"><code>docker logs</code></td>
+<td align="left"><code>crictl logs</code></td>
+</tr>
+<tr>
+<td align="left">容器内执行命令</td>
+<td align="left"><code>docker exec</code></td>
+<td align="left"><code>crictl exec</code></td>
+</tr>
+<tr>
+<td align="left">挂载容器</td>
+<td align="left"><code>docker attach</code></td>
+<td align="left"><code>crictl attach</code></td>
+</tr>
+<tr>
+<td align="left">显示容器资源使用情况</td>
+<td align="left"><code>docker stats</code></td>
+<td align="left"><code>crictl stats</code></td>
+</tr>
+<tr>
+<td align="left">创建容器</td>
+<td align="left"><code>docker create</code></td>
+<td align="left"><code>crictl create</code></td>
+</tr>
+<tr>
+<td align="left">启动容器</td>
+<td align="left"><code>docker start</code></td>
+<td align="left"><code>crictl start</code></td>
+</tr>
+<tr>
+<td align="left">停止容器</td>
+<td align="left"><code>docker stop</code></td>
+<td align="left"><code>crictl stop</code></td>
+</tr>
+<tr>
+<td align="left">删除容器</td>
+<td align="left"><code>docker rm</code></td>
+<td align="left"><code>crictl rm</code></td>
+</tr>
+<tr>
+<td align="left">查看镜像列表</td>
+<td align="left"><code>docker images</code></td>
+<td align="left"><code>crictl images</code></td>
+</tr>
+<tr>
+<td align="left">查看镜像详情</td>
+<td align="left"><code>docker inspect</code></td>
+<td align="left"><code>crictl inspecti</code></td>
+</tr>
+<tr>
+<td align="left">拉取镜像</td>
+<td align="left"><code>docker pull</code></td>
+<td align="left"><code>crictl pull</code></td>
+</tr>
+<tr>
+<td align="left">推送镜像</td>
+<td align="left"><code>docker push</code></td>
+<td align="left">无</td>
+</tr>
+<tr>
+<td align="left">删除镜像</td>
+<td align="left"><code>docker rmi</code></td>
+<td align="left"><code>crictl rmi</code></td>
+</tr>
+<tr>
+<td align="left">查看Pod列表</td>
+<td align="left">无</td>
+<td align="left"><code>crictl pods</code></td>
+</tr>
+<tr>
+<td align="left">查看Pod详情</td>
+<td align="left">无</td>
+<td align="left"><code>crictl inspectp</code></td>
+</tr>
+<tr>
+<td align="left">启动Pod</td>
+<td align="left">无</td>
+<td align="left"><code>crictl runp</code></td>
+</tr>
+<tr>
+<td align="left">停止Pod</td>
+<td align="left">无</td>
+<td align="left"><code>crictl stopp</code></td>
+</tr>
+</tbody></table>
+]]></content>
+      <categories>
+        <category>Ops</category>
+      </categories>
+      <tags>
+        <tag>Docker</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Docker 运行 Jenkins 无法显示报告</title>
     <url>/2018/04/08/ops/Docker/Docker%20%E8%BF%90%E8%A1%8C%20Jenkins%20%E6%97%A0%E6%B3%95%E6%98%BE%E7%A4%BA%E6%8A%A5%E5%91%8A/</url>
     <content><![CDATA[<p>Docker运行Jenkins有诸多不便，尽量不要使用。<br>较新版本Jenkins限制了js和css的运行，然而RobotFramework的日志log.html和报告report.html都严重依赖js和css。docker平台上最简单解决方法就是用JAVA_OPTS-Dhudson.model.DirectoryBrowserSupport.CSP=，放松Jenkins的安全策略。缺失字体库会造成显示成方块的问题</p>
@@ -3156,8 +3291,7 @@ eyJoaXN0b3J5IjpbLTI2NTUyNjY3MSw2NDQwMDk3MzJdfQ==
 <h2 id="docker-compose"><a href="#docker-compose" class="headerlink" title="docker-compose"></a>docker-compose</h2><p><a href="https://github.com/docker/compose/releases/">https://github.com/docker/compose/releases/</a><br>sudo chmod +x /usr/local/bin/docker-compose</p>
 <h2 id="docker-machine"><a href="#docker-machine" class="headerlink" title="docker-machine"></a>docker-machine</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">base=https://github.com/docker/machine/releases/download/v0.14.0 &amp;&amp;</span><br><span class="line">  curl -L <span class="variable">$base</span>/docker-machine-$(uname -s)-$(uname -m) &gt;/tmp/docker-machine &amp;&amp;</span><br><span class="line">  sudo install /tmp/docker-machine /usr/<span class="built_in">local</span>/bin/docker-machine</span><br></pre></td></tr></table></figure>
 
-<h2 id="配置代理"><a href="#配置代理" class="headerlink" title="配置代理"></a>配置代理</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo mkdir /etc/systemd/system/docker.service.d</span><br><span class="line"><span class="comment">#添加http代理内容</span></span><br><span class="line">sudo vim /etc/systemd/system/docker.service.d/http-proxy.conf</span><br><span class="line">[Service]</span><br><span class="line">Environment=<span class="string">&quot;HTTP_PROXY=http://username:password@proxy.example.com:port&quot;</span></span><br></pre></td></tr></table></figure>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo vim /etc/systemd/system/docker.service.d/https-proxy.conf</span><br><span class="line"><span class="comment">#添加http代理内容</span></span><br><span class="line">[Service]</span><br><span class="line">Environment=<span class="string">&quot;HTTPS_PROXY=http://username:password@proxy.example.com:port&quot;</span></span><br></pre></td></tr></table></figure>
+<h2 id="配置代理"><a href="#配置代理" class="headerlink" title="配置代理"></a>配置代理</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">cat &gt; /etc/systemd/system/docker.service.d/http-proxy.conf &lt;&lt;<span class="string">EOF</span></span><br><span class="line"><span class="string">[Service]</span></span><br><span class="line"><span class="string">Environment=&quot;HTTP_PROXY=http://100.100.154.250:3128&quot;</span></span><br><span class="line"><span class="string">EOF</span></span><br><span class="line"></span><br><span class="line">cat &gt; /etc/systemd/system/docker.service.d/https-proxy.conf &lt;&lt;<span class="string">EOF</span></span><br><span class="line"><span class="string">[Service]</span></span><br><span class="line"><span class="string">Environment=&quot;HTTP_PROXY=http://100.100.154.250:3128&quot;</span></span><br><span class="line"><span class="string">EOF</span></span><br><span class="line">sudo systemctl daemon-reload</span><br><span class="line">sudo systemctl restart docker</span><br></pre></td></tr></table></figure>
 <h2 id="仓库改源-信任源"><a href="#仓库改源-信任源" class="headerlink" title="仓库改源 信任源"></a>仓库改源 信任源</h2><p>如果在公司代理之后，https使用ssl链接经常会出现证书问题(如<code>x509: certificate signed by unknown authority</code>)，可以选择其他镜像，或忽略安全证书。<br>参考：<a href="https://docs.docker.com/registry/insecure/#use-self-signed-certificates">https://docs.docker.com/registry/insecure/#use-self-signed-certificates</a></p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo mkdir -p /etc/docker</span><br><span class="line">sudo tee /etc/docker/daemon.json &lt;&lt;-<span class="string">&#x27;EOF&#x27;</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="string">&quot;registry-mirrors&quot;</span>: [</span><br><span class="line">        <span class="string">&quot;https://1nj0zren.mirror.aliyuncs.com&quot;</span>,</span><br><span class="line">        <span class="string">&quot;https://docker.mirrors.ustc.edu.cn&quot;</span>,</span><br><span class="line">        <span class="string">&quot;http://f1361db2.m.daocloud.io&quot;</span>,</span><br><span class="line">        <span class="string">&quot;https://dockerhub.azk8s.cn&quot;</span></span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br><span class="line">EOF</span><br><span class="line">sudo systemctl daemon-reload</span><br><span class="line">sudo systemctl restart docker</span><br></pre></td></tr></table></figure>
 <h2 id="安全证书"><a href="#安全证书" class="headerlink" title="安全证书"></a>安全证书</h2><p>如果在公司代理之后，https使用ssl链接经常会出现证书问题(如<code>x509: certificate signed by unknown authority</code>)，也可以选择添加证书到系统。<br>以<code>docker pull docker.elastic.co/elasticsearch/elasticsearch:6.3.0</code>为例，会出现<code>Error response from daemon: Get https://docker.elastic.co/v2/: x509: certificate signed by unknown authority</code>可以看到主域名为<code>elastic.co</code></p>
