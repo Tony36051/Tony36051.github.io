@@ -1,12 +1,12 @@
 ---
-title: Hadoop3.x on Windows10
-date: 2022-03-16 23:40
+title: Hadoop3.3.2 on Windows10
+date: 2022-03-20 18:15
 tag: 
 - Hadoop
 categories:
 - BigData
 ---
-# Hadoop3.3 on Windows10
+# Hadoop3.3.2 on Windows10
 
 ## 简介
 
