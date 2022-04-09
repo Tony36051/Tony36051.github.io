@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 5.2.0">
+<meta name="generator" content="Hexo 5.4.2">
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
@@ -30,7 +30,7 @@
 <meta property="og:description" content="作为一个测试+运维人员，经常需要使用jenkins做持续集成，将jenkins作为守护进程有很多方法，其中一个就是用systemd。">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2019-06-17T16:00:00.000Z">
-<meta property="article:modified_time" content="2021-10-16T07:02:45.074Z">
+<meta property="article:modified_time" content="2022-04-09T03:35:06.532Z">
 <meta property="article:author" content="夏侯仪">
 <meta property="article:tag" content="Linux">
 <meta property="article:tag" content="Systemd">
@@ -227,7 +227,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-10-16 15:02:45" itemprop="dateModified" datetime="2021-10-16T15:02:45+08:00">2021-10-16</time>
+                <time title="修改时间：2022-04-09 11:35:06" itemprop="dateModified" datetime="2022-04-09T11:35:06+08:00">2022-04-09</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -251,7 +251,7 @@
 
       
         <p>作为一个测试+运维人员，经常需要使用jenkins做持续集成，将jenkins作为守护进程有很多方法，其中一个就是用systemd。</p>
-<a id="more"></a>
+<span id="more"></span>
 
 <h1 id="Systemd使用（Nginx和Jenkins为例）"><a href="#Systemd使用（Nginx和Jenkins为例）" class="headerlink" title="Systemd使用（Nginx和Jenkins为例）"></a>Systemd使用（Nginx和Jenkins为例）</h1><h2 id="systemd是什么"><a href="#systemd是什么" class="headerlink" title="systemd是什么"></a>systemd是什么</h2><p><strong>管理系统所有进程、服务以及启动项等</strong>的软件简称「系统管理器」</p>
 <h2 id="查看"><a href="#查看" class="headerlink" title="查看"></a>查看</h2><h3 id="2-1-查看系统所有安装的服务项"><a href="#2-1-查看系统所有安装的服务项" class="headerlink" title="2.1 查看系统所有安装的服务项"></a><strong>2.1 查看系统所有安装的服务项</strong></h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl list-unit-files --<span class="built_in">type</span>=service</span><br></pre></td></tr></table></figure>
@@ -284,7 +284,7 @@
 <h3 id="3-6-使服务不要开机自启动"><a href="#3-6-使服务不要开机自启动" class="headerlink" title="3.6 使服务不要开机自启动"></a><strong>3.6 使服务不要开机自启动</strong></h3><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl disable &lt;服务项名称&gt;</span><br></pre></td></tr></table></figure>
 
 <h2 id="创建服务"><a href="#创建服务" class="headerlink" title="创建服务"></a>创建服务</h2><h3 id="4-1-服务文件的位置"><a href="#4-1-服务文件的位置" class="headerlink" title="4.1 服务文件的位置"></a><strong>4.1 服务文件的位置</strong></h3><p>CentOS 7的服务systemctl脚本存放在：/usr/lib/systemd/，有系统 system 和用户 user 之分。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;lib&#x2F;systemd&#x2F;system  </span><br><span class="line">&#x2F;run&#x2F;systemd&#x2F;system  </span><br><span class="line">&#x2F;etc&#x2F;systemd&#x2F;system</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">/lib/systemd/system  </span><br><span class="line">/run/systemd/system  </span><br><span class="line">/etc/systemd/system</span><br></pre></td></tr></table></figure>
 <p>在<code>/etc/systemd/system</code>下面创建<code>nginx.service.d</code>目录，在这个目录里面新建任何以.conf结尾的文件，然后写入我们自己的配置。</p>
 <h3 id="4-2-服务文件的模版"><a href="#4-2-服务文件的模版" class="headerlink" title="4.2 服务文件的模版"></a><strong>4.2 服务文件的模版</strong></h3><p>每一个服务以.service结尾，一般会分为3部分：[Unit]、[Service]和[Install]，就以nginx为例吧，具体内容如下：</p>
 <figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">[Unit]</span></span><br><span class="line"><span class="attr">Description</span>=nginx - high performance web server</span><br><span class="line"><span class="attr">Documentation</span>=http://nginx.org/en/docs/</span><br><span class="line"><span class="attr">After</span>=network.target remote-fs.target nss-lookup.target</span><br><span class="line"></span><br><span class="line"><span class="section">[Service]</span></span><br><span class="line"><span class="attr">Type</span>=forking</span><br><span class="line"><span class="attr">PIDFile</span>=/usr/local/nginx/logs/nginx.pid</span><br><span class="line"><span class="attr">ExecStartPre</span>=/usr/local/nginx/sbin/nginx -t -c /usr/local/nginx/conf/nginx.conf</span><br><span class="line"><span class="attr">ExecStart</span>=/usr/local/nginx/sbin/nginx -c /usr/local/nginx/conf/nginx.conf</span><br><span class="line"><span class="attr">ExecReload</span>=/bin/kill -s HUP <span class="variable">$MAINPID</span></span><br><span class="line"><span class="attr">ExecStop</span>=/bin/kill -s QUIT <span class="variable">$MAINPID</span></span><br><span class="line"><span class="attr">PrivateTmp</span>=<span class="literal">true</span></span><br><span class="line"></span><br><span class="line"><span class="section">[Install]</span></span><br><span class="line"><span class="attr">WantedBy</span>=multi-user.target</span><br></pre></td></tr></table></figure>
@@ -458,7 +458,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">71</span>
+          <span class="site-state-item-count">73</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -503,7 +503,7 @@
 <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2021</span>
+  <span itemprop="copyrightYear">2022</span>
   <span class="with-love">
     <i class="user"></i>
   </span>

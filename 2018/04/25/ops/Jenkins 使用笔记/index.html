@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 5.2.0">
+<meta name="generator" content="Hexo 5.4.2">
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
@@ -30,7 +30,7 @@
 <meta property="og:description" content="记录Jenkins上使用的经验，另外在公司内部使用Jenkins会遇到一些代理问题，记录一些解决方法。">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2018-04-25T12:20:00.000Z">
-<meta property="article:modified_time" content="2021-10-16T07:02:45.074Z">
+<meta property="article:modified_time" content="2022-04-09T03:35:06.532Z">
 <meta property="article:author" content="夏侯仪">
 <meta property="article:tag" content="docker">
 <meta property="article:tag" content="jenkins">
@@ -227,7 +227,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-10-16 15:02:45" itemprop="dateModified" datetime="2021-10-16T15:02:45+08:00">2021-10-16</time>
+                <time title="修改时间：2022-04-09 11:35:06" itemprop="dateModified" datetime="2022-04-09T11:35:06+08:00">2022-04-09</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -251,7 +251,7 @@
 
       
         <p>记录Jenkins上使用的经验，另外在公司内部使用Jenkins会遇到一些代理问题，记录一些解决方法。</p>
-<a id="more"></a>
+<span id="more"></span>
 
 <h1 id="代理问题"><a href="#代理问题" class="headerlink" title="代理问题"></a>代理问题</h1><ol>
 <li>配置代理后，由于默认使用https取插件仓库，切换为http协议即可<br>在<a target="_blank" rel="noopener" href="http://localhost:8083/pluginManager/advanced%E4%B8%AD%EF%BC%8C%E5%8D%87%E7%BA%A7%E7%AB%99%E7%82%B9%E7%9A%84url%E5%8E%BB%E6%8E%89https%E7%9A%84s%EF%BC%8C%E7%94%A8http%E5%8D%8F%E8%AE%AE%EF%BC%8C%E7%84%B6%E5%90%8E%E6%8F%90%E4%BA%A4%E4%B8%80%E4%B8%8B%EF%BC%8C%E8%8E%B7%E5%8F%96%E4%B8%80%E4%B8%8B%E5%8F%AF%E9%80%89%E6%8F%92%E4%BB%B6">http://localhost:8083/pluginManager/advanced中，升级站点的url去掉https的s，用http协议，然后提交一下，获取一下可选插件</a></li>
@@ -284,7 +284,7 @@
 <li>pkill -f可以匹配部分启动命令,然后kill之. 如果没有找到会返回失败</li>
 <li>nohup &amp; 可以使进程后台执行. 重定向结果能让ssh马上返回<br>如果是本地执行命令, 需要这样:</li>
 </ol>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">pkill -f excelhelper || <span class="literal">true</span></span><br><span class="line">BUILD_ID=dontKillMe nohup java -jar <span class="variable">$&#123;WORKSPACE&#125;</span>/excelhelper/target/excelhelper-1.0-SNAPSHOT.jar &gt; /tmp/excelhelper.log 2&gt;&amp;1 &amp;</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">pkill -f excelhelper || <span class="literal">true</span></span><br><span class="line">BUILD_ID=dontKillMe <span class="built_in">nohup</span> java -jar <span class="variable">$&#123;WORKSPACE&#125;</span>/excelhelper/target/excelhelper-1.0-SNAPSHOT.jar &gt; /tmp/excelhelper.log 2&gt;&amp;1 &amp;</span><br></pre></td></tr></table></figure>
     </div>
 
     
@@ -406,7 +406,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">71</span>
+          <span class="site-state-item-count">73</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -451,7 +451,7 @@
 <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2021</span>
+  <span itemprop="copyrightYear">2022</span>
   <span class="with-love">
     <i class="user"></i>
   </span>

@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 5.2.0">
+<meta name="generator" content="Hexo 5.4.2">
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
@@ -192,6 +192,198 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/03/05/Automation/Jmeter%E6%B5%8B%E8%AF%95%E6%97%B6%E9%97%B4%E4%B8%8D%E5%87%86%EF%BC%9F%E5%BC%80%E5%8F%91%E6%8B%BFPostman%E7%BB%93%E6%9E%9C%E8%AF%B4%E4%BA%8B/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+      <meta itemprop="name" content="夏侯仪">
+      <meta itemprop="description" content="幽寰证此约 七魄俱为凭</br>魂袅还无明 诸厉化纷英</br>吾心共天契 请凭神御临">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="幻煞幽穹">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/03/05/Automation/Jmeter%E6%B5%8B%E8%AF%95%E6%97%B6%E9%97%B4%E4%B8%8D%E5%87%86%EF%BC%9F%E5%BC%80%E5%8F%91%E6%8B%BFPostman%E7%BB%93%E6%9E%9C%E8%AF%B4%E4%BA%8B/" class="post-title-link" itemprop="url">Jmeter测试时间不准？开发拿Postman结果说事</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-03-05 17:00:01" itemprop="dateCreated datePublished" datetime="2020-03-05T17:00:01+08:00">2020-03-05</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-04-09 11:35:06" itemprop="dateModified" datetime="2022-04-09T11:35:06+08:00">2022-04-09</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Test/" itemprop="url" rel="index"><span itemprop="name">Test</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="Jmeter测试时间不准？开发拿Postman结果说事"><a href="#Jmeter测试时间不准？开发拿Postman结果说事" class="headerlink" title="Jmeter测试时间不准？开发拿Postman结果说事"></a>Jmeter测试时间不准？开发拿Postman结果说事</h1><h2 id="术语解释"><a href="#术语解释" class="headerlink" title="术语解释"></a>术语解释</h2><h3 id="Jmeter术语"><a href="#Jmeter术语" class="headerlink" title="Jmeter术语"></a>Jmeter术语</h3><p>Latency：请求发出到接收到第一个返回的字节的时间<br>Response time (= Sample time = Load time = Elapsed time)：请求发出到接收完最后一个字节的时间<br>可以看到响应时间总是比Latency大</p>
+<h3 id="Postman术语"><a href="#Postman术语" class="headerlink" title="Postman术语"></a>Postman术语</h3><p>Socket Initialization: 打开socket时间，一般常数时间<br>DNS Lookup：将请求域名换成ip的时间，一般也很短，太慢也存在优化空间<br>TCP Handshake：TCP握手时间，受网络状态影响<br>Transfer Start：请求发出到接收到第一个返回的字节的时间。等于Jmeter的Latency，等于Chrome的TTFB（Time To First Byte)<br>Download：整个返回体的下载（接收）时间<br>Process：基本是常数时间，接收后Postman做请求头分离等时间</p>
+<h2 id="场景复现"><a href="#场景复现" class="headerlink" title="场景复现"></a>场景复现</h2><p>同一个请求，返回体Postman显示900k，耗时大约300ms，Jmeter要500+ms。定位问题使用Dynatrace，发现服务器处理时间260+，接近Postman。此时开发就在嘟囔，测试的时间不知道怎么搞的。这时候作为测试负责人，心里窝火，但是事实摆在眼前。只能认真研究为啥。<br>首先，我们看下具体展开的时间</p>
+<table>
+<thead>
+<tr>
+<th>工具</th>
+<th>总时间</th>
+<th>TTFB</th>
+<th>Download</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Postman</td>
+<td>194</td>
+<td>162</td>
+<td>26</td>
+</tr>
+<tr>
+<td>Jmeter</td>
+<td>537</td>
+<td>172</td>
+<td>365</td>
+</tr>
+</tbody></table>
+<p>TTFB/Latency时间差不多，在Download时间上差距很大，为什么Postman这么快呢？经前辈指点说Jmeter要手动添加gzip。<br>立马查看Jmeter请求的头和Postman请求的头，原来Postman的request header自动加上了Accept-Encoding: gzip, deflate，而JMeter没有。<br>打开JMeter的Debug级别日志可以看见返回体已经不是明文，实测一下：<br>工具|总时间|TTFB|Download<br>–|–|–|–<br>Postman|194|162|26<br>Jmeter with gzip|177|171|6</p>
+<h2 id="扩展：-Accept-Encoding-amp-Content-Encoding"><a href="#扩展：-Accept-Encoding-amp-Content-Encoding" class="headerlink" title="扩展： Accept-Encoding &amp; Content-Encoding"></a>扩展： Accept-Encoding &amp; Content-Encoding</h2><p>HTTP 请求头 Accept-Encoding 会将客户端能够理解的内容编码方式——通常是某种压缩算法——进行通知（给服务端）。通过内容协商的方式，服务端会选择一个客户端提议的方式，使用并在响应头 Content-Encoding 中通知客户端该选择。</p>
+<p>即使客户端和服务器都支持相同的压缩算法，在 identity 指令可以被接受的情况下，服务器也可以选择对响应主体不进行压缩。导致这种情况出现的两种常见的情形是：</p>
+<p>要发送的数据已经经过压缩，再次进行压缩不会导致被传输的数据量更小。一些图像格式的文件会存在这种情况；<br>服务器超载，无法承受压缩需求导致的计算开销。通常，如果服务器使用超过80%的计算能力，微软建议不要压缩。</p>
+<h2 id="建议-amp-讨论"><a href="#建议-amp-讨论" class="headerlink" title="建议&amp;讨论"></a>建议&amp;讨论</h2><ol>
+<li>请求体可以常规地加上 Accept-Encoding: gzip, deflate </li>
+<li>如果Sample Time在开启压缩后还是比Latency大很多，说明这个接口返回很大数据。此时我们要考虑服务器的内存使用量，因为大数据量返回的接口常规优化方式就是改大数据库一次的Fetch Size，此时服务器的内存占用量会大幅上升，严重时可以导致OOM。我们在回归性能问题单的同时，要观察服务器的内存使用量。</li>
+<li>大数据量的接口从业务系统同步接口返回可能不是一个最佳的方案，会扰动业务系统的性能。应该通过别的途径，以非实时批处理的方式取大量数据更加符合分析统计的场景。</li>
+<li>开发在优化时往往对Download Time没有特别好的优化方法，我们在确定返回体已经开启压缩后，可以用Latency作为指标。但是聚合报告聚合的是Sample Time，此时我们可以在<code>查看结果树</code> 或 <code>用表格查看结果</code> 中配置保存到csv文件，后期用Excel分析平均值或90%值。</li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/02/14/ops/%E8%BF%9E%E6%8E%A5%E6%B1%A0%E7%9B%91%E6%8E%A7/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+      <meta itemprop="name" content="夏侯仪">
+      <meta itemprop="description" content="幽寰证此约 七魄俱为凭</br>魂袅还无明 诸厉化纷英</br>吾心共天契 请凭神御临">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="幻煞幽穹">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/02/14/ops/%E8%BF%9E%E6%8E%A5%E6%B1%A0%E7%9B%91%E6%8E%A7/" class="post-title-link" itemprop="url">连接池监控</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-02-14 16:36:00" itemprop="dateCreated datePublished" datetime="2020-02-14T16:36:00+08:00">2020-02-14</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-04-09 11:35:06" itemprop="dateModified" datetime="2022-04-09T11:35:06+08:00">2022-04-09</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Ops/" itemprop="url" rel="index"><span itemprop="name">Ops</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="连接池"><a href="#连接池" class="headerlink" title="连接池"></a>连接池</h1><p>数据源是各种数据库，甚至你可以认为excel都是一个数据源。连接池是为了复用连接数据源的链接的管理池。<br>连接池的监控可以反应一部分的业务高峰，形成告警。持续的监控指标也能作为应用崩溃的复盘数据。</p>
+<h2 id="监控原理"><a href="#监控原理" class="headerlink" title="监控原理"></a>监控原理</h2><p>公司平台使用普罗米修斯采集Java暴露的JMX数据，作为产品研发团队，只需要在程序启动后，将每个数据源包装一个Listener，多个数据源打包成map，交给<code>MBeanExporter</code></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">MBeanExporter</span> <span class="variable">exporter</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">MBeanExporter</span>();</span><br><span class="line"><span class="comment">// 探测模式 0不自动 1当前IOC容器查找组件 2 根据的策略进行探测</span></span><br><span class="line">exporter.setAutodetectMode(<span class="number">0</span>);</span><br><span class="line">Map&lt;String, AtomikosDataSourceBean&gt; dataSources = <span class="literal">null</span>; <span class="comment">// 自行获取</span></span><br><span class="line">Map&lt;String, Object&gt; map = <span class="keyword">new</span> <span class="title class_">HashMap</span>&lt;String, Object&gt;();</span><br><span class="line"><span class="keyword">for</span> (String key : dataSources.keySet()) &#123;</span><br><span class="line">    <span class="type">AtomikosDataSourceBean</span> <span class="variable">dataSrouce</span> <span class="operator">=</span> dataSources.get(key);</span><br><span class="line">    <span class="type">DataSourceListener</span> <span class="variable">listener</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">DataSourceListener</span>(dataSrouce);</span><br><span class="line">    map.put(<span class="string">&quot;Catalina:type=DatasourceConnectionPool,name=&quot;</span> + dataSrouce.getUniqueResourceName(), listener);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">exporter.setBeans(map);</span><br><span class="line">exporter.afterPropertiesSet();</span><br><span class="line">exporter.afterSingletonsInstantiated();</span><br></pre></td></tr></table></figure>
+
+<h2 id="指标设置"><a href="#指标设置" class="headerlink" title="指标设置"></a>指标设置</h2><p>样例代码中，指标的计算是这样的：<br>最大上限： maxSize<br>当前创建： poolSize（池中总连接）<br>空闲数： available（池中可用连接）<br>已使用： poolSize - available<br>利用率： (poolSize - available) / poolSize</p>
+<p>一开始我是觉得不太合理，监控的时候，不太好监控。仔细思考一下，也可以组合一下用当前暴露的指标做监控：</p>
+<ol>
+<li>当前创建&gt;90 (硬指标，不方便)</li>
+<li>利用率在多个采集周期都&gt;90% （持续高涨，当前创建数应该会增加）</li>
+</ol>
+<p>其实如果不是非常学院派，常人理解的指标应该是这样计算：<br>最大上限： maxSize<br>当前创建： poolSize<br>空闲数： maxSize - poolSize<br>已使用： poolSize - available<br>利用率： poolSize / maxSize</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/06/17/ops/Linux/Systemd%E4%BD%BF%E7%94%A8%EF%BC%88Nginx%E5%92%8CJenkins%E4%B8%BA%E4%BE%8B%EF%BC%89/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -223,7 +415,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-10-16 15:02:45" itemprop="dateModified" datetime="2021-10-16T15:02:45+08:00">2021-10-16</time>
+                <time title="修改时间：2022-04-09 11:35:06" itemprop="dateModified" datetime="2022-04-09T11:35:06+08:00">2022-04-09</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -304,7 +496,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-10-16 15:02:45" itemprop="dateModified" datetime="2021-10-16T15:02:45+08:00">2021-10-16</time>
+                <time title="修改时间：2022-04-09 11:35:06" itemprop="dateModified" datetime="2022-04-09T11:35:06+08:00">2022-04-09</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -385,7 +577,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-10-16 15:02:45" itemprop="dateModified" datetime="2021-10-16T15:02:45+08:00">2021-10-16</time>
+                <time title="修改时间：2022-04-09 11:35:06" itemprop="dateModified" datetime="2022-04-09T11:35:06+08:00">2022-04-09</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -466,7 +658,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-10-16 15:02:45" itemprop="dateModified" datetime="2021-10-16T15:02:45+08:00">2021-10-16</time>
+                <time title="修改时间：2022-04-09 11:35:06" itemprop="dateModified" datetime="2022-04-09T11:35:06+08:00">2022-04-09</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -489,7 +681,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="Cookie的domain和path"><a href="#Cookie的domain和path" class="headerlink" title="Cookie的domain和path"></a>Cookie的domain和path</h1><h2 id="domain"><a href="#domain" class="headerlink" title="domain"></a>domain</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Set-Cookie: login_sip&#x3D;1D-8B-35; Path&#x3D;&#x2F;; Domain&#x3D;.example.com</span><br></pre></td></tr></table></figure>
+          <h1 id="Cookie的domain和path"><a href="#Cookie的domain和path" class="headerlink" title="Cookie的domain和path"></a>Cookie的domain和path</h1><h2 id="domain"><a href="#domain" class="headerlink" title="domain"></a>domain</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Set-Cookie: login_sip=1D-8B-35; Path=/; Domain=.example.com</span><br></pre></td></tr></table></figure>
 <p>SSO单点登录后，返回的头信息中应该包括若干条<code>Set-Cookie</code>，上述的Cookie说明此key-value的Cookie能用于*.example.com所有二级域名，<code>Path=/</code>表示后续所有路径都可以使用。<br>下面说的所有二级域名当然包括一级域名。</p>
 <ul>
 <li>Path=/; Domain=.example.com 所有二级域名，所有uri</li>
@@ -554,7 +746,7 @@ eyJoaXN0b3J5IjpbLTg4MDg3NTU0Myw4NjkzNDY1MTVdfQ==
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-10-16 15:02:45" itemprop="dateModified" datetime="2021-10-16T15:02:45+08:00">2021-10-16</time>
+                <time title="修改时间：2022-04-09 11:35:06" itemprop="dateModified" datetime="2022-04-09T11:35:06+08:00">2022-04-09</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -635,7 +827,7 @@ eyJoaXN0b3J5IjpbLTg4MDg3NTU0Myw4NjkzNDY1MTVdfQ==
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-10-16 15:02:45" itemprop="dateModified" datetime="2021-10-16T15:02:45+08:00">2021-10-16</time>
+                <time title="修改时间：2022-04-09 11:35:06" itemprop="dateModified" datetime="2022-04-09T11:35:06+08:00">2022-04-09</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -679,7 +871,7 @@ eyJoaXN0b3J5IjpbLTg4MDg3NTU0Myw4NjkzNDY1MTVdfQ==
     B --> C[psutil: 获取子进程的内存占用]
     C --> D[chrome: 执行js获取js使用情况]</pre>
 
-<h2 id="工程目录介绍"><a href="#工程目录介绍" class="headerlink" title="工程目录介绍"></a>工程目录介绍</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">├─1-TestCase</span><br><span class="line">│      切换.txt</span><br><span class="line">│</span><br><span class="line">├─2-DOMElement</span><br><span class="line">│      commonVariable.txt</span><br><span class="line">│      HomePage.txt</span><br><span class="line">│</span><br><span class="line">├─3-Keywords</span><br><span class="line">│      CanvasAW.txt</span><br><span class="line">│      Common.txt</span><br><span class="line">│      CommonAction.txt</span><br><span class="line">│      CommonAssert.txt</span><br><span class="line">│      CommonDriver.txt</span><br><span class="line">│      CommonResolve.txt</span><br><span class="line">│      CommonWait.txt</span><br><span class="line">│      HomePage.txt</span><br><span class="line">│      MemLeak.txt</span><br><span class="line">│      UplSolo.txt</span><br><span class="line">│</span><br><span class="line">├─5-Extendlibrary</span><br><span class="line">│  │</span><br><span class="line">│  └─MemoryLeak</span><br><span class="line">│          MemoryUtils.py</span><br><span class="line">│          MemUsageExcel.py</span><br></pre></td></tr></table></figure>
+<h2 id="工程目录介绍"><a href="#工程目录介绍" class="headerlink" title="工程目录介绍"></a>工程目录介绍</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">├─1-TestCase</span><br><span class="line">│      切换.txt</span><br><span class="line">│</span><br><span class="line">├─2-DOMElement</span><br><span class="line">│      commonVariable.txt</span><br><span class="line">│      HomePage.txt</span><br><span class="line">│</span><br><span class="line">├─3-Keywords</span><br><span class="line">│      CanvasAW.txt</span><br><span class="line">│      Common.txt</span><br><span class="line">│      CommonAction.txt</span><br><span class="line">│      CommonAssert.txt</span><br><span class="line">│      CommonDriver.txt</span><br><span class="line">│      CommonResolve.txt</span><br><span class="line">│      CommonWait.txt</span><br><span class="line">│      HomePage.txt</span><br><span class="line">│      MemLeak.txt</span><br><span class="line">│      UplSolo.txt</span><br><span class="line">│</span><br><span class="line">├─5-Extendlibrary</span><br><span class="line">│  │</span><br><span class="line">│  └─MemoryLeak</span><br><span class="line">│          MemoryUtils.py</span><br><span class="line">│          MemUsageExcel.py</span><br></pre></td></tr></table></figure>
 
 <pre class="mermaid">graph LR
     切换.txt --> MemLeak.txt
@@ -752,7 +944,7 @@ eyJoaXN0b3J5IjpbLTg4MDg3NTU0Myw4NjkzNDY1MTVdfQ==
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-10-16 15:02:45" itemprop="dateModified" datetime="2021-10-16T15:02:45+08:00">2021-10-16</time>
+                <time title="修改时间：2022-04-09 11:35:06" itemprop="dateModified" datetime="2022-04-09T11:35:06+08:00">2022-04-09</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -775,9 +967,9 @@ eyJoaXN0b3J5IjpbLTg4MDg3NTU0Myw4NjkzNDY1MTVdfQ==
     <div class="post-body" itemprop="articleBody">
 
       
-          <h3 id="关键字默认参数是变量，也需要定义"><a href="#关键字默认参数是变量，也需要定义" class="headerlink" title="关键字默认参数是变量，也需要定义"></a>关键字默认参数是变量，也需要定义</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">登录</span><br><span class="line">    [Arguments]    $&#123;url&#125;&#x3D;$&#123;Url_A3&#125;    $&#123;userName&#125;&#x3D;$&#123;User_A3&#125;    $&#123;passWord&#125;&#x3D;$&#123;Password_A3&#125;</span><br></pre></td></tr></table></figure>
+          <h3 id="关键字默认参数是变量，也需要定义"><a href="#关键字默认参数是变量，也需要定义" class="headerlink" title="关键字默认参数是变量，也需要定义"></a>关键字默认参数是变量，也需要定义</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">登录</span><br><span class="line">    [Arguments]    $&#123;url&#125;=$&#123;Url_A3&#125;    $&#123;userName&#125;=$&#123;User_A3&#125;    $&#123;passWord&#125;=$&#123;Password_A3&#125;</span><br></pre></td></tr></table></figure>
 <p>如果这里的<code>$&#123;Url_A3&#125;</code>没有定义，会报错<code>Non-existing variable &#39;$&#123;Url_A3&#125;&#39;.</code></p>
-<h3 id="打开chromedriver时候，增加（命令行）参数"><a href="#打开chromedriver时候，增加（命令行）参数" class="headerlink" title="打开chromedriver时候，增加（命令行）参数"></a>打开chromedriver时候，增加（命令行）参数</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$&#123;args_list&#125;	Create List	user-data-dir&#x3D;$&#123;OUTPUT DIR&#125;$&#123;&#x2F;&#125;chrome_data	enable-precise-memory-info</span><br><span class="line">$&#123;chromeOptions&#125;	Create Dictionary	args	$&#123;args_list&#125;</span><br><span class="line">$&#123;cap_dict&#125;	Create Dictionary	chromeOptions	$&#123;chromeOptions&#125;</span><br><span class="line">Open Browser	$&#123;url&#125;	chrome	desired_capabilities&#x3D;$&#123;cap_dict&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="打开chromedriver时候，增加（命令行）参数"><a href="#打开chromedriver时候，增加（命令行）参数" class="headerlink" title="打开chromedriver时候，增加（命令行）参数"></a>打开chromedriver时候，增加（命令行）参数</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$&#123;args_list&#125;	Create List	user-data-dir=$&#123;OUTPUT DIR&#125;$&#123;/&#125;chrome_data	enable-precise-memory-info</span><br><span class="line">$&#123;chromeOptions&#125;	Create Dictionary	args	$&#123;args_list&#125;</span><br><span class="line">$&#123;cap_dict&#125;	Create Dictionary	chromeOptions	$&#123;chromeOptions&#125;</span><br><span class="line">Open Browser	$&#123;url&#125;	chrome	desired_capabilities=$&#123;cap_dict&#125;</span><br></pre></td></tr></table></figure>
 
 
       
@@ -829,7 +1021,7 @@ eyJoaXN0b3J5IjpbLTg4MDg3NTU0Myw4NjkzNDY1MTVdfQ==
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-10-16 15:02:45" itemprop="dateModified" datetime="2021-10-16T15:02:45+08:00">2021-10-16</time>
+                <time title="修改时间：2022-04-09 11:35:06" itemprop="dateModified" datetime="2022-04-09T11:35:06+08:00">2022-04-09</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -856,168 +1048,6 @@ eyJoaXN0b3J5IjpbLTg4MDg3NTU0Myw4NjkzNDY1MTVdfQ==
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2019/01/31/Python/%E8%AE%B0%E4%B8%80%E6%AC%A1python%E8%B0%83%E8%AF%95excel%E8%AF%BB%E5%8F%96%E9%94%99%E8%AF%AF/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/12/04/ai/%E5%B7%A5%E5%8D%95%E5%88%86%E7%B1%BB-keras%E7%AC%94%E8%AE%B0/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-      <meta itemprop="name" content="夏侯仪">
-      <meta itemprop="description" content="幽寰证此约 七魄俱为凭</br>魂袅还无明 诸厉化纷英</br>吾心共天契 请凭神御临">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="幻煞幽穹">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2018/12/04/ai/%E5%B7%A5%E5%8D%95%E5%88%86%E7%B1%BB-keras%E7%AC%94%E8%AE%B0/" class="post-title-link" itemprop="url">工单分类-keras笔记</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2018-12-05 00:41:00" itemprop="dateCreated datePublished" datetime="2018-12-05T00:41:00+08:00">2018-12-05</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-10-16 15:02:45" itemprop="dateModified" datetime="2021-10-16T15:02:45+08:00">2021-10-16</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/AI/" itemprop="url" rel="index"><span itemprop="name">AI</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>之前参加公司内的文本分类（工单分类）比赛，记录中间过程。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2018/12/04/ai/%E5%B7%A5%E5%8D%95%E5%88%86%E7%B1%BB-keras%E7%AC%94%E8%AE%B0/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/10/24/projects/ReportPortal-Customization/ReportPortal-%E4%BA%8C%E6%AC%A1%E5%BC%80%E5%8F%91%E7%AC%94%E8%AE%B0/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-      <meta itemprop="name" content="夏侯仪">
-      <meta itemprop="description" content="幽寰证此约 七魄俱为凭</br>魂袅还无明 诸厉化纷英</br>吾心共天契 请凭神御临">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="幻煞幽穹">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2018/10/24/projects/ReportPortal-Customization/ReportPortal-%E4%BA%8C%E6%AC%A1%E5%BC%80%E5%8F%91%E7%AC%94%E8%AE%B0/" class="post-title-link" itemprop="url">ReportPortal 二次开发笔记</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2018-10-25 00:00:00" itemprop="dateCreated datePublished" datetime="2018-10-25T00:00:00+08:00">2018-10-25</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-10-16 15:02:45" itemprop="dateModified" datetime="2021-10-16T15:02:45+08:00">2021-10-16</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Dev/" itemprop="url" rel="index"><span itemprop="name">Dev</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>ReportPortal二次开发中, 记录一些考量、感想</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2018/10/24/projects/ReportPortal-Customization/ReportPortal-%E4%BA%8C%E6%AC%A1%E5%BC%80%E5%8F%91%E7%AC%94%E8%AE%B0/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -1108,7 +1138,7 @@ eyJoaXN0b3J5IjpbLTg4MDg3NTU0Myw4NjkzNDY1MTVdfQ==
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">71</span>
+          <span class="site-state-item-count">73</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1153,7 +1183,7 @@ eyJoaXN0b3J5IjpbLTg4MDg3NTU0Myw4NjkzNDY1MTVdfQ==
 <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2021</span>
+  <span itemprop="copyrightYear">2022</span>
   <span class="with-love">
     <i class="user"></i>
   </span>

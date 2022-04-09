@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 5.2.0">
+<meta name="generator" content="Hexo 5.4.2">
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
@@ -30,7 +30,7 @@
 <meta property="og:description" content="第四季度，必须考过专业级">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2021-10-12T16:00:00.000Z">
-<meta property="article:modified_time" content="2021-10-16T07:02:45.078Z">
+<meta property="article:modified_time" content="2022-04-09T03:35:06.536Z">
 <meta property="article:author" content="夏侯仪">
 <meta name="twitter:card" content="summary">
 
@@ -225,7 +225,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-10-16 15:02:45" itemprop="dateModified" datetime="2021-10-16T15:02:45+08:00">2021-10-16</time>
+                <time title="修改时间：2022-04-09 11:35:06" itemprop="dateModified" datetime="2022-04-09T11:35:06+08:00">2022-04-09</time>
               </span>
 
           
@@ -240,7 +240,7 @@
 
       
         <p>第四季度，必须考过专业级</p>
-<a id="more"></a>
+<span id="more"></span>
 
 <h1 id="科目四：软件设计与重构-考纲"><a href="#科目四：软件设计与重构-考纲" class="headerlink" title="科目四：软件设计与重构 考纲"></a>科目四：软件设计与重构 考纲</h1><h2 id="需求分析"><a href="#需求分析" class="headerlink" title="需求分析"></a>需求分析</h2><ul>
 <li>理解软件需求分析基本概念和原则；</li>
@@ -333,7 +333,60 @@
 <p>数据存储：数据存储表示文件、数据库、注册表项、内存等。涉及到个人数据需要在元素概述中详细列举元素涉及的高、中、低影响的个人数据。</p>
 <p>数据流：数据在系统中的移动方向，如网络通讯、共享内存、函数调用等。涉及到个人数据需要在元素概述中详细列举元素涉及的高、中、低影响的个人数据。</p>
 <p>信任边界：当数据流穿越不同的信任级别（区域）时，就存在信任边界，例如从用户态到内核态，从客户端到服务端等。</p>
-<p>|  元素   | S(spoofing)仿冒 | T(tampering)篡改 | R(Repudiation)抵赖 | D(Info disclosure)信息泄露 | D(denial of service)拒绝服务 | E(Elevation of Privilege)提权 | P(privacy)隐私 |<br>|  —-  | —-  |<br>| 外部交互方 | √ | - | √ | - | - | - | √ |<br>| 处理过程   | √ | √ | √ | √ | √ | √ | - |<br>| 数据存储   | - | √ | √ | √ | √ | - | √ |<br>| 数据流     | - | √ | - | √ | - | - | - |</p>
+<table>
+<thead>
+<tr>
+<th>元素</th>
+<th>S(spoofing)仿冒</th>
+<th>T(tampering)篡改</th>
+<th>R(Repudiation)抵赖</th>
+<th>D(Info disclosure)信息泄露</th>
+<th>D(denial of service)拒绝服务</th>
+<th>E(Elevation of Privilege)提权</th>
+<th>P(privacy)隐私</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>外部交互方</td>
+<td>√</td>
+<td>-</td>
+<td>√</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>√</td>
+</tr>
+<tr>
+<td>处理过程</td>
+<td>√</td>
+<td>√</td>
+<td>√</td>
+<td>√</td>
+<td>√</td>
+<td>√</td>
+<td>-</td>
+</tr>
+<tr>
+<td>数据存储</td>
+<td>-</td>
+<td>√</td>
+<td>√</td>
+<td>√</td>
+<td>√</td>
+<td>-</td>
+<td>√</td>
+</tr>
+<tr>
+<td>数据流</td>
+<td>-</td>
+<td>√</td>
+<td>-</td>
+<td>√</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+</tr>
+</tbody></table>
 <ul>
 <li>外部交互： 仿冒S， 抵赖R</li>
 <li>处理过程： 全部</li>
@@ -372,7 +425,18 @@
 </ol>
 <p>隐私威胁分析：可识别，不一致，不可控，不可知，不安全。<br>增量分析场景：绘制数据流图，<strong>变更识别</strong>，危险分析，风险评估，制定消减措施，产品响应。</p>
 <p>场景化扩展：<strong>场景化构建</strong>，绘制数据流图，变更识别，危险分析，风险评估，制定消减措施，产品响应。</p>
-<h2 id="软件设计与建模-1"><a href="#软件设计与建模-1" class="headerlink" title="软件设计与建模"></a>软件设计与建模</h2><p>软件系统架构的定义：系统架构 = 组件 + 交互 + 重要决策集。<br>安全架构的定义：    安全架构 = 系统业务架构 + 安全控制集。</p>
+<h3 id="加密算法"><a href="#加密算法" class="headerlink" title="加密算法"></a>加密算法</h3><p>安全： AES&gt;=128, SHA256, ECDSA&gt;=256, ECDH&gt;=256, RSA&gt;=2048, DSC&gt;=2048, DH&gt;=2048</p>
+<p>遗留系统可用： 3DES（k1/k2/k3各不相同）, RC4&gt;=128, SHA1, RSA_1024, DSA_1024, DH_1024</p>
+<p>不安全： Blowfish, DES, DESX, RC2, Skipjack, 2TDEA, TEA, SEAL, CYLINK_MEK, RC4&lt;128, SHA0, MD2/4/5, RIPEMD*, RSA&lt;1024, DH&lt;1024, ECDSA&lt;=160</p>
+<p>密码哈希： PBKDF2, BCRYPT, SCRYPT, Argon2</p>
+<p>PBKDF2是标准的密钥派生函数</p>
+<h2 id="软件设计与建模-1"><a href="#软件设计与建模-1" class="headerlink" title="软件设计与建模"></a>软件设计与建模</h2><p>软件建模体现了软件设计的思想，在需求和实现之间架起了一座桥梁，通过模型指导软件系统的具体实现。模型并不是软件系统的一个完备表示，而是所研究的系统的一种抽象。软件建模通过不同的视角去描述一个系统。</p>
+<p>软件建模体现了软件设计的思想，在需求和实现之间架起了一座桥梁，通过模型指导软件系统的具体实现。模型并不是软件系统的一个完备表示，而是所研究的系统的一种抽象。软件建模通过不同的视角去描述一个系统。</p>
+<p>UML内容组成：</p>
+<p>事物：结构事物（用例、接口、协作等），行为事物（交互、状态机），组织事物（包），辅助事物（注释）。</p>
+<p>关系：关联，依赖，泛化，实现。</p>
+<p>图：静态图（用例图，类图，对象图，组件图，部署图），动态图（顺序图，合作图，状态图，活动图）。</p>
+<p>软件系统架构的定义：系统架构 = 组件 + 交互 + 重要决策集。<br>安全架构的定义：    安全架构 = 系统业务架构 + 安全控制集。</p>
 <p>提供架构4+1视图集：</p>
 <ul>
 <li>逻辑视图：系统架构师, PM, SE。</li>
@@ -381,6 +445,94 @@
 <li>物理数图：运维, 部署工程师。</li>
 <li>开发视图：开发, 配置工程师。</li>
 </ul>
+<p>UML 4+1视图：</p>
+<ul>
+<li>逻辑视图：类图，对象图。</li>
+<li>实现视图：组件图。</li>
+<li>部署视图：部署图。</li>
+<li>行为视图：顺序图，合作图，状态图，活动图。</li>
+<li>用户视图：用例图。</li>
+</ul>
+<p>UML在软件开发流程中的应用：</p>
+<ul>
+<li>需求分析：用例图。</li>
+<li>概要设计，详细设计：类图，对象图，合作图，顺序图，状态图，活动图。</li>
+<li>编码阶段：无</li>
+<li>测试：类图，组件图，部署图。</li>
+</ul>
+<p>视角和类图：</p>
+<ul>
+<li>交互化视角：用例图。</li>
+<li>结构化视角：类图。</li>
+<li>行为视角：顺序图，活动图，状态图。</li>
+</ul>
+<p>用例图包含关系：</p>
+<p>Include：包含也可以叫Use，表示本用例会用到被包含的其他用例，被包含的用例是可以被重用的。</p>
+<p>Extend：扩展用例是可选的，在特定场景下可以补充基础用例，降低基础用例的复杂性。</p>
+<p>Generalization：泛化体现了父子关系，表明存在派生和继承。</p>
+<p>类图包含关系：</p>
+<p>实现（Realization）：是一种类与接口的关系，表示类是接口所有特征和行为的实现。例如：借阅者能查找书籍。</p>
+<p>依赖（Dependency）：是一种使用的关系，有单向依赖和双向依赖，但避免使用双向依赖。例如：借阅者查找结果依赖标题。</p>
+<p>泛化（Generalization）：是一种继承关系，指定了子类继承父类的所有特征和行为。例如：借阅者是老师或者学生。</p>
+<p>关联（Association）：是一种拥有的关系，它使一个类知道另一个类的属性和方法。例如：借阅者的借阅记录或预约记录。</p>
+<p>聚合（Aggregation）：是整体与个体的关系，可以理解成把个体聚集在一起。例如：借阅者的多条借阅记录。</p>
+<p>组合（Composition）：是整体与局部的关系，整体的对象负责代表局部的对象的生命周期，可以理解成整体是由局部组成的。例如：借阅记录必须要有相关书籍信息。</p>
+<p><strong>各种关系的强弱顺序</strong>： 泛化=实现&gt;组合&gt;聚合&gt;关联&gt;依赖</p>
+<p>三角实线=三角虚线&gt;菱形实线&gt;菱形虚线&gt;箭头实线&gt;箭头虚线</p>
+<p>记忆技巧： 类图关系连线的箭头，指向内容和范围较小的类。<br>箭头指向接口、父类、依赖的内容；菱形指向整体</p>
+<p>用例图描述系统在干什么。动态模型是描述系统的功能是如何完成的，用顺序图、活动图和状态图从不同的角度来描述对象和对象之间的交互。</p>
+<p>动态图作用和场景：</p>
+<p>顺序图：强调消息时间顺序的交互图。描述复杂的多对象间交互。并发、分支过多的场景会影响可理解性。</p>
+<p>活动图：用于对目标对象计算流程和工作流程建模。描述涉及到复杂的活动步骤的用例。特别并发、分支等场景。</p>
+<p>状态图：描述了系统元素的状态条件和响应，它反映了类的对象可能具有的状态，以及引起状态变化的事件。涉及到复杂的状态变化的场景，也适用于并发场景，如网络连接的会话状态等。状态图仅用于具有下列特点的类：具有若干个确定的状态，类的行为在这些状态下会受到影响变为其他状态。</p>
+<p>题目：<br>用例图中的Include关系是对应的UML四个关系中哪一种关系： 依赖</p>
+<h2 id="设计模式"><a href="#设计模式" class="headerlink" title="设计模式"></a>设计模式</h2><p>正交四原则：</p>
+<ol>
+<li>最小化重复</li>
+<li>分离变化</li>
+<li>缩小依赖范围</li>
+<li>向稳定方向依赖</li>
+</ol>
+<p>SOLID原则：</p>
+<ol>
+<li>单一职责SRP，一个类，引起它变化的原因只有一个。如果一个变化，导致多处修改，则存在重复。</li>
+<li>开闭原则OCP，对扩展开放，对修改关闭。多个变化导致一处修改，则对变化的识别不准，容易考虑不周，修改引入。</li>
+<li>里氏替换原则LSP，基类设定一系列的规范和契约，子类需要遵守。</li>
+<li>接口分离原则ISP，客户只需要了解必须了解的。不要暴漏的细节。</li>
+<li>依赖倒置原则DIP，接口为稳定的契约，双方都依赖于抽象，不依赖于具体实现；上层定义接口，下层实现接口</li>
+</ol>
+<h3 id="23种设计模式："><a href="#23种设计模式：" class="headerlink" title="23种设计模式："></a>23种设计模式：</h3><p>创建型：</p>
+<ol>
+<li>Factory Method（工厂方法）：隔离创建对象的细节，使得创建对象的行为可扩展</li>
+<li>Abstract Factory（抽象工厂）：该模式抽象出创建一组相关对象的接口，其中每个方法即为factory method</li>
+<li>Builder（建造者）：与factory不同的是，该模式包含了对象构造的若干过程，因此天然地与template结合</li>
+<li>Prototype（原型）: 用于以某个对象为模子创建一个新对象的场景，例如幻灯片中的母版与普通页、对象的克隆</li>
+<li>Singleton（单例）：</li>
+</ol>
+<p>结构型：</p>
+<ol start="6">
+<li>Adapter Class/Object（适配器）：处理遗留系统的不二法宝，也可以用空方法实现接口作为抽象父类</li>
+<li>Bridge（桥接）: 使用关联代替继承，解决类多维度的扩展导致的类爆炸的问题</li>
+<li>Composite（组合）：将组件组装为整体使用</li>
+<li>Decorator（装饰）：常见于各种wrapper，常用于在原函数执行前后做一些额外的工作</li>
+<li>Facade（外观）：封装扇出，利用树状结构减少调用者的复杂度</li>
+<li>Flyweight（享元）：复用变化少的对象</li>
+<li>Proxy（代理）：是原对象的一个完整的替代品</li>
+</ol>
+<p>行为型：</p>
+<ol start="13">
+<li>Interpreter（解释器）：一般用于解释执行自定义的某种语法</li>
+<li>Template Method（模板方法）：框架与钩子</li>
+<li>Chain of Responsibility（责任链）：一组对象按照既定的顺序关联起来，依次处理请求，其中任一对象都有权停止调用传递</li>
+<li>Command（命令）: 将行为抽象和解耦</li>
+<li>Iterator（迭代器）：封装数据的访问行为（顺序、可见性等）</li>
+<li>Mediator（中介者）：用一个中介对象来封装一系列的交互;新增一个模块处理两个模块的交互</li>
+<li>Memento（备忘录）：将当前对象的状态信息保存为另一个对象，使得当前对象可以基于状态镜像快速恢复原状态</li>
+<li>Observer（观察者）: 订阅/发布模型，用于事件驱动的设计</li>
+<li>State（状态）：封装FSM（有限状态机）的状态与状态迁移，每个状态定义了自身的输入与状态迁移</li>
+<li>Strategy（策略）：使用接口即使用strategy，用于隔离变化</li>
+<li>Visitor（访问者）：数据与行为分离方法。通过这种分离，可达到一个被访问者动态添加新的操作而无需做其他的修改的效果</li>
+</ol>
 
     </div>
 
@@ -421,7 +573,10 @@
     <a href="/2021/07/10/ops/Docker/Docker%20%E6%9B%BF%E4%BB%A3%E5%91%BD%E4%BB%A4%E7%AC%94%E8%AE%B0podman%E3%80%81nerdctl%E3%80%81crictl/" rel="prev" title="Docker 替代命令笔记podman、nerdctl、crictl">
       <i class="fa fa-chevron-left"></i> Docker 替代命令笔记podman、nerdctl、crictl
     </a></div>
-      <div class="post-nav-item"></div>
+      <div class="post-nav-item">
+    <a href="/2022/02/18/projects/CDH%E5%B9%B3%E5%8F%B0%E6%95%B0%E6%8D%AE%E5%90%8C%E6%AD%A5%E6%96%B9%E6%A1%88/" rel="next" title="CDH平台数据同步方案">
+      CDH平台数据同步方案 <i class="fa fa-chevron-right"></i>
+    </a></div>
     </div>
       </footer>
     
@@ -480,7 +635,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%A7%91%E7%9B%AE%E5%9B%9B%EF%BC%9A%E8%BD%AF%E4%BB%B6%E8%AE%BE%E8%AE%A1%E4%B8%8E%E9%87%8D%E6%9E%84-%E8%80%83%E7%BA%B2"><span class="nav-number">1.</span> <span class="nav-text">科目四：软件设计与重构 考纲</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%9C%80%E6%B1%82%E5%88%86%E6%9E%90"><span class="nav-number">1.1.</span> <span class="nav-text">需求分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BD%AF%E4%BB%B6%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%BB%BA%E6%A8%A1"><span class="nav-number">1.2.</span> <span class="nav-text">软件设计与建模</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%AF%E4%BF%A1%E8%AE%BE%E8%AE%A1"><span class="nav-number">1.3.</span> <span class="nav-text">可信设计</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%87%8D%E6%9E%84%E5%88%86%E6%9E%90%E4%B8%8E%E5%AE%9E%E7%8E%B0"><span class="nav-number">1.4.</span> <span class="nav-text">重构分析与实现</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%9C%80%E6%B1%82%E5%88%86%E6%9E%90-1"><span class="nav-number">1.5.</span> <span class="nav-text">需求分析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%9C%80%E6%B1%82%E5%88%86%E6%9E%90%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5%E5%92%8C%E5%8E%9F%E5%88%99"><span class="nav-number">1.5.1.</span> <span class="nav-text">需求分析基本概念和原则</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%9C%80%E6%B1%82%E5%88%86%E6%9E%90%E6%B4%BB%E5%8A%A8%E5%92%8C%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9"><span class="nav-number">1.5.2.</span> <span class="nav-text">需求分析活动和注意事项</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%9C%80%E6%B1%82%E7%AE%A1%E7%90%86"><span class="nav-number">1.5.3.</span> <span class="nav-text">需求管理</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%AF%E4%BF%A1%E8%AE%BE%E8%AE%A1-1"><span class="nav-number">1.6.</span> <span class="nav-text">可信设计</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#ASTRIDE-Low-Level%E5%A8%81%E8%83%81%E5%88%86%E6%9E%90"><span class="nav-number">1.6.1.</span> <span class="nav-text">ASTRIDE Low Level威胁分析</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E6%B5%81%E5%9B%BE%E5%85%83%E7%B4%A0"><span class="nav-number">1.6.1.1.</span> <span class="nav-text">数据流图元素</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%A8%81%E8%83%81%E5%88%86%E6%9E%90"><span class="nav-number">1.6.1.2.</span> <span class="nav-text">威胁分析</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BD%AF%E4%BB%B6%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%BB%BA%E6%A8%A1-1"><span class="nav-number">1.7.</span> <span class="nav-text">软件设计与建模</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%A7%91%E7%9B%AE%E5%9B%9B%EF%BC%9A%E8%BD%AF%E4%BB%B6%E8%AE%BE%E8%AE%A1%E4%B8%8E%E9%87%8D%E6%9E%84-%E8%80%83%E7%BA%B2"><span class="nav-number">1.</span> <span class="nav-text">科目四：软件设计与重构 考纲</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%9C%80%E6%B1%82%E5%88%86%E6%9E%90"><span class="nav-number">1.1.</span> <span class="nav-text">需求分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BD%AF%E4%BB%B6%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%BB%BA%E6%A8%A1"><span class="nav-number">1.2.</span> <span class="nav-text">软件设计与建模</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%AF%E4%BF%A1%E8%AE%BE%E8%AE%A1"><span class="nav-number">1.3.</span> <span class="nav-text">可信设计</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%87%8D%E6%9E%84%E5%88%86%E6%9E%90%E4%B8%8E%E5%AE%9E%E7%8E%B0"><span class="nav-number">1.4.</span> <span class="nav-text">重构分析与实现</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%9C%80%E6%B1%82%E5%88%86%E6%9E%90-1"><span class="nav-number">1.5.</span> <span class="nav-text">需求分析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%9C%80%E6%B1%82%E5%88%86%E6%9E%90%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5%E5%92%8C%E5%8E%9F%E5%88%99"><span class="nav-number">1.5.1.</span> <span class="nav-text">需求分析基本概念和原则</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%9C%80%E6%B1%82%E5%88%86%E6%9E%90%E6%B4%BB%E5%8A%A8%E5%92%8C%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9"><span class="nav-number">1.5.2.</span> <span class="nav-text">需求分析活动和注意事项</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%9C%80%E6%B1%82%E7%AE%A1%E7%90%86"><span class="nav-number">1.5.3.</span> <span class="nav-text">需求管理</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%AF%E4%BF%A1%E8%AE%BE%E8%AE%A1-1"><span class="nav-number">1.6.</span> <span class="nav-text">可信设计</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#ASTRIDE-Low-Level%E5%A8%81%E8%83%81%E5%88%86%E6%9E%90"><span class="nav-number">1.6.1.</span> <span class="nav-text">ASTRIDE Low Level威胁分析</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E6%B5%81%E5%9B%BE%E5%85%83%E7%B4%A0"><span class="nav-number">1.6.1.1.</span> <span class="nav-text">数据流图元素</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%A8%81%E8%83%81%E5%88%86%E6%9E%90"><span class="nav-number">1.6.1.2.</span> <span class="nav-text">威胁分析</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8A%A0%E5%AF%86%E7%AE%97%E6%B3%95"><span class="nav-number">1.6.2.</span> <span class="nav-text">加密算法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BD%AF%E4%BB%B6%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%BB%BA%E6%A8%A1-1"><span class="nav-number">1.7.</span> <span class="nav-text">软件设计与建模</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F"><span class="nav-number">1.8.</span> <span class="nav-text">设计模式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#23%E7%A7%8D%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%EF%BC%9A"><span class="nav-number">1.8.1.</span> <span class="nav-text">23种设计模式：</span></a></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -496,7 +651,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">71</span>
+          <span class="site-state-item-count">73</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -541,7 +696,7 @@
 <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2021</span>
+  <span itemprop="copyrightYear">2022</span>
   <span class="with-love">
     <i class="user"></i>
   </span>

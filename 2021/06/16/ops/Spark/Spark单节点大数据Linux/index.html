@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 5.2.0">
+<meta name="generator" content="Hexo 5.4.2">
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
@@ -22,15 +22,15 @@
     var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="记录Linux上单节点搭建spark，以及做大数据分析的过程">
+  <meta name="description" content="记录Linux上Spark伪分布式部署spark，以及做大数据分析的过程">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Spark单节点大数据Linux">
+<meta property="og:title" content="Spark伪分布式部署">
 <meta property="og:url" content="http://yoursite.com/2021/06/16/ops/Spark/Spark%E5%8D%95%E8%8A%82%E7%82%B9%E5%A4%A7%E6%95%B0%E6%8D%AELinux/index.html">
 <meta property="og:site_name" content="幻煞幽穹">
-<meta property="og:description" content="记录Linux上单节点搭建spark，以及做大数据分析的过程">
+<meta property="og:description" content="记录Linux上Spark伪分布式部署spark，以及做大数据分析的过程">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2021-06-16T02:02:00.000Z">
-<meta property="article:modified_time" content="2021-10-16T07:02:45.074Z">
+<meta property="article:modified_time" content="2022-04-09T03:35:06.532Z">
 <meta property="article:author" content="夏侯仪">
 <meta property="article:tag" content="Spark">
 <meta name="twitter:card" content="summary">
@@ -48,7 +48,7 @@
   };
 </script>
 
-  <title>Spark单节点大数据Linux | 幻煞幽穹</title>
+  <title>Spark伪分布式部署 | 幻煞幽穹</title>
   
 
 
@@ -209,7 +209,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          Spark单节点大数据Linux
+          Spark伪分布式部署
         </h1>
 
         <div class="post-meta">
@@ -226,7 +226,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-10-16 15:02:45" itemprop="dateModified" datetime="2021-10-16T15:02:45+08:00">2021-10-16</time>
+                <time title="修改时间：2022-04-09 11:35:06" itemprop="dateModified" datetime="2022-04-09T11:35:06+08:00">2022-04-09</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -249,11 +249,12 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>记录Linux上单节点搭建spark，以及做大数据分析的过程</p>
-<a id="more"></a>
+        <p>记录Linux上Spark伪分布式部署spark，以及做大数据分析的过程</p>
+<span id="more"></span>
 
-<h1 id="Spark单节点大数据Linux"><a href="#Spark单节点大数据Linux" class="headerlink" title="Spark单节点大数据Linux"></a>Spark单节点大数据Linux</h1><h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><p>版本：<br>下载地址： <a target="_blank" rel="noopener" href="https://spark.apache.org/downloads.html">https://spark.apache.org/downloads.html</a><br>spark: 3.1.2<br>hadoop: 3.2 or later<br>Spark 3.0+ is pre-built with Scala 2.12.</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">wget https://downloads.apache.org/spark/spark-3.1.2/spark-3.1.2-bin-hadoop3.2.tgz</span><br><span class="line">tar -zxvf spark-3.1.2-bin-hadoop3.2.tgz</span><br><span class="line">sudo apt update</span><br><span class="line">sudo apt install openjdk-11-jdk-headless</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h1 id="Spark伪分布式部署"><a href="#Spark伪分布式部署" class="headerlink" title="Spark伪分布式部署"></a>Spark伪分布式部署</h1><h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><p>版本：<br>下载地址： <a target="_blank" rel="noopener" href="https://spark.apache.org/downloads.html">https://spark.apache.org/downloads.html</a><br>spark: 3.1.2<br>hadoop: 3.2 or later<br>Spark 3.0+ is pre-built with Scala 2.12.</p>
+<p>master: 192.168.28.3<br>slaves: 192.168.28.3<br>driver: 192.168.28.3</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">wget https://downloads.apache.org/spark/spark-3.1.2/spark-3.1.2-bin-hadoop3.2.tgz</span><br><span class="line">tar -zxvf spark-3.1.2-bin-hadoop3.2.tgz</span><br><span class="line">sudo apt update</span><br><span class="line">sudo apt install openjdk-11-jdk-headless</span><br><span class="line"><span class="built_in">cd</span> spark-3.1.2-bin-hadoop3.2</span><br><span class="line"><span class="built_in">cp</span> conf/spark-env.sh.template conf/spark-env.sh</span><br><span class="line"></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;export SPARK_MASTER_HOST=192.168.28.3&quot;</span> &gt;&gt; conf/spark-env.sh</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;192.168.28.3&quot;</span> &gt;&gt; conf/slaves</span><br><span class="line"></span><br><span class="line">sbin/stop-worker.sh</span><br><span class="line">sbin/stop-master.sh</span><br><span class="line">sbin/start-master.sh</span><br><span class="line">sbin/start-worker.sh spark://192.168.28.3:7077</span><br><span class="line"></span><br><span class="line">java -jar java-789005-spark-1.0-SNAPSHOT.jar --server.port=8088 --train.file=file:///home/tony/dac/train.txt</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
     </div>
 
@@ -365,7 +366,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Spark%E5%8D%95%E8%8A%82%E7%82%B9%E5%A4%A7%E6%95%B0%E6%8D%AELinux"><span class="nav-number">1.</span> <span class="nav-text">Spark单节点大数据Linux</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E8%A3%85"><span class="nav-number">1.1.</span> <span class="nav-text">安装</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Spark%E4%BC%AA%E5%88%86%E5%B8%83%E5%BC%8F%E9%83%A8%E7%BD%B2"><span class="nav-number">1.</span> <span class="nav-text">Spark伪分布式部署</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E8%A3%85"><span class="nav-number">1.1.</span> <span class="nav-text">安装</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -381,7 +382,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">71</span>
+          <span class="site-state-item-count">73</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -426,7 +427,7 @@
 <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2021</span>
+  <span itemprop="copyrightYear">2022</span>
   <span class="with-love">
     <i class="user"></i>
   </span>
