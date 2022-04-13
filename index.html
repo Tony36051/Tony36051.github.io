@@ -223,7 +223,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-04-09 11:35:06" itemprop="dateModified" datetime="2022-04-09T11:35:06+08:00">2022-04-09</time>
+                <time title="修改时间：2022-04-13 22:57:15" itemprop="dateModified" datetime="2022-04-13T22:57:15+08:00">2022-04-13</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -247,18 +247,18 @@
 
       
           <h1 id="Hadoop3-3-2-on-Windows10"><a href="#Hadoop3-3-2-on-Windows10" class="headerlink" title="Hadoop3.3.2 on Windows10"></a>Hadoop3.3.2 on Windows10</h1><h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>在windows系统上进行hadoop相关开发，不需要高可用，仅用作开发调试还是很方便的。</p>
-<h2 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h2><p>hadoop: <a target="_blank" rel="noopener" href="https://www.apache.org/dyn/closer.cgi/hadoop/common/hadoop-3.2.2/hadoop-3.2.2.tar.gz">3.3.2</a><br>jdk: 1.8<br>winutils 3.3.x: <a target="_blank" rel="noopener" href="https://github.com/kontext-tech/winutils/tree/master/hadoop-3.3.1">https://github.com/kontext-tech/winutils/tree/master/hadoop-3.3.1</a></p>
+<h2 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h2><p>hadoop: <a target="_blank" rel="noopener" href="https://www.apache.org/dyn/closer.cgi/hadoop/common/hadoop-3.2.2/hadoop-3.2.2.tar.gz">3.3.2</a><br>jdk: 1.8<br>winutils 3.3.x 和 hadoop.dll: <a target="_blank" rel="noopener" href="https://github.com/kontext-tech/winutils/tree/master/hadoop-3.3.1/bin">https://github.com/kontext-tech/winutils/tree/master/hadoop-3.3.1/bin</a></p>
 <p>实测3.3.1的winutils可以适配3.3.2的hadoop版本。本机3.2.2hadoop在启动datanode时会失败。</p>
-<h2 id="安装和配置步骤"><a href="#安装和配置步骤" class="headerlink" title="安装和配置步骤"></a>安装和配置步骤</h2><p>下载解压hadoop，假设解压到<code>D:\ProgramData\hadoop-3.3.2</code><br>下载对应版本的<code>winutils.exe</code>和<code>hadoop.dll</code>复制到<code>D:\ProgramData\hadoop-3.3.2\bin</code></p>
+<h2 id="安装和配置步骤"><a href="#安装和配置步骤" class="headerlink" title="安装和配置步骤"></a>安装和配置步骤</h2><p>下载解压hadoop，假设解压到<code>D:\PortableSoftware\hadoop-3.3.2</code><br>下载对应版本的<code>winutils.exe</code>和<code>hadoop.dll</code>复制到<code>D:\PortableSoftware\hadoop-3.3.2\bin</code></p>
 <ol>
-<li>JAVA_HOME,如果你的java安装路径是含有”Program Files”, 使用”Progra<del>1”代替”Program Files”，或使用”Progra</del>2” 代替 “Program Files(x86)”</li>
+<li>JAVA_HOME,如果你的java安装路径是含有”Program Files”, 使用<code>Progra~1</code>代替”Program Files”，或使用<code>Progra~2</code> 代替 “Program Files(x86)”</li>
 <li>HADOOP_HOME</li>
-<li>PATH变量加入%JAVA_HOME%\bin;%HADOOP_HOME%\bin;%HADOOP_HOME%\sbin;</li>
+<li>PATH变量加入<code>%JAVA_HOME%\bin;%HADOOP_HOME%\bin;%HADOOP_HOME%\sbin</code></li>
 <li>检查： 新开cmd窗口，输入<code>hadoop -version</code></li>
-<li>配置%HADOOP_HOME%\etc\hadoop\hdfs-site.xml</li>
-<li>配置%HADOOP_HOME%\etc\hadoop\core-site.xml</li>
-<li>配置%HADOOP_HOME%\etc\hadoop\mapred-site.xml</li>
-<li>配置%HADOOP_HOME%\etc\hadoop\yarn-site.xml<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- hdfs-site.xml --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">configuration</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">name</span>&gt;</span>dfs.replication<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">value</span>&gt;</span>1<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">name</span>&gt;</span>dfs.namenode.name.dir<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">value</span>&gt;</span>file:///D:/ProgramData/hadoop-3.3.2/data/dfs/namenode<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">name</span>&gt;</span>dfs.datanode.data.dir<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">value</span>&gt;</span>file:///D:/ProgramData/hadoop-3.3.2/data/dfs/datanode<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">name</span>&gt;</span>dfs.permissions<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">value</span>&gt;</span>false<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<li>配置<code>%HADOOP_HOME%\etc\hadoop\hdfs-site.xml</code></li>
+<li>配置<code>%HADOOP_HOME%\etc\hadoop\core-site.xml</code></li>
+<li>配置<code>%HADOOP_HOME%\etc\hadoop\mapred-site.xml</code></li>
+<li>配置<code>%HADOOP_HOME%\etc\hadoop\yarn-site.xml</code><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- hdfs-site.xml --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">configuration</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">name</span>&gt;</span>dfs.replication<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">value</span>&gt;</span>1<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">name</span>&gt;</span>dfs.namenode.name.dir<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">value</span>&gt;</span>file:///D:/PortableSoftware/hadoop-3.3.2/data/dfs/namenode<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">name</span>&gt;</span>dfs.datanode.data.dir<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">value</span>&gt;</span>file:///D:/PortableSoftware/hadoop-3.3.2/data/dfs/datanode<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">name</span>&gt;</span>dfs.permissions<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">value</span>&gt;</span>false<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></span><br></pre></td></tr></table></figure>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- core-site.xml --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">configuration</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">name</span>&gt;</span>fs.default.name<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">value</span>&gt;</span>hdfs://localhost:9820<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></span><br></pre></td></tr></table></figure>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- mapred-site.xml --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">configuration</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">name</span>&gt;</span>mapreduce.framework.name<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">value</span>&gt;</span>yarn<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">description</span>&gt;</span>MapReduce framework name<span class="tag">&lt;/<span class="name">description</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></span><br></pre></td></tr></table></figure>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- yarn-site.xml --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">configuration</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">name</span>&gt;</span>yarn.nodemanager.aux-services<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">value</span>&gt;</span>mapreduce_shuffle<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">description</span>&gt;</span>Yarn Node Manager Aux Service<span class="tag">&lt;/<span class="name">description</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></span><br></pre></td></tr></table></figure>
@@ -332,7 +332,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-04-09 11:35:06" itemprop="dateModified" datetime="2022-04-09T11:35:06+08:00">2022-04-09</time>
+                <time title="修改时间：2022-04-13 22:57:15" itemprop="dateModified" datetime="2022-04-13T22:57:15+08:00">2022-04-13</time>
               </span>
 
           
@@ -418,7 +418,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-04-09 11:35:06" itemprop="dateModified" datetime="2022-04-09T11:35:06+08:00">2022-04-09</time>
+                <time title="修改时间：2022-04-13 22:57:15" itemprop="dateModified" datetime="2022-04-13T22:57:15+08:00">2022-04-13</time>
               </span>
 
           
@@ -490,7 +490,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-04-09 11:35:06" itemprop="dateModified" datetime="2022-04-09T11:35:06+08:00">2022-04-09</time>
+                <time title="修改时间：2022-04-13 22:57:15" itemprop="dateModified" datetime="2022-04-13T22:57:15+08:00">2022-04-13</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -571,7 +571,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-04-09 11:35:06" itemprop="dateModified" datetime="2022-04-09T11:35:06+08:00">2022-04-09</time>
+                <time title="修改时间：2022-04-13 22:57:15" itemprop="dateModified" datetime="2022-04-13T22:57:15+08:00">2022-04-13</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -652,7 +652,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-04-09 11:35:06" itemprop="dateModified" datetime="2022-04-09T11:35:06+08:00">2022-04-09</time>
+                <time title="修改时间：2022-04-13 22:57:15" itemprop="dateModified" datetime="2022-04-13T22:57:15+08:00">2022-04-13</time>
               </span>
 
           
@@ -724,7 +724,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-04-09 11:35:06" itemprop="dateModified" datetime="2022-04-09T11:35:06+08:00">2022-04-09</time>
+                <time title="修改时间：2022-04-13 22:57:15" itemprop="dateModified" datetime="2022-04-13T22:57:15+08:00">2022-04-13</time>
               </span>
 
           
@@ -796,7 +796,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-04-09 11:35:06" itemprop="dateModified" datetime="2022-04-09T11:35:06+08:00">2022-04-09</time>
+                <time title="修改时间：2022-04-13 22:57:15" itemprop="dateModified" datetime="2022-04-13T22:57:15+08:00">2022-04-13</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -925,7 +925,7 @@ f-->g</pre>
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-04-09 11:35:06" itemprop="dateModified" datetime="2022-04-09T11:35:06+08:00">2022-04-09</time>
+                <time title="修改时间：2022-04-13 22:57:15" itemprop="dateModified" datetime="2022-04-13T22:57:15+08:00">2022-04-13</time>
               </span>
 
           
@@ -997,7 +997,7 @@ f-->g</pre>
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-04-09 11:35:06" itemprop="dateModified" datetime="2022-04-09T11:35:06+08:00">2022-04-09</time>
+                <time title="修改时间：2022-04-13 22:57:15" itemprop="dateModified" datetime="2022-04-13T22:57:15+08:00">2022-04-13</time>
               </span>
 
           
