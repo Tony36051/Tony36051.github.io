@@ -15,24 +15,24 @@ categories:
 ## 环境
 hadoop: [3.3.2](https://www.apache.org/dyn/closer.cgi/hadoop/common/hadoop-3.2.2/hadoop-3.2.2.tar.gz)
 jdk: 1.8
-winutils 3.3.x: https://github.com/kontext-tech/winutils/tree/master/hadoop-3.3.1
+winutils 3.3.x 和 hadoop.dll: https://github.com/kontext-tech/winutils/tree/master/hadoop-3.3.1/bin
 
 实测3.3.1的winutils可以适配3.3.2的hadoop版本。本机3.2.2hadoop在启动datanode时会失败。
 
 ## 安装和配置步骤
 
-下载解压hadoop，假设解压到`D:\ProgramData\hadoop-3.3.2`
-下载对应版本的`winutils.exe`和`hadoop.dll`复制到`D:\ProgramData\hadoop-3.3.2\bin`
+下载解压hadoop，假设解压到`D:\PortableSoftware\hadoop-3.3.2`
+下载对应版本的`winutils.exe`和`hadoop.dll`复制到`D:\PortableSoftware\hadoop-3.3.2\bin`
 
 
-1. JAVA_HOME,如果你的java安装路径是含有"Program Files", 使用"Progra~1"代替"Program Files"，或使用"Progra~2" 代替 "Program Files(x86)"
+1. JAVA_HOME,如果你的java安装路径是含有"Program Files", 使用`Progra~1`代替"Program Files"，或使用`Progra~2` 代替 "Program Files(x86)"
 2. HADOOP_HOME
-3. PATH变量加入%JAVA_HOME%\bin;%HADOOP_HOME%\bin;%HADOOP_HOME%\sbin;
+3. PATH变量加入`%JAVA_HOME%\bin;%HADOOP_HOME%\bin;%HADOOP_HOME%\sbin`
 4. 检查： 新开cmd窗口，输入`hadoop -version`
-5. 配置%HADOOP_HOME%\etc\hadoop\hdfs-site.xml
-6. 配置%HADOOP_HOME%\etc\hadoop\core-site.xml
-7. 配置%HADOOP_HOME%\etc\hadoop\mapred-site.xml
-8. 配置%HADOOP_HOME%\etc\hadoop\yarn-site.xml
+5. 配置`%HADOOP_HOME%\etc\hadoop\hdfs-site.xml`
+6. 配置`%HADOOP_HOME%\etc\hadoop\core-site.xml`
+7. 配置`%HADOOP_HOME%\etc\hadoop\mapred-site.xml`
+8. 配置`%HADOOP_HOME%\etc\hadoop\yarn-site.xml`
 ```xml
 <!-- hdfs-site.xml -->
 <configuration>
@@ -42,11 +42,11 @@ winutils 3.3.x: https://github.com/kontext-tech/winutils/tree/master/hadoop-3.3.
     </property>
   <property>
     <name>dfs.namenode.name.dir</name>
-    <value>file:///D:/ProgramData/hadoop-3.3.2/data/dfs/namenode</value>
+    <value>file:///D:/PortableSoftware/hadoop-3.3.2/data/dfs/namenode</value>
   </property>
   <property>
     <name>dfs.datanode.data.dir</name>
-    <value>file:///D:/ProgramData/hadoop-3.3.2/data/dfs/datanode</value>
+    <value>file:///D:/PortableSoftware/hadoop-3.3.2/data/dfs/datanode</value>
   </property>
   <property>
     <name>dfs.permissions</name>
