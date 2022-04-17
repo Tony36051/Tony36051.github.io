@@ -10,7 +10,9 @@ Windows 安装 MySQL安装笔记
 <!--more-->
 
 # 下载
-http://dev.mysql.com/downloads/mysql/，选择适合你的操作系统的版本，我是windows10 64位，选择Windows (x86, 64-bit), ZIP Archive，点“download”。页面跳转后选择“No thanks, just start my download.”
+http://dev.mysql.com/downloads/mysql/
+
+，选择适合你的操作系统的版本，我是windows10 64位，选择Windows (x86, 64-bit), ZIP Archive，点“download”。页面跳转后选择“No thanks, just start my download.”
 # 解压
 下载完成后后，解压到本地目录，我解压到D:\mysql-5.7.16-winx64
 # 配置
@@ -42,7 +44,9 @@ sort_buffer_size = 2M
 read_rnd_buffer_size = 2M 
 
 sql_mode=NO_ENGINE_SUBSTITUTION,STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER
-    
+character-set-server = utf8mb4
+collation-server = utf8mb4_unicode_ci
+
 [client]
 default-character-set=utf8
 
@@ -50,7 +54,9 @@ default-character-set=utf8
 # 初始化
 因为没有data目录下的mysql数据，所以需要先初始化。
 打开cmd，跳转到目录下bin目录中
->mysqld --initialize --user=mysql --console
+```bat
+mysqld --initialize --user=mysql --console
+```
 
 该命令会生成基础的管理数据表，注意控制台cmd的返回，会有一个随机生成的密码，复制一下，备用
 # 设置windows服务
@@ -64,5 +70,8 @@ default-character-set=utf8
  >mysql -uroot -p
 
  输入刚才记下的随机密码
->set password = password('root')  # root就是你的新密码
+```
+set password = password('root');  # root就是你的新密码
+quit;
+```
 
