@@ -474,6 +474,19 @@ eyJoaXN0b3J5IjpbLTg4MDg3NTU0Myw4NjkzNDY1MTVdfQ==
       </tags>
   </entry>
   <entry>
+    <title>Spring 依赖版本查询</title>
+    <url>/2022/09/02/Dev/spring-dependency-versions/</url>
+    <content><![CDATA[<p>记录Springboot、Springcloud以及周边依赖的版本查询方法</p>
+<span id="more"></span>
+
+<h1 id="Springboot-周边依赖"><a href="#Springboot-周边依赖" class="headerlink" title="Springboot 周边依赖"></a>Springboot 周边依赖</h1><p>举例： <a href="https://docs.spring.io/spring-boot/docs/2.7.3/reference/html/dependency-versions.html">https://docs.spring.io/spring-boot/docs/2.7.3/reference/html/dependency-versions.html</a></p>
+<h1 id="StringCloud-与-Springboot-依赖"><a href="#StringCloud-与-Springboot-依赖" class="headerlink" title="StringCloud 与 Springboot 依赖"></a>StringCloud 与 Springboot 依赖</h1><p><a href="https://start.spring.io/actuator/info">https://start.spring.io/actuator/info</a></p>
+]]></content>
+      <categories>
+        <category>开发</category>
+      </categories>
+  </entry>
+  <entry>
     <title>vscode配置for VUE</title>
     <url>/2018/07/14/Dev/vscode%E9%85%8D%E7%BD%AEfor%20VUE/</url>
     <content><![CDATA[<p>测试开发要做点什么东东,几乎就是全栈的节奏了, 记录一下vscode的一些配置</p>
