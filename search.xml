@@ -71,18 +71,17 @@
 <h3 id="Q5"><a href="#Q5" class="headerlink" title="Q5"></a>Q5</h3><p>镜像: Armbian_23.02.0_amlogic_s905_jammy_5.15.92_server_2023.02.10.img.gz</p>
 <p>用5.15的内核是因为: <a href="https://bbs.hassbian.com/thread-17485-1-1.html">https://bbs.hassbian.com/thread-17485-1-1.html</a> 里面说到”ophub大佬澄清：这套armbian里的5.15内核是f大专门修改过的，打了text_offset，目的就是和5.4一样不需要主线uboot也可以启动（那个教程里的第3种启动方式）”</p>
 <p>dtb: /dtb/amlogic/meson-gxbb-p201.dtb</p>
-<h2 id="TF卡-扩展"><a href="#TF卡-扩展" class="headerlink" title="TF卡 扩展"></a>TF卡 扩展</h2><p>Q5用的TF卡, TF卡一开始在linux中只有2.5G左右, 但是我的卡是128G的, 原因是烧录镜像的时候被镜像控制了分区. </p>
-<p>激活 TF/SD/USB 的剩余空间，请登录 Armbian 系统 → 输入命令：</p>
-<p>armbian-tf<br>根据提示输入 e 将剩余空间扩容至当前系统分区和文件系统，输入 c 将创建新的第 3 分区。</p>
-<h1 id="Armbian-玩法"><a href="#Armbian-玩法" class="headerlink" title="Armbian 玩法"></a>Armbian 玩法</h1><h2 id="安装docker"><a href="#安装docker" class="headerlink" title="安装docker"></a>安装docker</h2><p>一. 准备apt, 用华为云的镜像, 其他云没有arm源</p>
-<blockquote>
+<h2 id="改armbian源"><a href="#改armbian源" class="headerlink" title="改armbian源"></a>改armbian源</h2><blockquote>
 <p>vim /etc/apt/sources.list</p>
 </blockquote>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">deb https://repo.huaweicloud.com/ubuntu-ports/ jammy main restricted universe multiverse</span><br><span class="line"><span class="comment">#deb-src https://repo.huaweicloud.com/ubuntu-ports/ bionic main restricted universe multiverse</span></span><br><span class="line"></span><br><span class="line">deb https://repo.huaweicloud.com/ubuntu-ports/ jammy-security main restricted universe multiverse</span><br><span class="line"><span class="comment">#deb-src https://repo.huaweicloud.com/ubuntu-ports/ bionic-security main restricted universe multiverse</span></span><br><span class="line"></span><br><span class="line">deb https://repo.huaweicloud.com/ubuntu-ports/ jammy-updates main restricted universe multiverse</span><br><span class="line"><span class="comment">#deb-src https://repo.huaweicloud.com/ubuntu-ports/ bionic-updates main restricted universe multiverse</span></span><br><span class="line"></span><br><span class="line">deb https://repo.huaweicloud.com/ubuntu-ports/ jammy-backports main restricted universe multiverse</span><br><span class="line"><span class="comment">#deb-src https://repo.huaweicloud.com/ubuntu-ports/ bionic-backports main restricted universe multiverse</span></span><br><span class="line"></span><br><span class="line"><span class="comment">## Not recommended</span></span><br><span class="line"><span class="comment"># deb https://repo.huaweicloud.com/ubuntu-ports/ bionic-proposed main restricted universe multiverse</span></span><br><span class="line"><span class="comment"># deb-src https://repo.huaweicloud.com/ubuntu-ports/ bionic-proposed main restricted universe multiverse</span></span><br></pre></td></tr></table></figure>
 <blockquote>
 <p>apt update</p>
 </blockquote>
-<p>二. 安装docker<br>docker 镜像用华为云的, 创建一个华为云账号, 用自己的加速地址.<br>data-root表述docker的数据存哪里, 机顶盒的空间非常小, docker使用的空间特别多, 所以要特别注意.<br>experimental开启实验模式, 跨cpu架构拉取镜像用.</p>
+<h2 id="TF卡-扩展"><a href="#TF卡-扩展" class="headerlink" title="TF卡 扩展"></a>TF卡 扩展</h2><p>Q5用的TF卡, TF卡一开始在linux中只有2.5G左右, 但是我的卡是128G的, 原因是烧录镜像的时候被镜像控制了分区. </p>
+<p>激活 TF/SD/USB 的剩余空间，请登录 Armbian 系统 → 输入命令：</p>
+<p>armbian-tf<br>根据提示输入 e 将剩余空间扩容至当前系统分区和文件系统，输入 c 将创建新的第 3 分区。</p>
+<h1 id="Armbian-玩法"><a href="#Armbian-玩法" class="headerlink" title="Armbian 玩法"></a>Armbian 玩法</h1><h2 id="安装docker"><a href="#安装docker" class="headerlink" title="安装docker"></a>安装docker</h2><p>docker 镜像用华为云的, 创建一个华为云账号, 用自己的加速地址.<br>data-root表述docker的数据存哪里, 机顶盒的空间非常小, docker使用的空间特别多, 所以要特别注意.<br>experimental开启实验模式, 跨cpu架构拉取镜像用.</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">curl -fsSL https://get.docker.com -o get-docker.sh</span><br><span class="line">sh get-docker.sh --mirror Aliyun</span><br><span class="line">vim /etc/docker/daemon.json</span><br><span class="line">&#123;</span><br><span class="line">    <span class="string">&quot;registry-mirrors&quot;</span>: [</span><br><span class="line">        <span class="string">&quot;https://e2b8b1cb6d8342758f440cf13b6647ec.mirror.swr.myhuaweicloud.com&quot;</span></span><br><span class="line">    ],</span><br><span class="line">    <span class="string">&quot;data-root&quot;</span>: <span class="string">&quot;/data/docker&quot;</span>,</span><br><span class="line">    <span class="string">&quot;experimental&quot;</span>: <span class="literal">true</span></span><br><span class="line">&#125;</span><br><span class="line">systemctl restart docker.service</span><br></pre></td></tr></table></figure>
 
 ]]></content>
