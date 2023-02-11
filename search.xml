@@ -1,6 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>Armbian容器魔方</title>
+    <url>/2023/02/11/Armbian%E5%AE%B9%E5%99%A8%E9%AD%94%E6%96%B9/</url>
+    <content><![CDATA[<p>Q5和UNT403A跑Armbian, 使用ipv6跑容器魔方. Q5有tf卡, UNT-403A用U盘引导,外加一个移动硬盘做数据盘.</p>
+<span id="more"></span>
+
+<h1 id="问题背景"><a href="#问题背景" class="headerlink" title="问题背景"></a>问题背景</h1><p>容器魔方的镜像仓库标记的架构是arm64, 但是armbian识别到的是 arrch64, 所以拉取镜像的时候会说找不到</p>
+<p>不使用官方的自适应架构的镜像, 用同账号下的onething1/arm64v8-wxedge镜像, 自己指定的版本, 注意必须带版本, 没有默认的latest版本.</p>
+<h1 id="关键记录"><a href="#关键记录" class="headerlink" title="关键记录"></a>关键记录</h1><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">docker run -d --name=wxedge \</span><br><span class="line">  --restart=always --privileged --net=host \</span><br><span class="line">  --tmpfs /run --tmpfs /tmp \</span><br><span class="line">  -v /data/wxedge_storage:/storage:rw  \</span><br><span class="line">  onething1/arm64v8-wxedge:2.4.3</span><br></pre></td></tr></table></figure>
+
+
+]]></content>
+  </entry>
+  <entry>
     <title>CleanCode代码整洁之道(读书笔记)</title>
     <url>/2018/09/03/CleanCode%E4%BB%A3%E7%A0%81%E6%95%B4%E6%B4%81%E4%B9%8B%E9%81%93(%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0)/</url>
     <content><![CDATA[<p>衡量代码的唯一有效标准：WTF/min<br>陪女票复习, 带上Bob大叔的代码整洁之道, 一天看了120+页, 真是舒爽. </p>
@@ -48,9 +61,19 @@
 <span id="more"></span>
 
 <h1 id="刷机"><a href="#刷机" class="headerlink" title="刷机"></a>刷机</h1><h2 id="刷安卓"><a href="#刷安卓" class="headerlink" title="刷安卓"></a>刷安卓</h2><p>卡刷</p>
-<h2 id="刷Armbian"><a href="#刷Armbian" class="headerlink" title="刷Armbian"></a>刷Armbian</h2><p>用ophub的github仓库<a href="https://github.com/ophub/amlogic-s9xxx-armbian/blob/main/README.cn.md">https://github.com/ophub/amlogic-s9xxx-armbian/blob/main/README.cn.md</a><br>用 balenaEtcher 将镜像写入tf/U盘<br>改dtb, 刷入后u盘有两个分区, fat32格式的boot分区修改uEnv.txt文件, 修改dtb</p>
-<h3 id="UNT403A"><a href="#UNT403A" class="headerlink" title="UNT403A"></a>UNT403A</h3><p>镜像: Armbian_23.02.0_amlogic_s905l3a_jammy_5.15.92_server_2023.02.10.img.gz<br>dtb: 用默认的/dtb/amlogic/meson-g12a-s905l3a-e900v22c.dtb</p>
-<h3 id="Q5"><a href="#Q5" class="headerlink" title="Q5"></a>Q5</h3><p>镜像: Armbian_23.02.0_amlogic_s905_jammy_5.15.92_server_2023.02.10.img.gz<br>dtb: /dtb/amlogic/meson-gxbb-p201.dtb</p>
+<h2 id="刷Armbian"><a href="#刷Armbian" class="headerlink" title="刷Armbian"></a>刷Armbian</h2><ol>
+<li>用ophub的github仓库<a href="https://github.com/ophub/amlogic-s9xxx-armbian/blob/main/README.cn.md">https://github.com/ophub/amlogic-s9xxx-armbian/blob/main/README.cn.md</a></li>
+<li>用 balenaEtcher 将镜像写入tf/U盘</li>
+<li>改dtb, 刷入后u盘有两个分区, fat32格式的boot分区修改uEnv.txt文件, 修改dtb<h3 id="UNT403A"><a href="#UNT403A" class="headerlink" title="UNT403A"></a>UNT403A</h3></li>
+</ol>
+<p>镜像: Armbian_23.02.0_amlogic_s905l3a_jammy_6.1.10_server_2023.02.10.img.gz</p>
+<p>dtb: 用默认的/dtb/amlogic/meson-g12a-s905l3a-e900v22c.dtb</p>
+<h3 id="Q5"><a href="#Q5" class="headerlink" title="Q5"></a>Q5</h3><p>镜像: Armbian_23.02.0_amlogic_s905_jammy_5.15.92_server_2023.02.10.img.gz</p>
+<p>用5.15的内核是因为: <a href="https://bbs.hassbian.com/thread-17485-1-1.html">https://bbs.hassbian.com/thread-17485-1-1.html</a> 里面说到”ophub大佬澄清：这套armbian里的5.15内核是f大专门修改过的，打了text_offset，目的就是和5.4一样不需要主线uboot也可以启动（那个教程里的第3种启动方式）”</p>
+<p>dtb: /dtb/amlogic/meson-gxbb-p201.dtb</p>
+<h2 id="TF卡-扩展"><a href="#TF卡-扩展" class="headerlink" title="TF卡 扩展"></a>TF卡 扩展</h2><p>Q5用的TF卡, TF卡一开始在linux中只有2.5G左右, 但是我的卡是128G的, 原因是烧录镜像的时候被镜像控制了分区. </p>
+<p>激活 TF/SD/USB 的剩余空间，请登录 Armbian 系统 → 输入命令：</p>
+<p>armbian-tf<br>根据提示输入 e 将剩余空间扩容至当前系统分区和文件系统，输入 c 将创建新的第 3 分区。</p>
 <h1 id="Armbian-玩法"><a href="#Armbian-玩法" class="headerlink" title="Armbian 玩法"></a>Armbian 玩法</h1><h2 id="安装docker"><a href="#安装docker" class="headerlink" title="安装docker"></a>安装docker</h2><p>一. 准备apt, 用华为云的镜像, 其他云没有arm源</p>
 <blockquote>
 <p>vim /etc/apt/sources.list</p>
@@ -62,9 +85,6 @@
 <p>二. 安装docker<br>docker 镜像用华为云的, 创建一个华为云账号, 用自己的加速地址.<br>data-root表述docker的数据存哪里, 机顶盒的空间非常小, docker使用的空间特别多, 所以要特别注意.<br>experimental开启实验模式, 跨cpu架构拉取镜像用.</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">curl -fsSL https://get.docker.com -o get-docker.sh</span><br><span class="line">sh get-docker.sh --mirror Aliyun</span><br><span class="line">vim /etc/docker/daemon.json</span><br><span class="line">&#123;</span><br><span class="line">    <span class="string">&quot;registry-mirrors&quot;</span>: [</span><br><span class="line">        <span class="string">&quot;https://e2b8b1cb6d8342758f440cf13b6647ec.mirror.swr.myhuaweicloud.com&quot;</span></span><br><span class="line">    ],</span><br><span class="line">    <span class="string">&quot;data-root&quot;</span>: <span class="string">&quot;/data/docker&quot;</span>,</span><br><span class="line">    <span class="string">&quot;experimental&quot;</span>: <span class="literal">true</span></span><br><span class="line">&#125;</span><br><span class="line">systemctl restart docker.service</span><br></pre></td></tr></table></figure>
 
-<h2 id="TF卡"><a href="#TF卡" class="headerlink" title="TF卡"></a>TF卡</h2><p>Q5用的TF卡, TF卡一开始在linux中只有2.5G左右, 但是我的卡是128G的, 原因是烧录镜像的时候被镜像控制了分区. </p>
-<p>激活 TF/SD/USB 的剩余空间，请登录 Armbian 系统 → 输入命令：</p>
-<p>armbian-tf<br>根据提示输入 e 将剩余空间扩容至当前系统分区和文件系统，输入 c 将创建新的第 3 分区。</p>
 ]]></content>
   </entry>
   <entry>
