@@ -61,6 +61,10 @@
 </blockquote>
 <p>二. 安装docker<br>docker 镜像用华为云的, 创建一个华为云账号, 用自己的加速地址.<br>data-root表述docker的数据存哪里, 机顶盒的空间非常小, docker使用的空间特别多, 所以要特别注意.<br>experimental开启实验模式, 跨cpu架构拉取镜像用.</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">curl -fsSL https://get.docker.com -o get-docker.sh</span><br><span class="line">sh get-docker.sh --mirror Aliyun</span><br><span class="line">vim /etc/docker/daemon.json</span><br><span class="line">&#123;</span><br><span class="line">    <span class="string">&quot;registry-mirrors&quot;</span>: [</span><br><span class="line">        <span class="string">&quot;https://e2b8b1cb6d8342758f440cf13b6647ec.mirror.swr.myhuaweicloud.com&quot;</span></span><br><span class="line">    ],</span><br><span class="line">    <span class="string">&quot;data-root&quot;</span>: <span class="string">&quot;/data/docker&quot;</span>,</span><br><span class="line">    <span class="string">&quot;experimental&quot;</span>: <span class="literal">true</span></span><br><span class="line">&#125;</span><br><span class="line">systemctl restart docker.service</span><br></pre></td></tr></table></figure>
+
+<h2 id="TF卡"><a href="#TF卡" class="headerlink" title="TF卡"></a>TF卡</h2><p>Q5用的TF卡, TF卡一开始在linux中只有2.5G左右, 但是我的卡是128G的, 原因是烧录镜像的时候被镜像控制了分区. </p>
+<p>激活 TF/SD/USB 的剩余空间，请登录 Armbian 系统 → 输入命令：</p>
+<p>armbian-tf<br>根据提示输入 e 将剩余空间扩容至当前系统分区和文件系统，输入 c 将创建新的第 3 分区。</p>
 ]]></content>
   </entry>
   <entry>
