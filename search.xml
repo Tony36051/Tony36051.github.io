@@ -42,6 +42,28 @@
       </tags>
   </entry>
   <entry>
+    <title>S905刷机Q5-UNT403A</title>
+    <url>/2023/02/10/S905%E5%88%B7%E6%9C%BAQ5-UNT403A/</url>
+    <content><![CDATA[<p>Q5-UNT403A卡刷或线刷安卓, 开了 adb 或安装 <code>reboot to libreelec</code>引导U盘上的Armbian.</p>
+<span id="more"></span>
+
+<h1 id="刷机"><a href="#刷机" class="headerlink" title="刷机"></a>刷机</h1><h2 id="刷安卓"><a href="#刷安卓" class="headerlink" title="刷安卓"></a>刷安卓</h2><p>卡刷</p>
+<h2 id="刷Armbian"><a href="#刷Armbian" class="headerlink" title="刷Armbian"></a>刷Armbian</h2><p>用ophub的github仓库<a href="https://github.com/ophub/amlogic-s9xxx-armbian/blob/main/README.cn.md">https://github.com/ophub/amlogic-s9xxx-armbian/blob/main/README.cn.md</a><br>用 balenaEtcher 将镜像写入tf/U盘<br>改dtb, 刷入后u盘有两个分区, fat32格式的boot分区修改uEnv.txt文件, 修改dtb</p>
+<h3 id="UNT403A"><a href="#UNT403A" class="headerlink" title="UNT403A"></a>UNT403A</h3><p>镜像: Armbian_23.02.0_amlogic_s905l3a_jammy_5.15.92_server_2023.02.10.img.gz<br>dtb: 用默认的/dtb/amlogic/meson-g12a-s905l3a-e900v22c.dtb</p>
+<h3 id="Q5"><a href="#Q5" class="headerlink" title="Q5"></a>Q5</h3><p>镜像: Armbian_23.02.0_amlogic_s905_jammy_5.15.92_server_2023.02.10.img.gz<br>dtb: /dtb/amlogic/meson-gxbb-p201.dtb</p>
+<h1 id="Armbian-玩法"><a href="#Armbian-玩法" class="headerlink" title="Armbian 玩法"></a>Armbian 玩法</h1><h2 id="安装docker"><a href="#安装docker" class="headerlink" title="安装docker"></a>安装docker</h2><p>一. 准备apt, 用华为云的镜像, 其他云没有arm源</p>
+<blockquote>
+<p>vim /etc/apt/sources.list</p>
+</blockquote>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">deb https://repo.huaweicloud.com/ubuntu-ports/ jammy main restricted universe multiverse</span><br><span class="line"><span class="comment">#deb-src https://repo.huaweicloud.com/ubuntu-ports/ bionic main restricted universe multiverse</span></span><br><span class="line"></span><br><span class="line">deb https://repo.huaweicloud.com/ubuntu-ports/ jammy-security main restricted universe multiverse</span><br><span class="line"><span class="comment">#deb-src https://repo.huaweicloud.com/ubuntu-ports/ bionic-security main restricted universe multiverse</span></span><br><span class="line"></span><br><span class="line">deb https://repo.huaweicloud.com/ubuntu-ports/ jammy-updates main restricted universe multiverse</span><br><span class="line"><span class="comment">#deb-src https://repo.huaweicloud.com/ubuntu-ports/ bionic-updates main restricted universe multiverse</span></span><br><span class="line"></span><br><span class="line">deb https://repo.huaweicloud.com/ubuntu-ports/ jammy-backports main restricted universe multiverse</span><br><span class="line"><span class="comment">#deb-src https://repo.huaweicloud.com/ubuntu-ports/ bionic-backports main restricted universe multiverse</span></span><br><span class="line"></span><br><span class="line"><span class="comment">## Not recommended</span></span><br><span class="line"><span class="comment"># deb https://repo.huaweicloud.com/ubuntu-ports/ bionic-proposed main restricted universe multiverse</span></span><br><span class="line"><span class="comment"># deb-src https://repo.huaweicloud.com/ubuntu-ports/ bionic-proposed main restricted universe multiverse</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>apt update</p>
+</blockquote>
+<p>二. 安装docker<br>docker 镜像用华为云的, 创建一个华为云账号, 用自己的加速地址.<br>data-root表述docker的数据存哪里, 机顶盒的空间非常小, docker使用的空间特别多, 所以要特别注意.<br>experimental开启实验模式, 跨cpu架构拉取镜像用.</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">curl -fsSL https://get.docker.com -o get-docker.sh</span><br><span class="line">sh get-docker.sh --mirror Aliyun</span><br><span class="line">vim /etc/docker/daemon.json</span><br><span class="line">&#123;</span><br><span class="line">    <span class="string">&quot;registry-mirrors&quot;</span>: [</span><br><span class="line">        <span class="string">&quot;https://e2b8b1cb6d8342758f440cf13b6647ec.mirror.swr.myhuaweicloud.com&quot;</span></span><br><span class="line">    ],</span><br><span class="line">    <span class="string">&quot;data-root&quot;</span>: <span class="string">&quot;/data/docker&quot;</span>,</span><br><span class="line">    <span class="string">&quot;experimental&quot;</span>: <span class="literal">true</span></span><br><span class="line">&#125;</span><br><span class="line">systemctl restart docker.service</span><br></pre></td></tr></table></figure>
+]]></content>
+  </entry>
+  <entry>
     <title>T1刷机Armbian经验</title>
     <url>/2021/03/02/T1%E5%88%B7%E6%9C%BAArmbian%E7%BB%8F%E9%AA%8C/</url>
     <content><![CDATA[<p>T1同时保留安卓和Armbian两个系统。</p>
