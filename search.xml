@@ -1042,6 +1042,20 @@ eyJoaXN0b3J5IjpbOTkwMjQ2MzU1LDcwNDkxNTEwOF19
       </tags>
   </entry>
   <entry>
+    <title>K8s使用initContainers设置hostpath目录权限</title>
+    <url>/2023/06/30/ops/K8s%E4%BD%BF%E7%94%A8initContainers%E8%AE%BE%E7%BD%AEhostpath%E7%9B%AE%E5%BD%95%E6%9D%83%E9%99%90/</url>
+    <content><![CDATA[<h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>deployment使用hostpath将宿主机的目录挂在到容器内，让容器内进程的日志可以写到hostpath目录上，然后被采集。<br>日志目录对权限有要求，查询k8s文档，如果将hostPath 卷指定 type值为DirectoryOrCreate，则权限为0755。<br>如果需要更精细的控制，可以使用initContainers</p>
+<h2 id="监控原理"><a href="#监控原理" class="headerlink" title="监控原理"></a>监控原理</h2><p>公司平台使用普罗米修斯采集Java暴露的JMX数据，作为产品研发团队，只需要在程序启动后，将每个数据源包装一个Listener，多个数据源打包成map，交给<code>MBeanExporter</code></p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 新增init容器调整日志目录，以满足送检要求</span></span><br><span class="line">      <span class="attr">initContainers:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">initc</span></span><br><span class="line">        <span class="attr">securityContext:</span></span><br><span class="line">          <span class="attr">runAsUser:</span> <span class="number">0</span></span><br><span class="line">        <span class="attr">command:</span></span><br><span class="line">        <span class="bullet">-</span> <span class="string">sh</span></span><br><span class="line">        <span class="bullet">-</span> <span class="string">-c</span></span><br><span class="line">        <span class="bullet">-</span> <span class="string">whoami;</span> <span class="string">chmod</span> <span class="number">750</span> <span class="string">/applog;</span> <span class="string">chown</span> <span class="string">-R</span> <span class="number">65532</span><span class="string">:65532</span> <span class="string">/applog</span></span><br><span class="line">        <span class="attr">image:</span> <span class="string">debian:10</span></span><br><span class="line">        <span class="attr">imagePullPolicy:</span> <span class="string">IfNotPresent</span></span><br><span class="line">        <span class="attr">resources:</span> &#123;&#125;</span><br><span class="line">        <span class="attr">terminationMessagePath:</span> <span class="string">/dev/termination-log</span></span><br><span class="line">        <span class="attr">terminationMessagePolicy:</span> <span class="string">File</span></span><br><span class="line">        <span class="attr">volumeMounts:</span></span><br><span class="line">        <span class="bullet">-</span> <span class="attr">mountPath:</span> <span class="string">/applog</span></span><br><span class="line">          <span class="attr">name:</span> <span class="string">applog</span></span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>Ops</category>
+      </categories>
+      <tags>
+        <tag>K8s</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Zabbix 实践</title>
     <url>/2018/03/12/ops/Zabbix%20%E5%AE%9E%E8%B7%B5/</url>
     <content><![CDATA[<h1 id="Zabbix实践"><a href="#Zabbix实践" class="headerlink" title="Zabbix实践"></a>Zabbix实践</h1><h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><p>zabbix安装需要3大块，server负责整理数据，agent采集数据，web负责展示与GUI配置。<br>server和web都依赖关系型数据库，这里以mysql为例，也是docker形式。</p>
