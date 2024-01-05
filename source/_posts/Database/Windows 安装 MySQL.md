@@ -106,7 +106,10 @@ mysqld --initialize --user=mysql --console
 
  输入刚才记下的随机密码
 ```
+# mysql5.7
 set password = password('root');  # root就是你的新密码
+# mysql8
+ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY '123456';
 quit;
 ```
 
