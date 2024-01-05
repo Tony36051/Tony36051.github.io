@@ -54,6 +54,7 @@ default-character-set=utf8
 8.0配置
 ```ini
 [mysqld]
+skip_ssl
 # Remove leading # and set to the amount of RAM for the most important data
 # cache in MySQL. Start at 70% of total RAM for dedicated server, else 10%.
 innodb_buffer_pool_size=128M
@@ -110,6 +111,8 @@ mysqld --initialize --user=mysql --console
 set password = password('root');  # root就是你的新密码
 # mysql8
 ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY '123456';
+# mysql8 django
+ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY '000000';
 quit;
 ```
 
