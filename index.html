@@ -223,7 +223,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-01-05 19:39:25" itemprop="dateModified" datetime="2024-01-05T19:39:25+08:00">2024-01-05</time>
+                <time title="修改时间：2024-01-06 15:02:36" itemprop="dateModified" datetime="2024-01-06T15:02:36+08:00">2024-01-06</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -246,9 +246,9 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>deployment使用hostpath将宿主机的目录挂在到容器内，让容器内进程的日志可以写到hostpath目录上，然后被采集。<br>日志目录对权限有要求，查询k8s文档，如果将hostPath 卷指定 type值为DirectoryOrCreate，则权限为0755。<br>如果需要更精细的控制，可以使用initContainers</p>
-<h2 id="监控原理"><a href="#监控原理" class="headerlink" title="监控原理"></a>监控原理</h2><p>公司平台使用普罗米修斯采集Java暴露的JMX数据，作为产品研发团队，只需要在程序启动后，将每个数据源包装一个Listener，多个数据源打包成map，交给<code>MBeanExporter</code></p>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 新增init容器调整日志目录，以满足送检要求</span></span><br><span class="line">      <span class="attr">initContainers:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">initc</span></span><br><span class="line">        <span class="attr">securityContext:</span></span><br><span class="line">          <span class="attr">runAsUser:</span> <span class="number">0</span></span><br><span class="line">        <span class="attr">command:</span></span><br><span class="line">        <span class="bullet">-</span> <span class="string">sh</span></span><br><span class="line">        <span class="bullet">-</span> <span class="string">-c</span></span><br><span class="line">        <span class="bullet">-</span> <span class="string">whoami;</span> <span class="string">chmod</span> <span class="number">750</span> <span class="string">/applog;</span> <span class="string">chown</span> <span class="string">-R</span> <span class="number">65532</span><span class="string">:65532</span> <span class="string">/applog</span></span><br><span class="line">        <span class="attr">image:</span> <span class="string">debian:10</span></span><br><span class="line">        <span class="attr">imagePullPolicy:</span> <span class="string">IfNotPresent</span></span><br><span class="line">        <span class="attr">resources:</span> &#123;&#125;</span><br><span class="line">        <span class="attr">terminationMessagePath:</span> <span class="string">/dev/termination-log</span></span><br><span class="line">        <span class="attr">terminationMessagePolicy:</span> <span class="string">File</span></span><br><span class="line">        <span class="attr">volumeMounts:</span></span><br><span class="line">        <span class="bullet">-</span> <span class="attr">mountPath:</span> <span class="string">/applog</span></span><br><span class="line">          <span class="attr">name:</span> <span class="string">applog</span></span><br></pre></td></tr></table></figure>
+          <h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>deployment使用hostpath将宿主机的目录挂在到容器内，让容器内进程的日志可以写到hostpath目录上，然后被采集。<br>日志目录对权限有要求，查询k8s文档，如果将hostPath 卷指定 type值为DirectoryOrCreate，则权限为0755。<br>如果需要更精细的控制，可以使用 initContainers ，与<code>spec.containers</code>同级</p>
+<h2 id="initContainers"><a href="#initContainers" class="headerlink" title="initContainers"></a>initContainers</h2><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 新增init容器调整日志目录，此处只能调整共同挂载卷的权限</span></span><br><span class="line">      <span class="attr">initContainers:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">initc</span></span><br><span class="line">        <span class="attr">securityContext:</span></span><br><span class="line">          <span class="attr">runAsUser:</span> <span class="number">0</span></span><br><span class="line">        <span class="attr">command:</span></span><br><span class="line">        <span class="bullet">-</span> <span class="string">sh</span></span><br><span class="line">        <span class="bullet">-</span> <span class="string">-c</span></span><br><span class="line">        <span class="bullet">-</span> <span class="string">whoami;</span> <span class="string">chmod</span> <span class="number">750</span> <span class="string">/applog;</span> <span class="string">chown</span> <span class="string">-R</span> <span class="number">65532</span><span class="string">:65532</span> <span class="string">/applog</span></span><br><span class="line">        <span class="attr">image:</span> <span class="string">debian:10</span></span><br><span class="line">        <span class="attr">imagePullPolicy:</span> <span class="string">IfNotPresent</span></span><br><span class="line">        <span class="attr">resources:</span> &#123;&#125;</span><br><span class="line">        <span class="attr">terminationMessagePath:</span> <span class="string">/dev/termination-log</span></span><br><span class="line">        <span class="attr">terminationMessagePolicy:</span> <span class="string">File</span></span><br><span class="line">        <span class="attr">volumeMounts:</span></span><br><span class="line">        <span class="bullet">-</span> <span class="attr">mountPath:</span> <span class="string">/applog</span></span><br><span class="line">          <span class="attr">name:</span> <span class="string">applog</span></span><br></pre></td></tr></table></figure>
+<h2 id="如果没有共同挂在卷呢？"><a href="#如果没有共同挂在卷呢？" class="headerlink" title="如果没有共同挂在卷呢？"></a>如果没有共同挂在卷呢？</h2><p>答：在Dockerfile中修改，可能需要USER指令改变RUN的命令权限。</p>
 
       
     </div>
@@ -299,7 +299,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-01-05 19:39:25" itemprop="dateModified" datetime="2024-01-05T19:39:25+08:00">2024-01-05</time>
+                <time title="修改时间：2024-01-06 15:02:36" itemprop="dateModified" datetime="2024-01-06T15:02:36+08:00">2024-01-06</time>
               </span>
 
           
@@ -371,7 +371,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-01-05 19:39:25" itemprop="dateModified" datetime="2024-01-05T19:39:25+08:00">2024-01-05</time>
+                <time title="修改时间：2024-01-06 15:02:36" itemprop="dateModified" datetime="2024-01-06T15:02:36+08:00">2024-01-06</time>
               </span>
 
           
@@ -389,6 +389,87 @@
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2023/02/10/S905%E5%88%B7%E6%9C%BAQ5-UNT403A/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2023/01/05/Dev/nuxt/nuxt-serverless%20%E7%AC%94%E8%AE%B0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+      <meta itemprop="name" content="夏侯仪">
+      <meta itemprop="description" content="幽寰证此约 七魄俱为凭</br>魂袅还无明 诸厉化纷英</br>吾心共天契 请凭神御临">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="幻煞幽穹">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2023/01/05/Dev/nuxt/nuxt-serverless%20%E7%AC%94%E8%AE%B0/" class="post-title-link" itemprop="url">Nuxt-serverless 笔记</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2023-01-06 00:00:00" itemprop="dateCreated datePublished" datetime="2023-01-06T00:00:00+08:00">2023-01-06</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-01-06 15:02:36" itemprop="dateModified" datetime="2024-01-06T15:02:36+08:00">2024-01-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Dev/" itemprop="url" rel="index"><span itemprop="name">Dev</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>学习的Nuxt框架，在serverless上使用</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2023/01/05/Dev/nuxt/nuxt-serverless%20%E7%AC%94%E8%AE%B0/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -443,7 +524,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-01-05 19:39:25" itemprop="dateModified" datetime="2024-01-05T19:39:25+08:00">2024-01-05</time>
+                <time title="修改时间：2024-01-06 15:02:36" itemprop="dateModified" datetime="2024-01-06T15:02:36+08:00">2024-01-06</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -524,7 +605,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-01-05 19:39:25" itemprop="dateModified" datetime="2024-01-05T19:39:25+08:00">2024-01-05</time>
+                <time title="修改时间：2024-01-06 15:02:36" itemprop="dateModified" datetime="2024-01-06T15:02:36+08:00">2024-01-06</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -633,7 +714,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-01-05 19:39:25" itemprop="dateModified" datetime="2024-01-05T19:39:25+08:00">2024-01-05</time>
+                <time title="修改时间：2024-01-06 15:02:36" itemprop="dateModified" datetime="2024-01-06T15:02:36+08:00">2024-01-06</time>
               </span>
 
           
@@ -719,7 +800,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-01-05 19:39:25" itemprop="dateModified" datetime="2024-01-05T19:39:25+08:00">2024-01-05</time>
+                <time title="修改时间：2024-01-06 15:02:36" itemprop="dateModified" datetime="2024-01-06T15:02:36+08:00">2024-01-06</time>
               </span>
 
           
@@ -791,7 +872,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-01-05 19:39:25" itemprop="dateModified" datetime="2024-01-05T19:39:25+08:00">2024-01-05</time>
+                <time title="修改时间：2024-01-06 15:02:36" itemprop="dateModified" datetime="2024-01-06T15:02:36+08:00">2024-01-06</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -872,7 +953,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-01-05 19:39:25" itemprop="dateModified" datetime="2024-01-05T19:39:25+08:00">2024-01-05</time>
+                <time title="修改时间：2024-01-06 15:02:36" itemprop="dateModified" datetime="2024-01-06T15:02:36+08:00">2024-01-06</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -899,78 +980,6 @@
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2021/06/16/ops/Spark/Spark%E5%8D%95%E8%8A%82%E7%82%B9%E5%A4%A7%E6%95%B0%E6%8D%AELinux/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2021/03/02/T1%E5%88%B7%E6%9C%BAArmbian%E7%BB%8F%E9%AA%8C/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-      <meta itemprop="name" content="夏侯仪">
-      <meta itemprop="description" content="幽寰证此约 七魄俱为凭</br>魂袅还无明 诸厉化纷英</br>吾心共天契 请凭神御临">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="幻煞幽穹">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/03/02/T1%E5%88%B7%E6%9C%BAArmbian%E7%BB%8F%E9%AA%8C/" class="post-title-link" itemprop="url">T1刷机Armbian经验</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-03-03 00:00:00" itemprop="dateCreated datePublished" datetime="2021-03-03T00:00:00+08:00">2021-03-03</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-01-05 19:39:25" itemprop="dateModified" datetime="2024-01-05T19:39:25+08:00">2024-01-05</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>T1同时保留安卓和Armbian两个系统。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/03/02/T1%E5%88%B7%E6%9C%BAArmbian%E7%BB%8F%E9%AA%8C/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -1061,7 +1070,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">77</span>
+          <span class="site-state-item-count">78</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1074,7 +1083,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">48</span>
+        <span class="site-state-item-count">50</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>

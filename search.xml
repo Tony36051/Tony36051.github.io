@@ -466,6 +466,19 @@ eyJoaXN0b3J5IjpbLTg4MDg3NTU0Myw4NjkzNDY1MTVdfQ==
       </tags>
   </entry>
   <entry>
+    <title>Spring 依赖版本查询</title>
+    <url>/2022/09/02/Dev/spring-dependency-versions/</url>
+    <content><![CDATA[<p>记录Springboot、Springcloud以及周边依赖的版本查询方法</p>
+<span id="more"></span>
+
+<h1 id="Springboot-周边依赖"><a href="#Springboot-周边依赖" class="headerlink" title="Springboot 周边依赖"></a>Springboot 周边依赖</h1><p>举例： <a href="https://docs.spring.io/spring-boot/docs/2.7.3/reference/html/dependency-versions.html">https://docs.spring.io/spring-boot/docs/2.7.3/reference/html/dependency-versions.html</a></p>
+<h1 id="StringCloud-与-Springboot-依赖"><a href="#StringCloud-与-Springboot-依赖" class="headerlink" title="StringCloud 与 Springboot 依赖"></a>StringCloud 与 Springboot 依赖</h1><p><a href="https://start.spring.io/actuator/info">https://start.spring.io/actuator/info</a></p>
+]]></content>
+      <categories>
+        <category>开发</category>
+      </categories>
+  </entry>
+  <entry>
     <title>重构</title>
     <url>/2020/12/11/Dev/refactoring/</url>
     <content><![CDATA[<p>之前看了重构的书，最近在公司内部自学网站学习重构的课程，简单记录一些核心要点。</p>
@@ -519,19 +532,6 @@ eyJoaXN0b3J5IjpbLTg4MDg3NTU0Myw4NjkzNDY1MTVdfQ==
       <tags>
         <tag>重构</tag>
       </tags>
-  </entry>
-  <entry>
-    <title>Spring 依赖版本查询</title>
-    <url>/2022/09/02/Dev/spring-dependency-versions/</url>
-    <content><![CDATA[<p>记录Springboot、Springcloud以及周边依赖的版本查询方法</p>
-<span id="more"></span>
-
-<h1 id="Springboot-周边依赖"><a href="#Springboot-周边依赖" class="headerlink" title="Springboot 周边依赖"></a>Springboot 周边依赖</h1><p>举例： <a href="https://docs.spring.io/spring-boot/docs/2.7.3/reference/html/dependency-versions.html">https://docs.spring.io/spring-boot/docs/2.7.3/reference/html/dependency-versions.html</a></p>
-<h1 id="StringCloud-与-Springboot-依赖"><a href="#StringCloud-与-Springboot-依赖" class="headerlink" title="StringCloud 与 Springboot 依赖"></a>StringCloud 与 Springboot 依赖</h1><p><a href="https://start.spring.io/actuator/info">https://start.spring.io/actuator/info</a></p>
-]]></content>
-      <categories>
-        <category>开发</category>
-      </categories>
   </entry>
   <entry>
     <title>vscode配置for VUE</title>
@@ -1042,20 +1042,6 @@ eyJoaXN0b3J5IjpbOTkwMjQ2MzU1LDcwNDkxNTEwOF19
       </tags>
   </entry>
   <entry>
-    <title>K8s使用initContainers设置hostpath目录权限</title>
-    <url>/2023/06/30/ops/K8s%E4%BD%BF%E7%94%A8initContainers%E8%AE%BE%E7%BD%AEhostpath%E7%9B%AE%E5%BD%95%E6%9D%83%E9%99%90/</url>
-    <content><![CDATA[<h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>deployment使用hostpath将宿主机的目录挂在到容器内，让容器内进程的日志可以写到hostpath目录上，然后被采集。<br>日志目录对权限有要求，查询k8s文档，如果将hostPath 卷指定 type值为DirectoryOrCreate，则权限为0755。<br>如果需要更精细的控制，可以使用initContainers</p>
-<h2 id="监控原理"><a href="#监控原理" class="headerlink" title="监控原理"></a>监控原理</h2><p>公司平台使用普罗米修斯采集Java暴露的JMX数据，作为产品研发团队，只需要在程序启动后，将每个数据源包装一个Listener，多个数据源打包成map，交给<code>MBeanExporter</code></p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 新增init容器调整日志目录，以满足送检要求</span></span><br><span class="line">      <span class="attr">initContainers:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">initc</span></span><br><span class="line">        <span class="attr">securityContext:</span></span><br><span class="line">          <span class="attr">runAsUser:</span> <span class="number">0</span></span><br><span class="line">        <span class="attr">command:</span></span><br><span class="line">        <span class="bullet">-</span> <span class="string">sh</span></span><br><span class="line">        <span class="bullet">-</span> <span class="string">-c</span></span><br><span class="line">        <span class="bullet">-</span> <span class="string">whoami;</span> <span class="string">chmod</span> <span class="number">750</span> <span class="string">/applog;</span> <span class="string">chown</span> <span class="string">-R</span> <span class="number">65532</span><span class="string">:65532</span> <span class="string">/applog</span></span><br><span class="line">        <span class="attr">image:</span> <span class="string">debian:10</span></span><br><span class="line">        <span class="attr">imagePullPolicy:</span> <span class="string">IfNotPresent</span></span><br><span class="line">        <span class="attr">resources:</span> &#123;&#125;</span><br><span class="line">        <span class="attr">terminationMessagePath:</span> <span class="string">/dev/termination-log</span></span><br><span class="line">        <span class="attr">terminationMessagePolicy:</span> <span class="string">File</span></span><br><span class="line">        <span class="attr">volumeMounts:</span></span><br><span class="line">        <span class="bullet">-</span> <span class="attr">mountPath:</span> <span class="string">/applog</span></span><br><span class="line">          <span class="attr">name:</span> <span class="string">applog</span></span><br></pre></td></tr></table></figure>
-]]></content>
-      <categories>
-        <category>Ops</category>
-      </categories>
-      <tags>
-        <tag>K8s</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Zabbix 实践</title>
     <url>/2018/03/12/ops/Zabbix%20%E5%AE%9E%E8%B7%B5/</url>
     <content><![CDATA[<h1 id="Zabbix实践"><a href="#Zabbix实践" class="headerlink" title="Zabbix实践"></a>Zabbix实践</h1><h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><p>zabbix安装需要3大块，server负责整理数据，agent采集数据，web负责展示与GUI配置。<br>server和web都依赖关系型数据库，这里以mysql为例，也是docker形式。</p>
@@ -1095,6 +1081,20 @@ eyJoaXN0b3J5IjpbOTkwMjQ2MzU1LDcwNDkxNTEwOF19
       </categories>
       <tags>
         <tag>Zabbix</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>K8s使用initContainers设置hostpath目录权限</title>
+    <url>/2023/06/30/ops/K8s%E4%BD%BF%E7%94%A8initContainers%E8%AE%BE%E7%BD%AEhostpath%E7%9B%AE%E5%BD%95%E6%9D%83%E9%99%90/</url>
+    <content><![CDATA[<h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>deployment使用hostpath将宿主机的目录挂在到容器内，让容器内进程的日志可以写到hostpath目录上，然后被采集。<br>日志目录对权限有要求，查询k8s文档，如果将hostPath 卷指定 type值为DirectoryOrCreate，则权限为0755。<br>如果需要更精细的控制，可以使用 initContainers ，与<code>spec.containers</code>同级</p>
+<h2 id="initContainers"><a href="#initContainers" class="headerlink" title="initContainers"></a>initContainers</h2><figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 新增init容器调整日志目录，此处只能调整共同挂载卷的权限</span></span><br><span class="line">      <span class="attr">initContainers:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">initc</span></span><br><span class="line">        <span class="attr">securityContext:</span></span><br><span class="line">          <span class="attr">runAsUser:</span> <span class="number">0</span></span><br><span class="line">        <span class="attr">command:</span></span><br><span class="line">        <span class="bullet">-</span> <span class="string">sh</span></span><br><span class="line">        <span class="bullet">-</span> <span class="string">-c</span></span><br><span class="line">        <span class="bullet">-</span> <span class="string">whoami;</span> <span class="string">chmod</span> <span class="number">750</span> <span class="string">/applog;</span> <span class="string">chown</span> <span class="string">-R</span> <span class="number">65532</span><span class="string">:65532</span> <span class="string">/applog</span></span><br><span class="line">        <span class="attr">image:</span> <span class="string">debian:10</span></span><br><span class="line">        <span class="attr">imagePullPolicy:</span> <span class="string">IfNotPresent</span></span><br><span class="line">        <span class="attr">resources:</span> &#123;&#125;</span><br><span class="line">        <span class="attr">terminationMessagePath:</span> <span class="string">/dev/termination-log</span></span><br><span class="line">        <span class="attr">terminationMessagePolicy:</span> <span class="string">File</span></span><br><span class="line">        <span class="attr">volumeMounts:</span></span><br><span class="line">        <span class="bullet">-</span> <span class="attr">mountPath:</span> <span class="string">/applog</span></span><br><span class="line">          <span class="attr">name:</span> <span class="string">applog</span></span><br></pre></td></tr></table></figure>
+<h2 id="如果没有共同挂在卷呢？"><a href="#如果没有共同挂在卷呢？" class="headerlink" title="如果没有共同挂在卷呢？"></a>如果没有共同挂在卷呢？</h2><p>答：在Dockerfile中修改，可能需要USER指令改变RUN的命令权限。</p>
+]]></content>
+      <categories>
+        <category>Ops</category>
+      </categories>
+      <tags>
+        <tag>K8s</tag>
       </tags>
   </entry>
   <entry>
@@ -1388,55 +1388,6 @@ eyJoaXN0b3J5IjpbOTkwMjQ2MzU1LDcwNDkxNTEwOF19
       </tags>
   </entry>
   <entry>
-    <title>RobotFramework实现Page Object设计模式的应用——GUI测试进阶</title>
-    <url>/2018/04/17/Automation/Robotframework/RobotFramework%E5%AE%9E%E7%8E%B0Page%20Object%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E7%9A%84%E5%BA%94%E7%94%A8%E2%80%94%E2%80%94GUI%E6%B5%8B%E8%AF%95%E8%BF%9B%E9%98%B6/</url>
-    <content><![CDATA[<p>第一次用RobotFramework-SeleniumLibrary写网页的GUI测试，封装关键字，按功能模块划分关键字。后来一次系统层面的UI重构，所有用例要重新写，成本很大，遂找到2013年提出，2015成熟的Page Object设计模式。基于页面或重用组件封装，仅将人类能交互的操作封装为方法。抽象后，可读性、可维护性大增。</p>
-<span id="more"></span>
-<h1 id="选型"><a href="#选型" class="headerlink" title="选型"></a>选型</h1><p>一开始选择的<a href="https://github.com/ncbi/robotframework-pageobjects">NCBI</a>的，文档详尽，功能较多，缺点是实现较复杂，坑是要指定对应的Selenium2Library的版本，对新的版本要改import，觉得不方便，什么还有别的问题。<br>后来选择使用较新的<a href="https://github.com/boakley/robotframework-pageobjectlibrary">boakley的实现</a>，实现上比较简单，功能与PageObject的意思都到了。缺点是没有完全按照PageObject的设计理念，方法返回值不一定是某页面或具体值，如果学院派地看，甚至可以说没有实现PageObject也是成立的。</p>
-<h1 id="实战后总结"><a href="#实战后总结" class="headerlink" title="实战后总结"></a>实战后总结</h1><p><strong>2020-01-14 Updated</strong>：<br>PageObject定义页面和元素xpath关系即可，页面动作如果非必要，不用为某个页面定义动作。因为大部分的操作还是点击和输入，这个在更底层应该封装好。无论在RobotFramework还是纯代码实现上，都可遵从此原则</p>
-<h1 id="实际项目举例"><a href="#实际项目举例" class="headerlink" title="实际项目举例"></a>实际项目举例</h1><h2 id="草稿"><a href="#草稿" class="headerlink" title="草稿"></a>草稿</h2><h3 id="commodityIndex-商品首页"><a href="#commodityIndex-商品首页" class="headerlink" title="commodityIndex 商品首页"></a>commodityIndex 商品首页</h3><ol>
-<li>click_n_frame_contract(index) 点击第n个框架</li>
-<li>search(key) 搜索</li>
-<li>clear_search() 清除搜索</li>
-<li>switch_row_display() 切换紧凑行显示</li>
-<li>switch_col_display() 切换宽松列显示</li>
-<li>click_n_pic(commodity_type) 该方法点击某类的第n个商品图片</li>
-<li>test66 意大利TIM 配置按钮（按名字定位）</li>
-<li>click_commodity_by_name(name) 点击商品名</li>
-<li>click_n_more(commodity_type) 点击某个类型下的more、收起动作<h3 id="commodityIndexAll-商品首页（无左边栏）空的页面"><a href="#commodityIndexAll-商品首页（无左边栏）空的页面" class="headerlink" title="commodityIndexAll 商品首页（无左边栏）空的页面"></a>commodityIndexAll 商品首页（无左边栏）空的页面</h3></li>
-</ol>
-<h3 id="commodityDetails-商品详情页"><a href="#commodityDetails-商品详情页" class="headerlink" title="commodityDetails 商品详情页"></a>commodityDetails 商品详情页</h3><ol>
-<li>get_product_id() 获取商品id</li>
-<li>click_configuration_tab() 点击配置页</li>
-<li>click_product_specification_tab() 点击规格页</li>
-<li>add_n(n) 添加n个商品到购物车【输入框 限制】</li>
-<li>click_customize() 点击客制化按钮</li>
-<li>维保选择</li>
-<li>test66能源店：多选基础服务，其他数量、描述超过4行<h3 id="commodityCustomize-商品定制化页"><a href="#commodityCustomize-商品定制化页" class="headerlink" title="commodityCustomize 商品定制化页"></a>commodityCustomize 商品定制化页</h3>该页定制化情况太多，不太好封装</li>
-<li>input_name(name) </li>
-<li>click_text(text) 根据文本内容点击配件，要搭配滚屏</li>
-<li>input_num(text, n) 根据文本定位对应的输入框，输入数字</li>
-<li>select_num(text, choice) 根据文本定位对应的输入框，下拉选择</li>
-<li>view_result() 切换到定制结果</li>
-<li>view_config()切回来</li>
-<li>get_product_price() 获取定制结果的产品价格</li>
-<li>get_Service_price() 获取定制结果的服务价格</li>
-<li>add_n(n) 添加n个商品到购物车</li>
-<li>参数正确性-协议</li>
-<li>展开收缩<h3 id="commodityQuery"><a href="#commodityQuery" class="headerlink" title="commodityQuery"></a>commodityQuery</h3>暂不处理</li>
-</ol>
-<h2 id="common"><a href="#common" class="headerlink" title="common"></a>common</h2><p>可以按text来点击<br>太长或太宽，要先滚动<br>自定义商品参数正确性，建议使用协议</p>
-<p>命名规范：<br>input_xxx<br>click_xxx<br>select_xxx<br>组合动作按实际业务命名<br>click_n_xxx：xxx取列头的名字，或类型</p>
-]]></content>
-      <categories>
-        <category>Test</category>
-      </categories>
-      <tags>
-        <tag>RobotFramework</tag>
-        <tag>PageObject</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>RobotFramework变量</title>
     <url>/2018/09/26/Automation/Robotframework/RobotFramework%E5%8F%98%E9%87%8F/</url>
     <content><![CDATA[<p>自动化用例跟其他编程语言的源文件基本类似, 关键字类比方法或函数, 关键字的参数就是函数的参数, 关键字的返回也就是函数的返回. 类似编程学习, 第一步是学习定义和使用各种变量.</p>
@@ -1582,6 +1533,55 @@ eyJoaXN0b3J5IjpbOTkwMjQ2MzU1LDcwNDkxNTEwOF19
       </tags>
   </entry>
   <entry>
+    <title>RobotFramework实现Page Object设计模式的应用——GUI测试进阶</title>
+    <url>/2018/04/17/Automation/Robotframework/RobotFramework%E5%AE%9E%E7%8E%B0Page%20Object%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E7%9A%84%E5%BA%94%E7%94%A8%E2%80%94%E2%80%94GUI%E6%B5%8B%E8%AF%95%E8%BF%9B%E9%98%B6/</url>
+    <content><![CDATA[<p>第一次用RobotFramework-SeleniumLibrary写网页的GUI测试，封装关键字，按功能模块划分关键字。后来一次系统层面的UI重构，所有用例要重新写，成本很大，遂找到2013年提出，2015成熟的Page Object设计模式。基于页面或重用组件封装，仅将人类能交互的操作封装为方法。抽象后，可读性、可维护性大增。</p>
+<span id="more"></span>
+<h1 id="选型"><a href="#选型" class="headerlink" title="选型"></a>选型</h1><p>一开始选择的<a href="https://github.com/ncbi/robotframework-pageobjects">NCBI</a>的，文档详尽，功能较多，缺点是实现较复杂，坑是要指定对应的Selenium2Library的版本，对新的版本要改import，觉得不方便，什么还有别的问题。<br>后来选择使用较新的<a href="https://github.com/boakley/robotframework-pageobjectlibrary">boakley的实现</a>，实现上比较简单，功能与PageObject的意思都到了。缺点是没有完全按照PageObject的设计理念，方法返回值不一定是某页面或具体值，如果学院派地看，甚至可以说没有实现PageObject也是成立的。</p>
+<h1 id="实战后总结"><a href="#实战后总结" class="headerlink" title="实战后总结"></a>实战后总结</h1><p><strong>2020-01-14 Updated</strong>：<br>PageObject定义页面和元素xpath关系即可，页面动作如果非必要，不用为某个页面定义动作。因为大部分的操作还是点击和输入，这个在更底层应该封装好。无论在RobotFramework还是纯代码实现上，都可遵从此原则</p>
+<h1 id="实际项目举例"><a href="#实际项目举例" class="headerlink" title="实际项目举例"></a>实际项目举例</h1><h2 id="草稿"><a href="#草稿" class="headerlink" title="草稿"></a>草稿</h2><h3 id="commodityIndex-商品首页"><a href="#commodityIndex-商品首页" class="headerlink" title="commodityIndex 商品首页"></a>commodityIndex 商品首页</h3><ol>
+<li>click_n_frame_contract(index) 点击第n个框架</li>
+<li>search(key) 搜索</li>
+<li>clear_search() 清除搜索</li>
+<li>switch_row_display() 切换紧凑行显示</li>
+<li>switch_col_display() 切换宽松列显示</li>
+<li>click_n_pic(commodity_type) 该方法点击某类的第n个商品图片</li>
+<li>test66 意大利TIM 配置按钮（按名字定位）</li>
+<li>click_commodity_by_name(name) 点击商品名</li>
+<li>click_n_more(commodity_type) 点击某个类型下的more、收起动作<h3 id="commodityIndexAll-商品首页（无左边栏）空的页面"><a href="#commodityIndexAll-商品首页（无左边栏）空的页面" class="headerlink" title="commodityIndexAll 商品首页（无左边栏）空的页面"></a>commodityIndexAll 商品首页（无左边栏）空的页面</h3></li>
+</ol>
+<h3 id="commodityDetails-商品详情页"><a href="#commodityDetails-商品详情页" class="headerlink" title="commodityDetails 商品详情页"></a>commodityDetails 商品详情页</h3><ol>
+<li>get_product_id() 获取商品id</li>
+<li>click_configuration_tab() 点击配置页</li>
+<li>click_product_specification_tab() 点击规格页</li>
+<li>add_n(n) 添加n个商品到购物车【输入框 限制】</li>
+<li>click_customize() 点击客制化按钮</li>
+<li>维保选择</li>
+<li>test66能源店：多选基础服务，其他数量、描述超过4行<h3 id="commodityCustomize-商品定制化页"><a href="#commodityCustomize-商品定制化页" class="headerlink" title="commodityCustomize 商品定制化页"></a>commodityCustomize 商品定制化页</h3>该页定制化情况太多，不太好封装</li>
+<li>input_name(name) </li>
+<li>click_text(text) 根据文本内容点击配件，要搭配滚屏</li>
+<li>input_num(text, n) 根据文本定位对应的输入框，输入数字</li>
+<li>select_num(text, choice) 根据文本定位对应的输入框，下拉选择</li>
+<li>view_result() 切换到定制结果</li>
+<li>view_config()切回来</li>
+<li>get_product_price() 获取定制结果的产品价格</li>
+<li>get_Service_price() 获取定制结果的服务价格</li>
+<li>add_n(n) 添加n个商品到购物车</li>
+<li>参数正确性-协议</li>
+<li>展开收缩<h3 id="commodityQuery"><a href="#commodityQuery" class="headerlink" title="commodityQuery"></a>commodityQuery</h3>暂不处理</li>
+</ol>
+<h2 id="common"><a href="#common" class="headerlink" title="common"></a>common</h2><p>可以按text来点击<br>太长或太宽，要先滚动<br>自定义商品参数正确性，建议使用协议</p>
+<p>命名规范：<br>input_xxx<br>click_xxx<br>select_xxx<br>组合动作按实际业务命名<br>click_n_xxx：xxx取列头的名字，或类型</p>
+]]></content>
+      <categories>
+        <category>Test</category>
+      </categories>
+      <tags>
+        <tag>RobotFramework</tag>
+        <tag>PageObject</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>RobotFramework执行镜像</title>
     <url>/2018/04/25/Automation/Robotframework/RobotFramework%E6%89%A7%E8%A1%8C%E9%95%9C%E5%83%8F/</url>
     <content><![CDATA[<p>团队使用RobotFramework作为主要自动化工具，将执行环境容器化，方便部署和扩展，以下为构建的Dockerfile</p>
@@ -1612,6 +1612,25 @@ eyJoaXN0b3J5IjpbOTkwMjQ2MzU1LDcwNDkxNTEwOF19
       </categories>
       <tags>
         <tag>RobotFramework</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Nuxt-serverless 笔记</title>
+    <url>/2023/01/05/Dev/nuxt/nuxt-serverless%20%E7%AC%94%E8%AE%B0/</url>
+    <content><![CDATA[<p>学习的Nuxt框架，在serverless上使用</p>
+<span id="more"></span>
+
+<h2 id="工程初始化"><a href="#工程初始化" class="headerlink" title="工程初始化"></a>工程初始化</h2><p>如果条件有限，无法使用pnpm等工具进行初始项目，可以参考 <a href="https://juejin.cn/post/7215790043050229815?searchId=2023083116564443075E47210E101198AF">https://juejin.cn/post/7215790043050229815?searchId=2023083116564443075E47210E101198AF</a> 此文章描述，使用<code>git clone</code> 方法。</p>
+<blockquote>
+<p>git clone -b v3 <a href="https://github.com/nuxt/starter.git">https://github.com/nuxt/starter.git</a> nuxt3-app</p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>Dev</category>
+      </categories>
+      <tags>
+        <tag>Nuxt</tag>
+        <tag>serverless</tag>
       </tags>
   </entry>
   <entry>
@@ -2259,53 +2278,6 @@ eyJoaXN0b3J5IjpbODExNDU2NDI2XX0=
       </tags>
   </entry>
   <entry>
-    <title>Hadoop3.3.2 on Windows10</title>
-    <url>/2022/03/20/ops/Hadoop/Hadoop3.3.2%20on%20Windows10/</url>
-    <content><![CDATA[<h1 id="Hadoop3-3-2-on-Windows10"><a href="#Hadoop3-3-2-on-Windows10" class="headerlink" title="Hadoop3.3.2 on Windows10"></a>Hadoop3.3.2 on Windows10</h1><h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>在windows系统上进行hadoop相关开发，不需要高可用，仅用作开发调试还是很方便的。</p>
-<h2 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h2><p>hadoop: <a href="https://www.apache.org/dyn/closer.cgi/hadoop/common/hadoop-3.2.2/hadoop-3.2.2.tar.gz">3.3.2</a><br>jdk: 1.8<br>winutils 3.3.x 和 hadoop.dll: <a href="https://github.com/kontext-tech/winutils/tree/master/hadoop-3.3.1/bin">https://github.com/kontext-tech/winutils/tree/master/hadoop-3.3.1/bin</a></p>
-<p>实测3.3.1的winutils可以适配3.3.2的hadoop版本。本机3.2.2hadoop在启动datanode时会失败。</p>
-<h2 id="安装和配置步骤"><a href="#安装和配置步骤" class="headerlink" title="安装和配置步骤"></a>安装和配置步骤</h2><p>下载解压hadoop，假设解压到<code>D:\PortableSoftware\hadoop-3.3.2</code><br>下载对应版本的<code>winutils.exe</code>和<code>hadoop.dll</code>复制到<code>D:\PortableSoftware\hadoop-3.3.2\bin</code></p>
-<ol>
-<li>JAVA_HOME,如果你的java安装路径是含有”Program Files”, 使用<code>Progra~1</code>代替”Program Files”，或使用<code>Progra~2</code> 代替 “Program Files(x86)”</li>
-<li>HADOOP_HOME</li>
-<li>PATH变量加入<code>%JAVA_HOME%\bin;%HADOOP_HOME%\bin;%HADOOP_HOME%\sbin</code></li>
-<li>检查： 新开cmd窗口，输入<code>hadoop -version</code></li>
-<li>配置<code>%HADOOP_HOME%\etc\hadoop\hdfs-site.xml</code></li>
-<li>配置<code>%HADOOP_HOME%\etc\hadoop\core-site.xml</code></li>
-<li>配置<code>%HADOOP_HOME%\etc\hadoop\mapred-site.xml</code></li>
-<li>配置<code>%HADOOP_HOME%\etc\hadoop\yarn-site.xml</code><figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="comment">&lt;!-- hdfs-site.xml --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">configuration</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">name</span>&gt;</span>dfs.replication<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">value</span>&gt;</span>1<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">name</span>&gt;</span>dfs.namenode.name.dir<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">value</span>&gt;</span>file:///D:/PortableSoftware/hadoop-3.3.2/data/dfs/namenode<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">name</span>&gt;</span>dfs.datanode.data.dir<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">value</span>&gt;</span>file:///D:/PortableSoftware/hadoop-3.3.2/data/dfs/datanode<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">name</span>&gt;</span>dfs.permissions<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">value</span>&gt;</span>false<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="comment">&lt;!-- core-site.xml --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">configuration</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">name</span>&gt;</span>fs.default.name<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">value</span>&gt;</span>hdfs://localhost:9820<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="comment">&lt;!-- mapred-site.xml --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">configuration</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">name</span>&gt;</span>mapreduce.framework.name<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">value</span>&gt;</span>yarn<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">description</span>&gt;</span>MapReduce framework name<span class="tag">&lt;/<span class="name">description</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="comment">&lt;!-- yarn-site.xml --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">configuration</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">name</span>&gt;</span>yarn.nodemanager.aux-services<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">value</span>&gt;</span>mapreduce_shuffle<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">description</span>&gt;</span>Yarn Node Manager Aux Service<span class="tag">&lt;/<span class="name">description</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-</li>
-</ol>
-<p>试验：</p>
-<blockquote>
-<p>hadoop version</p>
-</blockquote>
-<h2 id="启动HDFS"><a href="#启动HDFS" class="headerlink" title="启动HDFS"></a>启动HDFS</h2><p>第一次使用需要<code>hdfs namenode -format</code></p>
-<p>启动:</p>
-<blockquote>
-<p>start-dfs.cmd</p>
-</blockquote>
-<p>停止:</p>
-<blockquote>
-<p>stop-dfs.cmd</p>
-</blockquote>
-<p>访问：</p>
-<blockquote>
-<p><a href="http://localhost:9870/">http://localhost:9870/</a></p>
-</blockquote>
-]]></content>
-      <categories>
-        <category>BigData</category>
-      </categories>
-      <tags>
-        <tag>Hadoop</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Hadoop2.x 配置文件研读</title>
     <url>/2018/04/25/ops/Hadoop/Hadoop2.x%20%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E7%A0%94%E8%AF%BB/</url>
     <content><![CDATA[<p>团队下来一个任务，要求我研究hadoop的三个基本配置文件core-site.xml,hdfs-site.xml,mapred-site.xml。以下为研读笔记</p>
@@ -2405,6 +2377,53 @@ eyJoaXN0b3J5IjpbODExNDU2NDI2XX0=
 <h2 id="mapred-site-xml"><a href="#mapred-site-xml" class="headerlink" title="mapred-site.xml"></a>mapred-site.xml</h2><p><strong>mapreduce.job.name</strong>，job名称，<br>hadoop.job.history.(user.)location，制定历史文件存放目录<br><code>io.sort.*</code> 排序相关参数，内存用量，占比多少开始写硬盘。大量排序时可优化<br>mapreduce.map.memory.mb，map使用内存，<code>RAM-per-container</code><br>mapreduce.reduce.memory.mb，reduce使用内存，<code>2 * RAM-per-container</code><br>mapreduce.map.java.opts，<code>0.8 * RAM-per-container</code><br>mapreduce.reduce.java.opts, <code>0.8 * 2 * RAM-per-container</code><br>mapred.child.java.opts，每个任务最大jvm heap大小为1000M， -Xmx1000M -Dfile.encoding=UTF8 -XX:-UseGCOverheadLimit<br>mapred.map/reduce.tasks，不知道yarn管理之后还有没有，默认值2/1应该偏小<br><code>mapred.output.compress.*</code>启用压缩相关<br>cdh推荐配置<br>|配置项 | 推荐参数 | 注释|<br>|–|–|–|<br>|yarn.app.mapreduce.am.resource.cpu-vcores | 1 | AM container vcore reservation |<br>|yarn.app.mapreduce.am.resource.mb | 1024 | AM container memory reservation |<br>|ApplicationMaster Java Maximum Heap Size (available in CM) | 1024 | AM Java heap size |<br>|mapreduce.map.cpu.vcores | 1 | Map task vcore reservation |<br>|mapreduce.map.memory.mb | 1024 | Map task memory reservation |<br>|mapreduce.map.java.opts.max.heap | 1024 | Map task Java heap size |<br>|mapreduce.reduce.cpu.vcores | 1 | Reduce task vcore reservation |<br>|mapreduce.reduce.memory.mb | 1024 | Reduce task memory reservation |<br>|mapreduce.reduce.java.opts | 1024 | Reduce Task Java heap size |<br>|mapreduce.task.io.sort.mb | 256 | Spill/Sort memory reservation |</p>
 <h2 id="yarn-site-xml"><a href="#yarn-site-xml" class="headerlink" title="yarn-site.xml"></a>yarn-site.xml</h2><h3 id="日志聚合功能"><a href="#日志聚合功能" class="headerlink" title="日志聚合功能"></a>日志聚合功能</h3><figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span>    </span><br><span class="line">  <span class="tag">&lt;<span class="name">name</span>&gt;</span>yarn.log-aggregation-enable<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">value</span>&gt;</span>true<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span> </span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">name</span>&gt;</span>yarn.nodemanager.remote-app-log-dir<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">value</span>&gt;</span>/var/log/hadoop-yarn/apps<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">description</span>&gt;</span>[需要修改目录]Where to aggregate logs to.<span class="tag">&lt;/<span class="name">description</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span> </span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">name</span>&gt;</span>yarn.log-aggregation.retain-seconds<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">value</span>&gt;</span>86400<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br></pre></td></tr></table></figure>
 <p>yarn.nodemanager.resource.memory-mb，直接设为nn的物理内存<br>yarn.scheduler.minimum/maximum-allocation-mb，最小1G，最大8G</p>
+]]></content>
+      <categories>
+        <category>BigData</category>
+      </categories>
+      <tags>
+        <tag>Hadoop</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Hadoop3.3.2 on Windows10</title>
+    <url>/2022/03/20/ops/Hadoop/Hadoop3.3.2%20on%20Windows10/</url>
+    <content><![CDATA[<h1 id="Hadoop3-3-2-on-Windows10"><a href="#Hadoop3-3-2-on-Windows10" class="headerlink" title="Hadoop3.3.2 on Windows10"></a>Hadoop3.3.2 on Windows10</h1><h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>在windows系统上进行hadoop相关开发，不需要高可用，仅用作开发调试还是很方便的。</p>
+<h2 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h2><p>hadoop: <a href="https://www.apache.org/dyn/closer.cgi/hadoop/common/hadoop-3.2.2/hadoop-3.2.2.tar.gz">3.3.2</a><br>jdk: 1.8<br>winutils 3.3.x 和 hadoop.dll: <a href="https://github.com/kontext-tech/winutils/tree/master/hadoop-3.3.1/bin">https://github.com/kontext-tech/winutils/tree/master/hadoop-3.3.1/bin</a></p>
+<p>实测3.3.1的winutils可以适配3.3.2的hadoop版本。本机3.2.2hadoop在启动datanode时会失败。</p>
+<h2 id="安装和配置步骤"><a href="#安装和配置步骤" class="headerlink" title="安装和配置步骤"></a>安装和配置步骤</h2><p>下载解压hadoop，假设解压到<code>D:\PortableSoftware\hadoop-3.3.2</code><br>下载对应版本的<code>winutils.exe</code>和<code>hadoop.dll</code>复制到<code>D:\PortableSoftware\hadoop-3.3.2\bin</code></p>
+<ol>
+<li>JAVA_HOME,如果你的java安装路径是含有”Program Files”, 使用<code>Progra~1</code>代替”Program Files”，或使用<code>Progra~2</code> 代替 “Program Files(x86)”</li>
+<li>HADOOP_HOME</li>
+<li>PATH变量加入<code>%JAVA_HOME%\bin;%HADOOP_HOME%\bin;%HADOOP_HOME%\sbin</code></li>
+<li>检查： 新开cmd窗口，输入<code>hadoop -version</code></li>
+<li>配置<code>%HADOOP_HOME%\etc\hadoop\hdfs-site.xml</code></li>
+<li>配置<code>%HADOOP_HOME%\etc\hadoop\core-site.xml</code></li>
+<li>配置<code>%HADOOP_HOME%\etc\hadoop\mapred-site.xml</code></li>
+<li>配置<code>%HADOOP_HOME%\etc\hadoop\yarn-site.xml</code><figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="comment">&lt;!-- hdfs-site.xml --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">configuration</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">name</span>&gt;</span>dfs.replication<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">value</span>&gt;</span>1<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">name</span>&gt;</span>dfs.namenode.name.dir<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">value</span>&gt;</span>file:///D:/PortableSoftware/hadoop-3.3.2/data/dfs/namenode<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">name</span>&gt;</span>dfs.datanode.data.dir<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">value</span>&gt;</span>file:///D:/PortableSoftware/hadoop-3.3.2/data/dfs/datanode<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">name</span>&gt;</span>dfs.permissions<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">value</span>&gt;</span>false<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="comment">&lt;!-- core-site.xml --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">configuration</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">name</span>&gt;</span>fs.default.name<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">value</span>&gt;</span>hdfs://localhost:9820<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="comment">&lt;!-- mapred-site.xml --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">configuration</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">name</span>&gt;</span>mapreduce.framework.name<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">value</span>&gt;</span>yarn<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">description</span>&gt;</span>MapReduce framework name<span class="tag">&lt;/<span class="name">description</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="comment">&lt;!-- yarn-site.xml --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">configuration</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">name</span>&gt;</span>yarn.nodemanager.aux-services<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">value</span>&gt;</span>mapreduce_shuffle<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">description</span>&gt;</span>Yarn Node Manager Aux Service<span class="tag">&lt;/<span class="name">description</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<p>试验：</p>
+<blockquote>
+<p>hadoop version</p>
+</blockquote>
+<h2 id="启动HDFS"><a href="#启动HDFS" class="headerlink" title="启动HDFS"></a>启动HDFS</h2><p>第一次使用需要<code>hdfs namenode -format</code></p>
+<p>启动:</p>
+<blockquote>
+<p>start-dfs.cmd</p>
+</blockquote>
+<p>停止:</p>
+<blockquote>
+<p>stop-dfs.cmd</p>
+</blockquote>
+<p>访问：</p>
+<blockquote>
+<p><a href="http://localhost:9870/">http://localhost:9870/</a></p>
+</blockquote>
 ]]></content>
       <categories>
         <category>BigData</category>
@@ -3743,9 +3762,9 @@ eyJoaXN0b3J5IjpbLTI2NTUyNjY3MSw2NDQwMDk3MzJdfQ==
 <h2 id="docker-compose"><a href="#docker-compose" class="headerlink" title="docker-compose"></a>docker-compose</h2><p><a href="https://github.com/docker/compose/releases/">https://github.com/docker/compose/releases/</a><br>sudo chmod +x /usr/local/bin/docker-compose</p>
 <h2 id="docker-machine"><a href="#docker-machine" class="headerlink" title="docker-machine"></a>docker-machine</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">base=https://github.com/docker/machine/releases/download/v0.14.0 &amp;&amp;</span><br><span class="line">  curl -L <span class="variable">$base</span>/docker-machine-$(<span class="built_in">uname</span> -s)-$(<span class="built_in">uname</span> -m) &gt;/tmp/docker-machine &amp;&amp;</span><br><span class="line">  sudo install /tmp/docker-machine /usr/local/bin/docker-machine</span><br></pre></td></tr></table></figure>
 
-<h2 id="配置代理"><a href="#配置代理" class="headerlink" title="配置代理"></a>配置代理</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cat</span> &gt; /etc/systemd/system/docker.service.d/http-proxy.conf &lt;&lt;<span class="string">EOF</span></span><br><span class="line"><span class="string">[Service]</span></span><br><span class="line"><span class="string">Environment=&quot;HTTP_PROXY=http://100.100.154.250:3128&quot;</span></span><br><span class="line"><span class="string">EOF</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">cat</span> &gt; /etc/systemd/system/docker.service.d/https-proxy.conf &lt;&lt;<span class="string">EOF</span></span><br><span class="line"><span class="string">[Service]</span></span><br><span class="line"><span class="string">Environment=&quot;HTTP_PROXY=http://100.100.154.250:3128&quot;</span></span><br><span class="line"><span class="string">EOF</span></span><br><span class="line">sudo systemctl daemon-reload</span><br><span class="line">sudo systemctl restart docker</span><br></pre></td></tr></table></figure>
+<h2 id="配置代理"><a href="#配置代理" class="headerlink" title="配置代理"></a>配置代理</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">mkdir</span> -p /etc/systemd/system/docker.service.d</span><br><span class="line"></span><br><span class="line"><span class="built_in">cat</span> &gt; /etc/systemd/system/docker.service.d/https-proxy.conf &lt;&lt;<span class="string">EOF</span></span><br><span class="line"><span class="string">[Service]</span></span><br><span class="line"><span class="string">Environment==&quot;HTTP_PROXY=proxy.exmaple.com&quot; &quot;HTTPS_PROXY=proxy.exmaple.com&quot; &quot;NO_PROXY=localhost,localhost,127.0.0.0/8,10.0.0.0/8,192.168.0.0/16,&quot;</span></span><br><span class="line"><span class="string">EOF</span></span><br><span class="line">sudo systemctl daemon-reload</span><br><span class="line">sudo systemctl restart docker</span><br></pre></td></tr></table></figure>
 <h2 id="仓库改源-信任源"><a href="#仓库改源-信任源" class="headerlink" title="仓库改源 信任源"></a>仓库改源 信任源</h2><p>如果在公司代理之后，https使用ssl链接经常会出现证书问题(如<code>x509: certificate signed by unknown authority</code>)，可以选择其他镜像，或忽略安全证书。<br>参考：<a href="https://docs.docker.com/registry/insecure/#use-self-signed-certificates">https://docs.docker.com/registry/insecure/#use-self-signed-certificates</a></p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo <span class="built_in">mkdir</span> -p /etc/docker</span><br><span class="line">sudo <span class="built_in">tee</span> /etc/docker/daemon.json &lt;&lt;-<span class="string">&#x27;EOF&#x27;</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="string">&quot;registry-mirrors&quot;</span>: [</span><br><span class="line">        <span class="string">&quot;https://1nj0zren.mirror.aliyuncs.com&quot;</span>,</span><br><span class="line">        <span class="string">&quot;https://docker.mirrors.ustc.edu.cn&quot;</span>,</span><br><span class="line">        <span class="string">&quot;http://f1361db2.m.daocloud.io&quot;</span>,</span><br><span class="line">        <span class="string">&quot;https://dockerhub.azk8s.cn&quot;</span></span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br><span class="line">EOF</span><br><span class="line">sudo systemctl daemon-reload</span><br><span class="line">sudo systemctl restart docker</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo <span class="built_in">mkdir</span> -p /etc/docker</span><br><span class="line">sudo <span class="built_in">tee</span> /etc/docker/daemon.json &lt;&lt;-<span class="string">&#x27;EOF&#x27;</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="string">&quot;registry-mirrors&quot;</span>: [</span><br><span class="line">        <span class="string">&quot;https://1nj0zren.mirror.aliyuncs.com&quot;</span>,</span><br><span class="line">        <span class="string">&quot;https://docker.mirrors.ustc.edu.cn&quot;</span>,</span><br><span class="line">        <span class="string">&quot;http://f1361db2.m.daocloud.io&quot;</span>,</span><br><span class="line">        <span class="string">&quot;https://dockerhub.azk8s.cn&quot;</span></span><br><span class="line">    ],</span><br><span class="line">    <span class="string">&quot;insecure-registries&quot;</span>: [<span class="string">&quot;0.0.0.0/0&quot;</span>]</span><br><span class="line">&#125;</span><br><span class="line">EOF</span><br><span class="line">sudo systemctl daemon-reload</span><br><span class="line">sudo systemctl restart docker</span><br></pre></td></tr></table></figure>
 <h2 id="安全证书"><a href="#安全证书" class="headerlink" title="安全证书"></a>安全证书</h2><p>如果在公司代理之后，https使用ssl链接经常会出现证书问题(如<code>x509: certificate signed by unknown authority</code>)，也可以选择添加证书到系统。<br>以<code>docker pull docker.elastic.co/elasticsearch/elasticsearch:6.3.0</code>为例，会出现<code>Error response from daemon: Get https://docker.elastic.co/v2/: x509: certificate signed by unknown authority</code>可以看到主域名为<code>elastic.co</code></p>
 <ol>
 <li>打开浏览器 <a href="https://docker.elastic.co/v2/">https://docker.elastic.co/v2/</a></li>

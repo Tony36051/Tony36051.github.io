@@ -192,6 +192,116 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/06/19/Java/%E6%8B%A6%E6%88%AA%E5%99%A8+%E4%BF%A1%E5%8F%B7%E9%87%8F%E5%81%9A%E6%8E%A5%E5%8F%A3429%E9%99%90%E6%B5%81/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+      <meta itemprop="name" content="夏侯仪">
+      <meta itemprop="description" content="幽寰证此约 七魄俱为凭</br>魂袅还无明 诸厉化纷英</br>吾心共天契 请凭神御临">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="幻煞幽穹">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/06/19/Java/%E6%8B%A6%E6%88%AA%E5%99%A8+%E4%BF%A1%E5%8F%B7%E9%87%8F%E5%81%9A%E6%8E%A5%E5%8F%A3429%E9%99%90%E6%B5%81/" class="post-title-link" itemprop="url">拦截器+信号量做接口429限流</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-06-20 00:00:00" itemprop="dateCreated datePublished" datetime="2020-06-20T00:00:00+08:00">2020-06-20</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-01-06 15:02:36" itemprop="dateModified" datetime="2024-01-06T15:02:36+08:00">2024-01-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%BF%90%E7%BB%B4/" itemprop="url" rel="index"><span itemprop="name">运维</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="高可用之接口限流"><a href="#高可用之接口限流" class="headerlink" title="高可用之接口限流"></a>高可用之接口限流</h1><h2 id="限流方案"><a href="#限流方案" class="headerlink" title="限流方案"></a>限流方案</h2><ol>
+<li>请求存消息队列，实例根据自己处理能力，拉取消息消费</li>
+<li>线程池控制，排满线程池队就直接失败</li>
+<li>请求拦截器，维护一个信号量控制同时并发处理数，超出排队值(require排队)就返回429状态码</li>
+</ol>
+<h2 id="信号量方案"><a href="#信号量方案" class="headerlink" title="信号量方案"></a>信号量方案</h2><p>Spring管理唯一bean，内含唯一的限流拦截器。以下是关键变量<br>Semaphore current_model_semaphore 所有请求都共用一个信号量；<br>int semaphoreSize 信号量有多少permits<br>int semaphoreMaxQueueSize 设定多少请求可以排队，超了就抛异常了<br>List<String> apiFilterList 哪些URL需要拦截<br>ConcurrentMap&lt;String, AtomicInteger&gt; concurrents 接口对应有多少个当前处理数<br>Boolean returnTooManyRequestError 是否启用429返回</p>
+<h2 id="处理逻辑"><a href="#处理逻辑" class="headerlink" title="处理逻辑"></a>处理逻辑</h2><ol>
+<li>判断当前请求的url是否匹配apiFilterList其中一个，不匹配返回filter chain后续处理</li>
+<li>如果未启动429返回，则阻塞地获取信号量。获取成功则继续处理，超时会触发 InterruptedException ，捕捉后抛业务异常</li>
+<li>如果请求头没有标识本次请求为最后一次重试，调用tryAcquire()获取信号量的permits，如果没有现成可用的permits，立即返回，接着就返回429状态码，结束请求</li>
+<li>如果已达最大重试次数，那么本次请求应该更加“倔强”地等。如果排队获取信号量的线程还没达到设定的最长semaphoreMaxQueueSize，那么就acquire等待。如果队伍已满，只能放弃等待直接返回429.</li>
+<li>所有acquire()后，在finally块做信号量的release()</li>
+</ol>
+<pre class="mermaid">graph TB
+    1{判断当前请求的url是否匹配apiFilterList其中一个}
+    2[拦截器返回交给filter chian后续处理]
+    3{是否启用429返回}
+    4{acquire阻塞地获取信号量}
+    5[捕获InterruptedException后抛业务异常]
+    6[正常走业务逻辑]
+    7{是否达到最大重试次数}
+    8{tryAcquire有无现成的permits}
+    9[快速失败返回429]
+    10{是否达到最大排队长度}
+
+
+    1--无需限流-->2
+    1--需要限流-->3
+    3--未启用429-->4
+    4--超时-->5
+    4--成功获取-->6
+    3--启用429-->7
+    7--否-->8
+    8--无-->9
+    8--有-->6
+    7--是-->10
+    10--是-->9
+    10--否-->4</pre>
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/05/22/Dev/piao-shop-design/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -223,7 +333,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-01-05 19:39:25" itemprop="dateModified" datetime="2024-01-05T19:39:25+08:00">2024-01-05</time>
+                <time title="修改时间：2024-01-06 15:02:36" itemprop="dateModified" datetime="2024-01-06T15:02:36+08:00">2024-01-06</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -304,7 +414,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-01-05 19:39:25" itemprop="dateModified" datetime="2024-01-05T19:39:25+08:00">2024-01-05</time>
+                <time title="修改时间：2024-01-06 15:02:36" itemprop="dateModified" datetime="2024-01-06T15:02:36+08:00">2024-01-06</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -385,7 +495,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-01-05 19:39:25" itemprop="dateModified" datetime="2024-01-05T19:39:25+08:00">2024-01-05</time>
+                <time title="修改时间：2024-01-06 15:02:36" itemprop="dateModified" datetime="2024-01-06T15:02:36+08:00">2024-01-06</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -466,7 +576,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-01-05 19:39:25" itemprop="dateModified" datetime="2024-01-05T19:39:25+08:00">2024-01-05</time>
+                <time title="修改时间：2024-01-06 15:02:36" itemprop="dateModified" datetime="2024-01-06T15:02:36+08:00">2024-01-06</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -547,7 +657,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-01-05 19:39:25" itemprop="dateModified" datetime="2024-01-05T19:39:25+08:00">2024-01-05</time>
+                <time title="修改时间：2024-01-06 15:02:36" itemprop="dateModified" datetime="2024-01-06T15:02:36+08:00">2024-01-06</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -655,7 +765,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-01-05 19:39:25" itemprop="dateModified" datetime="2024-01-05T19:39:25+08:00">2024-01-05</time>
+                <time title="修改时间：2024-01-06 15:02:36" itemprop="dateModified" datetime="2024-01-06T15:02:36+08:00">2024-01-06</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -739,7 +849,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-01-05 19:39:25" itemprop="dateModified" datetime="2024-01-05T19:39:25+08:00">2024-01-05</time>
+                <time title="修改时间：2024-01-06 15:02:36" itemprop="dateModified" datetime="2024-01-06T15:02:36+08:00">2024-01-06</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -820,7 +930,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-01-05 19:39:25" itemprop="dateModified" datetime="2024-01-05T19:39:25+08:00">2024-01-05</time>
+                <time title="修改时间：2024-01-06 15:02:36" itemprop="dateModified" datetime="2024-01-06T15:02:36+08:00">2024-01-06</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -901,7 +1011,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-01-05 19:39:25" itemprop="dateModified" datetime="2024-01-05T19:39:25+08:00">2024-01-05</time>
+                <time title="修改时间：2024-01-06 15:02:36" itemprop="dateModified" datetime="2024-01-06T15:02:36+08:00">2024-01-06</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -933,94 +1043,6 @@
             </div>
           <!--/noindex-->
         
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/05/13/Automation/JMeter%E8%B8%A9%E8%BF%87%E7%9A%84%E5%B0%8F%E5%9D%91/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-      <meta itemprop="name" content="夏侯仪">
-      <meta itemprop="description" content="幽寰证此约 七魄俱为凭</br>魂袅还无明 诸厉化纷英</br>吾心共天契 请凭神御临">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="幻煞幽穹">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/05/13/Automation/JMeter%E8%B8%A9%E8%BF%87%E7%9A%84%E5%B0%8F%E5%9D%91/" class="post-title-link" itemprop="url">JMeter踩过的小坑，Cookie的domain和path</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2019-05-13 10:46:00" itemprop="dateCreated datePublished" datetime="2019-05-13T10:46:00+08:00">2019-05-13</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-01-05 19:39:25" itemprop="dateModified" datetime="2024-01-05T19:39:25+08:00">2024-01-05</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Test/" itemprop="url" rel="index"><span itemprop="name">Test</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="Cookie的domain和path"><a href="#Cookie的domain和path" class="headerlink" title="Cookie的domain和path"></a>Cookie的domain和path</h1><h2 id="domain"><a href="#domain" class="headerlink" title="domain"></a>domain</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Set-Cookie: login_sip=1D-8B-35; Path=/; Domain=.example.com</span><br></pre></td></tr></table></figure>
-<p>SSO单点登录后，返回的头信息中应该包括若干条<code>Set-Cookie</code>，上述的Cookie说明此key-value的Cookie能用于*.example.com所有二级域名，<code>Path=/</code>表示后续所有路径都可以使用。<br>下面说的所有二级域名当然包括一级域名。</p>
-<ul>
-<li>Path=/; Domain=.example.com 所有二级域名，所有uri</li>
-<li>Path=/; Domain=account.example.com 仅account.example.com这个二级域名可用，所有uri</li>
-<li>Path=/openapi; Domain=.example.com 所有二级域名，仅匹配/openapi的uri</li>
-</ul>
-<h2 id="坑重现"><a href="#坑重现" class="headerlink" title="坑重现"></a>坑重现</h2><p>JMeter的<code>Server Name or IP</code>中，域名或ip后不应该添加任何东西，<code>perf.example.com</code>或<code>192.168.1.1</code>都是对的，以下都是错误的例子。</p>
-<ul>
-<li>perf.example.com/</li>
-<li>perf.example.com/zoo</li>
-<li>192.168.1.1:8080<br>如果填写的是<code>perf.example.com/</code>，就会出现错误信息：Not storing invalid cookie: &lt;aasso_login=””; Path=/; Domain=.example.com&gt; for URL <a target="_blank" rel="noopener" href="http://perf.example.com//zoo/services/N">http://perf.example.com//zoo/services/N</a> (Illegal ‘domain’ attribute “example.com”. Domain of origin: “perf.example.com/“)</li>
-</ul>
-<!--stackedit_data:
-eyJoaXN0b3J5IjpbLTg4MDg3NTU0Myw4NjkzNDY1MTVdfQ==
--->
       
     </div>
 
@@ -1106,7 +1128,7 @@ eyJoaXN0b3J5IjpbLTg4MDg3NTU0Myw4NjkzNDY1MTVdfQ==
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">77</span>
+          <span class="site-state-item-count">78</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1119,7 +1141,7 @@ eyJoaXN0b3J5IjpbLTg4MDg3NTU0Myw4NjkzNDY1MTVdfQ==
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">48</span>
+        <span class="site-state-item-count">50</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
