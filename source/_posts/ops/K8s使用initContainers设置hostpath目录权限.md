@@ -10,14 +10,11 @@ categories:
 # 背景
 deployment使用hostpath将宿主机的目录挂在到容器内，让容器内进程的日志可以写到hostpath目录上，然后被采集。
 日志目录对权限有要求，查询k8s文档，如果将hostPath 卷指定 type值为DirectoryOrCreate，则权限为0755。
-如果需要更精细的控制，可以使用initContainers
+如果需要更精细的控制，可以使用 initContainers ，与`spec.containers`同级
 
-
-## 监控原理
-公司平台使用普罗米修斯采集Java暴露的JMX数据，作为产品研发团队，只需要在程序启动后，将每个数据源包装一个Listener，多个数据源打包成map，交给`MBeanExporter`
-
+## initContainers
 ```yaml
-# 新增init容器调整日志目录，以满足送检要求
+# 新增init容器调整日志目录，此处只能调整共同挂载卷的权限
       initContainers:
       - name: initc
         securityContext:
@@ -35,3 +32,5 @@ deployment使用hostpath将宿主机的目录挂在到容器内，让容器内�
         - mountPath: /applog
           name: applog
 ```
+## 如果没有共同挂在卷呢？
+答：在Dockerfile中修改，可能需要USER指令改变RUN的命令权限。
