@@ -2,7 +2,7 @@
 title: ollama离线Linux初体验
 date: 2024-07-02 14:00
 tag:
-- llm
+- LLM
 categories:
 - AI
 ---
