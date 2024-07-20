@@ -15,7 +15,7 @@ http://dev.mysql.com/downloads/mysql/
 ，选择适合你的操作系统的版本，我是windows10 64位，选择Windows (x86, 64-bit), ZIP Archive，点“download”。页面跳转后选择“No thanks, just start my download.”
 # 解压
 下载完成后后，解压到本地目录，我解压到D:\mysql-5.7.16-winx64
-# 配置
+# 配置(5.7)
 复制目录下“my-default.ini”文件，重命名为"my.ini"。修改为以下配置，注意对应修改路径
 ```
 [mysqld]
@@ -51,8 +51,44 @@ collation-server = utf8mb4_unicode_ci
 default-character-set=utf8
 
 ```
+8.0配置
+```ini
+[mysqld]
+skip_ssl
+# Remove leading # and set to the amount of RAM for the most important data
+# cache in MySQL. Start at 70% of total RAM for dedicated server, else 10%.
+innodb_buffer_pool_size=128M
+
+# Remove leading # to turn on a very important data integrity option: logging
+# changes to the binary log between backups.
+# log_bin
+
+# These are commonly set, remove the # and set as required.
+basedir=D:\\PortableSoftware\\mysql-8.0.33-winx64
+datadir=D:\\PortableSoftware\\mysql-8.0.33-winx64\\data
+tmpdir=D:\\PortableSoftware\\mysql-8.0.33-winx64\\data
+socket=D:\\PortableSoftware\\mysql-8.0.33-winx64\\data\\mysql.sock
+log-error=D:\\PortableSoftware\\mysql-8.0.33-winx64\\data\\mysql_error.log
+innodb_data_home_dir=D:\\PortableSoftware\\mysql-8.0.33-winx64\\data
+port=3306
+
+# Remove leading # to set options mainly useful for reporting servers.
+# The server defaults are faster for transactions and fast SELECTs.
+# Adjust sizes as needed, experiment to find the optimal values.
+join_buffer_size=128M
+sort_buffer_size=2M
+read_rnd_buffer_size=2M
+
+character-set-server=utf8mb4
+collation-server=utf8mb4_unicode_ci
+
+[client]
+default-character-set=utf8
+
+```
 # 初始化
 因为没有data目录下的mysql数据，所以需要先初始化。
+或需手动建一个data文件夹。
 打开cmd，跳转到目录下bin目录中
 ```bat
 mysqld --initialize --user=mysql --console
@@ -71,7 +107,12 @@ mysqld --initialize --user=mysql --console
 
  输入刚才记下的随机密码
 ```
+# mysql5.7
 set password = password('root');  # root就是你的新密码
+# mysql8
+ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY '123456';
+# mysql8 django
+ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY '000000';
 quit;
 ```
 

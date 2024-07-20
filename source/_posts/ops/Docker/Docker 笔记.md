@@ -29,14 +29,11 @@ base=https://github.com/docker/machine/releases/download/v0.14.0 &&
 
 ## 配置代理
 ```bash
-cat > /etc/systemd/system/docker.service.d/http-proxy.conf <<EOF
-[Service]
-Environment="HTTP_PROXY=http://100.100.154.250:3128"
-EOF
+mkdir -p /etc/systemd/system/docker.service.d
 
 cat > /etc/systemd/system/docker.service.d/https-proxy.conf <<EOF
 [Service]
-Environment="HTTP_PROXY=http://100.100.154.250:3128"
+Environment=="HTTP_PROXY=proxy.exmaple.com" "HTTPS_PROXY=proxy.exmaple.com" "NO_PROXY=localhost,localhost,127.0.0.0/8,10.0.0.0/8,192.168.0.0/16,"
 EOF
 sudo systemctl daemon-reload
 sudo systemctl restart docker
@@ -53,7 +50,8 @@ sudo tee /etc/docker/daemon.json <<-'EOF'
         "https://docker.mirrors.ustc.edu.cn",
         "http://f1361db2.m.daocloud.io",
         "https://dockerhub.azk8s.cn"
-    ]
+    ],
+    "insecure-registries": ["0.0.0.0/0"]
 }
 EOF
 sudo systemctl daemon-reload
