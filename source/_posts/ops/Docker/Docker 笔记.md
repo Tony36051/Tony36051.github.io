@@ -187,6 +187,15 @@ docker ps -a | grep "Exited" | awk '{print $1 }'|xargs docker stop
 docker ps -a | grep "Exited" | awk '{print $1 }'|xargs docker rm
 docker images|grep none|awk '{print $3 }'|xargs docker rmi
 ```
+### 查看挂载关系
+```bash
+docker inspect <容器> --format='{{range .Mounts}}...{{end}}'
+```
+
+### 查看启动命令
+```bash
+docker inspect <容器> --format='{{.Config.Cmd}}'
+```
 
 ### 网络相关
 ```bash
@@ -199,12 +208,12 @@ ip route|awk '/default/ { print $3 }'
 docker network rm xxx
 报错>daemon: network docker_gwbridge id b5ec2be36c4cd7f3dc0b04e3a20ed3e5a193985ed543a29a751b9740fef896ae has active endpoints
 此时需要看看谁在用这个网络
-docker inspect 
+docker inspect
 
 ## swarm集群命令
 ```bash
 docker swarm init  #(在manager节点输入，此时会建两个网络)
-docker swarm leave -f 
+docker swarm leave -f
 docker stack deploy --compose-file=docker-compose.yml cluster-name
 docker stack rm cluster-name
 docker stack ps cluster-name
@@ -223,13 +232,13 @@ docker_gwbridge
 
 ## docker-compose
 
-###查看 
+###查看
 > docker-compose ls
 
-### 启动 
+### 启动
 > docker-compose up
 
-### 停止 
+### 停止
 > docker-compose down
 
 ## docker-machine
@@ -584,7 +593,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
                 build-essential \
                 libaio1 \
                 wget \
-            && rm -rf /var/lib/apt/lists/* 
+            && rm -rf /var/lib/apt/lists/*
 
 # Install oracle
 # Reference: https://help.ubuntu.com/community/Oracle%20Instant%20Client
