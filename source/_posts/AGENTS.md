@@ -191,7 +191,7 @@ Strong success criteria let you loop independently. Weak criteria ("make it work
 ## 再叠加windows使用、git提交
 
 ```
-# AGENTS.md - from claude
+# AGENTS.md
 
 Behavioral guidelines to reduce common LLM coding mistakes. Merge with project-specific instructions as needed.
 
