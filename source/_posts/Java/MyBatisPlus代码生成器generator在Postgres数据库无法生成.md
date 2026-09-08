@@ -1,7 +1,7 @@
 ---
 title: 画瓢-Springboot骨架
 date: 2020-05-12
-tag: 
+tags: 
 - java
 - 画瓢
 categories:

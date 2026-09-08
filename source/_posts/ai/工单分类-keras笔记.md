@@ -1,7 +1,7 @@
 ---
 title: 工单分类-keras笔记
 date: 2018-12-05 00:41
-tag:
+tags:
 - 数据分析
 categories:
 - AI

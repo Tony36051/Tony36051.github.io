@@ -1,7 +1,7 @@
 ---
 title: Java生成javacore和heapdump文件
 date: 2019-06-15
-tag: 
+tags: 
 - java
 categories:
 - 运维

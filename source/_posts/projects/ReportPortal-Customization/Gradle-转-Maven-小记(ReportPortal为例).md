@@ -1,7 +1,7 @@
 ---
 title: Gradle 转 Maven 小记(ReportPortal为例)
 date: 2018-08-21
-tag: 
+tags: 
 - Java
 - Gradle
 - Maven

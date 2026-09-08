@@ -1,7 +1,7 @@
 ---
 title: 亚马逊自动下单 Selenium 自动化
 date: 2018-08-21
-tag: 
+tags: 
 - python
 - Selenium
 categories:

@@ -1,7 +1,7 @@
 ---
 title: Java Gist代码笔记
 date: 2018-08-17
-tag: 
+tags: 
 - java
 categories:
 - 开发

@@ -1,7 +1,7 @@
 ---
 title: Systemd使用（Nginx和Jenkins为例）
 date: 2019-06-18
-tag: 
+tags: 
 - Linux
 - Systemd
 categories:

@@ -1,7 +1,7 @@
 ---
 title: Hive on Spark 安装配置
 date: 2018-03-27 21:27
-tag: 
+tags: 
 - Hadoop
 - Spark
 categories:

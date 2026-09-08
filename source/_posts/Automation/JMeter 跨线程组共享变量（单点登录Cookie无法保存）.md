@@ -1,7 +1,7 @@
 ---
 title: JMeter 跨线程组共享变量（单点登录Cookie无法保存）
 date: 2019-05-05 15:46
-tag: 
+tags: 
 - JMeter
 
 categories:

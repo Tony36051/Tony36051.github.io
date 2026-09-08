@@ -1,7 +1,7 @@
 ---
 title: Java远程调试
 date: 2018-07-21 20:06
-tag: 
+tags: 
 - java
 categories:
 - 开发
