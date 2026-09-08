@@ -10,8 +10,7 @@
     "clean": "hexo clean",
     "generate": "hexo g",
     "server": "hexo s",
-    "deploy": "hexo d",
-    "postinstall": "node scripts/postinstall.js"
+    "deploy": "hexo d"
   },
   "dependencies": {
     "hexo": "^8.1.2",
@@ -23,14 +22,9 @@
     "hexo-generator-searchdb": "^1.4.1",
     "hexo-generator-tag": "^2.0.0",
     "hexo-neat": "^1.0.9",
-    "hexo-related-popular-posts": "^5.0.1",
     "hexo-renderer-ejs": "^2.0.0",
     "hexo-renderer-marked": "^6.3.0",
     "hexo-renderer-stylus": "^3.0.1",
     "hexo-server": "^3.0.0"
-  },
-  "devDependencies": {
-    "patch-package": "^8.0.1",
-    "postinstall-postinstall": "^2.1.0"
   }
 }
