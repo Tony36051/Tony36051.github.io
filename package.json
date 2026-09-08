@@ -11,7 +11,7 @@
     "generate": "hexo g",
     "server": "hexo s",
     "deploy": "hexo d",
-    "postinstall": "patch-package"
+    "postinstall": "patch-package || echo '[patch-package] skip (CI node 20 无需 patch)'"
   },
   "dependencies": {
     "hexo": "^8.1.2",
