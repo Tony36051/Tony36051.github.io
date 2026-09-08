@@ -1,7 +1,7 @@
 ---
 title: 重构
 date: 2020-12-12
-tag: 
+tags: 
 - 重构
 categories:
 - 开发

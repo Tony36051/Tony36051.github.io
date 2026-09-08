@@ -1,7 +1,7 @@
 ---
 title: MySQL 导入导出 blob 类型的坑
 date: 2018-07-21 17:28
-tag: 
+tags: 
 - MySQL
 categories:
 - Database

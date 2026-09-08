@@ -1,7 +1,7 @@
 ---
 title: Linux 常用命令组合
 date: 2018-05-02 09:57
-tag: 
+tags: 
 - Linux
 categories:
 - Ops

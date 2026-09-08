@@ -1,7 +1,7 @@
 ---
 title: postman请求前脚本，常用于生成token和时间戳
 date: 2020-08-21 10:56
-tag: 
+tags: 
 - postman
 categories:
 - Test

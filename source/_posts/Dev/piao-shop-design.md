@@ -1,7 +1,7 @@
 ---
 title: 画瓢系列：玩具级别的电商系统的基本功能设计
 date: 2020-05-23
-tag: 
+tags: 
 - 画瓢
 categories:
 - 开发

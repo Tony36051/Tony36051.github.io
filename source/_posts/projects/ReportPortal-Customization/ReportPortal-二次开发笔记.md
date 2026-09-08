@@ -1,7 +1,7 @@
 ---
 title: ReportPortal 二次开发笔记
 date: 2018-10-25
-tag: 
+tags: 
 - MongoDB 
 - ReportPortal 
 categories: 

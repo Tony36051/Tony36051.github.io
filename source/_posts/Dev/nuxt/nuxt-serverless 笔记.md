@@ -1,7 +1,7 @@
 ---
 title: Nuxt-serverless 笔记
 date: 2023-01-06
-tag: 
+tags: 
 - Nuxt
 - serverless
 categories:

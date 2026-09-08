@@ -5,6 +5,13 @@
   "hexo": {
     "version": "3.9.0"
   },
+  "scripts": {
+    "build": "hexo clean && hexo g",
+    "clean": "hexo clean",
+    "generate": "hexo g",
+    "server": "hexo s",
+    "deploy": "hexo d"
+  },
   "dependencies": {
     "hexo": "^7.3.0",
     "hexo-cli": "^4.3.2",

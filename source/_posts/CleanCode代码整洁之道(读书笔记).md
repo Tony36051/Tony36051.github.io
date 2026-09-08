@@ -1,7 +1,7 @@
 ---
 title: CleanCode代码整洁之道(读书笔记)
 date: 2018-09-04
-tag: 
+tags: 
 - Java
 categories:
 - Dev
