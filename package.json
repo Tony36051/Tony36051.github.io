@@ -10,7 +10,8 @@
     "clean": "hexo clean",
     "generate": "hexo g",
     "server": "hexo s",
-    "deploy": "hexo d"
+    "deploy": "hexo d",
+    "postinstall": "patch-package"
   },
   "dependencies": {
     "hexo": "^8.1.2",
@@ -27,5 +28,9 @@
     "hexo-renderer-marked": "^6.3.0",
     "hexo-renderer-stylus": "^3.0.1",
     "hexo-server": "^3.0.0"
+  },
+  "devDependencies": {
+    "patch-package": "^8.0.1",
+    "postinstall-postinstall": "^2.1.0"
   }
 }
